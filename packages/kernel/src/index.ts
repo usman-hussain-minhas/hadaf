@@ -46,3 +46,15 @@ export {
   type ProductFileExpectation,
   type VerifiedEvidenceRef
 } from "./verification/evidence.js";
+export {
+  reconcileStatusConfig,
+  type CloseoutExpectation,
+  type GeneratedStateRecordExpectation,
+  type GitHubPullRequestExpectation,
+  type GitHubPullRequestTruth,
+  type StatusReconciliationConfig,
+  type StatusReconciliationFinding,
+  type StatusReconciliationReport,
+  type StatusReconciliationStatus,
+  type VerifiedStatusRef
+} from "./verification/status.js";
