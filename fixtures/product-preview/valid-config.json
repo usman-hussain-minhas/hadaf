@@ -1,0 +1,34 @@
+{
+  "preview": {
+    "id": "hadaf-product-preview",
+    "name": "HADAF Product Preview",
+    "route": "/preview",
+    "maturity": "fixture_backed",
+    "publicationStatus": "local_only",
+    "targetBox": "H02",
+    "targetFfet": "H02-F03"
+  },
+  "stateSources": [
+    {
+      "id": "preview-shell",
+      "label": "Static preview shell",
+      "status": "fixture",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "product-runtime",
+      "label": "Product runtime adapter",
+      "status": "mocked",
+      "maturity": "mocked"
+    }
+  ],
+  "claims": [],
+  "cannotClaim": [
+    "production_connected_preview",
+    "public_preview_deployed",
+    "persistent_preview_state",
+    "browser_accessibility_complete",
+    "browser_performance_complete"
+  ],
+  "finalPostureRecommendation": "H02_PRODUCT_PREVIEW_FIXTURE_BACKED"
+}

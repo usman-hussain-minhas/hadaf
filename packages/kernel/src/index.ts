@@ -119,3 +119,15 @@ export {
   type HmcStateStatus,
   type HmcVerifiedRef
 } from "./hmc/state.js";
+export {
+  verifyProductPreviewConfig,
+  type ProductPreviewConfig,
+  type ProductPreviewFinding,
+  type ProductPreviewInput,
+  type ProductPreviewMaturity,
+  type ProductPreviewReport,
+  type ProductPreviewStateSourceInput,
+  type ProductPreviewStatus,
+  type ProductPreviewVerifiedRef,
+  type ProductPreviewView
+} from "./product-preview/maturity.js";

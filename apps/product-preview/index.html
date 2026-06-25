@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HADAF Product Preview</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="preview-shell" aria-labelledby="preview-title">
+      <header class="preview-header">
+        <a class="brand" href="/preview" aria-label="HADAF Product Preview home">
+          <span class="brand-mark" aria-hidden="true">PV</span>
+          <span>
+            <strong>HADAF</strong>
+            <small>Product Preview</small>
+          </span>
+        </a>
+        <div class="status-line" aria-label="Preview maturity">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span data-preview-field="publication">local_only</span>
+          <span class="maturity maturity--fixture" data-preview-field="maturity">fixture_backed</span>
+        </div>
+      </header>
+
+      <section class="hero" aria-labelledby="preview-title">
+        <p class="label">H02-F03</p>
+        <h1 id="preview-title" data-preview-field="name">HADAF Product Preview</h1>
+        <p class="summary">
+          Frontend-visible preview foundation for HADAF product surfaces. This route is local and fixture-backed; production_connected blocked until proof exists.
+        </p>
+        <div class="status-strip" role="list" aria-label="Preview boundaries">
+          <span role="listitem" class="status-pill">fixture_backed</span>
+          <span role="listitem" class="status-pill status-pill--warn">production_connected blocked</span>
+          <span role="listitem" class="status-pill">not published</span>
+        </div>
+      </section>
+
+      <section class="preview-grid" aria-label="Preview state">
+        <article class="panel">
+          <p class="label">Target</p>
+          <h2 data-preview-field="target">H02 Product Preview Foundation</h2>
+          <p>Preview state is generated from local fixture data and is not authority.</p>
+        </article>
+        <article class="panel">
+          <p class="label">State Sources</p>
+          <h2>Visible Maturity</h2>
+          <ul class="source-list" data-preview-field="sources">
+            <li><strong>Static preview shell</strong><span>fixture_backed</span></li>
+            <li><strong>Product runtime adapter</strong><span>mocked</span></li>
+          </ul>
+        </article>
+        <article class="panel panel--wide">
+          <p class="label">Cannot Claim</p>
+          <h2>Preserved Boundaries</h2>
+          <ul class="claim-list" data-preview-field="cannot-claim">
+            <li>production_connected_preview</li>
+            <li>public_preview_deployed</li>
+            <li>persistent_preview_state</li>
+            <li>browser_accessibility_complete</li>
+            <li>browser_performance_complete</li>
+          </ul>
+        </article>
+      </section>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
