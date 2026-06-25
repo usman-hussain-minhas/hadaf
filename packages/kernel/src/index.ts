@@ -36,3 +36,13 @@ export {
   type ValidationIssueCode,
   type ValidationResult
 } from "./quality/schemas.js";
+export {
+  verifyEvidenceConfig,
+  type EvidenceArtifactExpectation,
+  type EvidenceVerificationConfig,
+  type EvidenceVerificationFinding,
+  type EvidenceVerificationReport,
+  type EvidenceVerificationStatus,
+  type ProductFileExpectation,
+  type VerifiedEvidenceRef
+} from "./verification/evidence.js";
