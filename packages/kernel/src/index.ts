@@ -92,3 +92,10 @@ export {
   type SourceDocumentInput,
   type SourceDocumentKind
 } from "./source-vault/classifier.js";
+export {
+  runTargetGuard,
+  type TargetGuardConfig,
+  type TargetGuardFinding,
+  type TargetGuardReport,
+  type TargetGuardStatus
+} from "./target-guard/guard.js";

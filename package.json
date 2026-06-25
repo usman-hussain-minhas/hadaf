@@ -19,6 +19,8 @@
     "check:license": "node scripts/check-no-license-file.mjs",
     "check:public": "node scripts/check-public-safety.mjs",
     "check:public:self-test": "node scripts/check-public-safety.mjs --self-test",
+    "check:target-guard": "pnpm build && node scripts/check-target-guard.mjs",
+    "check:target-guard:self-test": "pnpm build && node scripts/check-target-guard.mjs --self-test",
     "check:pr-metadata": "node scripts/check-pr-metadata-public-safety.mjs --self-test",
     "check:ci": "node scripts/check-ci-workflow.mjs",
     "check:deps": "node scripts/check-dependency-licenses.mjs",
