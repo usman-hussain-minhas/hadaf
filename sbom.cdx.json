@@ -35,7 +35,7 @@
     "properties": [
       {
         "name": "hadaf:supply_chain_graph_sha256",
-        "value": "07739c7aeeda6535b03071cd00941835ca6bb381e64c8f1473c450e7ae4dd98c"
+        "value": "354ec32ab896bbcd79198335f275bdc362bce708a9c72d84e0520713eef01078"
       },
       {
         "name": "hadaf:remote_provenance_attestation",
@@ -122,10 +122,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/ajv@8.17.1",
+      "bom-ref": "pkg:npm/ajv@8.20.0",
       "name": "ajv",
-      "version": "8.17.1",
-      "purl": "pkg:npm/ajv@8.17.1",
+      "version": "8.20.0",
+      "purl": "pkg:npm/ajv@8.20.0",
       "licenses": [
         {
           "license": {
@@ -389,7 +389,7 @@
       "dependsOn": [
         "pkg:npm/%40types%2Fnode@22.20.0",
         "pkg:npm/ajv-formats@3.0.1",
-        "pkg:npm/ajv@8.17.1",
+        "pkg:npm/ajv@8.20.0",
         "pkg:npm/typescript@6.0.3"
       ]
     },
@@ -402,11 +402,11 @@
     {
       "ref": "pkg:npm/ajv-formats@3.0.1",
       "dependsOn": [
-        "pkg:npm/ajv@8.17.1"
+        "pkg:npm/ajv@8.20.0"
       ]
     },
     {
-      "ref": "pkg:npm/ajv@8.17.1",
+      "ref": "pkg:npm/ajv@8.20.0",
       "dependsOn": [
         "pkg:npm/fast-deep-equal@3.1.3",
         "pkg:npm/fast-uri@3.1.2",

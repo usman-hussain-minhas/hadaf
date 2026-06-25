@@ -2,7 +2,7 @@
 
 HADAF is proprietary software. This notice lists external packages currently used by this private product workspace and does not grant a public licence to HADAF.
 
-Supply-chain graph SHA-256: `07739c7aeeda6535b03071cd00941835ca6bb381e64c8f1473c450e7ae4dd98c`
+Supply-chain graph SHA-256: `354ec32ab896bbcd79198335f275bdc362bce708a9c72d84e0520713eef01078`
 
 Remote package provenance attestation is not available in H00-CORR-004; provenance is bounded to the committed pnpm lockfile and installed package metadata.
 
@@ -26,7 +26,7 @@ Remote package provenance attestation is not available in H00-CORR-004; provenan
 - Repository: git+https://github.com/ajv-validator/ajv-formats.git
 - Homepage: https://github.com/ajv-validator/ajv-formats#readme
 
-### ajv 8.17.1
+### ajv 8.20.0
 
 - Licence: MIT
 - Scope: direct
@@ -39,7 +39,7 @@ Remote package provenance attestation is not available in H00-CORR-004; provenan
 
 - Licence: MIT
 - Scope: transitive
-- Dependency of: ajv@8.17.1
+- Dependency of: ajv@8.20.0
 - Provenance: pnpm lockfile integrity and installed package metadata
 - Repository: git+https://github.com/epoberezkin/fast-deep-equal.git
 - Homepage: https://github.com/epoberezkin/fast-deep-equal#readme
@@ -48,7 +48,7 @@ Remote package provenance attestation is not available in H00-CORR-004; provenan
 
 - Licence: BSD-3-Clause
 - Scope: transitive
-- Dependency of: ajv@8.17.1
+- Dependency of: ajv@8.20.0
 - Provenance: pnpm lockfile integrity and installed package metadata
 - Repository: git+https://github.com/fastify/fast-uri.git
 - Homepage: https://github.com/fastify/fast-uri
@@ -57,7 +57,7 @@ Remote package provenance attestation is not available in H00-CORR-004; provenan
 
 - Licence: MIT
 - Scope: transitive
-- Dependency of: ajv@8.17.1
+- Dependency of: ajv@8.20.0
 - Provenance: pnpm lockfile integrity and installed package metadata
 - Repository: git+https://github.com/epoberezkin/json-schema-traverse.git
 - Homepage: https://github.com/epoberezkin/json-schema-traverse#readme
@@ -66,7 +66,7 @@ Remote package provenance attestation is not available in H00-CORR-004; provenan
 
 - Licence: MIT
 - Scope: transitive
-- Dependency of: ajv@8.17.1
+- Dependency of: ajv@8.20.0
 - Provenance: pnpm lockfile integrity and installed package metadata
 - Repository: floatdrop/require-from-string
 
