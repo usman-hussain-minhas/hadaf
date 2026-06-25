@@ -1,0 +1,22 @@
+{
+  "name": "hadaf",
+  "version": "0.0.0-bootstrap",
+  "description": "HAUTM Agentic Delivery & Assurance Framework",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "packageManager": "pnpm@10.34.4",
+  "engines": {
+    "node": ">=22.0.0 <25",
+    "pnpm": ">=10.0.0 <11"
+  },
+  "scripts": {
+    "build": "node scripts/check-package-metadata.mjs",
+    "test": "node scripts/check-package-metadata.mjs && node scripts/check-no-license-file.mjs",
+    "quality": "node scripts/check-package-metadata.mjs && node scripts/check-no-license-file.mjs && node scripts/check-public-safety.mjs && node scripts/check-ci-workflow.mjs",
+    "check:package": "node scripts/check-package-metadata.mjs",
+    "check:license": "node scripts/check-no-license-file.mjs",
+    "check:public": "node scripts/check-public-safety.mjs",
+    "check:ci": "node scripts/check-ci-workflow.mjs"
+  }
+}
