@@ -35,7 +35,7 @@
     "properties": [
       {
         "name": "hadaf:supply_chain_graph_sha256",
-        "value": "354ec32ab896bbcd79198335f275bdc362bce708a9c72d84e0520713eef01078"
+        "value": "c0ecda92c1954c66488d51888035bd29f107e9fad394063096da44269885563e"
       },
       {
         "name": "hadaf:remote_provenance_attestation",

@@ -2,7 +2,7 @@
 
 HADAF is proprietary software. This notice lists external packages currently used by this private product workspace and does not grant a public licence to HADAF.
 
-Supply-chain graph SHA-256: `354ec32ab896bbcd79198335f275bdc362bce708a9c72d84e0520713eef01078`
+Supply-chain graph SHA-256: `c0ecda92c1954c66488d51888035bd29f107e9fad394063096da44269885563e`
 
 Remote package provenance attestation is not available in H00-CORR-004; provenance is bounded to the committed pnpm lockfile and installed package metadata.
 
