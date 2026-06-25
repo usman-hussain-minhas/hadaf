@@ -2,7 +2,7 @@
 
 HADAF is proprietary software. This notice lists external packages currently used by this private product workspace and does not grant a public licence to HADAF.
 
-Supply-chain graph SHA-256: `d9f4d64f64ec6921c83d586202fff9816d544c7c7dd73d8e2076ceedd5cecc96`
+Supply-chain graph SHA-256: `07739c7aeeda6535b03071cd00941835ca6bb381e64c8f1473c450e7ae4dd98c`
 
 Remote package provenance attestation is not available in H00-CORR-004; provenance is bounded to the committed pnpm lockfile and installed package metadata.
 
@@ -16,6 +16,59 @@ Remote package provenance attestation is not available in H00-CORR-004; provenan
 - Provenance: pnpm lockfile integrity and installed package metadata
 - Repository: https://github.com/DefinitelyTyped/DefinitelyTyped.git
 - Homepage: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node
+
+### ajv-formats 3.0.1
+
+- Licence: MIT
+- Scope: direct
+- Dependency of: hadaf
+- Provenance: pnpm lockfile integrity and installed package metadata
+- Repository: git+https://github.com/ajv-validator/ajv-formats.git
+- Homepage: https://github.com/ajv-validator/ajv-formats#readme
+
+### ajv 8.17.1
+
+- Licence: MIT
+- Scope: direct
+- Dependency of: ajv-formats@3.0.1, hadaf
+- Provenance: pnpm lockfile integrity and installed package metadata
+- Repository: ajv-validator/ajv
+- Homepage: https://ajv.js.org
+
+### fast-deep-equal 3.1.3
+
+- Licence: MIT
+- Scope: transitive
+- Dependency of: ajv@8.17.1
+- Provenance: pnpm lockfile integrity and installed package metadata
+- Repository: git+https://github.com/epoberezkin/fast-deep-equal.git
+- Homepage: https://github.com/epoberezkin/fast-deep-equal#readme
+
+### fast-uri 3.1.2
+
+- Licence: BSD-3-Clause
+- Scope: transitive
+- Dependency of: ajv@8.17.1
+- Provenance: pnpm lockfile integrity and installed package metadata
+- Repository: git+https://github.com/fastify/fast-uri.git
+- Homepage: https://github.com/fastify/fast-uri
+
+### json-schema-traverse 1.0.0
+
+- Licence: MIT
+- Scope: transitive
+- Dependency of: ajv@8.17.1
+- Provenance: pnpm lockfile integrity and installed package metadata
+- Repository: git+https://github.com/epoberezkin/json-schema-traverse.git
+- Homepage: https://github.com/epoberezkin/json-schema-traverse#readme
+
+### require-from-string 2.0.2
+
+- Licence: MIT
+- Scope: transitive
+- Dependency of: ajv@8.17.1
+- Provenance: pnpm lockfile integrity and installed package metadata
+- Repository: floatdrop/require-from-string
 
 ### typescript 6.0.3
 

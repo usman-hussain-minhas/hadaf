@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://schemas/constitution-v1-1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "constitution_id",
+    "version",
+    "structured_contracts",
+    "question_resolution",
+    "question_register_hash",
+    "approval"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.1.0"
+    },
+    "constitution_id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "structured_contracts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "box_dependency_graph",
+        "agent_topology",
+        "proof_matrix",
+        "assurance_matrix",
+        "resource_limits",
+        "performance_environment_contract",
+        "independent_review_policy"
+      ],
+      "properties": {
+        "box_dependency_graph": {
+          "$ref": "fixture://schemas/authority-ref.json"
+        },
+        "agent_topology": {
+          "$ref": "fixture://schemas/authority-ref.json"
+        },
+        "proof_matrix": {
+          "$ref": "fixture://schemas/authority-ref.json"
+        },
+        "assurance_matrix": {
+          "$ref": "fixture://schemas/authority-ref.json"
+        },
+        "resource_limits": {
+          "$ref": "fixture://schemas/authority-ref.json"
+        },
+        "performance_environment_contract": {
+          "$ref": "fixture://schemas/authority-ref.json"
+        },
+        "independent_review_policy": {
+          "$ref": "fixture://schemas/authority-ref.json"
+        }
+      }
+    },
+    "question_resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "question_register",
+        "zero_broad_ambiguity",
+        "unresolved_broad_question_ids"
+      ],
+      "properties": {
+        "question_register": {
+          "$ref": "fixture://schemas/authority-ref.json"
+        },
+        "zero_broad_ambiguity": {
+          "const": true
+        },
+        "unresolved_broad_question_ids": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    },
+    "question_register_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "constitution_hash",
+        "approved_by",
+        "approved_at",
+        "approval_record_ref",
+        "approval_record_hash"
+      ],
+      "properties": {
+        "status": {
+          "const": "for_human_review"
+        },
+        "constitution_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "approved_by": {
+          "type": "null"
+        },
+        "approved_at": {
+          "type": "null"
+        },
+        "approval_record_ref": {
+          "type": "null"
+        },
+        "approval_record_hash": {
+          "type": "null"
+        }
+      }
+    }
+  }
+}

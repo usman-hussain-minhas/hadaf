@@ -131,3 +131,19 @@ export {
   type ProductPreviewVerifiedRef,
   type ProductPreviewView
 } from "./product-preview/maturity.js";
+export {
+  verifyH03SchemaRegistryConfig,
+  type H03ExpectedValidationStatus,
+  type H03InstanceValidation,
+  type H03SchemaDescriptor,
+  type H03SchemaRegistryConfig,
+  type H03SchemaRegistryFinding,
+  type H03SchemaRegistryReport,
+  type H03SchemaRegistryStatus,
+  type H03SchemaRole,
+  type H03SchemaVersionRef,
+  type H03SemanticCheckKind,
+  type H03SemanticValidation,
+  type H03ValidationResult,
+  type H03VerifiedSchema
+} from "./h03/schema-registry.js";
