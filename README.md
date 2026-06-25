@@ -22,6 +22,10 @@ Current posture:
 - no public deployment or production activation is authorized;
 - no open-source licence is granted.
 
+For a public-safe summary of delivery rules used by HADAF implementation work,
+see [Delivery Rules Reference](docs/delivery-rules-reference.md). Canonical
+authority remains the HADAF planning bundle and external Control records.
+
 ## Local Checks
 
 ```sh

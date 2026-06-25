@@ -110,6 +110,12 @@ H02 may prove a bounded static accessibility smoke baseline:
 
 This is not a full browser accessibility audit. H02 must preserve cannot-claim entries for browser-complete accessibility and browser performance until real browser tooling or equivalent proof exists.
 
+## H02 Claim Boundary
+
+Static accessibility smoke is not browser accessibility proof. It verifies a bounded static structure only; it does not prove full browser interaction, keyboard traversal, screen-reader behavior, or browser performance.
+
+Fixture-backed HMC and Product Preview states are not live, persistent, production-connected, or authoritative. They must remain visibly labeled at their actual maturity. HMC is a derived view, Product Preview is an inspection surface, and neither surface can override verified Git, GitHub, Control, or Evidence truth.
+
 ## Security And Public-Safety Rules
 
 HMC and Product Preview must not display secrets, private local paths, private operational paths, private prompts, raw transcripts, or unredacted private evidence. Public-safe hashes and statuses may be shown when the backing evidence policy allows it.
