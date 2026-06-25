@@ -13,10 +13,12 @@
   "scripts": {
     "build": "tsc -b packages/kernel",
     "test": "pnpm build && node --test \"packages/kernel/dist/**/*.test.js\"",
-    "quality": "node scripts/check-package-metadata.mjs && node scripts/check-no-license-file.mjs && node scripts/check-public-safety.mjs && node scripts/check-ci-workflow.mjs && node scripts/check-dependency-licenses.mjs && pnpm build && node --test \"packages/kernel/dist/**/*.test.js\"",
+    "quality": "node scripts/check-package-metadata.mjs && node scripts/check-no-license-file.mjs && node scripts/check-public-safety.mjs && node scripts/check-public-safety.mjs --self-test && node scripts/check-pr-metadata-public-safety.mjs --self-test && node scripts/check-ci-workflow.mjs && node scripts/check-dependency-licenses.mjs && pnpm build && node --test \"packages/kernel/dist/**/*.test.js\"",
     "check:package": "node scripts/check-package-metadata.mjs",
     "check:license": "node scripts/check-no-license-file.mjs",
     "check:public": "node scripts/check-public-safety.mjs",
+    "check:public:self-test": "node scripts/check-public-safety.mjs --self-test",
+    "check:pr-metadata": "node scripts/check-pr-metadata-public-safety.mjs --self-test",
     "check:ci": "node scripts/check-ci-workflow.mjs",
     "check:deps": "node scripts/check-dependency-licenses.mjs"
   },
