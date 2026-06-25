@@ -25,6 +25,7 @@
     "check:deps:self-test": "node scripts/check-dependency-licenses.mjs --self-test",
     "check:supply-chain": "node scripts/generate-supply-chain-artifacts.mjs --check",
     "verify:evidence": "node scripts/verify-evidence-manifest.mjs",
+    "verify:status": "node scripts/reconcile-status.mjs",
     "supply-chain": "node scripts/generate-supply-chain-artifacts.mjs"
   },
   "devDependencies": {
