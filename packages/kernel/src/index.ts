@@ -161,3 +161,15 @@ export {
   type H03VerifiedAuthorityManifestEntry,
   type H03VerifiedInput
 } from "./h03/input-authority.js";
+export {
+  hashNormalizedPlan,
+  normalizeH03PlanConfig,
+  type H03NormalizedPlan,
+  type H03NormalizedPlanSection,
+  type H03NormalizedPlanSource,
+  type H03PlanNormalizationConfig,
+  type H03PlanNormalizationFinding,
+  type H03PlanNormalizationReport,
+  type H03PlanNormalizationStatus,
+  type H03PlanSectionId
+} from "./h03/plan-normalization.js";
