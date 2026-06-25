@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.1.0",
+  "constitution_id": "C-v1-1",
+  "version": "1.1.0",
+  "question_resolution": {
+    "question_register": {
+      "artifact_id": "question-register",
+      "artifact_version": "1.0.0",
+      "ref": "fixture://question-register.json",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "schema_ref": "fixture://schemas/authority-ref.json",
+      "schema_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    "zero_broad_ambiguity": true,
+    "unresolved_broad_question_ids": []
+  },
+  "question_register_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "approval": {
+    "status": "for_human_review",
+    "constitution_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "approved_by": null,
+    "approved_at": null,
+    "approval_record_ref": null,
+    "approval_record_hash": null
+  }
+}

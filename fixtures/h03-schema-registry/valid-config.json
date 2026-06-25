@@ -1,0 +1,116 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h03-schema-registry"
+  },
+  "schemas": [
+    {
+      "schemaId": "authority_artifact_ref",
+      "schemaVersion": "1.0.0",
+      "ref": "fixture://schemas/authority-ref.json",
+      "sha256": "d49a822f2239ee4266436a1f3f2d6274252d6b6cabb1425a6428ffbe575160e0",
+      "role": "companion"
+    },
+    {
+      "schemaId": "delivery_constitution",
+      "schemaVersion": "1.0",
+      "ref": "fixture://schemas/constitution-v1.json",
+      "sha256": "b4c4e57201be55daa19a6ecb2d304c1837852e08796dd1af04b630457222a86a",
+      "role": "historical"
+    },
+    {
+      "schemaId": "delivery_constitution",
+      "schemaVersion": "1.1.0",
+      "ref": "fixture://schemas/constitution-v1-1.json",
+      "sha256": "59a57d7558dc56a0615e32047bf25aa1cd65dd83f17423f9dc6ecdee361240e5",
+      "role": "active"
+    }
+  ],
+  "requiredSchemas": [
+    {
+      "schemaId": "authority_artifact_ref",
+      "schemaVersion": "1.0.0"
+    },
+    {
+      "schemaId": "delivery_constitution",
+      "schemaVersion": "1.0"
+    },
+    {
+      "schemaId": "delivery_constitution",
+      "schemaVersion": "1.1.0"
+    }
+  ],
+  "instanceValidations": [
+    {
+      "validationId": "historical-v1-valid",
+      "schemaId": "delivery_constitution",
+      "schemaVersion": "1.0",
+      "instanceRef": "fixture://instances/constitution-v1-valid.json",
+      "expectedStatus": "passed"
+    },
+    {
+      "validationId": "active-v1-1-valid",
+      "schemaId": "delivery_constitution",
+      "schemaVersion": "1.1.0",
+      "instanceRef": "fixture://instances/constitution-v1-1-valid.json",
+      "expectedStatus": "passed"
+    },
+    {
+      "validationId": "active-v1-1-missing-contracts",
+      "schemaId": "delivery_constitution",
+      "schemaVersion": "1.1.0",
+      "instanceRef": "fixture://instances/constitution-v1-1-missing-contracts.json",
+      "expectedStatus": "failed"
+    },
+    {
+      "validationId": "active-v1-1-approval-overclaim",
+      "schemaId": "delivery_constitution",
+      "schemaVersion": "1.1.0",
+      "instanceRef": "fixture://instances/constitution-v1-1-approval-overclaim.json",
+      "expectedStatus": "failed"
+    }
+  ],
+  "semanticValidations": [
+    {
+      "validationId": "question-hash-valid",
+      "kind": "question_register_hash_matches_structured_ref",
+      "instanceRef": "fixture://instances/constitution-v1-1-valid.json",
+      "expectedStatus": "passed"
+    },
+    {
+      "validationId": "question-hash-mismatch",
+      "kind": "question_register_hash_matches_structured_ref",
+      "instanceRef": "fixture://instances/constitution-question-hash-mismatch.json",
+      "expectedStatus": "failed"
+    },
+    {
+      "validationId": "for-review-unapproved",
+      "kind": "approval_for_review_is_unapproved",
+      "instanceRef": "fixture://instances/constitution-v1-1-valid.json",
+      "expectedStatus": "passed"
+    },
+    {
+      "validationId": "approval-status-overclaim",
+      "kind": "approval_for_review_is_unapproved",
+      "instanceRef": "fixture://instances/constitution-v1-1-status-approved.json",
+      "expectedStatus": "failed"
+    },
+    {
+      "validationId": "execution-authorization-absent",
+      "kind": "execution_authorization_absent",
+      "instanceRef": "fixture://instances/constitution-v1-1-valid.json",
+      "expectedStatus": "passed"
+    },
+    {
+      "validationId": "structured-contract-refs-present",
+      "kind": "structured_contract_refs_present",
+      "instanceRef": "fixture://instances/constitution-v1-1-valid.json",
+      "expectedStatus": "passed"
+    }
+  ],
+  "cannotClaim": [
+    "delivery_constitution_compiler_implemented",
+    "h03_delivery_constitution_ready_for_human_ratification",
+    "h03_implemented"
+  ],
+  "finalPostureRecommendation": "H03_F00_SCHEMA_REGISTRY_BOUNDARY_VERIFIED"
+}

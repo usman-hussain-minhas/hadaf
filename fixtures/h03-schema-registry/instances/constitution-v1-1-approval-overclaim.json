@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.1.0",
+  "constitution_id": "C-v1-1",
+  "version": "1.1.0",
+  "structured_contracts": {
+    "box_dependency_graph": {
+      "artifact_id": "graph",
+      "artifact_version": "1.0.0",
+      "ref": "fixture://graph.json",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "schema_ref": "fixture://schemas/authority-ref.json",
+      "schema_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    "agent_topology": {
+      "artifact_id": "agent-topology",
+      "artifact_version": "1.0.0",
+      "ref": "fixture://agent-topology.json",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "schema_ref": "fixture://schemas/authority-ref.json",
+      "schema_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    "proof_matrix": {
+      "artifact_id": "proof-matrix",
+      "artifact_version": "1.0.0",
+      "ref": "fixture://proof-matrix.json",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "schema_ref": "fixture://schemas/authority-ref.json",
+      "schema_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    "assurance_matrix": {
+      "artifact_id": "assurance-matrix",
+      "artifact_version": "1.0.0",
+      "ref": "fixture://assurance-matrix.json",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "schema_ref": "fixture://schemas/authority-ref.json",
+      "schema_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    "resource_limits": {
+      "artifact_id": "resource-limits",
+      "artifact_version": "1.0.0",
+      "ref": "fixture://resource-limits.json",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "schema_ref": "fixture://schemas/authority-ref.json",
+      "schema_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    "performance_environment_contract": {
+      "artifact_id": "performance-environment-contract",
+      "artifact_version": "1.0.0",
+      "ref": "fixture://performance-environment-contract.json",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "schema_ref": "fixture://schemas/authority-ref.json",
+      "schema_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    "independent_review_policy": {
+      "artifact_id": "independent-review-policy",
+      "artifact_version": "1.0.0",
+      "ref": "fixture://independent-review-policy.json",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "schema_ref": "fixture://schemas/authority-ref.json",
+      "schema_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    }
+  },
+  "question_resolution": {
+    "question_register": {
+      "artifact_id": "question-register",
+      "artifact_version": "1.0.0",
+      "ref": "fixture://question-register.json",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "schema_ref": "fixture://schemas/authority-ref.json",
+      "schema_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    "zero_broad_ambiguity": true,
+    "unresolved_broad_question_ids": []
+  },
+  "question_register_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "approval": {
+    "status": "for_human_review",
+    "constitution_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "approved_by": "Codex",
+    "approved_at": null,
+    "approval_record_ref": null,
+    "approval_record_hash": null
+  }
+}

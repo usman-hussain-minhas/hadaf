@@ -1,0 +1,9 @@
+{
+  "constitution_id": "C-v1",
+  "version": "1.0",
+  "approval": {
+    "status": "for_human_review",
+    "constitution_hash": "legacy-hash"
+  },
+  "question_register_hash": "legacy-question-register-hash"
+}

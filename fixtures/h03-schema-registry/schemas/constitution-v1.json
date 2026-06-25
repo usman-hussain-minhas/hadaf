@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://schemas/constitution-v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "constitution_id",
+    "version",
+    "approval",
+    "question_register_hash"
+  ],
+  "properties": {
+    "constitution_id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "constitution_hash"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "draft",
+            "for_human_review",
+            "approved",
+            "rejected",
+            "superseded"
+          ]
+        },
+        "constitution_hash": {
+          "type": "string"
+        }
+      }
+    },
+    "question_register_hash": {
+      "type": "string"
+    }
+  }
+}
