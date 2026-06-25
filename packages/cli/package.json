@@ -1,0 +1,16 @@
+{
+  "name": "@hadaf/cli",
+  "version": "0.0.0-bootstrap",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "bin": {
+    "hadaf": "dist/src/index.js"
+  },
+  "dependencies": {
+    "@hadaf/core": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsc -b"
+  }
+}
