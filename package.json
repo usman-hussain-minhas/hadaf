@@ -15,6 +15,8 @@
     "test": "pnpm build && node --test \"packages/kernel/dist/**/*.test.js\"",
     "quality": "node scripts/run-quality-gates.mjs",
     "quality:report": "node scripts/run-quality-gates.mjs --json",
+    "hmc:serve": "node scripts/serve-hmc.mjs",
+    "hmc:smoke": "node scripts/serve-hmc.mjs --smoke",
     "check:package": "node scripts/check-package-metadata.mjs",
     "check:license": "node scripts/check-no-license-file.mjs",
     "check:public": "node scripts/check-public-safety.mjs",

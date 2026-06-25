@@ -24,9 +24,16 @@ function runQualityGates() {
   dimensions.push(commandDimension("license_file_absence", "ci_enforced", "node scripts/check-no-license-file.mjs"));
   dimensions.push(commandDimension("formatting", "ci_enforced", "node scripts/check-format.mjs"));
   dimensions.push(commandDimension("diff_hygiene", "ci_enforced", "node scripts/check-diff-hygiene.mjs"));
-  dimensions.push(commandDimension("lint_static_syntax", "ci_enforced", "node --check scripts/check-ci-workflow.mjs && node --check scripts/check-coverage.mjs && node --check scripts/check-dependency-licenses.mjs && node --check scripts/check-diff-hygiene.mjs && node --check scripts/check-format.mjs && node --check scripts/check-no-license-file.mjs && node --check scripts/check-package-metadata.mjs && node --check scripts/check-pr-metadata-public-safety.mjs && node --check scripts/check-public-safety.mjs && node --check scripts/check-target-guard.mjs && node --check scripts/generate-supply-chain-artifacts.mjs && node --check scripts/reconcile-status.mjs && node --check scripts/run-quality-gates.mjs && node --check scripts/verify-evidence-manifest.mjs && node --check scripts/verify-quality-classification.mjs && node --check scripts/verify-source-manifest.mjs && node --check scripts/classify-source-authority.mjs"));
+  dimensions.push(commandDimension("lint_static_syntax", "ci_enforced", "node --check scripts/check-ci-workflow.mjs && node --check scripts/check-coverage.mjs && node --check scripts/check-dependency-licenses.mjs && node --check scripts/check-diff-hygiene.mjs && node --check scripts/check-format.mjs && node --check scripts/check-no-license-file.mjs && node --check scripts/check-package-metadata.mjs && node --check scripts/check-pr-metadata-public-safety.mjs && node --check scripts/check-public-safety.mjs && node --check scripts/check-target-guard.mjs && node --check scripts/serve-hmc.mjs && node --check scripts/generate-supply-chain-artifacts.mjs && node --check scripts/reconcile-status.mjs && node --check scripts/run-quality-gates.mjs && node --check scripts/verify-evidence-manifest.mjs && node --check scripts/verify-quality-classification.mjs && node --check scripts/verify-source-manifest.mjs && node --check scripts/classify-source-authority.mjs"));
   dimensions.push(commandDimension("secret_and_residue_scan", "ci_enforced", "node scripts/check-public-safety.mjs && node scripts/check-public-safety.mjs --self-test"));
   dimensions.push(commandDimension("target_guard", "ci_enforced", "pnpm build && node scripts/check-target-guard.mjs && node scripts/check-target-guard.mjs --self-test && node scripts/check-target-guard.mjs fixtures/target-guard/valid-config.json"));
+  dimensions.push(commandDimension("hmc_static_smoke", "ci_enforced", "node scripts/serve-hmc.mjs --smoke", {
+    cannotClaim: [
+      "real_state_adapters_implemented",
+      "browser_accessibility_complete",
+      "browser_performance_complete"
+    ]
+  }));
   dimensions.push(commandDimension("pr_metadata_public_safety", "ci_enforced", "node scripts/check-pr-metadata-public-safety.mjs --self-test"));
   dimensions.push(commandDimension("ci_workflow_safety", "ci_enforced", "node scripts/check-ci-workflow.mjs"));
   dimensions.push(commandDimension("dependency_license_scan", "ci_enforced", "node scripts/check-dependency-licenses.mjs && node scripts/check-dependency-licenses.mjs --self-test"));
