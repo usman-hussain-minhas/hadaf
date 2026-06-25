@@ -11,12 +11,17 @@
     "pnpm": ">=10.0.0 <11"
   },
   "scripts": {
-    "build": "node scripts/check-package-metadata.mjs",
-    "test": "node scripts/check-package-metadata.mjs && node scripts/check-no-license-file.mjs",
-    "quality": "node scripts/check-package-metadata.mjs && node scripts/check-no-license-file.mjs && node scripts/check-public-safety.mjs && node scripts/check-ci-workflow.mjs",
+    "build": "tsc -b packages/kernel",
+    "test": "pnpm build && node --test \"packages/kernel/dist/**/*.test.js\"",
+    "quality": "node scripts/check-package-metadata.mjs && node scripts/check-no-license-file.mjs && node scripts/check-public-safety.mjs && node scripts/check-ci-workflow.mjs && node scripts/check-dependency-licenses.mjs && pnpm build && node --test \"packages/kernel/dist/**/*.test.js\"",
     "check:package": "node scripts/check-package-metadata.mjs",
     "check:license": "node scripts/check-no-license-file.mjs",
     "check:public": "node scripts/check-public-safety.mjs",
-    "check:ci": "node scripts/check-ci-workflow.mjs"
+    "check:ci": "node scripts/check-ci-workflow.mjs",
+    "check:deps": "node scripts/check-dependency-licenses.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.0",
+    "typescript": "6.0.3"
   }
 }
