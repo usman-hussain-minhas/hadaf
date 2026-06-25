@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+coverage/
+playwright-report/
+test-results/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Logs and caches
+*.log
+.DS_Store
+.turbo/
+.vite/
+.eslintcache
+
+# HADAF private planes must never be copied into the product repository.
+control/
+evidence/
+releases/
+runtime/
+input/

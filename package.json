@@ -1,0 +1,14 @@
+{
+  "name": "hadaf",
+  "version": "0.0.0-bootstrap",
+  "private": true,
+  "license": "UNLICENSED",
+  "description": "HADAF — HAUTM Agentic Delivery & Assurance Framework.",
+  "type": "module",
+  "scripts": {
+    "prepublishOnly": "node -e \"console.error('Publishing is disabled for HADAF.'); process.exit(1)\""
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}
