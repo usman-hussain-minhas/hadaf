@@ -1,0 +1,263 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://schemas/question-register-v1-1.json",
+  "title": "HADAF Question Register Record v1.1.0 Fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "question_id",
+    "category",
+    "question",
+    "context",
+    "source_reference",
+    "scope_class",
+    "risk_class",
+    "decision_deadline",
+    "status",
+    "cannot_claim"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.1.0"
+    },
+    "question_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1
+    },
+    "question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "source_reference": {
+      "type": "string",
+      "minLength": 1
+    },
+    "affected_boxes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "affected_ffets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "scope_class": {
+      "enum": [
+        "broad_systemic",
+        "narrow_local"
+      ]
+    },
+    "risk_class": {
+      "enum": [
+        "critical",
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "recommended_default": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "safe_default_authority": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "decision_deadline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "at",
+        "basis"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "before_affected_execution",
+            "before_box_acceptance",
+            "before_release",
+            "absolute_time"
+          ]
+        },
+        "at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "basis": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "absolute_time"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "human_answer": {},
+    "authority_record": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "ratified_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "status": {
+      "enum": [
+        "open",
+        "awaiting_human",
+        "default_authorized",
+        "answered",
+        "ratified",
+        "pending_run_completion",
+        "correction_required",
+        "superseded"
+      ]
+    },
+    "correction_ffet_required": {
+      "type": "boolean"
+    },
+    "cannot_claim": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "answered",
+              "ratified"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "human_answer",
+          "authority_record",
+          "ratified_at"
+        ],
+        "properties": {
+          "authority_record": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ratified_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "default_authorized"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "recommended_default",
+          "safe_default_authority"
+        ],
+        "properties": {
+          "recommended_default": {
+            "type": "string",
+            "minLength": 1
+          },
+          "safe_default_authority": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "correction_required"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "correction_ffet_required"
+        ],
+        "properties": {
+          "correction_ffet_required": {
+            "const": true
+          }
+        }
+      }
+    }
+  ]
+}

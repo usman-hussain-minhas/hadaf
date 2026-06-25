@@ -24,7 +24,7 @@ function runQualityGates() {
   dimensions.push(commandDimension("license_file_absence", "ci_enforced", "node scripts/check-no-license-file.mjs"));
   dimensions.push(commandDimension("formatting", "ci_enforced", "node scripts/check-format.mjs"));
   dimensions.push(commandDimension("diff_hygiene", "ci_enforced", "node scripts/check-diff-hygiene.mjs"));
-  dimensions.push(commandDimension("lint_static_syntax", "ci_enforced", "node --check scripts/lib/cli-args.mjs && node --check scripts/check-cli-arg-normalization.mjs && node --check scripts/check-ci-workflow.mjs && node --check scripts/check-coverage.mjs && node --check scripts/check-dependency-licenses.mjs && node --check scripts/check-diff-hygiene.mjs && node --check scripts/check-format.mjs && node --check scripts/check-no-license-file.mjs && node --check scripts/check-package-metadata.mjs && node --check scripts/check-pr-metadata-public-safety.mjs && node --check scripts/check-public-safety.mjs && node --check scripts/check-target-guard.mjs && node --check scripts/serve-hmc.mjs && node --check scripts/serve-product-preview.mjs && node --check scripts/verify-hmc-state.mjs && node --check scripts/verify-product-preview.mjs && node --check scripts/verify-static-ui.mjs && node --check scripts/generate-supply-chain-artifacts.mjs && node --check scripts/reconcile-status.mjs && node --check scripts/run-quality-gates.mjs && node --check scripts/verify-evidence-manifest.mjs && node --check scripts/verify-quality-classification.mjs && node --check scripts/verify-source-manifest.mjs && node --check scripts/classify-source-authority.mjs && node --check scripts/verify-h03-schema-registry.mjs && node --check scripts/verify-h03-input-authority.mjs && node --check scripts/verify-h03-plan-normalization.mjs"));
+  dimensions.push(commandDimension("lint_static_syntax", "ci_enforced", "node --check scripts/lib/cli-args.mjs && node --check scripts/check-cli-arg-normalization.mjs && node --check scripts/check-ci-workflow.mjs && node --check scripts/check-coverage.mjs && node --check scripts/check-dependency-licenses.mjs && node --check scripts/check-diff-hygiene.mjs && node --check scripts/check-format.mjs && node --check scripts/check-no-license-file.mjs && node --check scripts/check-package-metadata.mjs && node --check scripts/check-pr-metadata-public-safety.mjs && node --check scripts/check-public-safety.mjs && node --check scripts/check-target-guard.mjs && node --check scripts/serve-hmc.mjs && node --check scripts/serve-product-preview.mjs && node --check scripts/verify-hmc-state.mjs && node --check scripts/verify-product-preview.mjs && node --check scripts/verify-static-ui.mjs && node --check scripts/generate-supply-chain-artifacts.mjs && node --check scripts/reconcile-status.mjs && node --check scripts/run-quality-gates.mjs && node --check scripts/verify-evidence-manifest.mjs && node --check scripts/verify-quality-classification.mjs && node --check scripts/verify-source-manifest.mjs && node --check scripts/classify-source-authority.mjs && node --check scripts/verify-h03-schema-registry.mjs && node --check scripts/verify-h03-input-authority.mjs && node --check scripts/verify-h03-plan-normalization.mjs && node --check scripts/verify-h03-question-register.mjs"));
   dimensions.push(commandDimension("secret_and_residue_scan", "ci_enforced", "node scripts/check-public-safety.mjs && node scripts/check-public-safety.mjs --self-test"));
   dimensions.push(commandDimension("target_guard", "ci_enforced", "pnpm build && node scripts/check-target-guard.mjs && node scripts/check-target-guard.mjs --self-test && node scripts/check-target-guard.mjs fixtures/target-guard/valid-config.json"));
   dimensions.push(commandDimension("cli_argument_normalization", "ci_enforced", "pnpm check:cli-args"));
@@ -37,7 +37,6 @@ function runQualityGates() {
   }));
   dimensions.push(commandDimension("h03_input_authority_boundary", "ci_enforced", "pnpm build && node scripts/verify-h03-input-authority.mjs fixtures/h03-input-authority/valid-config.json", {
     cannotClaim: [
-      "question_register_compiler_implemented",
       "delivery_constitution_compiler_implemented",
       "h03_delivery_constitution_ready_for_human_ratification",
       "h03_implemented"
@@ -45,9 +44,14 @@ function runQualityGates() {
   }));
   dimensions.push(commandDimension("h03_plan_normalization_boundary", "ci_enforced", "pnpm build && node scripts/verify-h03-plan-normalization.mjs fixtures/h03-plan-normalization/valid-config.json", {
     cannotClaim: [
-      "question_register_compiler_implemented",
       "delivery_constitution_compiler_implemented",
-      "zero_broad_ambiguity_gate_implemented",
+      "h03_delivery_constitution_ready_for_human_ratification",
+      "h03_implemented"
+    ]
+  }));
+  dimensions.push(commandDimension("h03_question_register_boundary", "ci_enforced", "pnpm build && node scripts/verify-h03-question-register.mjs fixtures/h03-question-register/valid-config.json", {
+    cannotClaim: [
+      "delivery_constitution_compiler_implemented",
       "h03_delivery_constitution_ready_for_human_ratification",
       "h03_implemented"
     ]
