@@ -23,8 +23,8 @@ const deniedCopyleftLicenses = [
 const pinnedActions = {
   checkout: "actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
   setupNode: "actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
-  codeqlInit: "github/codeql-action/init@1a818fd5f97ed0ee9a823421bd5b171add01227f",
-  codeqlAnalyze: "github/codeql-action/analyze@1a818fd5f97ed0ee9a823421bd5b171add01227f",
+  codeqlInit: "github/codeql-action/init@8aad20d150bbac5944a9f9d289da16a4b0d87c1e",
+  codeqlAnalyze: "github/codeql-action/analyze@8aad20d150bbac5944a9f9d289da16a4b0d87c1e",
   dependencyReview: "actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294"
 };
 
