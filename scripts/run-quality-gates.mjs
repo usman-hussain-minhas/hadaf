@@ -29,7 +29,8 @@ function runQualityGates() {
   dimensions.push(commandDimension("target_guard", "ci_enforced", "pnpm build && node scripts/check-target-guard.mjs && node scripts/check-target-guard.mjs --self-test && node scripts/check-target-guard.mjs fixtures/target-guard/valid-config.json"));
   dimensions.push(commandDimension("hmc_static_smoke", "ci_enforced", "node scripts/serve-hmc.mjs --smoke", {
     cannotClaim: [
-      "real_state_adapters_implemented",
+      "live_github_adapter_implemented",
+      "persistent_state_store_implemented",
       "browser_accessibility_complete",
       "browser_performance_complete"
     ]
