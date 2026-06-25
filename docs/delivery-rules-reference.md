@@ -8,6 +8,24 @@ Product docs may explain how HADAF delivery is expected to behave, but they must
 
 Generated status, runtime summaries, HMC views, reports, and chat memory never override verified Git, GitHub, Control, or Evidence truth. When derived state disagrees with verified truth, the mismatch must be classified before any posture claim is made.
 
+## Historical Planning Queues
+
+Planning queue records may preserve pre-execution statuses such as `candidate`, `approved`, or `PLANNED`. After a FFET or Box has append-only closeout and current-state supersession records, those historical statuses are not current truth.
+
+Readers must prefer closeouts, current-state supersessions, verified evidence, and Git/GitHub truth over historical planning queues. Historical queues may explain what was intended at the time they were written; they must not reopen completed work or downgrade a boundedly verified posture by themselves.
+
+## Point-in-Time Evidence
+
+Verification configs and assurance configs are point-in-time records. They bind to the product SHA, source hashes, and evidence expectations recorded for that run.
+
+Do not replay an old verification config against a later product main and treat the mismatch as current failure unless the current FFET explicitly requires historical replay. Final proof for a completed Box should use that Box's terminal closeout, final readiness evidence, and any later supersession records.
+
+## SHA Pinning Boundary
+
+HADAF does not claim platform-level GitHub Actions SHA pin enforcement unless the GitHub setting actually requires it. Product CI can still enforce known pinned workflow actions through its scanner, and branch protection can require the stable `Seed quality checks` context.
+
+Those are separate controls: platform setting, Product scanner, and branch protection must be described independently.
+
 ## FFET Freshness
 
 A stale implementation is a symptom of a stale FFET.
