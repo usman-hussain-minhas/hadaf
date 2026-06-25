@@ -24,6 +24,7 @@
     "verify:static-ui": "node scripts/verify-static-ui.mjs",
     "check:package": "node scripts/check-package-metadata.mjs",
     "check:license": "node scripts/check-no-license-file.mjs",
+    "check:cli-args": "pnpm build && node scripts/check-cli-arg-normalization.mjs",
     "check:public": "node scripts/check-public-safety.mjs",
     "check:public:self-test": "node scripts/check-public-safety.mjs --self-test",
     "check:target-guard": "pnpm build && node scripts/check-target-guard.mjs",

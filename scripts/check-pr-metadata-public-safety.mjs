@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { readRequiredPathArgs } from "./lib/cli-args.mjs";
 
 const privatePathPatterns = [
   /\/Volumes\/[^\s"'`<>)\]}]+/i,
@@ -102,17 +103,10 @@ if (process.argv.includes("--self-test")) {
   process.exit(0);
 }
 
-const targets = process.argv.slice(2);
-if (targets.length === 0) {
-  console.error(
-    JSON.stringify({
-      status: "failed",
-      check: "pr_metadata_public_safety",
-      error: "Provide one or more text files, or run with --self-test"
-    })
-  );
-  process.exit(1);
-}
+const targets = readRequiredPathArgs({
+  check: "pr_metadata_public_safety",
+  usage: "Provide one or more text files, or run with --self-test"
+});
 
 const findings = targets.flatMap((target) => collectMetadataFindings(target, readFileSync(target, "utf8")));
 

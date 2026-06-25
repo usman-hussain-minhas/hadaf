@@ -1,12 +1,13 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { verifyProductPreviewConfig } from "../packages/kernel/dist/index.js";
+import { readRequiredSinglePathArg } from "./lib/cli-args.mjs";
 
-const configPath = process.argv[2];
-if (!configPath) {
-  console.error(JSON.stringify({ status: "failed", findings: [{ kind: "missing_config_path" }] }));
-  process.exit(2);
-}
+const configPath = readRequiredSinglePathArg({
+  check: "product_preview_verifier",
+  usage: "Usage: node scripts/verify-product-preview.mjs <config.json>",
+  exitCode: 2
+});
 
 const config = JSON.parse(await readFile(resolve(configPath), "utf8"));
 const report = verifyProductPreviewConfig(config);

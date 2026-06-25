@@ -3,13 +3,17 @@ import { readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { runTargetGuard } from "../packages/kernel/dist/target-guard/guard.js";
+import { readOptionalSinglePathArg } from "./lib/cli-args.mjs";
 
 if (process.argv.includes("--self-test")) {
   runSelfTest();
   process.exit(0);
 }
 
-const configPath = process.argv[2];
+const configPath = readOptionalSinglePathArg({
+  check: "target_guard",
+  usage: "Usage: node scripts/check-target-guard.mjs [config.json]"
+});
 const config = configPath
   ? JSON.parse(await readFile(configPath, "utf8"))
   : {
