@@ -28,6 +28,26 @@ test("verifies manifest refs, required refs, and product file hashes", () => {
   assert.equal(report.final_posture_recommendation, "fixture_posture");
 });
 
+test("verifies entries manifests and product blob references at an exact git sha", () => {
+  const fixture = buildFixture();
+  const report = verifyEvidenceConfig({
+    ...fixture.config,
+    manifestRefs: ["control://sample/entries-manifest.json"],
+    requiredRefs: [
+      "evidence://sample/artifact.json",
+      `product://README.md@${fixture.gitSha}`
+    ],
+    productFiles: []
+  });
+
+  assert.equal(report.status, "passed");
+  assert.deepEqual(report.findings, []);
+  assert.equal(
+    report.verified_refs.some((item) => item.ref === `product://README.md@${fixture.gitSha}`),
+    true
+  );
+});
+
 test("rejects hash mismatches and placeholder hashes", () => {
   const fixture = buildFixture();
   const report = verifyEvidenceConfig({
@@ -115,9 +135,112 @@ test("classifies logical references and product paths that escape configured roo
   assertFinding(report, "product_file_escapes_root");
 });
 
+test("rejects unsupported, ambiguous, and malformed manifest collections", () => {
+  const fixture = buildFixture();
+  writeControlManifest(fixture, "unsupported.json", { records: [] });
+  writeControlManifest(fixture, "ambiguous.json", {
+    artifacts: [],
+    entries: []
+  });
+  writeControlManifest(fixture, "malformed.json", {
+    entries: [
+      "not-an-object",
+      {
+        ref: "evidence://sample/artifact.json"
+      }
+    ]
+  });
+
+  const report = verifyEvidenceConfig({
+    ...fixture.config,
+    manifestRefs: [
+      "control://sample/unsupported.json",
+      "control://sample/ambiguous.json",
+      "control://sample/malformed.json"
+    ],
+    requiredRefs: []
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "unsupported_manifest_collection");
+  assertFinding(report, "ambiguous_manifest_collections");
+  assertFinding(report, "manifest_entry_malformed");
+});
+
+test("rejects duplicate manifest refs with conflicting hashes but allows exact duplicates", () => {
+  const fixture = buildFixture();
+  writeControlManifest(fixture, "duplicates.json", {
+    entries: [
+      {
+        ref: "evidence://sample/artifact.json",
+        sha256: fixture.artifactHash
+      },
+      {
+        ref: "evidence://sample/artifact.json",
+        sha256: fixture.artifactHash
+      }
+    ]
+  });
+  writeControlManifest(fixture, "conflict.json", {
+    entries: [
+      {
+        ref: "evidence://sample/artifact.json",
+        sha256: fixture.artifactHash
+      },
+      {
+        ref: "evidence://sample/artifact.json",
+        sha256: sha256("different")
+      }
+    ]
+  });
+
+  const duplicateReport = verifyEvidenceConfig({
+    ...fixture.config,
+    manifestRefs: ["control://sample/duplicates.json"],
+    requiredRefs: []
+  });
+  assert.equal(duplicateReport.status, "passed");
+
+  const conflictReport = verifyEvidenceConfig({
+    ...fixture.config,
+    manifestRefs: ["control://sample/conflict.json"],
+    requiredRefs: []
+  });
+  assert.equal(conflictReport.status, "failed");
+  assertFinding(conflictReport, "duplicate_manifest_ref_conflicting_hash");
+});
+
+test("rejects manifest entry invalid and placeholder hashes", () => {
+  const fixture = buildFixture();
+  writeControlManifest(fixture, "invalid-hashes.json", {
+    entries: [
+      {
+        ref: "evidence://sample/artifact.json",
+        sha256: "not-a-sha"
+      },
+      {
+        ref: "evidence://sample/other.json",
+        sha256: "pending"
+      }
+    ]
+  });
+
+  const report = verifyEvidenceConfig({
+    ...fixture.config,
+    manifestRefs: ["control://sample/invalid-hashes.json"],
+    requiredRefs: []
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "invalid_sha256");
+  assertFinding(report, "placeholder_hash");
+});
+
 function buildFixture(): {
   readonly config: EvidenceVerificationConfig;
   readonly gitSha: string;
+  readonly controlRoot: string;
+  readonly artifactHash: string;
   readonly readmeHash: string;
 } {
   const root = mkdtempSync(join(tmpdir(), "hadaf-evidence-fixture-"));
@@ -152,9 +275,28 @@ function buildFixture(): {
   git(productRoot, ["add", "README.md"]);
   git(productRoot, ["commit", "-m", "fixture"]);
   const gitSha = git(productRoot, ["rev-parse", "HEAD"]);
+  writeFileSync(
+    join(controlRoot, "sample/entries-manifest.json"),
+    JSON.stringify({
+      entries: [
+        {
+          ref: "evidence://sample/artifact.json",
+          sha256: artifactHash,
+          kind: "fixture_artifact"
+        },
+        {
+          ref: `product://README.md@${gitSha}`,
+          sha256: readmeHash,
+          kind: "fixture_product_blob"
+        }
+      ]
+    })
+  );
 
   return {
     gitSha,
+    controlRoot,
+    artifactHash,
     readmeHash,
     config: {
       logicalRoots: {
@@ -176,6 +318,14 @@ function buildFixture(): {
       cannotClaim: ["fixture_claim"]
     }
   };
+}
+
+function writeControlManifest(
+  fixture: ReturnType<typeof buildFixture>,
+  name: string,
+  value: unknown
+): void {
+  writeFileSync(join(fixture.controlRoot, "sample", name), JSON.stringify(value));
 }
 
 function git(cwd: string, args: readonly string[]): string {
