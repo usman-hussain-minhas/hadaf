@@ -58,6 +58,11 @@ interface ManifestArtifact {
   readonly sha256: string;
 }
 
+interface ProductManifestRef {
+  readonly path: string;
+  readonly gitSha?: string;
+}
+
 const SHA256_PATTERN = /^(?:sha256:)?[a-f0-9]{64}$/u;
 const PLACEHOLDER_PATTERN = /pending|placeholder|todo|TBD|FIXME/u;
 
@@ -95,6 +100,7 @@ export function verifyEvidenceConfig(
     });
     manifestArtifacts.push(...extractManifestArtifacts(manifestPath, findings));
   }
+  validateDuplicateManifestRefs(manifestArtifacts, findings);
 
   const expectedArtifacts = new Map(
     (config.expectedArtifacts ?? []).map((artifact) => [artifact.ref, artifact.sha256])
@@ -166,6 +172,20 @@ function verifyArtifactHash(
     return;
   }
 
+  const productManifestRef = parseProductManifestRef(ref);
+  if (productManifestRef) {
+    verifyProductManifestRef(
+      ref,
+      productManifestRef,
+      expectedSha256,
+      roots,
+      findings,
+      verifiedRefs,
+      source
+    );
+    return;
+  }
+
   const path = resolveLogicalRef(ref, roots, findings);
   if (!path) {
     findings.push({ kind: "unresolved_ref", ref });
@@ -192,6 +212,58 @@ function verifyArtifactHash(
   verifiedRefs.push({
     ref,
     path,
+    sha256: actual,
+    source
+  });
+}
+
+function verifyProductManifestRef(
+  ref: string,
+  productRef: ProductManifestRef,
+  expectedSha256: string,
+  roots: Record<string, string>,
+  findings: EvidenceVerificationFinding[],
+  verifiedRefs: VerifiedEvidenceRef[],
+  source: "manifest" | "expected_artifact"
+): void {
+  const productRoot = roots.product;
+  if (!productRoot) {
+    findings.push({
+      kind: "missing_product_root",
+      ref,
+      detail: "Product manifest references require a product logical root."
+    });
+    return;
+  }
+  if (!isRelativeProductPath(productRef.path)) {
+    findings.push({
+      kind: "product_file_escapes_root",
+      ref,
+      path: productRef.path
+    });
+    return;
+  }
+
+  const actual = productRef.gitSha
+    ? gitBlobSha256(productRoot, productRef.gitSha, productRef.path, findings)
+    : verifyLocalProductFile(productRoot, productRef.path, findings);
+  if (!actual) return;
+
+  const expected = normalizeSha256(expectedSha256);
+  if (actual !== expected) {
+    findings.push({
+      kind: "hash_mismatch",
+      ref,
+      path: productRef.path,
+      expected,
+      actual
+    });
+    return;
+  }
+
+  verifiedRefs.push({
+    ref,
+    path: productRef.path,
     sha256: actual,
     source
   });
@@ -281,21 +353,116 @@ function extractManifestArtifacts(
     return [];
   }
 
-  if (!isRecord(parsed)) return [];
-  const artifacts = Array.isArray(parsed.artifacts) ? parsed.artifacts : [];
-  return artifacts.flatMap((artifact): ManifestArtifact[] => {
-    if (!isRecord(artifact)) return [];
+  if (!isRecord(parsed)) {
+    findings.push({
+      kind: "manifest_root_malformed",
+      path: manifestPath
+    });
+    return [];
+  }
+
+  const hasArtifacts = Object.hasOwn(parsed, "artifacts");
+  const hasEntries = Object.hasOwn(parsed, "entries");
+  if (hasArtifacts && hasEntries) {
+    findings.push({
+      kind: "ambiguous_manifest_collections",
+      path: manifestPath,
+      detail: "A manifest must use exactly one authorized collection form."
+    });
+    return [];
+  }
+
+  if (hasArtifacts) {
+    return extractManifestCollection(parsed.artifacts, "artifacts", manifestPath, findings);
+  }
+  if (hasEntries) {
+    return extractManifestCollection(parsed.entries, "entries", manifestPath, findings);
+  }
+
+  findings.push({
+    kind: "unsupported_manifest_collection",
+    path: manifestPath,
+    detail: "Expected an authorized artifacts or entries collection."
+  });
+  return [];
+}
+
+function extractManifestCollection(
+  value: unknown,
+  collectionName: "artifacts" | "entries",
+  manifestPath: string,
+  findings: EvidenceVerificationFinding[]
+): ManifestArtifact[] {
+  if (!Array.isArray(value)) {
+    findings.push({
+      kind: "manifest_collection_malformed",
+      path: manifestPath,
+      detail: `${collectionName} must be an array.`
+    });
+    return [];
+  }
+
+  return value.flatMap((artifact): ManifestArtifact[] => {
+    if (!isRecord(artifact)) {
+      findings.push({
+        kind: "manifest_entry_malformed",
+        path: manifestPath,
+        detail: `${collectionName} entries must be objects.`
+      });
+      return [];
+    }
     const ref = artifact.ref;
     const sha256 = artifact.sha256;
     if (typeof ref !== "string" || typeof sha256 !== "string") {
       findings.push({
-        kind: "manifest_artifact_malformed",
+        kind: "manifest_entry_malformed",
         path: manifestPath
       });
       return [];
     }
     return [{ ref, sha256 }];
   });
+}
+
+function validateDuplicateManifestRefs(
+  artifacts: readonly ManifestArtifact[],
+  findings: EvidenceVerificationFinding[]
+): void {
+  const refs = new Map<string, string>();
+  for (const artifact of artifacts) {
+    const previousSha256 = refs.get(artifact.ref);
+    if (previousSha256 && previousSha256 !== artifact.sha256) {
+      findings.push({
+        kind: "duplicate_manifest_ref_conflicting_hash",
+        ref: artifact.ref,
+        expected: previousSha256,
+        actual: artifact.sha256
+      });
+    }
+    refs.set(artifact.ref, artifact.sha256);
+  }
+}
+
+function parseProductManifestRef(ref: string): ProductManifestRef | null {
+  const match = /^product:\/\/(.+)$/u.exec(ref);
+  if (!match) return null;
+
+  const body = match[1];
+  if (!body) return null;
+  const gitShaMatch = /^(.*)@([a-f0-9]{40})$/u.exec(body);
+  if (!gitShaMatch) {
+    return {
+      path: body
+    };
+  }
+
+  const path = gitShaMatch[1];
+  const gitSha = gitShaMatch[2];
+  if (!path || !gitSha) return null;
+  return {
+    path,
+    gitSha
+  };
 }
 
 function validateExpectedHash(
