@@ -11,7 +11,9 @@ test("derives a valid HMC fixture state with classified stale generated state", 
   assert.equal(report.classified_mismatches.length, 1);
   assert.equal(report.view.project.name, "HADAF v1");
   assert.equal(report.view.maturitySummary.fixture_backed > 0, true);
-  assert.equal(report.final_posture_recommendation, "H02_HMC_STATE_FIXTURE_BACKED");
+  assert.equal(report.final_posture_recommendation, "HADAF_H01_H02_FOUNDATION_IMPLEMENTED_AND_BOUNDEDLY_VERIFIED");
+  assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04" && ffet.status === "active"), false);
+  assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04-R1" && ffet.status === "verified"), true);
 });
 
 test("fails unclassified Git and GitHub truth mismatches", () => {
@@ -110,7 +112,7 @@ function validConfig(): HmcStateConfig {
     project: {
       id: "hadaf",
       name: "HADAF v1",
-      posture: "H02 active",
+      posture: "HADAF_H01_H02_FOUNDATION_IMPLEMENTED_AND_BOUNDEDLY_VERIFIED",
       maturity: "fixture_backed"
     },
     boxes: [
@@ -124,7 +126,7 @@ function validConfig(): HmcStateConfig {
       {
         id: "H02",
         name: "Mission Control and Product Preview",
-        status: "active",
+        status: "boundedly_verified",
         maturity: "fixture_backed"
       }
     ],
@@ -138,7 +140,19 @@ function validConfig(): HmcStateConfig {
       {
         id: "H02-F02",
         title: "Read adapters",
-        status: "active",
+        status: "merged",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H02-F04",
+        title: "Static assurance and closeout",
+        status: "merged",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H02-F04-R1",
+        title: "Quality claim precision correction",
+        status: "verified",
         maturity: "fixture_backed"
       }
     ],
@@ -194,7 +208,7 @@ function validConfig(): HmcStateConfig {
       "live_github_adapter_implemented",
       "persistent_state_store_implemented"
     ],
-    finalPostureRecommendation: "H02_HMC_STATE_FIXTURE_BACKED"
+    finalPostureRecommendation: "HADAF_H01_H02_FOUNDATION_IMPLEMENTED_AND_BOUNDEDLY_VERIFIED"
   };
 }
 

@@ -72,18 +72,20 @@ async function runSmoke() {
     const findings = [
       ...requireIncludes(html, [
         "HADAF Mission Control",
-        "H02 Mission Control and Product Preview",
+        "H01/H02 Foundation Boundedly Verified",
+        "HADAF_H01_H02_FOUNDATION_IMPLEMENTED_AND_BOUNDEDLY_VERIFIED",
+        "H02-F04-R1",
         "fixture_backed",
         "mocked",
         "self_hosting_ready",
         "HMC_authoritative_state",
         "Product Preview",
-        "Fixture adapter active",
+        "Current truth fixture active",
         "Generated state stale"
       ]),
       ...requireIncludes(css, [".app-shell", "@media", "--teal"]),
       ...requireIncludes(js, ["setView", "aria-pressed", "state.fixture.json"]),
-      ...requireIncludes(stateJson, ["adapterMaturity", "fixture_backed"])
+      ...requireIncludes(stateJson, ["adapterMaturity", "fixture_backed", "H02-F04-R1"])
     ];
     await assertFile(join(hmcDir, "index.html"));
     await assertFile(join(hmcDir, "styles.css"));

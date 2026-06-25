@@ -2,7 +2,7 @@
   "project": {
     "id": "hadaf",
     "name": "HADAF v1",
-    "posture": "H02 active",
+    "posture": "HADAF_H01_H02_FOUNDATION_IMPLEMENTED_AND_BOUNDEDLY_VERIFIED",
     "maturity": "fixture_backed"
   },
   "boxes": [
@@ -18,7 +18,7 @@
     {
       "id": "H02",
       "name": "Mission Control and Product Preview",
-      "status": "final_assurance",
+      "status": "boundedly_verified",
       "maturity": "fixture_backed"
     }
   ],
@@ -50,7 +50,13 @@
     {
       "id": "H02-F04",
       "title": "Static assurance and closeout",
-      "status": "active",
+      "status": "merged",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H02-F04-R1",
+      "title": "Quality claim precision correction",
+      "status": "verified",
       "maturity": "fixture_backed"
     }
   ],
@@ -103,23 +109,29 @@
       "status": "verified",
       "maturity": "fixture_backed",
       "required": true
+    },
+    {
+      "id": "H02-F04-R1",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "required": true
     }
   ],
   "decisions": [
     {
-      "id": "h02-next",
+      "id": "h03-next",
       "status": "ready",
       "maturity": "mocked"
     }
   ],
   "git": {
-    "expectedMainSha": "1111111111111111111111111111111111111111111111111111111111111111",
-    "actualMainSha": "1111111111111111111111111111111111111111111111111111111111111111",
-    "originMainSha": "1111111111111111111111111111111111111111111111111111111111111111"
+    "expectedMainSha": "8461d24e735f4146f0d4ec139e98519b21cebd77",
+    "actualMainSha": "8461d24e735f4146f0d4ec139e98519b21cebd77",
+    "originMainSha": "8461d24e735f4146f0d4ec139e98519b21cebd77"
   },
   "github": {
-    "expectedHeadSha": "2222222222222222222222222222222222222222222222222222222222222222",
-    "currentHeadSha": "2222222222222222222222222222222222222222222222222222222222222222",
+    "expectedHeadSha": "8461d24e735f4146f0d4ec139e98519b21cebd77",
+    "currentHeadSha": "8461d24e735f4146f0d4ec139e98519b21cebd77",
     "openPullRequests": 0
   },
   "generatedState": [
@@ -149,5 +161,5 @@
     "production_ready",
     "stable_agents"
   ],
-  "finalPostureRecommendation": "H02_STATIC_ASSURANCE_FIXTURE_BACKED"
+  "finalPostureRecommendation": "HADAF_H01_H02_FOUNDATION_IMPLEMENTED_AND_BOUNDEDLY_VERIFIED"
 }

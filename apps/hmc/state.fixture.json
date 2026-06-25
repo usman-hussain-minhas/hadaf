@@ -2,8 +2,8 @@
   "adapterStatus": "passed",
   "adapterMaturity": "fixture_backed",
   "projectName": "HADAF v1",
-  "activeBox": "H02 Mission Control and Product Preview",
-  "activeFfet": "H02-F04 Static assurance",
+  "activeBox": "H01/H02 Foundation Boundedly Verified",
+  "activeFfet": "H02-F04-R1 Quality claim correction",
   "classifiedMismatch": "generated_state_not_fresh",
   "cannotClaim": [
     "live_github_adapter_implemented",
