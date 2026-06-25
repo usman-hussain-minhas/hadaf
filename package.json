@@ -23,6 +23,7 @@
     "check:ci": "node scripts/check-ci-workflow.mjs",
     "check:deps": "node scripts/check-dependency-licenses.mjs",
     "check:deps:self-test": "node scripts/check-dependency-licenses.mjs --self-test",
+    "classify:source-authority": "node scripts/classify-source-authority.mjs",
     "check:supply-chain": "node scripts/generate-supply-chain-artifacts.mjs --check",
     "verify:evidence": "node scripts/verify-evidence-manifest.mjs",
     "verify:source-manifest": "node scripts/verify-source-manifest.mjs",

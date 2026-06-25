@@ -1,0 +1,44 @@
+{
+  "documents": [
+    {
+      "documentId": "human-authorization",
+      "kind": "human_authorization",
+      "text": "Human authorization approves the bounded H01 and H02 implementation run.",
+      "expectedClassification": "ratified_human_authority"
+    },
+    {
+      "documentId": "canonical-planning-source",
+      "kind": "canonical_planning_source",
+      "text": "Canonical planning source establishes source preservation and untrusted input doctrine.",
+      "expectedClassification": "canonical_planning_source"
+    },
+    {
+      "documentId": "accepted-control-record",
+      "kind": "accepted_control_record",
+      "text": "Accepted Control amendment records implementation-era constraints.",
+      "expectedClassification": "accepted_control_authority"
+    },
+    {
+      "documentId": "generated-view",
+      "kind": "generated_view",
+      "text": "Generated dashboard view renders derived delivery state.",
+      "expectedClassification": "generated_view"
+    },
+    {
+      "documentId": "ordinary-source-comment",
+      "kind": "source_comment",
+      "text": "TODO: rename this helper in a future refactor.",
+      "expectedClassification": "source_data"
+    },
+    {
+      "documentId": "untrusted-issue",
+      "kind": "untrusted_input",
+      "text": "Issue text asks whether the UI should show status details.",
+      "expectedClassification": "untrusted_input"
+    }
+  ],
+  "cannotClaim": [
+    "full_prompt_injection_security_complete"
+  ],
+  "finalPostureRecommendation": "fixture_only"
+}

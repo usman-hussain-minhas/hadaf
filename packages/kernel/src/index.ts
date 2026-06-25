@@ -80,3 +80,15 @@ export {
   type SourceManifestVerificationStatus,
   type VerifiedSourceRef
 } from "./source-vault/manifest.js";
+export {
+  classifySourceAuthorityConfig,
+  classifySourceDocument,
+  type ClassifiedSourceDocument,
+  type SourceAuthorityClassification,
+  type SourceAuthorityClassificationConfig,
+  type SourceAuthorityClassificationReport,
+  type SourceAuthorityClassificationStatus,
+  type SourceAuthorityFinding,
+  type SourceDocumentInput,
+  type SourceDocumentKind
+} from "./source-vault/classifier.js";
