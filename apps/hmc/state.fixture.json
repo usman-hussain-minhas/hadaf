@@ -3,13 +3,18 @@
   "adapterMaturity": "fixture_backed",
   "projectName": "HADAF v1",
   "activeBox": "H02 Mission Control and Product Preview",
-  "activeFfet": "H02-F02 Read adapters",
+  "activeFfet": "H02-F04 Static assurance",
   "classifiedMismatch": "generated_state_not_fresh",
   "cannotClaim": [
     "live_github_adapter_implemented",
     "persistent_state_store_implemented",
+    "production_connected_preview",
+    "public_preview_deployed",
     "browser_accessibility_complete",
     "browser_performance_complete",
-    "HMC_authoritative_state"
+    "HMC_authoritative_state",
+    "self_hosting_ready",
+    "production_ready",
+    "stable_agents"
   ]
 }

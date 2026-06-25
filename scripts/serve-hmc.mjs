@@ -78,7 +78,7 @@ async function runSmoke() {
         "self_hosting_ready",
         "HMC_authoritative_state",
         "Product Preview",
-        "Adapter pending",
+        "Fixture adapter active",
         "Generated state stale"
       ]),
       ...requireIncludes(css, [".app-shell", "@media", "--teal"]),
@@ -93,7 +93,8 @@ async function runSmoke() {
       check: "hmc_static_smoke",
       findings,
       cannot_claim: [
-        "real_state_adapters_implemented",
+        "live_github_adapter_implemented",
+        "persistent_state_store_implemented",
         "browser_accessibility_complete",
         "browser_performance_complete"
       ]
