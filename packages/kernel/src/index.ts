@@ -1,9 +1,24 @@
 export {
+  QUALITY_PROFILE_COMPILER_VERSION,
   compileHadafDogfoodQualityProfile,
+  compileQualityProfile,
+  getHadafDogfoodQualityAuthorityInput,
   getHadafDogfoodQualityProfileInput,
   type CompiledQualityProfile,
+  type QualityAuthoritySource,
+  type QualityAuthoritySourceKind,
+  type QualityProfileAuthorityInput,
+  type QualityProfileCompileOptions,
+  type QualityProfileCompilerMetadata,
+  type QualityProfileDebtRecord,
   type QualityProfileInput,
-  type QualityProfileOverride
+  type QualityProfileOverride,
+  type QualityProfileOverrideDirection,
+  type QualityProfileOverrideRecord,
+  type QualityProfileSemanticRanges,
+  type QualityProfileSourceBinding,
+  type QualityProfileWaiver,
+  type SourceBoundQualityProfileCompileOptions
 } from "./quality/profile.js";
 export {
   assertValidQualityRecord,

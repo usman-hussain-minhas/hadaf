@@ -35,6 +35,14 @@ test("adapts the compiled H00-Q00 profile to the canonical quality profile schem
 
   assert.equal(canonical.quality_profile_id, "hadaf_dogfood_quality_v1");
   assert.equal(canonical.profile_hash, PROFILE_HASH);
+  assert.match(canonical.compiled_profile_hash, /^sha256:[a-f0-9]{64}$/);
+  assert.equal(canonical.compiler.version, "0.2.0");
+  assert.equal(
+    canonical.source_binding.sources.some(
+      (source) => source.source_kind === "stack_pack"
+    ),
+    true
+  );
   assert.equal(canonical.testing.changed_line_coverage_min, 0.9);
   assert.equal(canonical.review.implementing_agent_self_attestation_forbidden, true);
   assertValidQualityRecord("quality_profile", canonical);
@@ -68,6 +76,68 @@ test("rejects duplicate inherited quality profile ancestry", () => {
 
   assert.equal(result.ok, false);
   assertIssue(result.issues, "$.inherited_from", "unique_items");
+});
+
+test("rejects quality profiles without required source binding kinds", () => {
+  const invalid = validQualityProfile();
+  invalid.source_binding = {
+    ...invalid.source_binding,
+    sources: invalid.source_binding.sources.filter(
+      (source) => source.source_kind !== "stack_pack"
+    )
+  };
+  const result = validateQualityRecord("quality_profile", invalid);
+
+  assert.equal(result.ok, false);
+  assertIssue(result.issues, "$.source_binding.sources", "missing_required");
+});
+
+test("rejects malformed quality profile source-binding metadata", () => {
+  const invalidHash = validQualityProfile() as any;
+  invalidHash.source_binding.source_binding_hash = "not-a-hash";
+  const hashResult = validateQualityRecord("quality_profile", invalidHash);
+
+  assert.equal(hashResult.ok, false);
+  assertIssue(hashResult.issues, "$.source_binding.source_binding_hash", "format");
+
+  const invalidKind = validQualityProfile() as any;
+  invalidKind.source_binding.sources[0].source_kind = "unknown";
+  const kindResult = validateQualityRecord("quality_profile", invalidKind);
+
+  assert.equal(kindResult.ok, false);
+  assertIssue(kindResult.issues, "$.source_binding.sources[0].source_kind", "enum");
+});
+
+test("rejects malformed quality profile semantic range metadata", () => {
+  const invalid = validQualityProfile() as any;
+  invalid.semantic_ranges.coverage_ratio.max = 2;
+  delete invalid.semantic_ranges.percentage.min;
+  const result = validateQualityRecord("quality_profile", invalid);
+
+  assert.equal(result.ok, false);
+  assertIssue(result.issues, "$.semantic_ranges.coverage_ratio.max", "maximum");
+  assertIssue(result.issues, "$.semantic_ranges.percentage.min", "missing_required");
+});
+
+test("rejects invalid quality profile semantic ranges and relationships", () => {
+  const invalidRange = validQualityProfile();
+  invalidRange.testing.changed_line_coverage_min = 1.2;
+  const rangeResult = validateQualityRecord("quality_profile", invalidRange);
+
+  assert.equal(rangeResult.ok, false);
+  assertIssue(rangeResult.issues, "$.testing.changed_line_coverage_min", "maximum");
+
+  const invalidRelationship = validQualityProfile();
+  invalidRelationship.maintainability.complexity_warning = 6;
+  invalidRelationship.maintainability.complexity_hard_review = 5;
+  const relationshipResult = validateQualityRecord("quality_profile", invalidRelationship);
+
+  assert.equal(relationshipResult.ok, false);
+  assertIssue(
+    relationshipResult.issues,
+    "$.maintainability.complexity_warning",
+    "relationship"
+  );
 });
 
 test("rejects implementing-agent self-attestation", () => {
