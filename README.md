@@ -17,3 +17,13 @@ No open-source license is granted. See [COPYRIGHT.md](COPYRIGHT.md).
 ## Security
 
 See [SECURITY.md](SECURITY.md). Do not submit secrets, credentials, private customer data, exploit packets, or confidential reports through public channels.
+
+## Bootstrap Workspace
+
+This repository uses Node.js 24 LTS and pnpm. The initial validation command is:
+
+```bash
+pnpm check
+```
+
+The validation pipeline type-checks the workspace, runs tests, checks public-repository safety rules, and audits dependency licence posture.

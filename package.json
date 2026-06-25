@@ -3,12 +3,27 @@
   "version": "0.0.0-bootstrap",
   "private": true,
   "license": "UNLICENSED",
-  "description": "HADAF — HAUTM Agentic Delivery & Assurance Framework.",
+  "description": "HADAF - HAUTM Agentic Delivery & Assurance Framework.",
   "type": "module",
+  "packageManager": "pnpm@10.34.4",
+  "engines": {
+    "node": ">=24.18.0 <25",
+    "pnpm": ">=10.34.4 <11"
+  },
   "scripts": {
+    "build": "tsc -b",
+    "check": "node scripts/hadaf-validation.mjs",
+    "scan:licenses": "node scripts/check-license-policy.mjs",
+    "scan:public": "node scripts/scan-public-repo.mjs",
+    "test": "node --test \"packages/*/dist/src/*.test.js\"",
+    "typecheck": "tsc -b --pretty false",
     "prepublishOnly": "node -e \"console.error('Publishing is disabled for HADAF.'); process.exit(1)\""
   },
   "publishConfig": {
     "access": "restricted"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.2",
+    "typescript": "6.0.3"
   }
 }
