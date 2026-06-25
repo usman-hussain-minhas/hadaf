@@ -173,3 +173,21 @@ export {
   type H03PlanNormalizationStatus,
   type H03PlanSectionId
 } from "./h03/plan-normalization.js";
+export {
+  compileH03QuestionRegisterConfig,
+  hashQuestionRegister,
+  type H03AuthorityConflict,
+  type H03AuthorityConflictClaim,
+  type H03DecisionDeadline,
+  type H03DecisionDeadlineKind,
+  type H03QuestionCandidate,
+  type H03QuestionRegisterConfig,
+  type H03QuestionRegisterFinding,
+  type H03QuestionRegisterRecord,
+  type H03QuestionRegisterReport,
+  type H03QuestionRegisterSchemaRef,
+  type H03QuestionRegisterStatus,
+  type H03QuestionRiskClass,
+  type H03QuestionScopeClass,
+  type H03QuestionStatus
+} from "./h03/question-register.js";

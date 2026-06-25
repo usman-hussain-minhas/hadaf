@@ -30,6 +30,8 @@ const cases = [
   pnpmCase("h03-input-authority-separator", ["verify:h03-input-authority", "--", "fixtures/h03-input-authority/valid-config.json"]),
   pnpmCase("h03-plan-normalization-direct", ["verify:h03-plan-normalization", "fixtures/h03-plan-normalization/valid-config.json"]),
   pnpmCase("h03-plan-normalization-separator", ["verify:h03-plan-normalization", "--", "fixtures/h03-plan-normalization/valid-config.json"]),
+  pnpmCase("h03-question-register-direct", ["verify:h03-question-register", "fixtures/h03-question-register/valid-config.json"]),
+  pnpmCase("h03-question-register-separator", ["verify:h03-question-register", "--", "fixtures/h03-question-register/valid-config.json"]),
   pnpmCase("target-guard-direct", ["check:target-guard", "fixtures/target-guard/valid-config.json"]),
   pnpmCase("target-guard-separator", ["check:target-guard", "--", "fixtures/target-guard/valid-config.json"]),
   nodeCase("pr-metadata-direct", ["scripts/check-pr-metadata-public-safety.mjs", fixturePaths.prBody]),

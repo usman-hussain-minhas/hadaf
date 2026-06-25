@@ -1,0 +1,128 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h03-question-register"
+  },
+  "questionRegisterSchema": {
+    "ref": "fixture://schemas/question-register-v1-1.json",
+    "sha256": "b538f780601c1cc44413b336a07ad9764bdf9ac1d5dc589fbd0b7e87a87c64ca",
+    "schemaVersion": "1.1.0"
+  },
+  "planNormalization": {
+    "inputAuthority": {
+      "logicalRoots": {
+        "fixture": "fixtures/h03-plan-normalization"
+      },
+      "sourceMode": "READ_ONLY_DIGEST",
+      "inputs": [
+        {
+          "inputId": "plan",
+          "form": "plain_language_plan",
+          "ref": "fixture://inputs/plan.md",
+          "sha256": "c08ae5c3d726fe2896b91583b3511b129bd180feb7c9ed0c8489ffae771d16f4",
+          "documentKind": "human_authorization",
+          "expectedClassification": "ratified_human_authority",
+          "required": true
+        },
+        {
+          "inputId": "generated-summary",
+          "form": "founder_notes",
+          "ref": "fixture://inputs/generated-summary.md",
+          "sha256": "26fc988b993520fadd3cf7b059f5cd8d4975d44c9db1c486d152823c4689fe2a",
+          "documentKind": "generated_view"
+        }
+      ],
+      "authorityManifest": [
+        {
+          "rank": 1,
+          "inputId": "plan",
+          "authority": "ratified_human_authority"
+        }
+      ],
+      "expectedSourceAuthoritySetHash": "d18693eb14327e1c67cfbd5e68445ba271c43dde9782dd9629fa2590f9b7253d"
+    },
+    "planSourceInputIds": [
+      "plan"
+    ],
+    "expectedSourceAuthoritySetHash": "d18693eb14327e1c67cfbd5e68445ba271c43dde9782dd9629fa2590f9b7253d",
+    "expectedNormalizedPlanHash": "2352e8961456756ef983d85b0f19b972a636242e7b2246d6f98ddd7cdaef30a5"
+  },
+  "expectedNormalizedPlanHash": "2352e8961456756ef983d85b0f19b972a636242e7b2246d6f98ddd7cdaef30a5",
+  "expectedQuestionRegisterHash": "539e4f78ef7729ad3cce4992a9f7782e48baa90c2789115e2cf08f48ef96bd62",
+  "questionCandidates": [
+    {
+      "candidateId": "execution-boundary-ratified",
+      "category": "human acceptance and irreversible activation",
+      "question": "Is H04-H06 implementation authorized by this H03 output?",
+      "context": {
+        "reason": "Continuation artifacts must remain draft until separately ratified."
+      },
+      "sourceSectionId": "human_gates",
+      "affectedBoxes": [
+        "H03",
+        "H04",
+        "H05",
+        "H06"
+      ],
+      "affectedFfets": [
+        "H03-F04",
+        "H03-F05"
+      ],
+      "scopeClass": "broad_systemic",
+      "riskClass": "high",
+      "options": [
+        "Keep execution authorization false until exact-hash human approval.",
+        "Authorize continuation immediately."
+      ],
+      "decisionDeadline": {
+        "kind": "before_affected_execution",
+        "at": null,
+        "basis": "Continuation execution is a human-only activation decision."
+      },
+      "humanAnswer": {
+        "selected": "Keep execution authorization false until exact-hash human approval."
+      },
+      "authorityRecord": "fixture://authority/h03-continuation-boundary",
+      "ratifiedAt": "2026-06-25T00:00:00Z",
+      "status": "ratified",
+      "cannotClaim": [
+        "h04_h05_h06_execution_authorized"
+      ]
+    },
+    {
+      "candidateId": "local-copy-default",
+      "category": "UI copy and interaction",
+      "question": "What copy should a fixture-only HMC view use when a field is not live?",
+      "context": {
+        "reason": "Fixture views must visibly avoid authority claims."
+      },
+      "sourceSectionId": "public_commitments",
+      "affectedBoxes": [
+        "H02",
+        "H03"
+      ],
+      "scopeClass": "narrow_local",
+      "riskClass": "low",
+      "options": [
+        "Use fixture-backed maturity labels.",
+        "Hide maturity labels."
+      ],
+      "recommendedDefault": "Use fixture-backed maturity labels.",
+      "safeDefaultAuthority": "fixture://authority/h03-local-copy",
+      "decisionDeadline": {
+        "kind": "before_box_acceptance",
+        "at": null,
+        "basis": "Local copy can proceed with ratified fixture-backed label policy."
+      },
+      "status": "default_authorized",
+      "cannotClaim": [
+        "hmc_authoritative_state"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "delivery_constitution_compiler_implemented",
+    "h03_delivery_constitution_ready_for_human_ratification",
+    "h03_implemented"
+  ],
+  "finalPostureRecommendation": "H03_F03_QUESTION_REGISTER_BOUNDARY_VERIFIED"
+}
