@@ -1,0 +1,9 @@
+{
+  "root": ".",
+  "profile": "hadaf_dogfood",
+  "cannotClaim": [
+    "compiled_bundle_binary_residue_scanning_complete",
+    "container_layer_residue_scanning_complete"
+  ],
+  "finalPostureRecommendation": "fixture_only"
+}
