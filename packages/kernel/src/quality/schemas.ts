@@ -13,8 +13,10 @@ export type ValidationIssueCode =
   | "const"
   | "enum"
   | "format"
+  | "maximum"
   | "minimum"
   | "missing_required"
+  | "relationship"
   | "type"
   | "unique_items";
 
@@ -41,8 +43,11 @@ const QUALITY_PROFILE_REQUIRED = [
   "quality_profile_id",
   "version",
   "profile_hash",
+  "compiled_profile_hash",
   "scope",
   "inherited_from",
+  "compiler",
+  "source_binding",
   "coding",
   "testing",
   "documentation",
@@ -54,12 +59,14 @@ const QUALITY_PROFILE_REQUIRED = [
   "data_compatibility_rollback",
   "supply_chain",
   "review",
-  "debt_policy"
+  "debt_policy",
+  "semantic_ranges"
 ] as const;
 
 const QUALITY_PROFILE_OPTIONAL = [
   "overrides",
   "waiver_refs",
+  "quality_debt",
   "cannot_claim"
 ] as const;
 
@@ -180,6 +187,13 @@ const QUALITY_DEBT_STATUSES = [
   "rejected"
 ] as const;
 const PERFORMANCE_STATES = ["cold", "warm", "mixed"] as const;
+const SOURCE_KINDS = [
+  "quality_constitution",
+  "stack_pack",
+  "stack_pack_template",
+  "project_pack",
+  "control_amendment"
+] as const;
 const RFC3339_DATE_TIME_PATTERN =
   /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/;
 
@@ -229,9 +243,14 @@ export function validateQualityProfileRecord(value: unknown): ValidationResult {
     expectNonEmptyString(record, "quality_profile_id", issues);
     expectNonEmptyString(record, "version", issues);
     expectNonEmptyString(record, "profile_hash", issues);
+    expectNonEmptyString(record, "compiled_profile_hash", issues);
+    expectSha256Field(record, "profile_hash", "$", issues);
+    expectSha256Field(record, "compiled_profile_hash", "$", issues);
     expectNonEmptyString(record, "scope", issues);
     expectUniqueStringArray(record, "inherited_from", issues);
     for (const key of [
+      "compiler",
+      "source_binding",
       "coding",
       "testing",
       "documentation",
@@ -243,13 +262,17 @@ export function validateQualityProfileRecord(value: unknown): ValidationResult {
       "data_compatibility_rollback",
       "supply_chain",
       "review",
-      "debt_policy"
+      "debt_policy",
+      "semantic_ranges"
     ]) {
       expectRecord(record, key, issues);
     }
     expectArrayOfRecords(record, "overrides", issues, false);
     expectStringArray(record, "waiver_refs", issues, false);
+    expectArrayOfRecords(record, "quality_debt", issues, false);
     expectStringArray(record, "cannot_claim", issues, false);
+    expectQualityProfileMetadata(record, issues);
+    expectQualityProfileSemantics(record, issues);
   }
   return result("quality_profile", issues);
 }
@@ -405,8 +428,24 @@ export function toCanonicalQualityProfileRecord(profile: CompiledQualityProfile)
     quality_profile_id: profile.qualityProfileId,
     version: profile.version,
     profile_hash: profile.profileHash,
+    compiled_profile_hash: profile.compiledProfileHash,
     scope: profile.scope,
     inherited_from: [...profile.inheritedFrom],
+    compiler: {
+      name: profile.compiler.name,
+      version: profile.compiler.version
+    },
+    source_binding: {
+      source_binding_hash: profile.sourceBinding.sourceBindingHash,
+      concrete_artifact_debt: [...profile.sourceBinding.concreteArtifactDebt],
+      sources: profile.sourceBinding.sources.map((source) => ({
+        source_id: source.sourceId,
+        source_kind: source.sourceKind,
+        source_ref: source.sourceRef,
+        sha256: source.sha256,
+        concrete_artifact_available: source.concreteArtifactAvailable
+      }))
+    },
     coding: {
       formatter_required: profile.coding.formatterRequired,
       lint_errors_max: profile.coding.lintErrorsMax,
@@ -514,8 +553,293 @@ export function toCanonicalQualityProfileRecord(profile: CompiledQualityProfile)
       remediation_ffet_required: profile.debt.remediationFfetRequired,
       cannot_claim_required: profile.debt.cannotClaimRequired,
       prohibited_waiver_classes: [...profile.debt.prohibitedWaiverClasses]
-    }
+    },
+    semantic_ranges: {
+      coverage_ratio: {
+        min: profile.semanticRanges.coverageRatio.min,
+        max: profile.semanticRanges.coverageRatio.max
+      },
+      cls: {
+        min: profile.semanticRanges.cls.min,
+        max: profile.semanticRanges.cls.max
+      },
+      latency_ms: {
+        min: profile.semanticRanges.latencyMs.min
+      },
+      percentage: {
+        min: profile.semanticRanges.percentage.min,
+        max: profile.semanticRanges.percentage.max
+      }
+    },
+    overrides: profile.overrides.map((override) => ({
+      path: override.path,
+      baseline: override.baseline,
+      value: override.value,
+      direction: override.direction,
+      ...(override.waiverRef ? { waiver_ref: override.waiverRef } : {})
+    })),
+    waiver_refs: [...profile.waiverRefs],
+    quality_debt: profile.qualityDebt.map((debt) => ({
+      debt_id: debt.debtId,
+      path: debt.path,
+      baseline: debt.baseline,
+      value: debt.value,
+      waiver_ref: debt.waiverRef,
+      reason: debt.reason,
+      owner: debt.owner,
+      expires_at: debt.expiresAt,
+      cannot_claim: [...debt.cannotClaim]
+    })),
+    cannot_claim: [...profile.cannotClaim]
   };
+}
+
+function expectQualityProfileMetadata(
+  record: PlainRecord,
+  issues: IssueCollector
+): void {
+  const compiler = record.compiler;
+  if (isPlainRecord(compiler)) {
+    rejectAdditionalAtPath(compiler, ["name", "version"], "$.compiler", issues);
+    expectNonEmptyStringAtPath(compiler, "name", "$.compiler", issues);
+    expectNonEmptyStringAtPath(compiler, "version", "$.compiler", issues);
+  }
+
+  const sourceBinding = record.source_binding;
+  if (isPlainRecord(sourceBinding)) {
+    rejectAdditionalAtPath(
+      sourceBinding,
+      ["source_binding_hash", "concrete_artifact_debt", "sources"],
+      "$.source_binding",
+      issues
+    );
+    expectNonEmptyStringAtPath(
+      sourceBinding,
+      "source_binding_hash",
+      "$.source_binding",
+      issues
+    );
+    expectSha256Field(sourceBinding, "source_binding_hash", "$.source_binding", issues);
+    expectStringArrayAtPath(
+      sourceBinding,
+      "concrete_artifact_debt",
+      "$.source_binding",
+      issues
+    );
+    expectAuthoritySources(sourceBinding, issues);
+  }
+
+  const semanticRanges = record.semantic_ranges;
+  if (isPlainRecord(semanticRanges)) {
+    rejectAdditionalAtPath(
+      semanticRanges,
+      ["coverage_ratio", "cls", "latency_ms", "percentage"],
+      "$.semantic_ranges",
+      issues
+    );
+    expectRequiredRangeAtPath(
+      semanticRanges,
+      "coverage_ratio",
+      "$.semantic_ranges.coverage_ratio",
+      0,
+      1,
+      true,
+      issues
+    );
+    expectRequiredRangeAtPath(
+      semanticRanges,
+      "cls",
+      "$.semantic_ranges.cls",
+      0,
+      1,
+      true,
+      issues
+    );
+    expectRequiredRangeAtPath(
+      semanticRanges,
+      "latency_ms",
+      "$.semantic_ranges.latency_ms",
+      0,
+      null,
+      false,
+      issues
+    );
+    expectRequiredRangeAtPath(
+      semanticRanges,
+      "percentage",
+      "$.semantic_ranges.percentage",
+      0,
+      100,
+      true,
+      issues
+    );
+  }
+}
+
+function expectAuthoritySources(
+  sourceBinding: PlainRecord,
+  issues: IssueCollector
+): void {
+  const sources = sourceBinding.sources;
+  if (!Array.isArray(sources)) {
+    issues.push({
+      path: "$.source_binding.sources",
+      code: "type",
+      message: "Expected an array."
+    });
+    return;
+  }
+  if (sources.length === 0) {
+    issues.push({
+      path: "$.source_binding.sources",
+      code: "minimum",
+      message: "Expected at least one authority source."
+    });
+  }
+
+  const kinds = new Set<string>();
+  const ids = new Set<string>();
+  for (const [index, item] of sources.entries()) {
+    const path = `$.source_binding.sources[${index}]`;
+    if (!isPlainRecord(item)) {
+      issues.push({
+        path,
+        code: "type",
+        message: "Expected an object record."
+      });
+      continue;
+    }
+    validateRequiredAtPath(
+      item,
+      ["source_id", "source_kind", "source_ref", "sha256", "concrete_artifact_available"],
+      path,
+      issues
+    );
+    rejectAdditionalAtPath(
+      item,
+      ["source_id", "source_kind", "source_ref", "sha256", "concrete_artifact_available"],
+      path,
+      issues
+    );
+    expectNonEmptyStringAtPath(item, "source_id", path, issues);
+    expectEnumAtPath(item, "source_kind", SOURCE_KINDS, path, issues);
+    expectNonEmptyStringAtPath(item, "source_ref", path, issues);
+    expectNonEmptyStringAtPath(item, "sha256", path, issues);
+    expectSha256Field(item, "sha256", path, issues);
+    expectBooleanAtPath(item, "concrete_artifact_available", path, issues);
+
+    if (typeof item.source_id === "string") {
+      if (ids.has(item.source_id)) {
+        issues.push({
+          path: `${path}.source_id`,
+          code: "unique_items",
+          message: "Expected unique source ids."
+        });
+      }
+      ids.add(item.source_id);
+    }
+    if (typeof item.source_kind === "string") {
+      kinds.add(item.source_kind);
+    }
+  }
+
+  for (const requiredKind of ["quality_constitution", "stack_pack", "project_pack"]) {
+    if (!kinds.has(requiredKind)) {
+      issues.push({
+        path: "$.source_binding.sources",
+        code: "missing_required",
+        message: `Missing required source kind ${requiredKind}.`
+      });
+    }
+  }
+}
+
+function expectQualityProfileSemantics(
+  record: PlainRecord,
+  issues: IssueCollector
+): void {
+  const testing = record.testing;
+  if (isPlainRecord(testing)) {
+    expectNumberBetweenAtPath(testing, "project_line_coverage_min", "$.testing", 0, 1, issues);
+    expectNumberBetweenAtPath(testing, "project_branch_coverage_min", "$.testing", 0, 1, issues);
+    expectNumberBetweenAtPath(testing, "changed_line_coverage_min", "$.testing", 0, 1, issues);
+    expectNumberBetweenAtPath(testing, "changed_branch_coverage_min", "$.testing", 0, 1, issues);
+    expectNumberBetweenAtPath(testing, "critical_box_line_coverage_min", "$.testing", 0, 1, issues);
+    expectNumberBetweenAtPath(testing, "critical_box_branch_coverage_min", "$.testing", 0, 1, issues);
+    expectOrderedAtPath(
+      "$.testing.project_line_coverage_min",
+      testing.project_line_coverage_min,
+      "$.testing.changed_line_coverage_min",
+      testing.changed_line_coverage_min,
+      issues
+    );
+    expectOrderedAtPath(
+      "$.testing.changed_line_coverage_min",
+      testing.changed_line_coverage_min,
+      "$.testing.critical_box_line_coverage_min",
+      testing.critical_box_line_coverage_min,
+      issues
+    );
+    expectOrderedAtPath(
+      "$.testing.project_branch_coverage_min",
+      testing.project_branch_coverage_min,
+      "$.testing.changed_branch_coverage_min",
+      testing.changed_branch_coverage_min,
+      issues
+    );
+    expectOrderedAtPath(
+      "$.testing.changed_branch_coverage_min",
+      testing.changed_branch_coverage_min,
+      "$.testing.critical_box_branch_coverage_min",
+      testing.critical_box_branch_coverage_min,
+      issues
+    );
+  }
+
+  const performance = record.performance;
+  if (isPlainRecord(performance)) {
+    expectNumberAtLeast(performance, "local_api_read_p95_ms", 0, issues);
+    expectNumberAtLeast(performance, "local_api_write_p95_ms", 0, issues);
+    expectNumberAtLeast(performance, "hmc_lcp_ms", 0, issues);
+    expectNumberBetweenAtPath(performance, "hmc_cls_max", "$.performance", 0, 1, issues);
+    expectOrderedAtPath(
+      "$.performance.local_api_read_p95_ms",
+      performance.local_api_read_p95_ms,
+      "$.performance.local_api_write_p95_ms",
+      performance.local_api_write_p95_ms,
+      issues
+    );
+  }
+
+  const maintainability = record.maintainability;
+  if (isPlainRecord(maintainability)) {
+    expectNumberAtLeast(maintainability, "complexity_warning", 0, issues);
+    expectNumberAtLeast(maintainability, "complexity_hard_review", 0, issues);
+    expectNumberAtLeast(maintainability, "function_size_warning_lines", 1, issues);
+    expectNumberBetweenAtPath(
+      maintainability,
+      "duplication_warning_percent",
+      "$.maintainability",
+      0,
+      100,
+      issues
+    );
+    expectNumberAtLeast(maintainability, "no_new_duplicate_block_over_lines", 1, issues);
+    expectOrderedAtPath(
+      "$.maintainability.complexity_warning",
+      maintainability.complexity_warning,
+      "$.maintainability.complexity_hard_review",
+      maintainability.complexity_hard_review,
+      issues
+    );
+    expectOrderedAtPath(
+      "$.maintainability.no_new_duplicate_block_over_lines",
+      maintainability.no_new_duplicate_block_over_lines,
+      "$.maintainability.function_size_warning_lines",
+      maintainability.function_size_warning_lines,
+      issues
+    );
+  }
 }
 
 function result(schema: QualitySchemaKind, issues: IssueCollector): ValidationResult {
@@ -944,6 +1268,169 @@ function expectNonEmptyStringAtPath(
       path: `${path}.${key}`,
       code: "type",
       message: "Expected a non-empty string."
+    });
+  }
+}
+
+function expectBooleanAtPath(
+  record: PlainRecord,
+  key: string,
+  path: string,
+  issues: IssueCollector
+): void {
+  if (!hasOwn(record, key)) {
+    return;
+  }
+  if (typeof record[key] !== "boolean") {
+    issues.push({
+      path: `${path}.${key}`,
+      code: "type",
+      message: "Expected a boolean."
+    });
+  }
+}
+
+function expectSha256Field(
+  record: PlainRecord,
+  key: string,
+  path: string,
+  issues: IssueCollector
+): void {
+  if (!hasOwn(record, key) || typeof record[key] !== "string") {
+    return;
+  }
+  if (!/^sha256:[a-f0-9]{64}$/.test(record[key])) {
+    issues.push({
+      path: `${path}.${key}`,
+      code: "format",
+      message: "Expected a sha256 hash."
+    });
+  }
+}
+
+function expectRequiredRangeAtPath(
+  record: PlainRecord,
+  key: string,
+  path: string,
+  minimum: number,
+  maximum: number | null,
+  requireMax: boolean,
+  issues: IssueCollector
+): void {
+  if (!hasOwn(record, key)) {
+    issues.push({
+      path,
+      code: "missing_required",
+      message: "Required range is missing."
+    });
+    return;
+  }
+  const value = record[key];
+  if (!isPlainRecord(value)) {
+    issues.push({
+      path,
+      code: "type",
+      message: "Expected an object record."
+    });
+    return;
+  }
+  rejectAdditionalAtPath(
+    value,
+    requireMax ? ["min", "max"] : ["min"],
+    path,
+    issues
+  );
+  validateRequiredAtPath(value, requireMax ? ["min", "max"] : ["min"], path, issues);
+  expectNumberAtPath(value, "min", path, issues);
+  if (requireMax) {
+    expectNumberAtPath(value, "max", path, issues);
+  }
+  if (value.min !== minimum) {
+    issues.push({
+      path: `${path}.min`,
+      code: "minimum",
+      message: `Expected minimum boundary ${minimum}.`
+    });
+  }
+  if (requireMax && value.max !== maximum) {
+    issues.push({
+      path: `${path}.max`,
+      code: "maximum",
+      message: `Expected maximum boundary ${maximum}.`
+    });
+  }
+}
+
+function expectNumberAtPath(
+  record: PlainRecord,
+  key: string,
+  path: string,
+  issues: IssueCollector
+): void {
+  if (!hasOwn(record, key)) {
+    return;
+  }
+  const value = record[key];
+  if (typeof value !== "number" || Number.isNaN(value)) {
+    issues.push({
+      path: `${path}.${key}`,
+      code: "type",
+      message: "Expected a number."
+    });
+  }
+}
+
+function expectNumberBetweenAtPath(
+  record: PlainRecord,
+  key: string,
+  path: string,
+  minimum: number,
+  maximum: number,
+  issues: IssueCollector
+): void {
+  if (!hasOwn(record, key)) {
+    return;
+  }
+  const value = record[key];
+  if (typeof value !== "number" || Number.isNaN(value)) {
+    issues.push({
+      path: `${path}.${key}`,
+      code: "type",
+      message: "Expected a number."
+    });
+    return;
+  }
+  if (value < minimum) {
+    issues.push({
+      path: `${path}.${key}`,
+      code: "minimum",
+      message: `Expected a value greater than or equal to ${minimum}.`
+    });
+  }
+  if (value > maximum) {
+    issues.push({
+      path: `${path}.${key}`,
+      code: "maximum",
+      message: `Expected a value less than or equal to ${maximum}.`
+    });
+  }
+}
+
+function expectOrderedAtPath(
+  lowerPath: string,
+  lowerValue: unknown,
+  upperPath: string,
+  upperValue: unknown,
+  issues: IssueCollector
+): void {
+  if (typeof lowerValue !== "number" || typeof upperValue !== "number") {
+    return;
+  }
+  if (lowerValue > upperValue) {
+    issues.push({
+      path: lowerPath,
+      code: "relationship",
+      message: `Expected ${lowerPath} to be less than or equal to ${upperPath}.`
     });
   }
 }

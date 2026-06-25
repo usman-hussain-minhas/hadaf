@@ -1,0 +1,185 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "metadata": {
+    "tools": [
+      {
+        "vendor": "HAUTM",
+        "name": "HADAF supply-chain generator",
+        "version": "0.1.0"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "name": "hadaf",
+      "version": "0.0.0-bootstrap",
+      "licenses": [
+        {
+          "license": {
+            "id": "UNLICENSED"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "private",
+          "value": "true"
+        },
+        {
+          "name": "license_posture",
+          "value": "proprietary_all_rights_reserved"
+        }
+      ]
+    },
+    "properties": [
+      {
+        "name": "hadaf:supply_chain_graph_sha256",
+        "value": "d9f4d64f64ec6921c83d586202fff9816d544c7c7dd73d8e2076ceedd5cecc96"
+      },
+      {
+        "name": "hadaf:remote_provenance_attestation",
+        "value": "not_available_in_h00_corr_004"
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40types%2Fnode@22.20.0",
+      "name": "@types/node",
+      "version": "22.20.0",
+      "purl": "pkg:npm/%40types%2Fnode@22.20.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+        },
+        {
+          "type": "website",
+          "url": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node"
+        }
+      ],
+      "properties": [
+        {
+          "name": "hadaf:dependency_scope",
+          "value": "direct"
+        },
+        {
+          "name": "hadaf:license_classification",
+          "value": "permissive"
+        },
+        {
+          "name": "hadaf:provenance",
+          "value": "local_pnpm_lockfile_and_installed_package_metadata"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/typescript@6.0.3",
+      "name": "typescript",
+      "version": "6.0.3",
+      "purl": "pkg:npm/typescript@6.0.3",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/microsoft/TypeScript.git"
+        },
+        {
+          "type": "website",
+          "url": "https://www.typescriptlang.org/"
+        }
+      ],
+      "properties": [
+        {
+          "name": "hadaf:dependency_scope",
+          "value": "direct"
+        },
+        {
+          "name": "hadaf:license_classification",
+          "value": "permissive"
+        },
+        {
+          "name": "hadaf:provenance",
+          "value": "local_pnpm_lockfile_and_installed_package_metadata"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/undici-types@6.21.0",
+      "name": "undici-types",
+      "version": "6.21.0",
+      "purl": "pkg:npm/undici-types@6.21.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "git+https://github.com/nodejs/undici.git"
+        },
+        {
+          "type": "website",
+          "url": "https://undici.nodejs.org"
+        }
+      ],
+      "properties": [
+        {
+          "name": "hadaf:dependency_scope",
+          "value": "transitive"
+        },
+        {
+          "name": "hadaf:license_classification",
+          "value": "permissive"
+        },
+        {
+          "name": "hadaf:provenance",
+          "value": "local_pnpm_lockfile_and_installed_package_metadata"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "hadaf",
+      "dependsOn": [
+        "pkg:npm/%40types%2Fnode@22.20.0",
+        "pkg:npm/typescript@6.0.3"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40types%2Fnode@22.20.0",
+      "dependsOn": [
+        "pkg:npm/undici-types@6.21.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/typescript@6.0.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/undici-types@6.21.0",
+      "dependsOn": []
+    }
+  ]
+}
