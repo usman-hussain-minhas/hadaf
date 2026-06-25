@@ -147,3 +147,17 @@ export {
   type H03ValidationResult,
   type H03VerifiedSchema
 } from "./h03/schema-registry.js";
+export {
+  computeSourceAuthoritySetHash,
+  verifyH03InputAuthorityConfig,
+  type H03AcceptedInput,
+  type H03AcceptedInputForm,
+  type H03AuthorityManifestEntry,
+  type H03InputAuthorityConfig,
+  type H03InputAuthorityFinding,
+  type H03InputAuthorityReport,
+  type H03InputAuthorityStatus,
+  type H03SourceMode,
+  type H03VerifiedAuthorityManifestEntry,
+  type H03VerifiedInput
+} from "./h03/input-authority.js";

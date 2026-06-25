@@ -40,6 +40,7 @@
     "verify:quality-classification": "node scripts/verify-quality-classification.mjs",
     "verify:status": "node scripts/reconcile-status.mjs",
     "verify:h03-schema-registry": "node scripts/verify-h03-schema-registry.mjs",
+    "verify:h03-input-authority": "node scripts/verify-h03-input-authority.mjs",
     "supply-chain": "node scripts/generate-supply-chain-artifacts.mjs"
   },
   "devDependencies": {

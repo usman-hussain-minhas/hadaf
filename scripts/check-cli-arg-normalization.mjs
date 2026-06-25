@@ -26,6 +26,8 @@ const cases = [
   pnpmCase("quality-separator", ["verify:quality-classification", "--", fixturePaths.qualityReport]),
   pnpmCase("h03-schema-registry-direct", ["verify:h03-schema-registry", "fixtures/h03-schema-registry/valid-config.json"]),
   pnpmCase("h03-schema-registry-separator", ["verify:h03-schema-registry", "--", "fixtures/h03-schema-registry/valid-config.json"]),
+  pnpmCase("h03-input-authority-direct", ["verify:h03-input-authority", "fixtures/h03-input-authority/valid-config.json"]),
+  pnpmCase("h03-input-authority-separator", ["verify:h03-input-authority", "--", "fixtures/h03-input-authority/valid-config.json"]),
   pnpmCase("target-guard-direct", ["check:target-guard", "fixtures/target-guard/valid-config.json"]),
   pnpmCase("target-guard-separator", ["check:target-guard", "--", "fixtures/target-guard/valid-config.json"]),
   nodeCase("pr-metadata-direct", ["scripts/check-pr-metadata-public-safety.mjs", fixturePaths.prBody]),
