@@ -24,6 +24,10 @@ if (!/permissions:\s*\n\s+contents:\s+read/m.test(workflow)) {
   failures.push("Workflow must use least-privilege contents: read permissions");
 }
 
+if (!/run:\s+pnpm run quality/m.test(workflow)) {
+  failures.push("Workflow must run the classified quality gate through pnpm run quality");
+}
+
 if (failures.length > 0) {
   console.error(JSON.stringify({ status: "failed", check: "ci_workflow", failures }, null, 2));
   process.exit(1);

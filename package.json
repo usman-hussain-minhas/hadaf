@@ -13,7 +13,8 @@
   "scripts": {
     "build": "tsc -b packages/kernel",
     "test": "pnpm build && node --test \"packages/kernel/dist/**/*.test.js\"",
-    "quality": "node scripts/check-package-metadata.mjs && node scripts/check-no-license-file.mjs && node scripts/check-public-safety.mjs && node scripts/check-public-safety.mjs --self-test && node scripts/check-pr-metadata-public-safety.mjs --self-test && node scripts/check-ci-workflow.mjs && node scripts/check-dependency-licenses.mjs && node scripts/check-dependency-licenses.mjs --self-test && node scripts/generate-supply-chain-artifacts.mjs --check && pnpm build && node --test \"packages/kernel/dist/**/*.test.js\"",
+    "quality": "node scripts/run-quality-gates.mjs",
+    "quality:report": "node scripts/run-quality-gates.mjs --json",
     "check:package": "node scripts/check-package-metadata.mjs",
     "check:license": "node scripts/check-no-license-file.mjs",
     "check:public": "node scripts/check-public-safety.mjs",
