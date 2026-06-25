@@ -68,3 +68,15 @@ export {
   type QualityDimensionClassification,
   type VerifiedQualityClassificationRef
 } from "./verification/quality-classification.js";
+export {
+  fingerprintSource,
+  verifySourceManifestConfig,
+  type SourceFileExpectation,
+  type SourceFingerprint,
+  type SourceManifestExpectation,
+  type SourceManifestFinding,
+  type SourceManifestVerificationConfig,
+  type SourceManifestVerificationReport,
+  type SourceManifestVerificationStatus,
+  type VerifiedSourceRef
+} from "./source-vault/manifest.js";
