@@ -1,0 +1,66 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h03-input-authority"
+  },
+  "sourceMode": "READ_ONLY_DIGEST",
+  "inputs": [
+    {
+      "inputId": "founder-plan",
+      "form": "plain_language_plan",
+      "ref": "fixture://inputs/founder-plan.md",
+      "sha256": "2fbceec4648728af44e43bded542b516d5db7058df6d412c8404265453fdb6ae",
+      "documentKind": "human_authorization",
+      "expectedClassification": "ratified_human_authority"
+    },
+    {
+      "inputId": "roadmap",
+      "form": "roadmap",
+      "ref": "fixture://inputs/roadmap.md",
+      "sha256": "2c867dfe7e928fd673751cf5b9f0500f2e4e4dc87d318feefdc7f4ae6eec058f",
+      "documentKind": "canonical_planning_source",
+      "expectedClassification": "canonical_planning_source"
+    },
+    {
+      "inputId": "schema-amendment",
+      "form": "architecture_document",
+      "ref": "fixture://inputs/schema-amendment.md",
+      "sha256": "26703ff0508d49a85c678f95bd5bce9c26b60c68cc066b105839057b7bc03f05",
+      "documentKind": "accepted_control_record",
+      "expectedClassification": "accepted_control_authority"
+    },
+    {
+      "inputId": "generated-summary",
+      "form": "founder_notes",
+      "ref": "fixture://inputs/generated-summary.md",
+      "sha256": "b302d2c8ee5910b3e34f66fe933d0d44fb98c5cf7aca0bbe4c2befc35e25616d",
+      "documentKind": "generated_view",
+      "expectedClassification": "generated_view"
+    }
+  ],
+  "authorityManifest": [
+    {
+      "rank": 1,
+      "inputId": "founder-plan",
+      "authority": "ratified_human_authority"
+    },
+    {
+      "rank": 2,
+      "inputId": "roadmap",
+      "authority": "canonical_planning_source"
+    },
+    {
+      "rank": 3,
+      "inputId": "schema-amendment",
+      "authority": "accepted_control_authority"
+    }
+  ],
+  "expectedSourceAuthoritySetHash": "ba88da15b6b405ad8bdac94c7af84196c697a910d389876e7f1b2c8f1230746e",
+  "cannotClaim": [
+    "plan_ingestion_normalizer_implemented",
+    "question_register_compiler_implemented",
+    "delivery_constitution_compiler_implemented",
+    "h03_delivery_constitution_ready_for_human_ratification",
+    "h03_implemented"
+  ],
+  "finalPostureRecommendation": "H03_F01_INPUT_AUTHORITY_BOUNDARY_VERIFIED"
+}
