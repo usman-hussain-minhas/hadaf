@@ -1,0 +1,15 @@
+{
+  "adapterStatus": "passed",
+  "adapterMaturity": "fixture_backed",
+  "projectName": "HADAF v1",
+  "activeBox": "H02 Mission Control and Product Preview",
+  "activeFfet": "H02-F02 Read adapters",
+  "classifiedMismatch": "generated_state_not_fresh",
+  "cannotClaim": [
+    "live_github_adapter_implemented",
+    "persistent_state_store_implemented",
+    "browser_accessibility_complete",
+    "browser_performance_complete",
+    "HMC_authoritative_state"
+  ]
+}
