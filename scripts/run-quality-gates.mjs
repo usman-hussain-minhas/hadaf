@@ -24,7 +24,7 @@ function runQualityGates() {
   dimensions.push(commandDimension("license_file_absence", "ci_enforced", "node scripts/check-no-license-file.mjs"));
   dimensions.push(commandDimension("formatting", "ci_enforced", "node scripts/check-format.mjs"));
   dimensions.push(commandDimension("diff_hygiene", "ci_enforced", "node scripts/check-diff-hygiene.mjs"));
-  dimensions.push(commandDimension("lint_static_syntax", "ci_enforced", "node --check scripts/check-ci-workflow.mjs && node --check scripts/check-coverage.mjs && node --check scripts/check-dependency-licenses.mjs && node --check scripts/check-diff-hygiene.mjs && node --check scripts/check-format.mjs && node --check scripts/check-no-license-file.mjs && node --check scripts/check-package-metadata.mjs && node --check scripts/check-pr-metadata-public-safety.mjs && node --check scripts/check-public-safety.mjs && node --check scripts/check-target-guard.mjs && node --check scripts/serve-hmc.mjs && node --check scripts/serve-product-preview.mjs && node --check scripts/verify-hmc-state.mjs && node --check scripts/verify-product-preview.mjs && node --check scripts/generate-supply-chain-artifacts.mjs && node --check scripts/reconcile-status.mjs && node --check scripts/run-quality-gates.mjs && node --check scripts/verify-evidence-manifest.mjs && node --check scripts/verify-quality-classification.mjs && node --check scripts/verify-source-manifest.mjs && node --check scripts/classify-source-authority.mjs"));
+  dimensions.push(commandDimension("lint_static_syntax", "ci_enforced", "node --check scripts/check-ci-workflow.mjs && node --check scripts/check-coverage.mjs && node --check scripts/check-dependency-licenses.mjs && node --check scripts/check-diff-hygiene.mjs && node --check scripts/check-format.mjs && node --check scripts/check-no-license-file.mjs && node --check scripts/check-package-metadata.mjs && node --check scripts/check-pr-metadata-public-safety.mjs && node --check scripts/check-public-safety.mjs && node --check scripts/check-target-guard.mjs && node --check scripts/serve-hmc.mjs && node --check scripts/serve-product-preview.mjs && node --check scripts/verify-hmc-state.mjs && node --check scripts/verify-product-preview.mjs && node --check scripts/verify-static-ui.mjs && node --check scripts/generate-supply-chain-artifacts.mjs && node --check scripts/reconcile-status.mjs && node --check scripts/run-quality-gates.mjs && node --check scripts/verify-evidence-manifest.mjs && node --check scripts/verify-quality-classification.mjs && node --check scripts/verify-source-manifest.mjs && node --check scripts/classify-source-authority.mjs"));
   dimensions.push(commandDimension("secret_and_residue_scan", "ci_enforced", "node scripts/check-public-safety.mjs && node scripts/check-public-safety.mjs --self-test"));
   dimensions.push(commandDimension("target_guard", "ci_enforced", "pnpm build && node scripts/check-target-guard.mjs && node scripts/check-target-guard.mjs --self-test && node scripts/check-target-guard.mjs fixtures/target-guard/valid-config.json"));
   dimensions.push(commandDimension("hmc_static_smoke", "ci_enforced", "node scripts/serve-hmc.mjs --smoke", {
@@ -54,6 +54,14 @@ function runQualityGates() {
       "production_connected_preview",
       "public_preview_deployed",
       "persistent_preview_state"
+    ]
+  }));
+  dimensions.push(commandDimension("local_static_accessibility_smoke", "ci_enforced", "node scripts/verify-static-ui.mjs && node scripts/verify-static-ui.mjs --self-test", {
+    cannotClaim: [
+      "browser_accessibility_complete",
+      "browser_performance_complete",
+      "screen_reader_complete",
+      "keyboard_traversal_complete"
     ]
   }));
   dimensions.push(commandDimension("pr_metadata_public_safety", "ci_enforced", "node scripts/check-pr-metadata-public-safety.mjs --self-test"));
@@ -143,18 +151,30 @@ function classifiedDebtDimensions() {
     },
     {
       dimensionId: "accessibility",
-      maturity: "not_yet_applicable",
-      status: "not_applicable_with_reason",
+      maturity: "declared_debt",
+      status: "debt_approved",
       executable: false,
-      reason: "No HMC/Product Preview frontend exists in H00.",
+      reason: "Local static accessibility smoke is enforced, but no browser, keyboard traversal, or assistive-technology automation is available in H02.",
+      debt: {
+        owner: "hmc.frontend",
+        reason: "Static HTML structure, landmarks, labels, cannot_claim visibility, and asset budget are checked; browser-complete accessibility requires later tooling.",
+        remediationFfet: "future_browser_accessibility_gate",
+        cannotClaim: ["browser_accessibility_complete"]
+      },
       cannotClaim: ["browser_accessibility_complete"]
     },
     {
       dimensionId: "browser_performance",
-      maturity: "not_yet_applicable",
-      status: "not_applicable_with_reason",
+      maturity: "declared_debt",
+      status: "debt_approved",
       executable: false,
-      reason: "No browser frontend route exists in H00.",
+      reason: "Static asset budget is enforced, but no browser runtime performance tooling is available in H02.",
+      debt: {
+        owner: "hmc.frontend",
+        reason: "Static byte budget is checked; browser Core Web Vitals or equivalent runtime performance proof requires later tooling.",
+        remediationFfet: "future_browser_performance_gate",
+        cannotClaim: ["browser_performance_complete"]
+      },
       cannotClaim: ["browser_performance_complete"]
     },
     {

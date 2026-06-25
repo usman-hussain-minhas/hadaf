@@ -75,11 +75,11 @@
                 <h2 id="active-box-title">H02 Mission Control and Product Preview</h2>
               </div>
               <div class="status-strip" role="list" aria-label="Box status">
-                <span role="listitem" class="status-pill status-pill--active">active</span>
+                <span role="listitem" class="status-pill status-pill--active">final assurance</span>
                 <span role="listitem" class="status-pill">H01 complete</span>
                 <span role="listitem" class="status-pill status-pill--warn">independent qualification debt</span>
               </div>
-              <p class="summary">Local frontend foundation is in progress after bounded H01 source and target assurance.</p>
+              <p class="summary">Local frontend foundation is fixture-backed and in final static assurance after bounded H01 source and target assurance.</p>
             </section>
 
             <section class="panel" aria-labelledby="truth-title">
@@ -140,8 +140,8 @@
             </div>
             <div class="table-row" role="row">
               <span role="cell">H02 HMC and Product Preview</span>
-              <span role="cell"><strong>active</strong></span>
-              <span role="cell">static UI</span>
+              <span role="cell"><strong>final assurance</strong></span>
+              <span role="cell">static UI smoke</span>
               <span role="cell">browser complete checks</span>
             </div>
           </div>
@@ -161,20 +161,25 @@
               <strong>Architecture contract</strong>
               <span>merged</span>
             </article>
-            <article class="queue-item is-active">
+            <article class="queue-item is-done">
               <span class="queue-code">H02-F01</span>
               <strong>Local HMC shell</strong>
               <span>merged</span>
             </article>
-            <article class="queue-item">
+            <article class="queue-item is-done">
               <span class="queue-code">H02-F02</span>
               <strong data-state-field="active-ffet">H02-F02 Read adapters</strong>
-              <span>active</span>
+              <span>merged</span>
             </article>
-            <article class="queue-item">
+            <article class="queue-item is-done">
               <span class="queue-code">H02-F03</span>
               <strong>Product Preview</strong>
-              <span>pending</span>
+              <span>merged</span>
+            </article>
+            <article class="queue-item is-active">
+              <span class="queue-code">H02-F04</span>
+              <strong>Static assurance</strong>
+              <span>active</span>
             </article>
           </div>
         </section>
@@ -197,6 +202,7 @@
                 <li><span class="status-dot status-dot--ok"></span> quality gate</li>
                 <li><span class="status-dot status-dot--ok"></span> Target Guard</li>
                 <li><span class="status-dot status-dot--ok"></span> bundle verifier</li>
+                <li><span class="status-dot status-dot--ok"></span> static accessibility smoke</li>
               </ul>
             </section>
             <section class="panel" aria-labelledby="debt-title">
@@ -224,8 +230,8 @@
           <div class="state-grid" aria-label="Evidence state examples">
             <article class="state-card">
               <span class="state-label">loading</span>
-              <strong>Adapter pending</strong>
-              <p>Real evidence adapter begins in H02-F02.</p>
+              <strong>Fixture adapter active</strong>
+              <p>H02 state adapters are fixture-backed and visibly classify stale generated state.</p>
             </article>
             <article class="state-card">
               <span class="state-label">empty</span>
@@ -246,7 +252,7 @@
               <p class="label">Decisions</p>
               <h1 id="decisions-title">Human Attention</h1>
             </div>
-            <span class="maturity maturity--mocked">mocked</span>
+              <span class="maturity maturity--fixture">fixture_backed</span>
           </div>
           <div class="panel panel--wide">
             <div class="decision-row">
@@ -269,8 +275,8 @@
             <div class="preview-box">
               <span class="preview-mark" aria-hidden="true">PV</span>
               <div>
-                <strong>Preview shell begins in H02-F03.</strong>
-                <p>Current maturity is mocked. `production_connected` is blocked until a later proof exists.</p>
+                <strong>Preview shell available in H02-F03.</strong>
+                <p>Current maturity is fixture_backed. production_connected blocked until a later proof exists.</p>
               </div>
             </div>
           </div>

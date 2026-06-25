@@ -18,7 +18,7 @@
     {
       "id": "H02",
       "name": "Mission Control and Product Preview",
-      "status": "active",
+      "status": "final_assurance",
       "maturity": "fixture_backed"
     }
   ],
@@ -38,6 +38,18 @@
     {
       "id": "H02-F02",
       "title": "Read adapters",
+      "status": "merged",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H02-F03",
+      "title": "Product Preview foundation",
+      "status": "merged",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H02-F04",
+      "title": "Static assurance and closeout",
       "status": "active",
       "maturity": "fixture_backed"
     }
@@ -51,11 +63,43 @@
         "browser_accessibility_complete",
         "browser_performance_complete"
       ]
+    },
+    {
+      "id": "product_preview_static_smoke",
+      "status": "passed",
+      "maturity": "fixture_backed",
+      "cannotClaim": [
+        "production_connected_preview",
+        "public_preview_deployed",
+        "browser_accessibility_complete",
+        "browser_performance_complete"
+      ]
+    },
+    {
+      "id": "local_static_accessibility_smoke",
+      "status": "passed",
+      "maturity": "fixture_backed",
+      "cannotClaim": [
+        "browser_accessibility_complete",
+        "browser_performance_complete"
+      ]
     }
   ],
   "evidence": [
     {
       "id": "H02-F01",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "required": true
+    },
+    {
+      "id": "H02-F02",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "required": true
+    },
+    {
+      "id": "H02-F03",
       "status": "verified",
       "maturity": "fixture_backed",
       "required": true
@@ -96,9 +140,14 @@
   "cannotClaim": [
     "live_github_adapter_implemented",
     "persistent_state_store_implemented",
+    "production_connected_preview",
+    "public_preview_deployed",
     "browser_accessibility_complete",
     "browser_performance_complete",
-    "HMC_authoritative_state"
+    "HMC_authoritative_state",
+    "self_hosting_ready",
+    "production_ready",
+    "stable_agents"
   ],
-  "finalPostureRecommendation": "H02_HMC_STATE_FIXTURE_BACKED"
+  "finalPostureRecommendation": "H02_STATIC_ASSURANCE_FIXTURE_BACKED"
 }
