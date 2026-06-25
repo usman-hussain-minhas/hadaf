@@ -1,0 +1,29 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/source-manifest"
+  },
+  "sources": [
+    {
+      "sourceId": "fixture-source",
+      "rootRef": "fixture://valid-source",
+      "sourceType": "READ_ONLY_DIGEST",
+      "writePermission": "forbidden",
+      "mutationAllowed": false,
+      "expectedFingerprintSha256": "4d5c2d6512bed8b986890c439d2b915977a99cb3059fdf148fef8ab906d4f22f",
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "2c7f736521c5e8d74f89c629a232289a4083171ffc8eb946c8313e725a7a9b6e"
+        },
+        {
+          "path": "docs/guide.md",
+          "sha256": "824284a1dce6d649fc2980de45764eecc11bf9eec0c09c2230febb733229085f"
+        }
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "real_h01_config_committed_to_product_git"
+  ],
+  "finalPostureRecommendation": "fixture_only"
+}
