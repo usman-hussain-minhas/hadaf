@@ -24,7 +24,7 @@ function runQualityGates() {
   dimensions.push(commandDimension("license_file_absence", "ci_enforced", "node scripts/check-no-license-file.mjs"));
   dimensions.push(commandDimension("formatting", "ci_enforced", "node scripts/check-format.mjs"));
   dimensions.push(commandDimension("diff_hygiene", "ci_enforced", "node scripts/check-diff-hygiene.mjs"));
-  dimensions.push(commandDimension("lint_static_syntax", "ci_enforced", "node --check scripts/check-ci-workflow.mjs && node --check scripts/check-coverage.mjs && node --check scripts/check-dependency-licenses.mjs && node --check scripts/check-diff-hygiene.mjs && node --check scripts/check-format.mjs && node --check scripts/check-no-license-file.mjs && node --check scripts/check-package-metadata.mjs && node --check scripts/check-pr-metadata-public-safety.mjs && node --check scripts/check-public-safety.mjs && node --check scripts/generate-supply-chain-artifacts.mjs && node --check scripts/reconcile-status.mjs && node --check scripts/run-quality-gates.mjs && node --check scripts/verify-evidence-manifest.mjs"));
+  dimensions.push(commandDimension("lint_static_syntax", "ci_enforced", "node --check scripts/check-ci-workflow.mjs && node --check scripts/check-coverage.mjs && node --check scripts/check-dependency-licenses.mjs && node --check scripts/check-diff-hygiene.mjs && node --check scripts/check-format.mjs && node --check scripts/check-no-license-file.mjs && node --check scripts/check-package-metadata.mjs && node --check scripts/check-pr-metadata-public-safety.mjs && node --check scripts/check-public-safety.mjs && node --check scripts/generate-supply-chain-artifacts.mjs && node --check scripts/reconcile-status.mjs && node --check scripts/run-quality-gates.mjs && node --check scripts/verify-evidence-manifest.mjs && node --check scripts/verify-quality-classification.mjs"));
   dimensions.push(commandDimension("secret_and_residue_scan", "ci_enforced", "node scripts/check-public-safety.mjs && node scripts/check-public-safety.mjs --self-test"));
   dimensions.push(commandDimension("pr_metadata_public_safety", "ci_enforced", "node scripts/check-pr-metadata-public-safety.mjs --self-test"));
   dimensions.push(commandDimension("ci_workflow_safety", "ci_enforced", "node scripts/check-ci-workflow.mjs"));
@@ -103,6 +103,12 @@ function classifiedDebtDimensions() {
       status: "debt_approved",
       executable: false,
       reason: "CodeQL or equivalent SAST workflow belongs to H00-SEC-001 shared-integration scope.",
+      debt: {
+        owner: "quality.compiler@0.1",
+        reason: "The local quality runner does not yet ingest GitHub CodeQL status as a first-class SAST gate.",
+        remediationFfet: "future_quality_gate_engine_github_status_ingestion",
+        cannotClaim: ["sast_ci_enforced"]
+      },
       cannotClaim: ["sast_ci_enforced"]
     },
     {
@@ -127,6 +133,12 @@ function classifiedDebtDimensions() {
       status: "debt_approved",
       executable: false,
       reason: "No complexity tool is available without adding dependencies; enforce in a later maintainability gate.",
+      debt: {
+        owner: "quality.compiler@0.1",
+        reason: "No complexity analyzer is installed in H00.",
+        remediationFfet: "future_maintainability_gate_engine_expansion",
+        cannotClaim: ["complexity_gate_enforced"]
+      },
       cannotClaim: ["complexity_gate_enforced"]
     },
     {
@@ -135,6 +147,12 @@ function classifiedDebtDimensions() {
       status: "debt_approved",
       executable: false,
       reason: "No duplication analyzer is available without adding dependencies; enforce in a later maintainability gate.",
+      debt: {
+        owner: "quality.compiler@0.1",
+        reason: "No duplication analyzer is installed in H00.",
+        remediationFfet: "future_maintainability_gate_engine_expansion",
+        cannotClaim: ["duplication_gate_enforced"]
+      },
       cannotClaim: ["duplication_gate_enforced"]
     },
     {
@@ -143,6 +161,12 @@ function classifiedDebtDimensions() {
       status: "debt_approved",
       executable: false,
       reason: "Mutation/fault sampling tooling is not installed in H00.",
+      debt: {
+        owner: "quality.compiler@0.1",
+        reason: "Mutation/fault sampling tooling is not installed in H00.",
+        remediationFfet: "future_test_effectiveness_gate_engine_expansion",
+        cannotClaim: ["mutation_testing_complete"]
+      },
       cannotClaim: ["mutation_testing_complete"]
     },
     {
@@ -178,8 +202,8 @@ function validateQualityReport(dimensions) {
     if (dimension.status === "not_applicable_with_reason" && !dimension.reason) {
       findings.push({ dimensionId: dimension.dimensionId, kind: "not_applicable_missing_reason" });
     }
-    if (dimension.status === "debt_approved" && (!dimension.reason || !Array.isArray(dimension.cannotClaim) || dimension.cannotClaim.length === 0)) {
-      findings.push({ dimensionId: dimension.dimensionId, kind: "debt_missing_reason_or_cannot_claim" });
+    if (dimension.status === "debt_approved" && !hasDebtMetadata(dimension)) {
+      findings.push({ dimensionId: dimension.dimensionId, kind: "debt_missing_required_metadata" });
     }
   }
 
@@ -187,6 +211,23 @@ function validateQualityReport(dimensions) {
     status: findings.length === 0 ? "passed" : "failed",
     findings
   };
+}
+
+function hasDebtMetadata(dimension) {
+  return Boolean(
+    dimension.reason &&
+    dimension.debt &&
+    typeof dimension.debt.owner === "string" &&
+    dimension.debt.owner.length > 0 &&
+    typeof dimension.debt.reason === "string" &&
+    dimension.debt.reason.length > 0 &&
+    typeof dimension.debt.remediationFfet === "string" &&
+    dimension.debt.remediationFfet.length > 0 &&
+    Array.isArray(dimension.debt.cannotClaim) &&
+    dimension.debt.cannotClaim.length > 0 &&
+    Array.isArray(dimension.cannotClaim) &&
+    dimension.cannotClaim.length > 0
+  );
 }
 
 function findBundleVerifier() {
@@ -221,6 +262,19 @@ function runSelfTest() {
       status: "debt_approved",
       executable: false,
       reason: "fixture",
+      debt: {
+        owner: "quality.compiler@0.1",
+        reason: "fixture",
+        remediationFfet: "fixture_ffet",
+        cannotClaim: ["fixture_claim"]
+      },
+      cannotClaim: ["fixture_claim"]
+    },
+    {
+      dimensionId: "invalid_debt",
+      status: "debt_approved",
+      executable: false,
+      reason: "fixture",
       cannotClaim: ["fixture_claim"]
     }
   ];
@@ -229,11 +283,12 @@ function runSelfTest() {
   const failures = [];
   if (!kinds.has("non_executable_dimension_marked_passed")) failures.push("passed_unimplemented_dimension_not_rejected");
   if (!kinds.has("not_applicable_missing_reason")) failures.push("not_applicable_without_reason_not_rejected");
+  if (!kinds.has("debt_missing_required_metadata")) failures.push("debt_without_required_metadata_not_rejected");
 
   if (failures.length > 0) {
     console.error(JSON.stringify({ status: "failed", check: "quality_runner_self_test", failures }, null, 2));
     process.exit(1);
   }
 
-  console.log(JSON.stringify({ status: "passed", check: "quality_runner_self_test", negativeFixtures: 2 }));
+  console.log(JSON.stringify({ status: "passed", check: "quality_runner_self_test", negativeFixtures: 3 }));
 }

@@ -58,3 +58,13 @@ export {
   type StatusReconciliationStatus,
   type VerifiedStatusRef
 } from "./verification/status.js";
+export {
+  verifyQualityClassificationConfig,
+  type ClassifiedQualityDimension,
+  type QualityClassificationFinding,
+  type QualityClassificationVerificationConfig,
+  type QualityClassificationVerificationReport,
+  type QualityClassificationVerificationStatus,
+  type QualityDimensionClassification,
+  type VerifiedQualityClassificationRef
+} from "./verification/quality-classification.js";
