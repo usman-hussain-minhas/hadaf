@@ -35,3 +35,28 @@ const initialView = location.hash.replace("#", "") || "project";
 if (panels.some((panel) => panel.dataset.viewPanel === initialView)) {
   setView(initialView);
 }
+
+loadFixtureState().catch(() => {
+  document.documentElement.dataset.hmcState = "fixture_unavailable";
+});
+
+async function loadFixtureState() {
+  const response = await fetch("./state.fixture.json", { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error(`HMC fixture state failed with HTTP ${response.status}`);
+  }
+  const state = await response.json();
+  document.documentElement.dataset.hmcState = state.adapterStatus;
+  const adapterStatus = document.querySelector("[data-state-field='adapter-status']");
+  if (adapterStatus) {
+    adapterStatus.textContent = `${state.adapterMaturity} adapter`;
+  }
+  const activeFfet = document.querySelector("[data-state-field='active-ffet']");
+  if (activeFfet) {
+    activeFfet.textContent = state.activeFfet;
+  }
+  const mismatch = document.querySelector("[data-state-field='classified-mismatch']");
+  if (mismatch) {
+    mismatch.textContent = state.classifiedMismatch;
+  }
+}

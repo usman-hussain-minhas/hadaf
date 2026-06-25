@@ -8,7 +8,8 @@ const hmcDir = join(rootDir, "apps", "hmc");
 const contentTypes = new Map([
   [".html", "text/html; charset=utf-8"],
   [".css", "text/css; charset=utf-8"],
-  [".js", "text/javascript; charset=utf-8"]
+  [".js", "text/javascript; charset=utf-8"],
+  [".json", "application/json; charset=utf-8"]
 ]);
 
 if (process.argv.includes("--smoke")) {
@@ -62,10 +63,11 @@ async function runSmoke() {
   const port = typeof address === "object" && address ? address.port : 0;
   const base = `http://127.0.0.1:${port}`;
   try {
-    const [html, css, js] = await Promise.all([
+    const [html, css, js, stateJson] = await Promise.all([
       fetchText(`${base}/`),
       fetchText(`${base}/styles.css`),
-      fetchText(`${base}/app.js`)
+      fetchText(`${base}/app.js`),
+      fetchText(`${base}/state.fixture.json`)
     ]);
     const findings = [
       ...requireIncludes(html, [
@@ -80,7 +82,8 @@ async function runSmoke() {
         "Generated state stale"
       ]),
       ...requireIncludes(css, [".app-shell", "@media", "--teal"]),
-      ...requireIncludes(js, ["setView", "aria-pressed"])
+      ...requireIncludes(js, ["setView", "aria-pressed", "state.fixture.json"]),
+      ...requireIncludes(stateJson, ["adapterMaturity", "fixture_backed"])
     ];
     await assertFile(join(hmcDir, "index.html"));
     await assertFile(join(hmcDir, "styles.css"));

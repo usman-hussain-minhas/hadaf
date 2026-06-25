@@ -1,0 +1,104 @@
+{
+  "project": {
+    "id": "hadaf",
+    "name": "HADAF v1",
+    "posture": "H02 active",
+    "maturity": "fixture_backed"
+  },
+  "boxes": [
+    {
+      "id": "H01",
+      "name": "Source Vault and Target Guard",
+      "status": "complete",
+      "maturity": "fixture_backed",
+      "debt": [
+        "historical_manifest_nested_product_refs"
+      ]
+    },
+    {
+      "id": "H02",
+      "name": "Mission Control and Product Preview",
+      "status": "active",
+      "maturity": "fixture_backed"
+    }
+  ],
+  "ffets": [
+    {
+      "id": "H02-F00",
+      "title": "Architecture contract",
+      "status": "merged",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H02-F01",
+      "title": "Local HMC shell",
+      "status": "merged",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H02-F02",
+      "title": "Read adapters",
+      "status": "active",
+      "maturity": "fixture_backed"
+    }
+  ],
+  "quality": [
+    {
+      "id": "hmc_static_smoke",
+      "status": "passed",
+      "maturity": "fixture_backed",
+      "cannotClaim": [
+        "browser_accessibility_complete",
+        "browser_performance_complete"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "H02-F01",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "required": true
+    }
+  ],
+  "decisions": [
+    {
+      "id": "h02-next",
+      "status": "ready",
+      "maturity": "mocked"
+    }
+  ],
+  "git": {
+    "expectedMainSha": "1111111111111111111111111111111111111111111111111111111111111111",
+    "actualMainSha": "1111111111111111111111111111111111111111111111111111111111111111",
+    "originMainSha": "1111111111111111111111111111111111111111111111111111111111111111"
+  },
+  "github": {
+    "expectedHeadSha": "2222222222222222222222222222222222222222222222222222222222222222",
+    "currentHeadSha": "2222222222222222222222222222222222222222222222222222222222222222",
+    "openPullRequests": 0
+  },
+  "generatedState": [
+    {
+      "id": "runtime-checkpoint",
+      "freshness": "stale",
+      "maturity": "mocked"
+    }
+  ],
+  "classifiedMismatches": [
+    {
+      "kind": "generated_state_not_fresh",
+      "ref": "generated:runtime-checkpoint",
+      "classification": "stale",
+      "detail": "Runtime checkpoint freshness remains debt."
+    }
+  ],
+  "cannotClaim": [
+    "live_github_adapter_implemented",
+    "persistent_state_store_implemented",
+    "browser_accessibility_complete",
+    "browser_performance_complete",
+    "HMC_authoritative_state"
+  ],
+  "finalPostureRecommendation": "H02_HMC_STATE_FIXTURE_BACKED"
+}

@@ -20,7 +20,7 @@
           <span class="status-dot status-dot--ok" aria-hidden="true"></span>
           <span>local</span>
           <span class="divider" aria-hidden="true"></span>
-          <span>derived view</span>
+          <span data-state-field="adapter-status">fixture_backed adapter</span>
           <span class="maturity maturity--fixture">fixture_backed</span>
         </div>
       </header>
@@ -164,12 +164,12 @@
             <article class="queue-item is-active">
               <span class="queue-code">H02-F01</span>
               <strong>Local HMC shell</strong>
-              <span>active</span>
+              <span>merged</span>
             </article>
             <article class="queue-item">
               <span class="queue-code">H02-F02</span>
-              <strong>Read adapters</strong>
-              <span>pending</span>
+              <strong data-state-field="active-ffet">H02-F02 Read adapters</strong>
+              <span>active</span>
             </article>
             <article class="queue-item">
               <span class="queue-code">H02-F03</span>
@@ -234,7 +234,7 @@
             </article>
             <article class="state-card state-card--warn">
               <span class="state-label">conflict</span>
-              <strong>Generated state stale</strong>
+              <strong data-state-field="classified-mismatch">Generated state stale</strong>
               <p>Conflict markers must remain visible.</p>
             </article>
           </div>
