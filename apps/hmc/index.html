@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HADAF Mission Control</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#project" data-view-link="project" aria-label="HADAF Mission Control project view">
+          <span class="brand-mark" aria-hidden="true">H</span>
+          <span>
+            <strong>HADAF</strong>
+            <small>Mission Control</small>
+          </span>
+        </a>
+        <div class="topbar-status" aria-label="Current local status">
+          <span class="status-dot status-dot--ok" aria-hidden="true"></span>
+          <span>local</span>
+          <span class="divider" aria-hidden="true"></span>
+          <span>derived view</span>
+          <span class="maturity maturity--fixture">fixture_backed</span>
+        </div>
+      </header>
+
+      <aside class="sidebar" aria-label="Mission Control navigation">
+        <nav class="nav-list">
+          <button class="nav-item is-active" type="button" data-view="project" aria-pressed="true">
+            <span aria-hidden="true">P</span>
+            <span>Project</span>
+          </button>
+          <button class="nav-item" type="button" data-view="boxes" aria-pressed="false">
+            <span aria-hidden="true">B</span>
+            <span>Boxes</span>
+          </button>
+          <button class="nav-item" type="button" data-view="ffets" aria-pressed="false">
+            <span aria-hidden="true">F</span>
+            <span>FFETs</span>
+          </button>
+          <button class="nav-item" type="button" data-view="quality" aria-pressed="false">
+            <span aria-hidden="true">Q</span>
+            <span>Quality</span>
+          </button>
+          <button class="nav-item" type="button" data-view="evidence" aria-pressed="false">
+            <span aria-hidden="true">E</span>
+            <span>Evidence</span>
+          </button>
+          <button class="nav-item" type="button" data-view="decisions" aria-pressed="false">
+            <span aria-hidden="true">D</span>
+            <span>Decisions</span>
+          </button>
+          <button class="nav-item" type="button" data-view="preview" aria-pressed="false">
+            <span aria-hidden="true">V</span>
+            <span>Preview</span>
+          </button>
+        </nav>
+      </aside>
+
+      <main class="workspace" id="workspace">
+        <section class="view is-active" id="view-project" data-view-panel="project" aria-labelledby="project-title">
+          <div class="view-heading">
+            <div>
+              <p class="label">Project</p>
+              <h1 id="project-title">HADAF v1</h1>
+            </div>
+            <span class="maturity maturity--fixture">fixture_backed</span>
+          </div>
+
+          <div class="dashboard-grid dashboard-grid--project">
+            <section class="panel panel--wide" aria-labelledby="active-box-title">
+              <div class="panel-heading">
+                <p class="label">Active Box</p>
+                <h2 id="active-box-title">H02 Mission Control and Product Preview</h2>
+              </div>
+              <div class="status-strip" role="list" aria-label="Box status">
+                <span role="listitem" class="status-pill status-pill--active">active</span>
+                <span role="listitem" class="status-pill">H01 complete</span>
+                <span role="listitem" class="status-pill status-pill--warn">independent qualification debt</span>
+              </div>
+              <p class="summary">Local frontend foundation is in progress after bounded H01 source and target assurance.</p>
+            </section>
+
+            <section class="panel" aria-labelledby="truth-title">
+              <div class="panel-heading">
+                <p class="label">Truth</p>
+                <h2 id="truth-title">Precedence</h2>
+              </div>
+              <ol class="rank-list">
+                <li>Verified Git and GitHub truth</li>
+                <li>Verified evidence and closeout records</li>
+                <li>Accepted Control authority</li>
+                <li>Fresh runtime state</li>
+                <li>Generated UI state</li>
+              </ol>
+            </section>
+
+            <section class="panel" aria-labelledby="cannot-title">
+              <div class="panel-heading">
+                <p class="label">Cannot Claim</p>
+                <h2 id="cannot-title">Preserved</h2>
+              </div>
+              <ul class="tag-list" aria-label="Cannot claim entries">
+                <li>self_hosting_ready</li>
+                <li>production_ready</li>
+                <li>stable_agents</li>
+                <li>HMC_authoritative_state</li>
+              </ul>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="view-boxes" data-view-panel="boxes" aria-labelledby="boxes-title" hidden>
+          <div class="view-heading">
+            <div>
+              <p class="label">Boxes</p>
+              <h1 id="boxes-title">Roadmap</h1>
+            </div>
+            <span class="maturity maturity--fixture">fixture_backed</span>
+          </div>
+          <div class="table-panel" role="table" aria-label="Box roadmap">
+            <div class="table-row table-row--head" role="row">
+              <span role="columnheader">Box</span>
+              <span role="columnheader">Status</span>
+              <span role="columnheader">Proof</span>
+              <span role="columnheader">Debt</span>
+            </div>
+            <div class="table-row" role="row">
+              <span role="cell">H00 Quality Foundation</span>
+              <span role="cell"><strong>bounded</strong></span>
+              <span role="cell">self verified</span>
+              <span role="cell">independent qualification</span>
+            </div>
+            <div class="table-row" role="row">
+              <span role="cell">H01 Source Vault and Target Guard</span>
+              <span role="cell"><strong>complete</strong></span>
+              <span role="cell">Box Assurance</span>
+              <span role="cell">historical manifest traversal</span>
+            </div>
+            <div class="table-row" role="row">
+              <span role="cell">H02 HMC and Product Preview</span>
+              <span role="cell"><strong>active</strong></span>
+              <span role="cell">static UI</span>
+              <span role="cell">browser complete checks</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="view-ffets" data-view-panel="ffets" aria-labelledby="ffets-title" hidden>
+          <div class="view-heading">
+            <div>
+              <p class="label">FFETs</p>
+              <h1 id="ffets-title">Queue</h1>
+            </div>
+            <span class="maturity maturity--fixture">fixture_backed</span>
+          </div>
+          <div class="queue-list" aria-label="FFET queue">
+            <article class="queue-item is-done">
+              <span class="queue-code">H02-F00</span>
+              <strong>Architecture contract</strong>
+              <span>merged</span>
+            </article>
+            <article class="queue-item is-active">
+              <span class="queue-code">H02-F01</span>
+              <strong>Local HMC shell</strong>
+              <span>active</span>
+            </article>
+            <article class="queue-item">
+              <span class="queue-code">H02-F02</span>
+              <strong>Read adapters</strong>
+              <span>pending</span>
+            </article>
+            <article class="queue-item">
+              <span class="queue-code">H02-F03</span>
+              <strong>Product Preview</strong>
+              <span>pending</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="view-quality" data-view-panel="quality" aria-labelledby="quality-title" hidden>
+          <div class="view-heading">
+            <div>
+              <p class="label">Quality</p>
+              <h1 id="quality-title">Debt and Gates</h1>
+            </div>
+            <span class="maturity maturity--fixture">fixture_backed</span>
+          </div>
+          <div class="dashboard-grid">
+            <section class="panel" aria-labelledby="gate-title">
+              <div class="panel-heading">
+                <p class="label">Gate</p>
+                <h2 id="gate-title">Executable</h2>
+              </div>
+              <ul class="check-list">
+                <li><span class="status-dot status-dot--ok"></span> quality gate</li>
+                <li><span class="status-dot status-dot--ok"></span> Target Guard</li>
+                <li><span class="status-dot status-dot--ok"></span> bundle verifier</li>
+              </ul>
+            </section>
+            <section class="panel" aria-labelledby="debt-title">
+              <div class="panel-heading">
+                <p class="label">Debt</p>
+                <h2 id="debt-title">Classified</h2>
+              </div>
+              <ul class="tag-list">
+                <li>branch_coverage_enforced</li>
+                <li>browser_accessibility_complete</li>
+                <li>browser_performance_complete</li>
+              </ul>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="view-evidence" data-view-panel="evidence" aria-labelledby="evidence-title" hidden>
+          <div class="view-heading">
+            <div>
+              <p class="label">Evidence</p>
+              <h1 id="evidence-title">Proof Surface</h1>
+            </div>
+            <span class="maturity maturity--mocked">mocked</span>
+          </div>
+          <div class="state-grid" aria-label="Evidence state examples">
+            <article class="state-card">
+              <span class="state-label">loading</span>
+              <strong>Adapter pending</strong>
+              <p>Real evidence adapter begins in H02-F02.</p>
+            </article>
+            <article class="state-card">
+              <span class="state-label">empty</span>
+              <strong>No current question</strong>
+              <p>Decision queue is empty in this fixture.</p>
+            </article>
+            <article class="state-card state-card--warn">
+              <span class="state-label">conflict</span>
+              <strong>Generated state stale</strong>
+              <p>Conflict markers must remain visible.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="view-decisions" data-view-panel="decisions" aria-labelledby="decisions-title" hidden>
+          <div class="view-heading">
+            <div>
+              <p class="label">Decisions</p>
+              <h1 id="decisions-title">Human Attention</h1>
+            </div>
+            <span class="maturity maturity--mocked">mocked</span>
+          </div>
+          <div class="panel panel--wide">
+            <div class="decision-row">
+              <span class="status-pill status-pill--active">ready</span>
+              <strong>Proceed through H02 bounded frontend foundation.</strong>
+              <span>No blocking decision in this fixture.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="view-preview" data-view-panel="preview" aria-labelledby="preview-title" hidden>
+          <div class="view-heading">
+            <div>
+              <p class="label">Product Preview</p>
+              <h1 id="preview-title">Separate Surface</h1>
+            </div>
+            <span class="maturity maturity--mocked">mocked</span>
+          </div>
+          <div class="panel panel--wide">
+            <div class="preview-box">
+              <span class="preview-mark" aria-hidden="true">PV</span>
+              <div>
+                <strong>Preview shell begins in H02-F03.</strong>
+                <p>Current maturity is mocked. `production_connected` is blocked until a later proof exists.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
