@@ -1,0 +1,46 @@
+{
+  "inputAuthority": {
+    "logicalRoots": {
+      "fixture": "fixtures/h03-plan-normalization"
+    },
+    "sourceMode": "READ_ONLY_DIGEST",
+    "inputs": [
+      {
+        "inputId": "plan",
+        "form": "plain_language_plan",
+        "ref": "fixture://inputs/plan.md",
+        "sha256": "c08ae5c3d726fe2896b91583b3511b129bd180feb7c9ed0c8489ffae771d16f4",
+        "documentKind": "human_authorization",
+        "expectedClassification": "ratified_human_authority"
+      },
+      {
+        "inputId": "generated-summary",
+        "form": "founder_notes",
+        "ref": "fixture://inputs/generated-summary.md",
+        "sha256": "26fc988b993520fadd3cf7b059f5cd8d4975d44c9db1c486d152823c4689fe2a",
+        "documentKind": "generated_view",
+        "expectedClassification": "generated_view"
+      }
+    ],
+    "authorityManifest": [
+      {
+        "rank": 1,
+        "inputId": "plan",
+        "authority": "ratified_human_authority"
+      }
+    ]
+  },
+  "planSourceInputIds": [
+    "plan"
+  ],
+  "expectedSourceAuthoritySetHash": "d18693eb14327e1c67cfbd5e68445ba271c43dde9782dd9629fa2590f9b7253d",
+  "expectedNormalizedPlanHash": "2352e8961456756ef983d85b0f19b972a636242e7b2246d6f98ddd7cdaef30a5",
+  "cannotClaim": [
+    "question_register_compiler_implemented",
+    "delivery_constitution_compiler_implemented",
+    "zero_broad_ambiguity_gate_implemented",
+    "h03_delivery_constitution_ready_for_human_ratification",
+    "h03_implemented"
+  ],
+  "finalPostureRecommendation": "H03_F02_PLAN_NORMALIZATION_VERIFIED"
+}
