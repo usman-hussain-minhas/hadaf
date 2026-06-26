@@ -89,6 +89,57 @@ test("rejects companion artifacts that fail their schema", () => {
   assert.equal(report.findings.some((finding) => finding.kind === "invalid_companion_artifact"), true);
 });
 
+test("validates companion schemas with hash-bound external schema refs", () => {
+  const config = loadMutableConfig();
+  delete config.expectedConstitutionCandidateHash;
+  config.structuredContracts.agent_topology = {
+    artifact_id: "h03-fixture-companion-with-authority-ref",
+    artifact_version: "1.0.0",
+    ref: "fixture://artifacts/companion-with-authority-ref.json",
+    sha256: "2d1f23cf62f5e7cd54103886aec072db567358a0569d6bb0de837d832fe9958d",
+    schema_ref: "fixture://schemas/companion-with-authority-ref.json",
+    schema_sha256: "7dea322ed329ae88a2b23c6f2a25fa64495cda1f5764bdb3da048594fed5e46e"
+  };
+  config.companionArtifacts.agent_topology = {
+    ref: "fixture://artifacts/companion-with-authority-ref.json",
+    sha256: "2d1f23cf62f5e7cd54103886aec072db567358a0569d6bb0de837d832fe9958d",
+    schemaRef: "fixture://schemas/companion-with-authority-ref.json",
+    schemaSha256: "7dea322ed329ae88a2b23c6f2a25fa64495cda1f5764bdb3da048594fed5e46e"
+  };
+
+  const report = compileMutableConfig(config);
+
+  assert.equal(report.status, "passed");
+  assert.equal(report.verified_companions.some((companion) => companion.key === "agent_topology"), true);
+});
+
+test("rejects companion schemas with unregistered external refs", () => {
+  const config = loadMutableConfig();
+  delete config.expectedConstitutionCandidateHash;
+  config.structuredContracts.agent_topology = {
+    artifact_id: "h03-fixture-companion-with-authority-ref",
+    artifact_version: "1.0.0",
+    ref: "fixture://artifacts/companion-with-authority-ref.json",
+    sha256: "2d1f23cf62f5e7cd54103886aec072db567358a0569d6bb0de837d832fe9958d",
+    schema_ref: "fixture://schemas/companion-with-unregistered-ref.json",
+    schema_sha256: "b70c05316f4bf5d4f2c7fe7d257988f197f4e26639d8ea4500f18291ddf02e2a"
+  };
+  config.companionArtifacts.agent_topology = {
+    ref: "fixture://artifacts/companion-with-authority-ref.json",
+    sha256: "2d1f23cf62f5e7cd54103886aec072db567358a0569d6bb0de837d832fe9958d",
+    schemaRef: "fixture://schemas/companion-with-unregistered-ref.json",
+    schemaSha256: "b70c05316f4bf5d4f2c7fe7d257988f197f4e26639d8ea4500f18291ddf02e2a"
+  };
+
+  const report = compileMutableConfig(config);
+
+  assert.equal(report.status, "failed");
+  assert.equal(report.findings.some((finding) =>
+    finding.kind === "companion_schema_compile_failed" &&
+    finding.key === "agent_topology"
+  ), true);
+});
+
 test("rejects unresolved broad/systemic questions", () => {
   const config = loadMutableConfig();
   delete config.questionRegister.questionCandidates[0].humanAnswer;
