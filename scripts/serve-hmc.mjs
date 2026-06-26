@@ -72,20 +72,24 @@ async function runSmoke() {
     const findings = [
       ...requireIncludes(html, [
         "HADAF Mission Control",
-        "H01/H02 Foundation Boundedly Verified",
-        "HADAF_H01_H02_FOUNDATION_IMPLEMENTED_AND_BOUNDEDLY_VERIFIED",
+        "H03 Plan Compiler and Delivery Constitution",
+        "H03_DELIVERY_CONSTITUTION_NOT_YET_READY_FOR_HUMAN_RATIFICATION",
         "H02-F04-R1",
+        "H03-F06",
         "fixture_backed",
         "mocked",
+        "for_human_review",
+        "execution_not_authorized",
+        "derived_view_only",
         "self_hosting_ready",
         "HMC_authoritative_state",
         "Product Preview",
-        "Current truth fixture active",
+        "H03 derived projection active",
         "Generated state stale"
       ]),
       ...requireIncludes(css, [".app-shell", "@media", "--teal"]),
-      ...requireIncludes(js, ["setView", "aria-pressed", "state.fixture.json"]),
-      ...requireIncludes(stateJson, ["adapterMaturity", "fixture_backed", "H02-F04-R1"])
+      ...requireIncludes(js, ["setView", "aria-pressed", "state.fixture.json", "constitution-status"]),
+      ...requireIncludes(stateJson, ["adapterMaturity", "fixture_backed", "H03-F06", "derived_view_only"])
     ];
     await assertFile(join(hmcDir, "index.html"));
     await assertFile(join(hmcDir, "styles.css"));
@@ -96,7 +100,11 @@ async function runSmoke() {
       findings,
       cannot_claim: [
         "live_github_adapter_implemented",
+        "live_h03_control_adapter_implemented",
         "persistent_state_store_implemented",
+        "HMC_authoritative_state",
+        "constitution_approved_by_human",
+        "execution_authorization_granted",
         "browser_accessibility_complete",
         "browser_performance_complete"
       ]

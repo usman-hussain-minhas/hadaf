@@ -13,6 +13,7 @@ export interface HmcStateConfig {
   readonly quality: readonly HmcQualityInput[];
   readonly evidence: readonly HmcEvidenceInput[];
   readonly decisions: readonly HmcDecisionInput[];
+  readonly h03Projection?: HmcH03ProjectionInput;
   readonly git?: HmcGitTruthInput;
   readonly github?: HmcGitHubTruthInput;
   readonly generatedState?: readonly HmcGeneratedStateInput[];
@@ -83,6 +84,42 @@ export interface HmcGeneratedStateInput {
   readonly maturity: HmcMaturity;
 }
 
+export interface HmcH03ProjectionInput {
+  readonly id: string;
+  readonly status: string;
+  readonly maturity: HmcMaturity;
+  readonly authority: "derived_view_only";
+  readonly freshness: "fresh" | "stale" | "unknown";
+  readonly claimsAuthority?: boolean;
+  readonly compilerStages: readonly HmcH03CompilerStageInput[];
+  readonly deliveryConstitution: HmcH03DeliveryConstitutionProjectionInput;
+  readonly continuation: HmcH03ContinuationProjectionInput;
+}
+
+export interface HmcH03CompilerStageInput {
+  readonly id: string;
+  readonly title: string;
+  readonly status: string;
+  readonly maturity: HmcMaturity;
+  readonly closeoutStatus?: "not_applicable" | "pending" | "closeout_complete";
+}
+
+export interface HmcH03DeliveryConstitutionProjectionInput {
+  readonly readinessStatus: "not_ready" | "boundary_verified" | "ready_for_human_ratification";
+  readonly approvalStatus: "for_human_review" | "approved" | "rejected";
+  readonly executionAuthorized: boolean;
+  readonly humanRatificationRequired: boolean;
+  readonly maturity: HmcMaturity;
+  readonly constitutionHash?: string;
+  readonly readinessEvidenceVerified?: boolean;
+}
+
+export interface HmcH03ContinuationProjectionInput {
+  readonly status: "not_authorized" | "draft_only";
+  readonly h04H05H06ExecutionAuthorized: boolean;
+  readonly maturity: HmcMaturity;
+}
+
 export interface HmcClassifiedMismatchInput {
   readonly kind: string;
   readonly ref: string;
@@ -128,6 +165,7 @@ export interface HmcDerivedView {
   readonly quality: readonly HmcQualityInput[];
   readonly evidence: readonly HmcEvidenceInput[];
   readonly decisions: readonly HmcDecisionInput[];
+  readonly h03Projection?: HmcH03ProjectionInput;
   readonly truthPrecedence: readonly string[];
   readonly maturitySummary: Record<HmcMaturity, number>;
 }
@@ -162,6 +200,7 @@ export function deriveHmcStateConfig(config: HmcStateConfig): HmcStateReport {
   validateGitHubTruth(config, classified, findings);
   validateEvidence(config, classified, findings);
   validateGeneratedState(config, classified, findings);
+  validateH03Projection(config, classified, findings);
 
   const verifiedRefs: HmcVerifiedRef[] = [
     ...config.boxes.map((box) => ({ ref: `box:${box.id}`, status: box.status, maturity: box.maturity })),
@@ -170,7 +209,8 @@ export function deriveHmcStateConfig(config: HmcStateConfig): HmcStateReport {
       ref: `evidence:${evidence.id}`,
       status: evidence.status,
       maturity: evidence.maturity
-    }))
+    })),
+    ...h03VerifiedRefs(config.h03Projection)
   ];
 
   return {
@@ -193,7 +233,8 @@ export function deriveHmcStateConfig(config: HmcStateConfig): HmcStateReport {
         "generated_ui_state",
         "fixtures_and_mocks"
       ],
-      maturitySummary: summarizeMaturity(config)
+      maturitySummary: summarizeMaturity(config),
+      ...(config.h03Projection ? { h03Projection: config.h03Projection } : {})
     },
     cannot_claim: [...(config.cannotClaim ?? [])],
     final_posture_recommendation: config.finalPostureRecommendation ?? null
@@ -307,6 +348,126 @@ function validateGeneratedState(
   }
 }
 
+function validateH03Projection(
+  config: HmcStateConfig,
+  classified: readonly HmcClassifiedMismatchInput[],
+  findings: HmcStateFinding[]
+): void {
+  const projection = config.h03Projection;
+  if (!projection) return;
+
+  validateMaturity(`h03:${projection.id}`, projection.maturity, config, findings);
+  for (const stage of projection.compilerStages) {
+    validateMaturity(`h03_stage:${stage.id}`, stage.maturity, config, findings);
+  }
+  validateMaturity("h03:delivery_constitution", projection.deliveryConstitution.maturity, config, findings);
+  validateMaturity("h03:continuation", projection.continuation.maturity, config, findings);
+
+  if (projection.authority !== "derived_view_only" || projection.claimsAuthority === true) {
+    findings.push({
+      kind: "h03_projection_claims_authority",
+      ref: `h03:${projection.id}`,
+      detail: "HMC may project H03 state, but cannot create lifecycle authority."
+    });
+  }
+
+  if (projection.freshness !== "fresh") {
+    requireClassification("h03_projection_not_fresh", `h03:${projection.id}`, classified, findings, {
+      expected: "fresh",
+      actual: projection.freshness
+    });
+  }
+
+  if (projection.deliveryConstitution.approvalStatus !== "for_human_review") {
+    findings.push({
+      kind: "h03_constitution_approval_overclaim",
+      ref: "h03:delivery_constitution",
+      expected: "for_human_review",
+      actual: projection.deliveryConstitution.approvalStatus
+    });
+  }
+
+  if (projection.deliveryConstitution.executionAuthorized !== false) {
+    findings.push({
+      kind: "h03_execution_authorization_overclaim",
+      ref: "h03:delivery_constitution",
+      expected: "false",
+      actual: String(projection.deliveryConstitution.executionAuthorized)
+    });
+  }
+
+  if (projection.deliveryConstitution.humanRatificationRequired !== true) {
+    findings.push({
+      kind: "h03_human_ratification_not_required",
+      ref: "h03:delivery_constitution",
+      expected: "true",
+      actual: String(projection.deliveryConstitution.humanRatificationRequired)
+    });
+  }
+
+  if (
+    projection.deliveryConstitution.readinessStatus === "ready_for_human_ratification" &&
+    projection.deliveryConstitution.readinessEvidenceVerified !== true
+  ) {
+    findings.push({
+      kind: "h03_readiness_claim_without_evidence",
+      ref: "h03:delivery_constitution",
+      expected: "readinessEvidenceVerified=true",
+      actual: "missing"
+    });
+  }
+
+  if (projection.continuation.h04H05H06ExecutionAuthorized !== false) {
+    findings.push({
+      kind: "h04_h06_execution_authorization_overclaim",
+      ref: "h03:continuation",
+      expected: "false",
+      actual: String(projection.continuation.h04H05H06ExecutionAuthorized)
+    });
+  }
+
+  for (const cannotClaim of [
+    "HMC_authoritative_state",
+    "live_h03_control_adapter_implemented",
+    "constitution_approved_by_human",
+    "execution_authorization_granted",
+    "h04_h05_h06_execution_authorized"
+  ]) {
+    if (config.cannotClaim?.includes(cannotClaim)) continue;
+    findings.push({
+      kind: "missing_h03_projection_cannot_claim",
+      ref: `cannot_claim:${cannotClaim}`,
+      detail: "H03 HMC projection must preserve precise cannot_claim boundaries."
+    });
+  }
+}
+
+function h03VerifiedRefs(projection: HmcH03ProjectionInput | undefined): HmcVerifiedRef[] {
+  if (!projection) return [];
+  return [
+    {
+      ref: `h03:${projection.id}`,
+      status: projection.status,
+      maturity: projection.maturity
+    },
+    ...projection.compilerStages.map((stage) => ({
+      ref: `h03_stage:${stage.id}`,
+      status: stage.status,
+      maturity: stage.maturity
+    })),
+    {
+      ref: "h03:delivery_constitution",
+      status: projection.deliveryConstitution.readinessStatus,
+      maturity: projection.deliveryConstitution.maturity
+    },
+    {
+      ref: "h03:continuation",
+      status: projection.continuation.status,
+      maturity: projection.continuation.maturity
+    }
+  ];
+}
+
 function requireClassification(
   kind: string,
   ref: string,
@@ -355,9 +516,20 @@ function summarizeMaturity(config: HmcStateConfig): Record<HmcMaturity, number> 
     ...config.quality.map((quality) => quality.maturity),
     ...config.evidence.map((evidence) => evidence.maturity),
     ...config.decisions.map((decision) => decision.maturity),
+    ...h03Maturities(config.h03Projection),
     ...(config.generatedState ?? []).map((state) => state.maturity)
   ]) {
     summary[maturity] += 1;
   }
   return summary;
+}
+
+function h03Maturities(projection: HmcH03ProjectionInput | undefined): HmcMaturity[] {
+  if (!projection) return [];
+  return [
+    projection.maturity,
+    ...projection.compilerStages.map((stage) => stage.maturity),
+    projection.deliveryConstitution.maturity,
+    projection.continuation.maturity
+  ];
 }

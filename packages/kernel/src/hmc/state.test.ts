@@ -11,7 +11,11 @@ test("derives a valid HMC fixture state with classified stale generated state", 
   assert.equal(report.classified_mismatches.length, 1);
   assert.equal(report.view.project.name, "HADAF v1");
   assert.equal(report.view.maturitySummary.fixture_backed > 0, true);
-  assert.equal(report.final_posture_recommendation, "HADAF_H01_H02_FOUNDATION_IMPLEMENTED_AND_BOUNDEDLY_VERIFIED");
+  assert.equal(report.final_posture_recommendation, "H03_DELIVERY_CONSTITUTION_NOT_YET_READY_FOR_HUMAN_RATIFICATION");
+  assert.equal(report.view.h03Projection?.authority, "derived_view_only");
+  assert.equal(report.view.h03Projection?.deliveryConstitution.approvalStatus, "for_human_review");
+  assert.equal(report.view.h03Projection?.deliveryConstitution.executionAuthorized, false);
+  assert.equal(report.verified_refs.some((ref) => ref.ref === "h03_stage:H03-F05" && ref.status === "closeout_complete"), true);
   assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04" && ffet.status === "active"), false);
   assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04-R1" && ffet.status === "verified"), true);
 });
@@ -86,6 +90,83 @@ test("fails production connected maturity without proof", () => {
   assertFinding(report, "production_connected_without_proof");
 });
 
+test("fails H03 projection authority creation", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h03Projection: {
+      ...validConfig().h03Projection!,
+      claimsAuthority: true
+    }
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "h03_projection_claims_authority");
+});
+
+test("fails H03 constitution approval and execution overclaims", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h03Projection: {
+      ...validConfig().h03Projection!,
+      deliveryConstitution: {
+        ...validConfig().h03Projection!.deliveryConstitution,
+        approvalStatus: "approved",
+        executionAuthorized: true
+      },
+      continuation: {
+        ...validConfig().h03Projection!.continuation,
+        h04H05H06ExecutionAuthorized: true
+      }
+    }
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "h03_constitution_approval_overclaim");
+  assertFinding(report, "h03_execution_authorization_overclaim");
+  assertFinding(report, "h04_h06_execution_authorization_overclaim");
+});
+
+test("fails stale H03 projection without classification", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h03Projection: {
+      ...validConfig().h03Projection!,
+      freshness: "stale"
+    },
+    classifiedMismatches: []
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "unclassified_state_mismatch");
+});
+
+test("fails H03 ready-for-ratification claim without evidence", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h03Projection: {
+      ...validConfig().h03Projection!,
+      deliveryConstitution: {
+        ...validConfig().h03Projection!.deliveryConstitution,
+        readinessStatus: "ready_for_human_ratification",
+        readinessEvidenceVerified: false
+      }
+    }
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "h03_readiness_claim_without_evidence");
+});
+
+test("fails H03 projection when precise cannot_claim entries are missing", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    cannotClaim: ["live_github_adapter_implemented"]
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "missing_h03_projection_cannot_claim");
+});
+
 test("fails private paths in state config", () => {
   const report = deriveHmcStateConfig({
     ...validConfig(),
@@ -128,6 +209,13 @@ function validConfig(): HmcStateConfig {
         name: "Mission Control and Product Preview",
         status: "boundedly_verified",
         maturity: "fixture_backed"
+      },
+      {
+        id: "H03",
+        name: "Plan Compiler and Delivery Constitution",
+        status: "compiler_pipeline_in_progress",
+        maturity: "fixture_backed",
+        debt: ["human_ratification_pending", "h04_h06_execution_not_authorized"]
       }
     ],
     ffets: [
@@ -154,6 +242,48 @@ function validConfig(): HmcStateConfig {
         title: "Quality claim precision correction",
         status: "verified",
         maturity: "fixture_backed"
+      },
+      {
+        id: "H03-F00",
+        title: "Schema registry boundary",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H03-F01",
+        title: "Input authority boundary",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H03-F02",
+        title: "Plan normalization boundary",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H03-F03",
+        title: "Question Register boundary",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H03-F04",
+        title: "Delivery Constitution compiler boundary",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H03-F05",
+        title: "Constitution readiness boundary",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H03-F06",
+        title: "HMC derived projection",
+        status: "in_progress",
+        maturity: "fixture_backed"
       }
     ],
     quality: [
@@ -174,11 +304,82 @@ function validConfig(): HmcStateConfig {
     ],
     decisions: [
       {
-        id: "h02-next",
+        id: "h03-human-ratification",
         status: "ready",
-        maturity: "mocked"
+        maturity: "fixture_backed"
       }
     ],
+    h03Projection: {
+      id: "H03",
+      status: "compiler_pipeline_visible",
+      maturity: "fixture_backed",
+      authority: "derived_view_only",
+      freshness: "fresh",
+      compilerStages: [
+        {
+          id: "H03-F00",
+          title: "Schema registry boundary",
+          status: "closeout_complete",
+          maturity: "fixture_backed",
+          closeoutStatus: "closeout_complete"
+        },
+        {
+          id: "H03-F01",
+          title: "Input authority boundary",
+          status: "closeout_complete",
+          maturity: "fixture_backed",
+          closeoutStatus: "closeout_complete"
+        },
+        {
+          id: "H03-F02",
+          title: "Plan normalization boundary",
+          status: "closeout_complete",
+          maturity: "fixture_backed",
+          closeoutStatus: "closeout_complete"
+        },
+        {
+          id: "H03-F03",
+          title: "Question Register boundary",
+          status: "closeout_complete",
+          maturity: "fixture_backed",
+          closeoutStatus: "closeout_complete"
+        },
+        {
+          id: "H03-F04",
+          title: "Delivery Constitution compiler boundary",
+          status: "closeout_complete",
+          maturity: "fixture_backed",
+          closeoutStatus: "closeout_complete"
+        },
+        {
+          id: "H03-F05",
+          title: "Constitution readiness boundary",
+          status: "closeout_complete",
+          maturity: "fixture_backed",
+          closeoutStatus: "closeout_complete"
+        },
+        {
+          id: "H03-F06",
+          title: "HMC derived projection",
+          status: "in_progress",
+          maturity: "fixture_backed",
+          closeoutStatus: "pending"
+        }
+      ],
+      deliveryConstitution: {
+        readinessStatus: "boundary_verified",
+        approvalStatus: "for_human_review",
+        executionAuthorized: false,
+        humanRatificationRequired: true,
+        maturity: "fixture_backed",
+        constitutionHash: sha("d")
+      },
+      continuation: {
+        status: "not_authorized",
+        h04H05H06ExecutionAuthorized: false,
+        maturity: "fixture_backed"
+      }
+    },
     git: {
       expectedMainSha: sha(),
       actualMainSha: sha(),
@@ -206,9 +407,14 @@ function validConfig(): HmcStateConfig {
     ],
     cannotClaim: [
       "live_github_adapter_implemented",
-      "persistent_state_store_implemented"
+      "persistent_state_store_implemented",
+      "HMC_authoritative_state",
+      "live_h03_control_adapter_implemented",
+      "constitution_approved_by_human",
+      "execution_authorization_granted",
+      "h04_h05_h06_execution_authorized"
     ],
-    finalPostureRecommendation: "HADAF_H01_H02_FOUNDATION_IMPLEMENTED_AND_BOUNDEDLY_VERIFIED"
+    finalPostureRecommendation: "H03_DELIVERY_CONSTITUTION_NOT_YET_READY_FOR_HUMAN_RATIFICATION"
   };
 }
 
