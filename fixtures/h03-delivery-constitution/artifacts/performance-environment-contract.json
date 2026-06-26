@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "h03-fixture-performance-environment",
+  "artifact_type": "performance_environment_contract",
+  "constitution_id": "hadaf-h03-fixture-constitution",
+  "version": "1.0.0",
+  "summary": "Fixture performance contract limits H03 to static and local command evidence.",
+  "requirements": [
+    "No browser performance proof is claimed.",
+    "No production runtime performance proof is claimed."
+  ],
+  "cannot_claim": [
+    "browser_performance_complete",
+    "production_performance_complete"
+  ]
+}

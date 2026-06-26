@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "h03-fixture-independent-review-policy",
+  "artifact_type": "independent_review_policy",
+  "constitution_id": "hadaf-h03-fixture-constitution",
+  "version": "1.0.0",
+  "summary": "Fixture review policy requires honesty about advisory review.",
+  "requirements": [
+    "Use separate_session_advisory_read_only_audit when mechanical independence is not proven.",
+    "Do not treat different role labels as independent process separation."
+  ],
+  "cannot_claim": [
+    "independent_quality_auditor_qualified",
+    "independent_process_separation_proven"
+  ]
+}

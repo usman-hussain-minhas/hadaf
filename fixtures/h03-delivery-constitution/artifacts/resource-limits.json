@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "h03-fixture-resource-limits",
+  "artifact_type": "resource_limits",
+  "constitution_id": "hadaf-h03-fixture-constitution",
+  "version": "1.0.0",
+  "summary": "Fixture resource limits keep H03 serial and bounded.",
+  "requirements": [
+    "Use one worktree per Product FFET.",
+    "Use one PR per Product FFET.",
+    "Stop on scope overlap or stale FFET discovery."
+  ],
+  "cannot_claim": [
+    "resource_limit_enforcement_runtime_implemented"
+  ]
+}

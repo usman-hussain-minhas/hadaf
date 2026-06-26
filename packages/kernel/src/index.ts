@@ -191,3 +191,24 @@ export {
   type H03QuestionScopeClass,
   type H03QuestionStatus
 } from "./h03/question-register.js";
+export {
+  compileH03DeliveryConstitutionConfig,
+  hashDeliveryConstitutionCandidate,
+  type H03AuthorityArtifactRef,
+  type H03CompanionArtifactBinding,
+  type H03ConstitutionApproval,
+  type H03ConstitutionAuthorityEntry,
+  type H03DeliveryConstitution,
+  type H03DeliveryConstitutionConfig,
+  type H03DeliveryConstitutionFinding,
+  type H03DeliveryConstitutionReport,
+  type H03DeliveryConstitutionSchemaRefs,
+  type H03DeliveryConstitutionSettings,
+  type H03DeliveryConstitutionStatus,
+  type H03DeliveryConstitutionTarget,
+  type H03HashContract,
+  type H03QuestionResolution,
+  type H03SchemaRef,
+  type H03StructuredContractKey,
+  type H03VerifiedCompanionArtifact
+} from "./h03/delivery-constitution.js";

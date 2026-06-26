@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "graph_id": "h03-fixture-graph",
+  "version": "1.0.0",
+  "project_id": "hadaf-v1",
+  "constitution_id": "hadaf-h03-fixture-constitution",
+  "nodes": [
+    {
+      "box_id": "H03",
+      "name": "Plan Compiler and Delivery Constitution",
+      "objective": "Compile authority-bound planning inputs into a reviewable Delivery Constitution candidate.",
+      "source_refs": [
+        "fixture://inputs/plan.md"
+      ],
+      "planning_status": "approved"
+    }
+  ],
+  "edges": [],
+  "topological_order": [
+    "H03"
+  ],
+  "cycle_status": "acyclic",
+  "unresolved_dependencies": [],
+  "cannot_claim": [
+    "h04_h05_h06_execution_authorized"
+  ]
+}
