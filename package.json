@@ -46,6 +46,7 @@
     "verify:h03-delivery-constitution": "node scripts/verify-h03-delivery-constitution.mjs",
     "verify:h03-constitution-readiness": "node scripts/verify-h03-constitution-readiness.mjs",
     "verify:h03-ratification-readiness": "node scripts/verify-h03-ratification-readiness.mjs",
+    "verify:h05-agent-registry": "node scripts/verify-h05-agent-registry.mjs",
     "supply-chain": "node scripts/generate-supply-chain-artifacts.mjs"
   },
   "devDependencies": {

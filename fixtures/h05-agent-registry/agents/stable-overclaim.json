@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "agent_id": "agent.stable-overclaim",
+  "version": "0.1.0",
+  "role_family": "stable agent operator",
+  "capabilities": [
+    "stable_agent_operations"
+  ],
+  "allowed_planes": [
+    "product"
+  ],
+  "forbidden_planes": [
+    "release"
+  ],
+  "write_boundaries": [
+    "exact_ffet_owned_files"
+  ],
+  "qualification_status": "fixture_tested",
+  "bounded_use_status": "bounded_for_h05",
+  "evidence_requirements": [
+    {
+      "ref": "product://fixtures/h05-agent-registry/evidence/stable-overclaim.json",
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+    }
+  ],
+  "upskill_refs": [
+    {
+      "ref": "product://fixtures/h05-agent-registry/upskills/stable-overclaim.json",
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+    }
+  ],
+  "cannot_claim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "agent_id": "codex.bootstrap",
+  "version": "0.5.0",
+  "role_family": "bootstrap_executor",
+  "capabilities": [
+    "fresh_ffet_execution",
+    "control_evidence_closeout",
+    "terminal_learning_review"
+  ],
+  "allowed_planes": [
+    "product",
+    "control",
+    "evidence"
+  ],
+  "forbidden_planes": [
+    "release"
+  ],
+  "write_boundaries": [
+    "exact_ffet_owned_files",
+    "append_only_control_evidence_records"
+  ],
+  "qualification_status": "bounded_for_scope",
+  "bounded_use_status": "bounded_for_h04_h06",
+  "evidence_requirements": [
+    {
+      "ref": "product://fixtures/h05-agent-registry/evidence/bounded-agent-validation.json",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    }
+  ],
+  "upskill_refs": [
+    {
+      "ref": "product://fixtures/h05-agent-registry/upskills/terminal-learning-policy.json",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+    }
+  ],
+  "cannot_claim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ]
+}

@@ -324,3 +324,15 @@ export {
   type H03VerifiedPredecessor,
   type H03VerifiedRecord
 } from "./h03/constitution-readiness.js";
+export {
+  verifyH05AgentRegistryConfig,
+  type H05AgentExpectation,
+  type H05AgentRegistryConfig,
+  type H05AgentRegistryFinding,
+  type H05AgentRegistryReport,
+  type H05AgentRegistrySchemaDescriptor,
+  type H05AgentRegistryStatus,
+  type H05AgentValidationResult,
+  type H05ExpectedAgentStatus,
+  type H05VerifiedAgentRegistryRef
+} from "./h05/agent-registry.js";
