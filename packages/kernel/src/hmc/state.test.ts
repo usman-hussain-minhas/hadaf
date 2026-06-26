@@ -11,16 +11,19 @@ test("derives a valid HMC fixture state with classified stale generated state", 
   assert.equal(report.classified_mismatches.length, 1);
   assert.equal(report.view.project.name, "HADAF v1");
   assert.equal(report.view.maturitySummary.fixture_backed > 0, true);
-  assert.equal(report.final_posture_recommendation, "H03_PRODUCT_PIPELINE_COMPLETE_PENDING_BOX_ASSURANCE");
+  assert.equal(report.final_posture_recommendation, "H05_AGENT_FOUNDATION_ACTIVE_FIXTURE_BACKED");
   assert.equal(report.view.h03Projection?.authority, "derived_view_only");
   assert.equal(report.view.h03Projection?.deliveryConstitution.approvalStatus, "for_human_review");
   assert.equal(report.view.h03Projection?.deliveryConstitution.executionAuthorized, false);
   assert.equal(report.view.h04Projection?.authority, "derived_view_only");
   assert.equal(report.view.h04Projection?.finalizer.successorGate, "conditional_go");
+  assert.equal(report.view.h05Projection?.authority, "derived_view_only");
+  assert.equal(report.view.h05Projection?.box.assuranceStatus, "pending");
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h03_stage:H03-F05" && ref.status === "closeout_complete"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h03_stage:H03-F06" && ref.status === "closeout_complete"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h04_ffet:H04-F05" && ref.status === "closeout_complete"), true);
-  assert.equal(report.verified_refs.some((ref) => ref.ref === "h04_ffet:H04-F06" && ref.status === "active"), true);
+  assert.equal(report.verified_refs.some((ref) => ref.ref === "h04_ffet:H04-F06" && ref.status === "closeout_complete"), true);
+  assert.equal(report.verified_refs.some((ref) => ref.ref === "h05_agent:codex.bootstrap" && ref.status === "fixture_projected"), true);
   assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04" && ffet.status === "active"), false);
   assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04-R1" && ffet.status === "verified"), true);
 });
@@ -221,6 +224,92 @@ test("fails H04 projection when precise cannot_claim entries are missing", () =>
   assertFinding(report, "missing_h04_projection_cannot_claim");
 });
 
+test("fails H05 projection authority, maturity, and live/persistent overclaims", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h05Projection: {
+      ...validConfig().h05Projection!,
+      claimsAuthority: true,
+      claimLiveAdapter: true,
+      claimPersistence: true,
+      maturity: "persistent"
+    }
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "h05_projection_claims_authority");
+  assertFinding(report, "h05_projection_maturity_overclaim");
+  assertFinding(report, "h05_live_adapter_overclaim");
+  assertFinding(report, "h05_persistence_overclaim");
+});
+
+test("fails H05 stable, mechanical-independence, and runtime-enforcement overclaims", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h05Projection: {
+      ...validConfig().h05Projection!,
+      claimStableAgents: true,
+      claimMechanicalIndependence: true,
+      claimRuntimeEnforcement: true,
+      agents: [
+        {
+          ...validConfig().h05Projection!.agents[0]!,
+          status: "stable_agent",
+          qualificationStatus: "mechanically_independent",
+          circuitBreakerStatus: "runtime_enforced",
+          upskillStatus: "runtime_enforced"
+        }
+      ]
+    }
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "h05_stable_agent_projection_overclaim");
+  assertFinding(report, "h05_mechanical_independence_projection_overclaim");
+  assertFinding(report, "h05_runtime_enforcement_projection_overclaim");
+  assertFinding(report, "h05_runtime_circuit_breaker_enforcement_overclaim");
+  assertFinding(report, "h05_runtime_upskill_enforcement_overclaim");
+});
+
+test("fails H05 stale agent projection and missing prerequisite closeout", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h05Projection: {
+      ...validConfig().h05Projection!,
+      prerequisiteCloseouts: [
+        {
+          id: "H05-F03",
+          status: "closeout_complete",
+          closeoutStatus: "closeout_complete",
+          evidenceStatus: "missing",
+          terminalLearningStatus: "missing"
+        }
+      ],
+      agents: [
+        {
+          ...validConfig().h05Projection!.agents[0]!,
+          freshness: "stale"
+        }
+      ]
+    },
+    classifiedMismatches: []
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "h05_prerequisite_not_closeout_complete");
+  assertFinding(report, "unclassified_state_mismatch");
+});
+
+test("fails H05 projection when precise cannot_claim entries are missing", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    cannotClaim: ["live_github_adapter_implemented", "HMC_authoritative_state"]
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "missing_h05_projection_cannot_claim");
+});
+
 test("fails private paths in state config", () => {
   const report = deriveHmcStateConfig({
     ...validConfig(),
@@ -274,9 +363,16 @@ function validConfig(): HmcStateConfig {
       {
         id: "H04",
         name: "Lifecycle State and Run Ledger",
+        status: "conditional_go_to_h05",
+        maturity: "fixture_backed",
+        debt: ["h05_box_assurance_pending", "h06_not_implemented"]
+      },
+      {
+        id: "H05",
+        name: "Agent Registry and Circuit Breakers",
         status: "product_pipeline_active",
         maturity: "fixture_backed",
-        debt: ["box_assurance_pending", "h05_h06_not_implemented"]
+        debt: ["box_assurance_pending", "runtime_agent_execution_not_implemented"]
       }
     ],
     ffets: [
@@ -379,6 +475,36 @@ function validConfig(): HmcStateConfig {
       {
         id: "H04-F06",
         title: "HMC lifecycle projection",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H05-F00",
+        title: "Agent registry state model",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H05-F01",
+        title: "Agent cards and capability contracts",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H05-F02",
+        title: "Circuit breakers and no-rogue controls",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H05-F03",
+        title: "Upskill and decision learning records",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H05-F04",
+        title: "HMC agent projection",
         status: "active",
         maturity: "fixture_backed"
       }
@@ -389,11 +515,29 @@ function validConfig(): HmcStateConfig {
         status: "passed",
         maturity: "fixture_backed",
         cannotClaim: ["browser_accessibility_complete"]
+      },
+      {
+        id: "h05_hmc_agent_projection",
+        status: "passed",
+        maturity: "fixture_backed",
+        cannotClaim: [
+          "stable_agents",
+          "mechanically_independent_agents",
+          "runtime_circuit_breaker_enforcement",
+          "runtime_upskill_enforcement",
+          "HMC_authoritative_state"
+        ]
       }
     ],
     evidence: [
       {
         id: "H02-F01",
+        status: "verified",
+        maturity: "fixture_backed",
+        required: true
+      },
+      {
+        id: "H05-F03",
         status: "verified",
         maturity: "fixture_backed",
         required: true
@@ -479,15 +623,15 @@ function validConfig(): HmcStateConfig {
     },
     h04Projection: {
       id: "H04",
-      status: "product_pipeline_active",
+      status: "conditional_go_to_h05",
       maturity: "fixture_backed",
       authority: "derived_view_only",
       freshness: "fresh",
       box: {
         id: "H04",
-        status: "product_pipeline_active",
+        status: "conditional_go_to_h05",
         maturity: "fixture_backed",
-        assuranceStatus: "pending"
+        assuranceStatus: "complete"
       },
       ffets: [
         h04Ffet("H04-F00", "Truth Ledger schema boundary", "closeout_complete"),
@@ -495,7 +639,7 @@ function validConfig(): HmcStateConfig {
         h04Ffet("H04-F02", "FFET lifecycle verifier", "closeout_complete"),
         h04Ffet("H04-F03", "Closeout chain verifier", "closeout_complete"),
         h04Ffet("H04-F05", "Finalize Box verifier", "closeout_complete"),
-        h04Ffet("H04-F06", "HMC lifecycle projection", "active")
+        h04Ffet("H04-F06", "HMC lifecycle projection", "closeout_complete")
       ],
       truthLedger: {
         status: "fixture_projected",
@@ -508,8 +652,32 @@ function validConfig(): HmcStateConfig {
         status: "implemented",
         maturity: "fixture_backed",
         successorGate: "conditional_go",
-        blockingDebt: ["h04_box_assurance_pending"]
+        blockingDebt: []
       }
+    },
+    h05Projection: {
+      id: "H05",
+      status: "product_pipeline_active",
+      maturity: "fixture_backed",
+      authority: "derived_view_only",
+      freshness: "fresh",
+      box: {
+        id: "H05",
+        status: "product_pipeline_active",
+        maturity: "fixture_backed",
+        assuranceStatus: "pending"
+      },
+      agents: [
+        h05Agent("codex.bootstrap", "Bootstrap Execution Adapter"),
+        h05Agent("quality.auditor", "Quality Auditor"),
+        h05Agent("git.conductor", "Git Conductor")
+      ],
+      prerequisiteCloseouts: [
+        h05Prerequisite("H05-F00"),
+        h05Prerequisite("H05-F01"),
+        h05Prerequisite("H05-F02"),
+        h05Prerequisite("H05-F03")
+      ]
     },
     git: {
       expectedMainSha: sha(),
@@ -545,9 +713,14 @@ function validConfig(): HmcStateConfig {
       "execution_authorization_granted",
       "h04_h05_h06_execution_authorized",
       "h04_assurance_complete",
-      "h04_fully_implemented"
+      "h04_fully_implemented",
+      "stable_agents",
+      "mechanically_independent_agents",
+      "independent_quality_auditor_qualified",
+      "runtime_circuit_breaker_enforcement",
+      "runtime_upskill_enforcement"
     ],
-    finalPostureRecommendation: "H03_PRODUCT_PIPELINE_COMPLETE_PENDING_BOX_ASSURANCE"
+    finalPostureRecommendation: "H05_AGENT_FOUNDATION_ACTIVE_FIXTURE_BACKED"
   };
 }
 
@@ -560,6 +733,33 @@ function h04Ffet(id: string, title: string, status: string): NonNullable<HmcStat
     truthSource: "fixture",
     closeoutStatus: status === "closeout_complete" ? "closeout_complete" : "pending",
     freshness: "fresh"
+  };
+}
+
+function h05Agent(agentId: string, title: string): NonNullable<HmcStateConfig["h05Projection"]>["agents"][number] {
+  return {
+    agentId,
+    title,
+    status: "fixture_projected",
+    maturity: "fixture_backed",
+    qualificationStatus: "fixture_tested",
+    boundedUseStatus: "bounded_for_h05",
+    registryStatus: "verified",
+    capabilityStatus: "verified",
+    circuitBreakerStatus: "verified",
+    upskillStatus: "verified",
+    truthSource: "fixture",
+    freshness: "fresh"
+  };
+}
+
+function h05Prerequisite(id: string): NonNullable<HmcStateConfig["h05Projection"]>["prerequisiteCloseouts"][number] {
+  return {
+    id,
+    status: "closeout_complete",
+    closeoutStatus: "closeout_complete",
+    evidenceStatus: "verified",
+    terminalLearningStatus: "complete"
   };
 }
 

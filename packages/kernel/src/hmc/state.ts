@@ -15,6 +15,7 @@ export interface HmcStateConfig {
   readonly decisions: readonly HmcDecisionInput[];
   readonly h03Projection?: HmcH03ProjectionInput;
   readonly h04Projection?: HmcH04ProjectionInput;
+  readonly h05Projection?: HmcH05ProjectionInput;
   readonly git?: HmcGitTruthInput;
   readonly github?: HmcGitHubTruthInput;
   readonly generatedState?: readonly HmcGeneratedStateInput[];
@@ -166,6 +167,53 @@ export interface HmcH04FinalizerProjectionInput {
   readonly blockingDebt: readonly string[];
 }
 
+export interface HmcH05ProjectionInput {
+  readonly id: string;
+  readonly status: string;
+  readonly maturity: HmcMaturity;
+  readonly authority: "derived_view_only";
+  readonly freshness: "fresh" | "stale" | "unknown";
+  readonly claimsAuthority?: boolean;
+  readonly box: HmcH05BoxProjectionInput;
+  readonly agents: readonly HmcH05AgentProjectionInput[];
+  readonly prerequisiteCloseouts: readonly HmcH05PrerequisiteProjectionInput[];
+  readonly claimStableAgents?: boolean;
+  readonly claimMechanicalIndependence?: boolean;
+  readonly claimRuntimeEnforcement?: boolean;
+  readonly claimLiveAdapter?: boolean;
+  readonly claimPersistence?: boolean;
+}
+
+export interface HmcH05BoxProjectionInput {
+  readonly id: string;
+  readonly status: string;
+  readonly maturity: HmcMaturity;
+  readonly assuranceStatus: "not_started" | "pending" | "in_progress" | "complete";
+}
+
+export interface HmcH05AgentProjectionInput {
+  readonly agentId: string;
+  readonly title: string;
+  readonly status: string;
+  readonly maturity: HmcMaturity;
+  readonly qualificationStatus: string;
+  readonly boundedUseStatus: string;
+  readonly registryStatus: "verified" | "missing" | "stale" | "conflict";
+  readonly capabilityStatus: "verified" | "missing" | "stale" | "conflict";
+  readonly circuitBreakerStatus: "verified" | "missing" | "stale" | "conflict" | "runtime_enforced";
+  readonly upskillStatus: "verified" | "missing" | "stale" | "conflict" | "runtime_enforced";
+  readonly truthSource: "fixture" | "verified_evidence" | "generated" | "unknown";
+  readonly freshness: "fresh" | "stale" | "missing" | "conflict";
+}
+
+export interface HmcH05PrerequisiteProjectionInput {
+  readonly id: string;
+  readonly status: string;
+  readonly closeoutStatus: "not_applicable" | "pending" | "closeout_complete";
+  readonly evidenceStatus: "verified" | "missing" | "stale" | "conflict";
+  readonly terminalLearningStatus: "complete" | "missing" | "stale" | "conflict";
+}
+
 export interface HmcClassifiedMismatchInput {
   readonly kind: string;
   readonly ref: string;
@@ -213,6 +261,7 @@ export interface HmcDerivedView {
   readonly decisions: readonly HmcDecisionInput[];
   readonly h03Projection?: HmcH03ProjectionInput;
   readonly h04Projection?: HmcH04ProjectionInput;
+  readonly h05Projection?: HmcH05ProjectionInput;
   readonly truthPrecedence: readonly string[];
   readonly maturitySummary: Record<HmcMaturity, number>;
 }
@@ -231,6 +280,9 @@ const PRIVATE_PATH_PATTERNS: readonly RegExp[] = [
   /file:\/\/\/?(Users|Volumes)\//iu,
   /\binput:\/\/[^\s"'`<>)\]}]+/iu
 ];
+const STABLE_AGENT_PATTERN = /\bstable(?:[_\s-]+agent|[_\s-]+agents)?\b|^stable$/iu;
+const MECHANICAL_INDEPENDENCE_PATTERN =
+  /\b(?:mechanically[_\s-]+independent|independent[_\s-]+quality[_\s-]+auditor|independent[_\s-]+process)(?:\b|[_\s-])/iu;
 
 export function deriveHmcStateConfig(config: HmcStateConfig): HmcStateReport {
   const findings: HmcStateFinding[] = [];
@@ -249,6 +301,7 @@ export function deriveHmcStateConfig(config: HmcStateConfig): HmcStateReport {
   validateGeneratedState(config, classified, findings);
   validateH03Projection(config, classified, findings);
   validateH04Projection(config, classified, findings);
+  validateH05Projection(config, classified, findings);
 
   const verifiedRefs: HmcVerifiedRef[] = [
     ...config.boxes.map((box) => ({ ref: `box:${box.id}`, status: box.status, maturity: box.maturity })),
@@ -259,7 +312,8 @@ export function deriveHmcStateConfig(config: HmcStateConfig): HmcStateReport {
       maturity: evidence.maturity
     })),
     ...h03VerifiedRefs(config.h03Projection),
-    ...h04VerifiedRefs(config.h04Projection)
+    ...h04VerifiedRefs(config.h04Projection),
+    ...h05VerifiedRefs(config.h05Projection)
   ];
 
   return {
@@ -284,7 +338,8 @@ export function deriveHmcStateConfig(config: HmcStateConfig): HmcStateReport {
       ],
       maturitySummary: summarizeMaturity(config),
       ...(config.h03Projection ? { h03Projection: config.h03Projection } : {}),
-      ...(config.h04Projection ? { h04Projection: config.h04Projection } : {})
+      ...(config.h04Projection ? { h04Projection: config.h04Projection } : {}),
+      ...(config.h05Projection ? { h05Projection: config.h05Projection } : {})
     },
     cannot_claim: [...(config.cannotClaim ?? [])],
     final_posture_recommendation: config.finalPostureRecommendation ?? null
@@ -589,6 +644,153 @@ function validateH04Projection(
   }
 }
 
+function validateH05Projection(
+  config: HmcStateConfig,
+  classified: readonly HmcClassifiedMismatchInput[],
+  findings: HmcStateFinding[]
+): void {
+  const projection = config.h05Projection;
+  if (!projection) return;
+
+  validateMaturity(`h05:${projection.id}`, projection.maturity, config, findings);
+  validateMaturity(`h05_box:${projection.box.id}`, projection.box.maturity, config, findings);
+  for (const agent of projection.agents) {
+    validateMaturity(`h05_agent:${agent.agentId}`, agent.maturity, config, findings);
+  }
+
+  if (projection.authority !== "derived_view_only" || projection.claimsAuthority === true) {
+    findings.push({
+      kind: "h05_projection_claims_authority",
+      ref: `h05:${projection.id}`,
+      detail: "HMC may project H05 agent state, but cannot create agent authority."
+    });
+  }
+
+  if (projection.freshness !== "fresh") {
+    requireClassification("h05_projection_not_fresh", `h05:${projection.id}`, classified, findings, {
+      expected: "fresh",
+      actual: projection.freshness
+    });
+  }
+
+  if (projection.maturity === "api_backed" || projection.maturity === "persistent" || projection.maturity === "production_connected") {
+    findings.push({
+      kind: "h05_projection_maturity_overclaim",
+      ref: `h05:${projection.id}`,
+      expected: "fixture_backed",
+      actual: projection.maturity
+    });
+  }
+
+  for (const prerequisite of projection.prerequisiteCloseouts) {
+    if (
+      prerequisite.closeoutStatus !== "closeout_complete" ||
+      prerequisite.evidenceStatus !== "verified" ||
+      prerequisite.terminalLearningStatus !== "complete"
+    ) {
+      findings.push({
+        kind: "h05_prerequisite_not_closeout_complete",
+        ref: `h05_prerequisite:${prerequisite.id}`,
+        expected: "closeout_complete/verified/complete",
+        actual: `${prerequisite.closeoutStatus}/${prerequisite.evidenceStatus}/${prerequisite.terminalLearningStatus}`
+      });
+    }
+  }
+
+  for (const agent of projection.agents) {
+    if (agent.freshness !== "fresh") {
+      requireClassification("h05_agent_projection_not_fresh", `h05_agent:${agent.agentId}`, classified, findings, {
+        expected: "fresh",
+        actual: agent.freshness
+      });
+    }
+    if (agent.registryStatus !== "verified") {
+      findings.push({
+        kind: "h05_agent_registry_not_verified",
+        ref: `h05_agent:${agent.agentId}`,
+        expected: "verified",
+        actual: agent.registryStatus
+      });
+    }
+    if (agent.capabilityStatus !== "verified") {
+      findings.push({
+        kind: "h05_agent_capability_not_verified",
+        ref: `h05_agent:${agent.agentId}`,
+        expected: "verified",
+        actual: agent.capabilityStatus
+      });
+    }
+    if (agent.circuitBreakerStatus !== "verified") {
+      findings.push({
+        kind:
+          agent.circuitBreakerStatus === "runtime_enforced"
+            ? "h05_runtime_circuit_breaker_enforcement_overclaim"
+            : "h05_agent_circuit_breaker_not_verified",
+        ref: `h05_agent:${agent.agentId}`,
+        expected: "verified",
+        actual: agent.circuitBreakerStatus
+      });
+    }
+    if (agent.upskillStatus !== "verified") {
+      findings.push({
+        kind:
+          agent.upskillStatus === "runtime_enforced"
+            ? "h05_runtime_upskill_enforcement_overclaim"
+            : "h05_agent_upskill_not_verified",
+        ref: `h05_agent:${agent.agentId}`,
+        expected: "verified",
+        actual: agent.upskillStatus
+      });
+    }
+    if (STABLE_AGENT_PATTERN.test(agent.status) || STABLE_AGENT_PATTERN.test(agent.qualificationStatus)) {
+      findings.push({
+        kind: "h05_stable_agent_projection_overclaim",
+        ref: `h05_agent:${agent.agentId}`,
+        expected: "fixture_tested_or_bounded",
+        actual: `${agent.status}/${agent.qualificationStatus}`
+      });
+    }
+    if (MECHANICAL_INDEPENDENCE_PATTERN.test(agent.status) || MECHANICAL_INDEPENDENCE_PATTERN.test(agent.qualificationStatus)) {
+      findings.push({
+        kind: "h05_mechanical_independence_projection_overclaim",
+        ref: `h05_agent:${agent.agentId}`,
+        expected: "cannot_claim_preserved",
+        actual: `${agent.status}/${agent.qualificationStatus}`
+      });
+    }
+  }
+
+  const claimChecks: readonly [boolean | undefined, string, string][] = [
+    [projection.claimStableAgents, "h05_stable_agent_projection_overclaim", "stable_agents"],
+    [projection.claimMechanicalIndependence, "h05_mechanical_independence_projection_overclaim", "mechanically_independent_agents"],
+    [projection.claimRuntimeEnforcement, "h05_runtime_enforcement_projection_overclaim", "runtime_enforcement"],
+    [projection.claimLiveAdapter, "h05_live_adapter_overclaim", "live_github_adapter_implemented"],
+    [projection.claimPersistence, "h05_persistence_overclaim", "persistent_state_store_implemented"]
+  ];
+  for (const [enabled, kind, ref] of claimChecks) {
+    if (enabled !== true) continue;
+    findings.push({ kind, ref, expected: "cannot_claim_preserved", actual: "claimed" });
+  }
+
+  for (const cannotClaim of [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified",
+    "runtime_circuit_breaker_enforcement",
+    "runtime_upskill_enforcement",
+    "HMC_authoritative_state",
+    "live_github_adapter_implemented",
+    "persistent_state_store_implemented"
+  ]) {
+    if (config.cannotClaim?.includes(cannotClaim)) continue;
+    findings.push({
+      kind: "missing_h05_projection_cannot_claim",
+      ref: `cannot_claim:${cannotClaim}`,
+      detail: "H05 HMC agent projection must preserve precise cannot_claim boundaries."
+    });
+  }
+}
+
 function h03VerifiedRefs(projection: HmcH03ProjectionInput | undefined): HmcVerifiedRef[] {
   if (!projection) return [];
   return [
@@ -646,6 +848,32 @@ function h04VerifiedRefs(projection: HmcH04ProjectionInput | undefined): HmcVeri
   ];
 }
 
+function h05VerifiedRefs(projection: HmcH05ProjectionInput | undefined): HmcVerifiedRef[] {
+  if (!projection) return [];
+  return [
+    {
+      ref: `h05:${projection.id}`,
+      status: projection.status,
+      maturity: projection.maturity
+    },
+    {
+      ref: `h05_box:${projection.box.id}`,
+      status: projection.box.status,
+      maturity: projection.box.maturity
+    },
+    ...projection.agents.map((agent) => ({
+      ref: `h05_agent:${agent.agentId}`,
+      status: agent.status,
+      maturity: agent.maturity
+    })),
+    ...projection.prerequisiteCloseouts.map((prerequisite) => ({
+      ref: `h05_prerequisite:${prerequisite.id}`,
+      status: prerequisite.closeoutStatus,
+      maturity: projection.maturity
+    }))
+  ];
+}
+
 function requireClassification(
   kind: string,
   ref: string,
@@ -696,6 +924,7 @@ function summarizeMaturity(config: HmcStateConfig): Record<HmcMaturity, number> 
     ...config.decisions.map((decision) => decision.maturity),
     ...h03Maturities(config.h03Projection),
     ...h04Maturities(config.h04Projection),
+    ...h05Maturities(config.h05Projection),
     ...(config.generatedState ?? []).map((state) => state.maturity)
   ]) {
     summary[maturity] += 1;
@@ -711,6 +940,15 @@ function h04Maturities(projection: HmcH04ProjectionInput | undefined): HmcMaturi
     ...projection.ffets.map((ffet) => ffet.maturity),
     projection.truthLedger.maturity,
     projection.finalizer.maturity
+  ];
+}
+
+function h05Maturities(projection: HmcH05ProjectionInput | undefined): HmcMaturity[] {
+  if (!projection) return [];
+  return [
+    projection.maturity,
+    projection.box.maturity,
+    ...projection.agents.map((agent) => agent.maturity)
   ];
 }
 
