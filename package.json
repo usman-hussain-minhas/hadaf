@@ -49,6 +49,7 @@
     "verify:h05-agent-registry": "node scripts/verify-h05-agent-registry.mjs",
     "verify:h05-capability-contracts": "node scripts/verify-h05-capability-contracts.mjs",
     "verify:h05-circuit-breakers": "node scripts/verify-h05-circuit-breakers.mjs",
+    "verify:h05-upskill-records": "node scripts/verify-h05-upskill-records.mjs",
     "supply-chain": "node scripts/generate-supply-chain-artifacts.mjs"
   },
   "devDependencies": {

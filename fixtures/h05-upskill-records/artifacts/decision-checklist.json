@@ -1,0 +1,8 @@
+{
+  "artifact": "decision_checklist",
+  "items": [
+    "record rejected alternatives",
+    "record corrected rule",
+    "record stop or ask condition"
+  ]
+}

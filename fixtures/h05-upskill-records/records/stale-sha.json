@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "upskill_id": "upskill.stale-sha",
+  "triggering_event_ref": {
+    "ref": "fixture://artifacts/terminal-event.json",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "learning_dimensions": [
+    "evidence"
+  ],
+  "mistake_or_no_change_reason": "A stale sentinel SHA should be rejected.",
+  "durable_change_refs": [
+    {
+      "ref": "fixture://artifacts/verifier-rule.json",
+      "sha256": "0b6a6338b89feef6d246fc3e8df9cace70be4181fa593b02acdd6737a5836821"
+    }
+  ],
+  "regression_fixture_refs": [],
+  "effective_from": "product://fixtures/h05-upskill-records/effective/H05-F03.json",
+  "non_degradation_result": "passed",
+  "cannot_claim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified",
+    "runtime_upskill_enforcement"
+  ]
+}

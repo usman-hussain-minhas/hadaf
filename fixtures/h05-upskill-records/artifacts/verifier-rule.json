@@ -1,0 +1,4 @@
+{
+  "artifact": "verifier_rule_fixture",
+  "rule": "terminal learning must produce a durable guard or an explicit no-change record"
+}

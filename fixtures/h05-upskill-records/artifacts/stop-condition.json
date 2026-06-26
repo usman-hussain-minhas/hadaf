@@ -1,0 +1,4 @@
+{
+  "artifact": "stop_condition",
+  "condition": "stop when generated state conflicts with GitHub truth and the mismatch is unclassified"
+}

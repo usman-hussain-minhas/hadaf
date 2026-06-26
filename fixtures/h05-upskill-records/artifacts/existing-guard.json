@@ -1,0 +1,4 @@
+{
+  "artifact": "existing_guard",
+  "guard": "non-degradation check already covers the terminal outcome"
+}

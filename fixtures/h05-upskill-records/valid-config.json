@@ -1,0 +1,114 @@
+{
+  "logicalRoots": {
+    "fixture://artifacts": "fixtures/h05-upskill-records/artifacts",
+    "fixture://records": "fixtures/h05-upskill-records/records",
+    "fixture://schemas": "fixtures/h05-upskill-records/schemas"
+  },
+  "schema": {
+    "ref": "fixture://schemas/upskill_record.schema.json",
+    "sha256": "0d9816dca1c38cc173e801481090c7d8855484e76a28868828c414bb7d4d95e9"
+  },
+  "schemaRefs": [
+    {
+      "ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json",
+      "sha256": "7a83c465f4307fd2e30cf3bccfbab40eddae37a706a4cdbdd3588ba024fc75a9"
+    }
+  ],
+  "requiredCannotClaim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified",
+    "runtime_upskill_enforcement"
+  ],
+  "records": [
+    {
+      "recordId": "upskill.coding-guard",
+      "ref": "fixture://records/coding-guard.json",
+      "sha256": "7e97546eadb03b0b0edc64521dbb5d86897313f8e85c54b695ce68a81514578b",
+      "expectedStatus": "passed"
+    },
+    {
+      "recordId": "upskill.decision-guard",
+      "ref": "fixture://records/decision-guard.json",
+      "sha256": "62abee031c94caeceab8716ef7b11579ae48c203326b773736cd560137e60d17",
+      "expectedStatus": "passed"
+    },
+    {
+      "recordId": "upskill.no-change-justified",
+      "ref": "fixture://records/no-change-justified.json",
+      "sha256": "58287b503168aceb0c769f040d11b859fc684572ba77ce18dbd2049d4b1f4544",
+      "expectedStatus": "passed"
+    },
+    {
+      "recordId": "upskill.lesson-without-effect",
+      "ref": "fixture://records/lesson-without-effect.json",
+      "sha256": "369580750bcb14275292264b1b925b7d99945ed0c0ad869be553be1ae3f07528",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "lesson_without_durable_effect"
+      ]
+    },
+    {
+      "recordId": "upskill.decision-missing-alternatives",
+      "ref": "fixture://records/decision-missing-alternatives.json",
+      "sha256": "a09074c7f65a72d0aa31a792b18ed6860b3399c3066330ef3adfc7c91c8c2196",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "decision_upskill_missing_rejected_alternatives"
+      ]
+    },
+    {
+      "recordId": "upskill.decision-missing-stop",
+      "ref": "fixture://records/decision-missing-stop.json",
+      "sha256": "643b2275ad7245596d5c4c2f6dc7ef1b7d0af083f3bad3cf6aacf52fe2b9268d",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "decision_upskill_missing_future_stop_or_ask_condition"
+      ]
+    },
+    {
+      "recordId": "upskill.silent-authority-change",
+      "ref": "fixture://records/silent-authority-change.json",
+      "sha256": "8d47301df64e54640fd7fc3cadba5f64b8187620e0e809e35ce421560be10f13",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "silent_authority_change_forbidden"
+      ]
+    },
+    {
+      "recordId": "upskill.stable-overclaim",
+      "ref": "fixture://records/stable-overclaim.json",
+      "sha256": "21c8b7679a897816ec8057cc5d7df4cfb150bea6af6c33d241e33f73c2ab42e1",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "stable_agent_overclaim"
+      ]
+    },
+    {
+      "recordId": "upskill.bad-hash",
+      "ref": "fixture://records/bad-hash.json",
+      "sha256": "8499864ff939581756fd1fe33c6e9ee1409888505402c07d89e8e92733b1f772",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "triggering_event_ref_sha256_invalid"
+      ]
+    },
+    {
+      "recordId": "upskill.stale-sha",
+      "ref": "fixture://records/stale-sha.json",
+      "sha256": "4d6d85898e70dda058c43ba444c1590059a85757adaa868929cb6368e15e5a7b",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "triggering_event_ref_stale_sha256"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified",
+    "runtime_upskill_enforcement",
+    "structured_decision_upskill_fields_enforced_by_schema"
+  ],
+  "finalPostureRecommendation": "H05_F03_UPSKILL_DECISION_LEARNING_RECORDS_FIXTURE_VERIFIED"
+}

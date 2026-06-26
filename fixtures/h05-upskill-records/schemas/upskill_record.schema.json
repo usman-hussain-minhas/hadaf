@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://schemas/upskill_record.schema.json",
+  "title": "HADAF Upskill Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "upskill_id",
+    "triggering_event_ref",
+    "learning_dimensions",
+    "mistake_or_no_change_reason",
+    "durable_change_refs",
+    "regression_fixture_refs",
+    "effective_from",
+    "non_degradation_result",
+    "cannot_claim"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "upskill_id": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/id"
+    },
+    "triggering_event_ref": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/refHash"
+    },
+    "learning_dimensions": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "coding",
+          "planning",
+          "evidence",
+          "security",
+          "doctrine",
+          "decision",
+          "claim_escalation",
+          "audit_assumption"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "mistake_or_no_change_reason": {
+      "type": "string"
+    },
+    "durable_change_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/refHash"
+      },
+      "default": []
+    },
+    "regression_fixture_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/refHash"
+      },
+      "default": []
+    },
+    "effective_from": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/ref"
+    },
+    "non_degradation_result": {
+      "enum": [
+        "passed",
+        "failed",
+        "not_applicable_with_reason"
+      ]
+    },
+    "cannot_claim": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/cannotClaim"
+    }
+  }
+}
