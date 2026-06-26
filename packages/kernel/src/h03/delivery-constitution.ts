@@ -409,7 +409,9 @@ function verifyCompanionArtifacts(
       findings.push({ kind: "missing_companion_artifact_binding", key });
       continue;
     }
-    verifyCompanionArtifact(key, artifactRef, binding, config.logicalRoots, findings);
+    verifyCompanionArtifact(key, artifactRef, binding, config.logicalRoots, [
+      config.schemas.authorityArtifactRef
+    ], findings);
     if (findings.length > findingCountBeforeCompanion) continue;
     verified.push({
       key,
@@ -427,6 +429,7 @@ function verifyCompanionArtifact(
   artifactRef: H03AuthorityArtifactRef,
   binding: H03CompanionArtifactBinding,
   logicalRoots: Record<string, string>,
+  referencedSchemaRefs: readonly H03SchemaRef[],
   findings: H03DeliveryConstitutionFinding[]
 ): void {
   if (
@@ -441,10 +444,37 @@ function verifyCompanionArtifact(
   const artifact = loadJsonDocument(binding.ref, normalizeSha256(binding.sha256), logicalRoots, findings, key);
   const schema = loadJsonDocument(binding.schemaRef, normalizeSha256(binding.schemaSha256), logicalRoots, findings, `${key}:schema`);
   if (!artifact || !schema) return;
+  const referencedSchemas = referencedSchemaRefs.map((schemaRef) =>
+    loadSchema(schemaRef, logicalRoots, findings)
+  );
+  if (referencedSchemas.some((referencedSchema) => !referencedSchema)) return;
 
   const ajv = new Ajv2020({ allErrors: true, strict: false });
   addFormats(ajv);
-  const valid = ajv.compile(schema as AnySchema)(artifact);
+  try {
+    for (const referencedSchema of referencedSchemas) {
+      ajv.addSchema(referencedSchema as AnySchema);
+    }
+  } catch (error) {
+    findings.push({
+      kind: "companion_schema_ref_registration_failed",
+      key,
+      detail: error instanceof Error ? error.message : "unknown schema registration error"
+    });
+    return;
+  }
+  let validator: ValidateFunction<unknown>;
+  try {
+    validator = ajv.compile(schema as AnySchema);
+  } catch (error) {
+    findings.push({
+      kind: "companion_schema_compile_failed",
+      key,
+      detail: error instanceof Error ? error.message : "unknown schema compile error"
+    });
+    return;
+  }
+  const valid = validator(artifact);
   if (!valid) {
     findings.push({ kind: "invalid_companion_artifact", key });
   }

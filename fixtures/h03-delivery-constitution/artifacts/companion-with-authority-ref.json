@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "h03-fixture-companion-with-authority-ref",
+  "source_ref": {
+    "artifact_id": "h03-fixture-source",
+    "artifact_version": "1.0.0",
+    "ref": "fixture://inputs/plan.md",
+    "sha256": "c08ae5c3d726fe2896b91583b3511b129bd180feb7c9ed0c8489ffae771d16f4",
+    "schema_ref": "fixture://schemas/authority-ref.json",
+    "schema_sha256": "884a856bb443b4c5dc0ef3ccab8d361a0fedaa549cc99efb49238348ffc3e919"
+  }
+}
