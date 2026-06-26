@@ -2,7 +2,7 @@
   "project": {
     "id": "hadaf",
     "name": "HADAF v1",
-    "posture": "HADAF_H01_H02_FOUNDATION_IMPLEMENTED_AND_BOUNDEDLY_VERIFIED",
+    "posture": "H03_DELIVERY_CONSTITUTION_NOT_YET_READY_FOR_HUMAN_RATIFICATION",
     "maturity": "fixture_backed"
   },
   "boxes": [
@@ -20,6 +20,16 @@
       "name": "Mission Control and Product Preview",
       "status": "boundedly_verified",
       "maturity": "fixture_backed"
+    },
+    {
+      "id": "H03",
+      "name": "Plan Compiler and Delivery Constitution",
+      "status": "compiler_pipeline_in_progress",
+      "maturity": "fixture_backed",
+      "debt": [
+        "human_ratification_pending",
+        "h04_h06_execution_not_authorized"
+      ]
     }
   ],
   "ffets": [
@@ -58,6 +68,48 @@
       "title": "Quality claim precision correction",
       "status": "verified",
       "maturity": "fixture_backed"
+    },
+    {
+      "id": "H03-F00",
+      "title": "Schema registry boundary",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H03-F01",
+      "title": "Input authority boundary",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H03-F02",
+      "title": "Plan normalization boundary",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H03-F03",
+      "title": "Question Register boundary",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H03-F04",
+      "title": "Delivery Constitution compiler boundary",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H03-F05",
+      "title": "Constitution readiness boundary",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H03-F06",
+      "title": "HMC derived projection",
+      "status": "in_progress",
+      "maturity": "fixture_backed"
     }
   ],
   "quality": [
@@ -68,6 +120,17 @@
       "cannotClaim": [
         "browser_accessibility_complete",
         "browser_performance_complete"
+      ]
+    },
+    {
+      "id": "hmc_state_adapter",
+      "status": "passed",
+      "maturity": "fixture_backed",
+      "cannotClaim": [
+        "live_github_adapter_implemented",
+        "persistent_state_store_implemented",
+        "live_h03_control_adapter_implemented",
+        "HMC_authoritative_state"
       ]
     },
     {
@@ -93,25 +156,19 @@
   ],
   "evidence": [
     {
-      "id": "H02-F01",
-      "status": "verified",
-      "maturity": "fixture_backed",
-      "required": true
-    },
-    {
-      "id": "H02-F02",
-      "status": "verified",
-      "maturity": "fixture_backed",
-      "required": true
-    },
-    {
-      "id": "H02-F03",
-      "status": "verified",
-      "maturity": "fixture_backed",
-      "required": true
-    },
-    {
       "id": "H02-F04-R1",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "required": true
+    },
+    {
+      "id": "H03-F04",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "required": true
+    },
+    {
+      "id": "H03-F05",
       "status": "verified",
       "maturity": "fixture_backed",
       "required": true
@@ -119,19 +176,90 @@
   ],
   "decisions": [
     {
-      "id": "h03-next",
+      "id": "h03-human-ratification",
       "status": "ready",
-      "maturity": "mocked"
+      "maturity": "fixture_backed"
     }
   ],
+  "h03Projection": {
+    "id": "H03",
+    "status": "compiler_pipeline_visible",
+    "maturity": "fixture_backed",
+    "authority": "derived_view_only",
+    "freshness": "fresh",
+    "compilerStages": [
+      {
+        "id": "H03-F00",
+        "title": "Schema registry boundary",
+        "status": "closeout_complete",
+        "maturity": "fixture_backed",
+        "closeoutStatus": "closeout_complete"
+      },
+      {
+        "id": "H03-F01",
+        "title": "Input authority boundary",
+        "status": "closeout_complete",
+        "maturity": "fixture_backed",
+        "closeoutStatus": "closeout_complete"
+      },
+      {
+        "id": "H03-F02",
+        "title": "Plan normalization boundary",
+        "status": "closeout_complete",
+        "maturity": "fixture_backed",
+        "closeoutStatus": "closeout_complete"
+      },
+      {
+        "id": "H03-F03",
+        "title": "Question Register boundary",
+        "status": "closeout_complete",
+        "maturity": "fixture_backed",
+        "closeoutStatus": "closeout_complete"
+      },
+      {
+        "id": "H03-F04",
+        "title": "Delivery Constitution compiler boundary",
+        "status": "closeout_complete",
+        "maturity": "fixture_backed",
+        "closeoutStatus": "closeout_complete"
+      },
+      {
+        "id": "H03-F05",
+        "title": "Constitution readiness boundary",
+        "status": "closeout_complete",
+        "maturity": "fixture_backed",
+        "closeoutStatus": "closeout_complete"
+      },
+      {
+        "id": "H03-F06",
+        "title": "HMC derived projection",
+        "status": "in_progress",
+        "maturity": "fixture_backed",
+        "closeoutStatus": "pending"
+      }
+    ],
+    "deliveryConstitution": {
+      "readinessStatus": "boundary_verified",
+      "approvalStatus": "for_human_review",
+      "executionAuthorized": false,
+      "humanRatificationRequired": true,
+      "maturity": "fixture_backed",
+      "constitutionHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    "continuation": {
+      "status": "not_authorized",
+      "h04H05H06ExecutionAuthorized": false,
+      "maturity": "fixture_backed"
+    }
+  },
   "git": {
-    "expectedMainSha": "8461d24e735f4146f0d4ec139e98519b21cebd77",
-    "actualMainSha": "8461d24e735f4146f0d4ec139e98519b21cebd77",
-    "originMainSha": "8461d24e735f4146f0d4ec139e98519b21cebd77"
+    "expectedMainSha": "6f571597fb80a7d71d449f300653ce1cceec52dd",
+    "actualMainSha": "6f571597fb80a7d71d449f300653ce1cceec52dd",
+    "originMainSha": "6f571597fb80a7d71d449f300653ce1cceec52dd"
   },
   "github": {
-    "expectedHeadSha": "8461d24e735f4146f0d4ec139e98519b21cebd77",
-    "currentHeadSha": "8461d24e735f4146f0d4ec139e98519b21cebd77",
+    "expectedHeadSha": "6f571597fb80a7d71d449f300653ce1cceec52dd",
+    "currentHeadSha": "6f571597fb80a7d71d449f300653ce1cceec52dd",
     "openPullRequests": 0
   },
   "generatedState": [
@@ -151,15 +279,21 @@
   ],
   "cannotClaim": [
     "live_github_adapter_implemented",
+    "live_h03_control_adapter_implemented",
     "persistent_state_store_implemented",
     "production_connected_preview",
     "public_preview_deployed",
     "browser_accessibility_complete",
     "browser_performance_complete",
     "HMC_authoritative_state",
+    "constitution_approved_by_human",
+    "execution_authorization_granted",
+    "h03_delivery_constitution_ready_for_human_ratification",
+    "h03_implemented",
+    "h04_h05_h06_execution_authorized",
     "self_hosting_ready",
     "production_ready",
     "stable_agents"
   ],
-  "finalPostureRecommendation": "HADAF_H01_H02_FOUNDATION_IMPLEMENTED_AND_BOUNDEDLY_VERIFIED"
+  "finalPostureRecommendation": "H03_DELIVERY_CONSTITUTION_NOT_YET_READY_FOR_HUMAN_RATIFICATION"
 }

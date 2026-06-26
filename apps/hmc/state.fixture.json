@@ -2,17 +2,38 @@
   "adapterStatus": "passed",
   "adapterMaturity": "fixture_backed",
   "projectName": "HADAF v1",
-  "activeBox": "H01/H02 Foundation Boundedly Verified",
-  "activeFfet": "H02-F04-R1 Quality claim correction",
+  "projectPosture": "H03_DELIVERY_CONSTITUTION_NOT_YET_READY_FOR_HUMAN_RATIFICATION",
+  "activeBox": "H03 Plan Compiler and Delivery Constitution",
+  "activeFfet": "H03-F06 HMC derived projection",
   "classifiedMismatch": "generated_state_not_fresh",
+  "h03Projection": {
+    "status": "compiler_pipeline_visible",
+    "authority": "derived_view_only",
+    "deliveryConstitution": {
+      "readinessStatus": "boundary_verified",
+      "approvalStatus": "for_human_review",
+      "executionAuthorized": false,
+      "humanRatificationRequired": true
+    },
+    "continuation": {
+      "status": "not_authorized",
+      "h04H05H06ExecutionAuthorized": false
+    }
+  },
   "cannotClaim": [
     "live_github_adapter_implemented",
+    "live_h03_control_adapter_implemented",
     "persistent_state_store_implemented",
     "production_connected_preview",
     "public_preview_deployed",
     "browser_accessibility_complete",
     "browser_performance_complete",
     "HMC_authoritative_state",
+    "constitution_approved_by_human",
+    "execution_authorization_granted",
+    "h03_delivery_constitution_ready_for_human_ratification",
+    "h03_implemented",
+    "h04_h05_h06_execution_authorized",
     "self_hosting_ready",
     "production_ready",
     "stable_agents"

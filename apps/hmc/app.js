@@ -55,6 +55,32 @@ async function loadFixtureState() {
   if (activeFfet) {
     activeFfet.textContent = state.activeFfet;
   }
+  const activeBox = document.querySelector("[data-state-field='active-box']");
+  if (activeBox) {
+    activeBox.textContent = state.activeBox;
+  }
+  const projectPosture = document.querySelector("[data-state-field='project-posture']");
+  if (projectPosture) {
+    projectPosture.textContent = state.projectPosture;
+  }
+  const constitutionStatus = document.querySelector("[data-state-field='constitution-status']");
+  if (constitutionStatus) {
+    constitutionStatus.textContent = state.h03Projection.deliveryConstitution.readinessStatus;
+  }
+  const approvalStatus = document.querySelector("[data-state-field='approval-status']");
+  if (approvalStatus) {
+    approvalStatus.textContent = state.h03Projection.deliveryConstitution.approvalStatus;
+  }
+  const executionStatus = document.querySelector("[data-state-field='execution-status']");
+  if (executionStatus) {
+    executionStatus.textContent = state.h03Projection.deliveryConstitution.executionAuthorized
+      ? "execution_authorized"
+      : "execution_not_authorized";
+  }
+  const projectionAuthority = document.querySelector("[data-state-field='projection-authority']");
+  if (projectionAuthority) {
+    projectionAuthority.textContent = state.h03Projection.authority;
+  }
   const mismatch = document.querySelector("[data-state-field='classified-mismatch']");
   if (mismatch) {
     mismatch.textContent = state.classifiedMismatch;

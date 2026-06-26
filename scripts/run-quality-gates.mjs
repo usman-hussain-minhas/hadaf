@@ -79,7 +79,11 @@ function runQualityGates() {
   dimensions.push(commandDimension("hmc_static_smoke", "ci_enforced", "node scripts/serve-hmc.mjs --smoke", {
     cannotClaim: [
       "live_github_adapter_implemented",
+      "live_h03_control_adapter_implemented",
       "persistent_state_store_implemented",
+      "HMC_authoritative_state",
+      "constitution_approved_by_human",
+      "execution_authorization_granted",
       "browser_accessibility_complete",
       "browser_performance_complete"
     ]
@@ -87,7 +91,11 @@ function runQualityGates() {
   dimensions.push(commandDimension("hmc_state_adapter", "ci_enforced", "pnpm build && node scripts/verify-hmc-state.mjs fixtures/hmc-state/valid-config.json", {
     cannotClaim: [
       "live_github_adapter_implemented",
-      "persistent_state_store_implemented"
+      "live_h03_control_adapter_implemented",
+      "persistent_state_store_implemented",
+      "HMC_authoritative_state",
+      "constitution_approved_by_human",
+      "execution_authorization_granted"
     ]
   }));
   dimensions.push(commandDimension("product_preview_static_smoke", "ci_enforced", "node scripts/serve-product-preview.mjs --smoke", {
