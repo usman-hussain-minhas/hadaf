@@ -1,0 +1,109 @@
+{
+  "projectionId": "H05",
+  "boxId": "H05",
+  "productSha": "8ef08d244a2e5c2959be42f59127521579b46692",
+  "treeHash": "0daad4a9fc9d8703ba0300af3e63ee3d676a1337",
+  "authority": "derived_view_only",
+  "maturity": "fixture_backed",
+  "freshness": "fresh",
+  "requiredPrerequisites": [
+    "H05-F00",
+    "H05-F01",
+    "H05-F02",
+    "H05-F03"
+  ],
+  "prerequisites": [
+    {
+      "id": "H05-F00",
+      "status": "closeout_complete",
+      "closeoutComplete": true,
+      "evidenceManifestVerified": true,
+      "terminalLearningComplete": true
+    },
+    {
+      "id": "H05-F01",
+      "status": "closeout_complete",
+      "closeoutComplete": true,
+      "evidenceManifestVerified": true,
+      "terminalLearningComplete": true
+    },
+    {
+      "id": "H05-F02",
+      "status": "closeout_complete",
+      "closeoutComplete": true,
+      "evidenceManifestVerified": true,
+      "terminalLearningComplete": true
+    },
+    {
+      "id": "H05-F03",
+      "status": "closeout_complete",
+      "closeoutComplete": true,
+      "evidenceManifestVerified": true,
+      "terminalLearningComplete": true
+    }
+  ],
+  "agents": [
+    {
+      "agentId": "codex.bootstrap",
+      "title": "Bootstrap Execution Adapter",
+      "status": "fixture_projected",
+      "maturity": "fixture_backed",
+      "qualificationStatus": "fixture_tested",
+      "boundedUseStatus": "bounded_for_h05",
+      "registryStatus": "verified",
+      "capabilityStatus": "verified",
+      "circuitBreakerStatus": "verified",
+      "upskillStatus": "verified",
+      "truthSource": "fixture",
+      "freshness": "fresh"
+    },
+    {
+      "agentId": "quality.auditor",
+      "title": "Quality Auditor",
+      "status": "fixture_projected",
+      "maturity": "fixture_backed",
+      "qualificationStatus": "fixture_tested",
+      "boundedUseStatus": "bounded_for_h05",
+      "registryStatus": "verified",
+      "capabilityStatus": "verified",
+      "circuitBreakerStatus": "verified",
+      "upskillStatus": "verified",
+      "truthSource": "fixture",
+      "freshness": "fresh"
+    },
+    {
+      "agentId": "git.conductor",
+      "title": "Git Conductor",
+      "status": "fixture_projected",
+      "maturity": "fixture_backed",
+      "qualificationStatus": "fixture_tested",
+      "boundedUseStatus": "bounded_for_h05",
+      "registryStatus": "verified",
+      "capabilityStatus": "verified",
+      "circuitBreakerStatus": "verified",
+      "upskillStatus": "verified",
+      "truthSource": "fixture",
+      "freshness": "fresh"
+    }
+  ],
+  "requiredCannotClaim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified",
+    "runtime_circuit_breaker_enforcement",
+    "runtime_upskill_enforcement",
+    "HMC_authoritative_state",
+    "live_github_adapter_implemented",
+    "persistent_state_store_implemented"
+  ],
+  "cannotClaim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified",
+    "runtime_circuit_breaker_enforcement",
+    "runtime_upskill_enforcement",
+    "HMC_authoritative_state",
+    "live_github_adapter_implemented",
+    "persistent_state_store_implemented"
+  ]
+}

@@ -2,7 +2,7 @@
   "project": {
     "id": "hadaf",
     "name": "HADAF v1",
-    "posture": "H04_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED",
+    "posture": "H05_AGENT_FOUNDATION_ACTIVE_FIXTURE_BACKED",
     "maturity": "fixture_backed"
   },
   "boxes": [
@@ -34,11 +34,21 @@
     {
       "id": "H04",
       "name": "Lifecycle State and Run Ledger",
+      "status": "conditional_go_to_h05",
+      "maturity": "fixture_backed",
+      "debt": [
+        "h05_box_assurance_pending",
+        "h06_not_implemented"
+      ]
+    },
+    {
+      "id": "H05",
+      "name": "Agent Registry and Circuit Breakers",
       "status": "product_pipeline_active",
       "maturity": "fixture_backed",
       "debt": [
         "box_assurance_pending",
-        "h05_h06_not_implemented"
+        "runtime_agent_execution_not_implemented"
       ]
     }
   ],
@@ -154,6 +164,36 @@
     {
       "id": "H04-F06",
       "title": "HMC lifecycle projection",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H05-F00",
+      "title": "Agent registry state model",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H05-F01",
+      "title": "Agent cards and capability contracts",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H05-F02",
+      "title": "Circuit breakers and no-rogue controls",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H05-F03",
+      "title": "Upskill and decision learning records",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H05-F04",
+      "title": "HMC agent projection",
       "status": "active",
       "maturity": "fixture_backed"
     }
@@ -198,6 +238,18 @@
         "browser_accessibility_complete",
         "browser_performance_complete"
       ]
+    },
+    {
+      "id": "h05_hmc_agent_projection",
+      "status": "passed",
+      "maturity": "fixture_backed",
+      "cannotClaim": [
+        "stable_agents",
+        "mechanically_independent_agents",
+        "runtime_circuit_breaker_enforcement",
+        "runtime_upskill_enforcement",
+        "HMC_authoritative_state"
+      ]
     }
   ],
   "evidence": [
@@ -221,6 +273,12 @@
     },
     {
       "id": "H04-F05",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "required": true
+    },
+    {
+      "id": "H05-F03",
       "status": "verified",
       "maturity": "fixture_backed",
       "required": true
@@ -306,15 +364,15 @@
   },
   "h04Projection": {
     "id": "H04",
-    "status": "product_pipeline_active",
+    "status": "conditional_go_to_h05",
     "maturity": "fixture_backed",
     "authority": "derived_view_only",
     "freshness": "fresh",
     "box": {
       "id": "H04",
-      "status": "product_pipeline_active",
+      "status": "conditional_go_to_h05",
       "maturity": "fixture_backed",
-      "assuranceStatus": "pending"
+      "assuranceStatus": "complete"
     },
     "ffets": [
       {
@@ -365,10 +423,10 @@
       {
         "id": "H04-F06",
         "title": "HMC lifecycle projection",
-        "status": "active",
+        "status": "closeout_complete",
         "maturity": "fixture_backed",
         "truthSource": "fixture",
-        "closeoutStatus": "pending",
+        "closeoutStatus": "closeout_complete",
         "freshness": "fresh"
       }
     ],
@@ -383,10 +441,95 @@
       "status": "implemented",
       "maturity": "fixture_backed",
       "successorGate": "conditional_go",
-      "blockingDebt": [
-        "h04_box_assurance_pending"
-      ]
+      "blockingDebt": []
     }
+  },
+  "h05Projection": {
+    "id": "H05",
+    "status": "product_pipeline_active",
+    "maturity": "fixture_backed",
+    "authority": "derived_view_only",
+    "freshness": "fresh",
+    "box": {
+      "id": "H05",
+      "status": "product_pipeline_active",
+      "maturity": "fixture_backed",
+      "assuranceStatus": "pending"
+    },
+    "agents": [
+      {
+        "agentId": "codex.bootstrap",
+        "title": "Bootstrap Execution Adapter",
+        "status": "fixture_projected",
+        "maturity": "fixture_backed",
+        "qualificationStatus": "fixture_tested",
+        "boundedUseStatus": "bounded_for_h05",
+        "registryStatus": "verified",
+        "capabilityStatus": "verified",
+        "circuitBreakerStatus": "verified",
+        "upskillStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh"
+      },
+      {
+        "agentId": "quality.auditor",
+        "title": "Quality Auditor",
+        "status": "fixture_projected",
+        "maturity": "fixture_backed",
+        "qualificationStatus": "fixture_tested",
+        "boundedUseStatus": "bounded_for_h05",
+        "registryStatus": "verified",
+        "capabilityStatus": "verified",
+        "circuitBreakerStatus": "verified",
+        "upskillStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh"
+      },
+      {
+        "agentId": "git.conductor",
+        "title": "Git Conductor",
+        "status": "fixture_projected",
+        "maturity": "fixture_backed",
+        "qualificationStatus": "fixture_tested",
+        "boundedUseStatus": "bounded_for_h05",
+        "registryStatus": "verified",
+        "capabilityStatus": "verified",
+        "circuitBreakerStatus": "verified",
+        "upskillStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh"
+      }
+    ],
+    "prerequisiteCloseouts": [
+      {
+        "id": "H05-F00",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      },
+      {
+        "id": "H05-F01",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      },
+      {
+        "id": "H05-F02",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      },
+      {
+        "id": "H05-F03",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      }
+    ]
   },
   "git": {
     "expectedMainSha": "619bb8f0c81faca1025b62a48d542dc12fa02f0f",
@@ -429,9 +572,13 @@
     "h04_h05_h06_execution_authorized",
     "h04_assurance_complete",
     "h04_fully_implemented",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified",
+    "runtime_circuit_breaker_enforcement",
+    "runtime_upskill_enforcement",
     "self_hosting_ready",
     "production_ready",
     "stable_agents"
   ],
-  "finalPostureRecommendation": "H04_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED"
+  "finalPostureRecommendation": "H05_AGENT_FOUNDATION_ACTIVE_FIXTURE_BACKED"
 }

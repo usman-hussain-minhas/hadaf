@@ -2,9 +2,9 @@
   "adapterStatus": "passed",
   "adapterMaturity": "fixture_backed",
   "projectName": "HADAF v1",
-  "projectPosture": "H04_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED",
-  "activeBox": "H04 Lifecycle State and Run Ledger",
-  "activeFfet": "H04-F06 HMC lifecycle projection",
+  "projectPosture": "H05_AGENT_FOUNDATION_ACTIVE_FIXTURE_BACKED",
+  "activeBox": "H05 Agent Registry and Circuit Breakers",
+  "activeFfet": "H05-F04 HMC agent projection",
   "h03AssuranceStatus": "H03 Box assurance pending",
   "classifiedMismatch": "generated_state_not_fresh",
   "h03Projection": {
@@ -22,16 +22,52 @@
     }
   },
   "h04Projection": {
-    "status": "product_pipeline_active",
+    "status": "conditional_go_to_h05",
     "authority": "derived_view_only",
-    "boxStatus": "product_pipeline_active",
+    "boxStatus": "conditional_go_to_h05",
     "truthLedgerStatus": "fixture_projected",
     "finalizerStatus": "implemented",
     "successorGate": "conditional_go",
-    "activeFfet": "H04-F06",
-    "closeoutComplete": 5,
-    "activeOrPending": 1,
-    "assuranceStatus": "pending"
+    "activeFfet": "H04-F06 closeout_complete",
+    "closeoutComplete": 6,
+    "activeOrPending": 0,
+    "assuranceStatus": "complete"
+  },
+  "h05Projection": {
+    "status": "product_pipeline_active",
+    "authority": "derived_view_only",
+    "boxStatus": "product_pipeline_active",
+    "agentCount": 3,
+    "registryStatus": "verified",
+    "capabilityStatus": "verified",
+    "circuitBreakerStatus": "verified",
+    "upskillStatus": "verified",
+    "activeFfet": "H05-F04",
+    "assuranceStatus": "pending",
+    "maturity": "fixture_backed",
+    "agents": [
+      {
+        "agentId": "codex.bootstrap",
+        "title": "Bootstrap Execution Adapter",
+        "status": "fixture_projected",
+        "qualificationStatus": "fixture_tested",
+        "boundedUseStatus": "bounded_for_h05"
+      },
+      {
+        "agentId": "quality.auditor",
+        "title": "Quality Auditor",
+        "status": "fixture_projected",
+        "qualificationStatus": "fixture_tested",
+        "boundedUseStatus": "bounded_for_h05"
+      },
+      {
+        "agentId": "git.conductor",
+        "title": "Git Conductor",
+        "status": "fixture_projected",
+        "qualificationStatus": "fixture_tested",
+        "boundedUseStatus": "bounded_for_h05"
+      }
+    ]
   },
   "cannotClaim": [
     "live_github_adapter_implemented",
@@ -49,6 +85,10 @@
     "h04_h05_h06_execution_authorized",
     "h04_assurance_complete",
     "h04_fully_implemented",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified",
+    "runtime_circuit_breaker_enforcement",
+    "runtime_upskill_enforcement",
     "self_hosting_ready",
     "production_ready",
     "stable_agents"

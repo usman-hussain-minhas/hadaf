@@ -72,16 +72,22 @@ async function runSmoke() {
     const findings = [
       ...requireIncludes(html, [
         "HADAF Mission Control",
-        "H04 Lifecycle State and Run Ledger",
-        "H04_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED",
+        "H05 Agent Registry and Circuit Breakers",
+        "H05_AGENT_FOUNDATION_ACTIVE_FIXTURE_BACKED",
         "H02-F04-R1",
         "H03-F06",
         "H04-F06",
+        "H05-F04",
         "fixture_backed",
         "mocked",
         "for_human_review",
         "execution_not_authorized",
         "derived_view_only",
+        "Agents",
+        "Registry Projection",
+        "Bootstrap Execution Adapter",
+        "runtime_circuit_breaker_enforcement",
+        "runtime_upskill_enforcement",
         "self_hosting_ready",
         "HMC_authoritative_state",
         "h04_assurance_complete",
@@ -95,8 +101,10 @@ async function runSmoke() {
       ...requireIncludes(stateJson, [
         "adapterMaturity",
         "fixture_backed",
-        "H04-F06 HMC lifecycle projection",
+        "H05-F04 HMC agent projection",
         "product_pipeline_active",
+        "codex.bootstrap",
+        "circuitBreakerStatus",
         "fixture_projected",
         "derived_view_only"
       ])

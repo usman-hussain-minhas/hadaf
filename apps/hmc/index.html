@@ -35,6 +35,10 @@
             <span aria-hidden="true">B</span>
             <span>Boxes</span>
           </button>
+          <button class="nav-item" type="button" data-view="agents" aria-pressed="false">
+            <span aria-hidden="true">A</span>
+            <span>Agents</span>
+          </button>
           <button class="nav-item" type="button" data-view="ffets" aria-pressed="false">
             <span aria-hidden="true">F</span>
             <span>FFETs</span>
@@ -76,11 +80,12 @@
               </div>
               <div class="status-strip" role="list" aria-label="Box status">
                 <span role="listitem" class="status-pill status-pill--active">H04 lifecycle visible</span>
-                <span role="listitem" class="status-pill">F00-F05 closeout complete</span>
-                <span role="listitem" class="status-pill status-pill--warn" data-state-field="h04-active-ffet">H04-F06</span>
+                <span role="listitem" class="status-pill">H04 closeout complete</span>
+                <span role="listitem" class="status-pill status-pill--active">H05 agent state visible</span>
+                <span role="listitem" class="status-pill status-pill--warn" data-state-field="h05-active-ffet">H05-F04</span>
                 <span role="listitem" class="status-pill status-pill--warn">Box assurance pending</span>
               </div>
-              <p class="summary" data-state-field="project-posture">H04_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED</p>
+              <p class="summary" data-state-field="project-posture">H05_AGENT_FOUNDATION_ACTIVE_FIXTURE_BACKED</p>
             </section>
 
             <section class="panel" aria-labelledby="truth-title">
@@ -106,6 +111,9 @@
                 <li>self_hosting_ready</li>
                 <li>production_ready</li>
                 <li>stable_agents</li>
+                <li>mechanically_independent_agents</li>
+                <li>runtime_circuit_breaker_enforcement</li>
+                <li>runtime_upskill_enforcement</li>
                 <li>HMC_authoritative_state</li>
                 <li>execution_authorization_granted</li>
                 <li>h04_assurance_complete</li>
@@ -134,6 +142,89 @@
                   <p>Control and Evidence remain authoritative.</p>
                 </article>
               </div>
+            </section>
+
+            <section class="panel panel--wide" aria-labelledby="h05-title">
+              <div class="panel-heading">
+                <p class="label">H05 Projection</p>
+                <h2 id="h05-title" data-state-field="h05-status">product_pipeline_active</h2>
+              </div>
+              <div class="projection-grid" aria-label="H05 agent projection">
+                <article>
+                  <span class="state-label">Agents</span>
+                  <strong data-state-field="h05-agent-count">3</strong>
+                  <p>Fixture-backed registry state.</p>
+                </article>
+                <article>
+                  <span class="state-label">Guards</span>
+                  <strong data-state-field="h05-circuit-breakers">verified</strong>
+                  <p>No runtime enforcement claim.</p>
+                </article>
+                <article>
+                  <span class="state-label">Authority</span>
+                  <strong data-state-field="h05-projection-authority">derived_view_only</strong>
+                  <p>Registry, circuit, and learning authority remain external.</p>
+                </article>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="view-agents" data-view-panel="agents" aria-labelledby="agents-title" hidden>
+          <div class="view-heading">
+            <div>
+              <p class="label">Agents</p>
+              <h1 id="agents-title">Registry Projection</h1>
+            </div>
+            <span class="maturity maturity--fixture">fixture_backed</span>
+          </div>
+          <div class="dashboard-grid">
+            <section class="panel panel--wide" aria-labelledby="agent-state-title">
+              <div class="panel-heading">
+                <p class="label">Derived State</p>
+                <h2 id="agent-state-title">H05 Agent Projection</h2>
+              </div>
+              <div class="projection-grid" aria-label="Agent registry controls">
+                <article>
+                  <span class="state-label">Registry</span>
+                  <strong data-state-field="h05-registry">verified</strong>
+                  <p>Agent cards are fixture-backed.</p>
+                </article>
+                <article>
+                  <span class="state-label">Capabilities</span>
+                  <strong data-state-field="h05-capabilities">verified</strong>
+                  <p>Allowed operations stay bounded.</p>
+                </article>
+                <article>
+                  <span class="state-label">Upskill</span>
+                  <strong data-state-field="h05-upskill">verified</strong>
+                  <p>Learning records require durable effects.</p>
+                </article>
+              </div>
+            </section>
+            <section class="panel" aria-labelledby="agent-list-title">
+              <div class="panel-heading">
+                <p class="label">Projected Agents</p>
+                <h2 id="agent-list-title">Bounded</h2>
+              </div>
+              <ul class="agent-list" data-state-field="h05-agent-list" aria-label="Fixture-backed agents">
+                <li><strong>Bootstrap Execution Adapter</strong><span>fixture_tested / bounded_for_h05</span></li>
+                <li><strong>Quality Auditor</strong><span>fixture_tested / bounded_for_h05</span></li>
+                <li><strong>Git Conductor</strong><span>fixture_tested / bounded_for_h05</span></li>
+              </ul>
+            </section>
+            <section class="panel" aria-labelledby="agent-boundaries-title">
+              <div class="panel-heading">
+                <p class="label">Cannot Claim</p>
+                <h2 id="agent-boundaries-title">Preserved</h2>
+              </div>
+              <ul class="tag-list" aria-label="Agent cannot claim entries">
+                <li>stable_agents</li>
+                <li>mechanically_independent_agents</li>
+                <li>independent_quality_auditor_qualified</li>
+                <li>runtime_circuit_breaker_enforcement</li>
+                <li>runtime_upskill_enforcement</li>
+              </ul>
             </section>
           </div>
         </section>
@@ -179,9 +270,15 @@
             </div>
             <div class="table-row" role="row">
               <span role="cell">H04 Lifecycle State and Run Ledger</span>
-              <span role="cell"><strong>active</strong></span>
+              <span role="cell"><strong>conditional go</strong></span>
               <span role="cell">fixture-backed lifecycle projection</span>
-              <span role="cell">Box assurance pending</span>
+              <span role="cell">H06 not implemented</span>
+            </div>
+            <div class="table-row" role="row">
+              <span role="cell">H05 Agent Registry and Circuit Breakers</span>
+              <span role="cell"><strong>active</strong></span>
+              <span role="cell">fixture-backed agent projection</span>
+              <span role="cell">runtime enforcement not claimed</span>
             </div>
           </div>
         </section>

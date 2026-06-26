@@ -372,3 +372,14 @@ export {
   type H05UpskillRecordValidationResult,
   type H05VerifiedUpskillRef
 } from "./h05/upskill-records.js";
+export {
+  deriveH05HmcAgentProjection,
+  type H05HmcAgentProjectionConfig,
+  type H05HmcAgentProjectionFinding,
+  type H05HmcAgentProjectionInput,
+  type H05HmcAgentProjectionMaturity,
+  type H05HmcAgentProjectionReport,
+  type H05HmcAgentProjectionStatus,
+  type H05HmcDerivedAgentProjection,
+  type H05HmcPrerequisiteInput
+} from "./h05/hmc-agent-projection.js";

@@ -105,6 +105,50 @@ async function loadFixtureState() {
   if (h04ProjectionAuthority) {
     h04ProjectionAuthority.textContent = state.h04Projection.authority;
   }
+  const h05Status = document.querySelector("[data-state-field='h05-status']");
+  if (h05Status) {
+    h05Status.textContent = state.h05Projection.status;
+  }
+  const h05AgentCount = document.querySelector("[data-state-field='h05-agent-count']");
+  if (h05AgentCount) {
+    h05AgentCount.textContent = String(state.h05Projection.agentCount);
+  }
+  const h05Registry = document.querySelector("[data-state-field='h05-registry']");
+  if (h05Registry) {
+    h05Registry.textContent = state.h05Projection.registryStatus;
+  }
+  const h05Capabilities = document.querySelector("[data-state-field='h05-capabilities']");
+  if (h05Capabilities) {
+    h05Capabilities.textContent = state.h05Projection.capabilityStatus;
+  }
+  const h05CircuitBreakers = document.querySelector("[data-state-field='h05-circuit-breakers']");
+  if (h05CircuitBreakers) {
+    h05CircuitBreakers.textContent = state.h05Projection.circuitBreakerStatus;
+  }
+  const h05Upskill = document.querySelector("[data-state-field='h05-upskill']");
+  if (h05Upskill) {
+    h05Upskill.textContent = state.h05Projection.upskillStatus;
+  }
+  const h05ActiveFfet = document.querySelector("[data-state-field='h05-active-ffet']");
+  if (h05ActiveFfet) {
+    h05ActiveFfet.textContent = state.h05Projection.activeFfet;
+  }
+  const h05ProjectionAuthority = document.querySelector("[data-state-field='h05-projection-authority']");
+  if (h05ProjectionAuthority) {
+    h05ProjectionAuthority.textContent = state.h05Projection.authority;
+  }
+  const h05AgentList = document.querySelector("[data-state-field='h05-agent-list']");
+  if (h05AgentList) {
+    h05AgentList.replaceChildren(
+      ...state.h05Projection.agents.map((agent) => {
+        const item = document.createElement("li");
+        item.innerHTML = `<strong></strong><span></span>`;
+        item.querySelector("strong").textContent = agent.title;
+        item.querySelector("span").textContent = `${agent.qualificationStatus} / ${agent.boundedUseStatus}`;
+        return item;
+      })
+    );
+  }
   const mismatch = document.querySelector("[data-state-field='classified-mismatch']");
   if (mismatch) {
     mismatch.textContent = state.classifiedMismatch;
