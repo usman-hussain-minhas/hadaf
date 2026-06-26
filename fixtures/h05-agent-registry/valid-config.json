@@ -1,0 +1,71 @@
+{
+  "logicalRoots": {
+    "fixture://agents": "fixtures/h05-agent-registry/agents",
+    "fixture://schemas": "fixtures/h05-agent-registry/schemas"
+  },
+  "schema": {
+    "ref": "fixture://schemas/agent_registry_record.schema.json",
+    "sha256": "45e5e7167c76120ecaec8582278df2becb426ed8a128e88daebd743a8c4aae95"
+  },
+  "schemaRefs": [
+    {
+      "ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json",
+      "sha256": "7a83c465f4307fd2e30cf3bccfbab40eddae37a706a4cdbdd3588ba024fc75a9"
+    }
+  ],
+  "requiredCannotClaim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ],
+  "agents": [
+    {
+      "agentId": "codex.bootstrap",
+      "ref": "fixture://agents/valid-bounded-agent.json",
+      "sha256": "3c0acfbf905bc7202c4ef7d63057f0de18c2087f6dd66a6bdf118e2363b7b9ef",
+      "expectedStatus": "passed"
+    },
+    {
+      "agentId": "agent.stable-overclaim",
+      "ref": "fixture://agents/stable-overclaim.json",
+      "sha256": "58581c4b8f1181812a90cd5a0c83b72f3e1c3e23552e8acf652ac9fbe1b4af41",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "stable_agent_overclaim"
+      ]
+    },
+    {
+      "agentId": "agent.independent-overclaim",
+      "ref": "fixture://agents/independent-overclaim.json",
+      "sha256": "6412e68f7bb19858ed596c80ba6d01185261e5c83caa4a0b333af85ede17b5a7",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "mechanical_independence_overclaim"
+      ]
+    },
+    {
+      "agentId": "agent.missing-cannot-claim",
+      "ref": "fixture://agents/missing-cannot-claim.json",
+      "sha256": "70d3cf9677e3032ee740ba9f58d59c4df255f6d6cec086809aa3a4ed27390dda",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "cannot_claim_missing_required"
+      ]
+    },
+    {
+      "agentId": "agent.invalid-upskill-ref",
+      "ref": "fixture://agents/invalid-upskill-ref.json",
+      "sha256": "197ffc158a2ce869836f9be70263c1cd093ff769ce1172fafdc236b9d79e4096",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "upskill_ref_sha256_invalid"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ],
+  "finalPostureRecommendation": "H05_F00_AGENT_REGISTRY_STATE_FIXTURE_VERIFIED"
+}

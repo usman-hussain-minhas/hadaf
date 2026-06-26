@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://schemas/agent_registry_record.schema.json",
+  "title": "HADAF Agent Registry Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "agent_id",
+    "version",
+    "role_family",
+    "capabilities",
+    "allowed_planes",
+    "forbidden_planes",
+    "write_boundaries",
+    "qualification_status",
+    "bounded_use_status",
+    "evidence_requirements",
+    "upskill_refs",
+    "cannot_claim"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "agent_id": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/id"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[A-Za-z0-9.-]+)?$"
+    },
+    "role_family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "allowed_planes": {
+      "type": "array",
+      "items": {
+        "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/plane"
+      },
+      "uniqueItems": true
+    },
+    "forbidden_planes": {
+      "type": "array",
+      "items": {
+        "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/plane"
+      },
+      "uniqueItems": true
+    },
+    "write_boundaries": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "qualification_status": {
+      "enum": [
+        "draft",
+        "fixture_tested",
+        "bounded_for_scope",
+        "suspended",
+        "deprecated"
+      ]
+    },
+    "bounded_use_status": {
+      "enum": [
+        "not_allowed",
+        "bounded_for_h04_h06",
+        "bounded_for_h04",
+        "bounded_for_h05",
+        "bounded_for_h06"
+      ]
+    },
+    "evidence_requirements": {
+      "type": "array",
+      "items": {
+        "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/refHash"
+      }
+    },
+    "upskill_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/refHash"
+      }
+    },
+    "cannot_claim": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/cannotClaim"
+    }
+  }
+}

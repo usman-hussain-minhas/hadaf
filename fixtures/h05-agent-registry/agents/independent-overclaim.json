@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "agent_id": "agent.independent-overclaim",
+  "version": "0.1.0",
+  "role_family": "audit_operator",
+  "capabilities": [
+    "mechanically_independent_quality_audit"
+  ],
+  "allowed_planes": [
+    "evidence"
+  ],
+  "forbidden_planes": [
+    "product",
+    "release"
+  ],
+  "write_boundaries": [
+    "append_only_evidence_records"
+  ],
+  "qualification_status": "fixture_tested",
+  "bounded_use_status": "bounded_for_h05",
+  "evidence_requirements": [
+    {
+      "ref": "product://fixtures/h05-agent-registry/evidence/independent-overclaim.json",
+      "sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+    }
+  ],
+  "upskill_refs": [
+    {
+      "ref": "product://fixtures/h05-agent-registry/upskills/independent-overclaim.json",
+      "sha256": "6666666666666666666666666666666666666666666666666666666666666666"
+    }
+  ],
+  "cannot_claim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ]
+}

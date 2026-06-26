@@ -36,6 +36,8 @@ const cases = [
   pnpmCase("h03-delivery-constitution-separator", ["verify:h03-delivery-constitution", "--", "fixtures/h03-delivery-constitution/valid-config.json"]),
   pnpmCase("h03-constitution-readiness-direct", ["verify:h03-constitution-readiness", "fixtures/h03-constitution-readiness/valid-config.json"]),
   pnpmCase("h03-constitution-readiness-separator", ["verify:h03-constitution-readiness", "--", "fixtures/h03-constitution-readiness/valid-config.json"]),
+  pnpmCase("h05-agent-registry-direct", ["verify:h05-agent-registry", "fixtures/h05-agent-registry/valid-config.json"]),
+  pnpmCase("h05-agent-registry-separator", ["verify:h05-agent-registry", "--", "fixtures/h05-agent-registry/valid-config.json"]),
   pnpmCase("target-guard-direct", ["check:target-guard", "fixtures/target-guard/valid-config.json"]),
   pnpmCase("target-guard-separator", ["check:target-guard", "--", "fixtures/target-guard/valid-config.json"]),
   nodeCase("pr-metadata-direct", ["scripts/check-pr-metadata-public-safety.mjs", fixturePaths.prBody]),

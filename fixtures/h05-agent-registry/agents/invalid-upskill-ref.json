@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "agent_id": "agent.invalid-upskill-ref",
+  "version": "0.1.0",
+  "role_family": "fixture_limited_operator",
+  "capabilities": [
+    "agent_registry_negative_calibration"
+  ],
+  "allowed_planes": [
+    "product"
+  ],
+  "forbidden_planes": [
+    "release"
+  ],
+  "write_boundaries": [
+    "exact_ffet_owned_files"
+  ],
+  "qualification_status": "fixture_tested",
+  "bounded_use_status": "bounded_for_h05",
+  "evidence_requirements": [
+    {
+      "ref": "product://fixtures/h05-agent-registry/evidence/invalid-upskill-ref.json",
+      "sha256": "9999999999999999999999999999999999999999999999999999999999999999"
+    }
+  ],
+  "upskill_refs": [
+    {
+      "ref": "product://fixtures/h05-agent-registry/upskills/invalid-upskill-ref.json",
+      "sha256": "not-a-valid-hash"
+    }
+  ],
+  "cannot_claim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ]
+}
