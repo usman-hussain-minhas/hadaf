@@ -1,0 +1,120 @@
+{
+  "logicalRoots": {
+    "fixture://cards": "fixtures/h05-capability-contracts/cards",
+    "fixture://schemas": "fixtures/h05-agent-registry/schemas"
+  },
+  "schema": {
+    "ref": "fixture://schemas/agent_registry_record.schema.json",
+    "sha256": "45e5e7167c76120ecaec8582278df2becb426ed8a128e88daebd743a8c4aae95"
+  },
+  "schemaRefs": [
+    {
+      "ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json",
+      "sha256": "7a83c465f4307fd2e30cf3bccfbab40eddae37a706a4cdbdd3588ba024fc75a9"
+    }
+  ],
+  "requiredCannotClaim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ],
+  "cards": [
+    {
+      "agentId": "agent.capability-valid",
+      "ref": "fixture://cards/valid-agent-card.json",
+      "sha256": "de499a838e5d1bf2eafd0404051c5fcaf39ef8729db3e57f0ae47c35500fb762",
+      "expectedStatus": "passed",
+      "requiredCapabilities": [
+        "model:generate_code",
+        "tool:run_tests"
+      ],
+      "allowedCapabilities": [
+        "model:generate_code",
+        "tool:run_tests",
+        "filesystem:read_product_files"
+      ],
+      "allowedCapabilityPrefixes": [
+        "model",
+        "tool",
+        "filesystem"
+      ]
+    },
+    {
+      "agentId": "agent.unsupported-tool",
+      "ref": "fixture://cards/unsupported-tool-capability.json",
+      "sha256": "79b5c61a5c7c52992ee6b534e6ab139537ba280ad1998b9b85552ade8f3aadf7",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "unsupported_tool_capability"
+      ],
+      "allowedCapabilities": [
+        "model:generate_code",
+        "tool:run_tests",
+        "filesystem:read_product_files"
+      ],
+      "allowedCapabilityPrefixes": [
+        "model",
+        "tool",
+        "filesystem"
+      ]
+    },
+    {
+      "agentId": "agent.write-overclaim",
+      "ref": "fixture://cards/write-permission-overclaim.json",
+      "sha256": "83028b9d50ad0b495f464f2e205ca6fad4533bec683bceb44857544e85c003c3",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "write_permission_overclaim"
+      ],
+      "allowedCapabilities": [
+        "model:generate_code",
+        "tool:run_tests"
+      ],
+      "allowedCapabilityPrefixes": [
+        "model",
+        "tool"
+      ]
+    },
+    {
+      "agentId": "agent.private-prompt",
+      "ref": "fixture://cards/private-prompt-exposure.json",
+      "sha256": "537876ce355e2a15e4959a3b41197b12ebb4a7ba4eaedce18f8d57b1d19b33b6",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "private_prompt_or_instruction_exposure"
+      ],
+      "allowedCapabilities": [
+        "model:generate_code"
+      ],
+      "allowedCapabilityPrefixes": [
+        "model"
+      ]
+    },
+    {
+      "agentId": "agent.capability-missing-cannot-claim",
+      "ref": "fixture://cards/missing-cannot-claim.json",
+      "sha256": "141d924a576db9e7a42fc9f9bcb098e346052f06cc53e9bc1ab1ff06a61ca96f",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "cannot_claim_missing_required"
+      ],
+      "allowedCapabilities": [
+        "model:generate_code",
+        "tool:run_tests"
+      ],
+      "allowedCapabilityPrefixes": [
+        "model",
+        "tool"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified",
+    "h05_circuit_breakers_implemented",
+    "h05_upskill_records_implemented",
+    "h05_hmc_agent_projection_implemented"
+  ],
+  "finalPostureRecommendation": "H05_F01_AGENT_CARDS_CAPABILITY_CONTRACTS_FIXTURE_VERIFIED"
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "agent_id": "agent.capability-valid",
+  "version": "0.1.0",
+  "role_family": "bounded_capability_worker",
+  "capabilities": [
+    "model:generate_code",
+    "tool:run_tests",
+    "filesystem:read_product_files"
+  ],
+  "allowed_planes": [
+    "product"
+  ],
+  "forbidden_planes": [
+    "control",
+    "evidence",
+    "runtime",
+    "release"
+  ],
+  "write_boundaries": [
+    "exact_ffet_owned_files"
+  ],
+  "qualification_status": "fixture_tested",
+  "bounded_use_status": "bounded_for_h05",
+  "evidence_requirements": [
+    {
+      "ref": "product://fixtures/h05-capability-contracts/evidence/valid-agent-card.json",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    }
+  ],
+  "upskill_refs": [
+    {
+      "ref": "product://fixtures/h05-capability-contracts/upskills/capability-boundaries.json",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+    }
+  ],
+  "cannot_claim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ]
+}

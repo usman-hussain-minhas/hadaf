@@ -336,3 +336,15 @@ export {
   type H05ExpectedAgentStatus,
   type H05VerifiedAgentRegistryRef
 } from "./h05/agent-registry.js";
+export {
+  verifyH05CapabilityContractConfig,
+  type H05CapabilityCardExpectation,
+  type H05CapabilityCardValidationResult,
+  type H05CapabilityContractConfig,
+  type H05CapabilityContractFinding,
+  type H05CapabilityContractReport,
+  type H05CapabilityContractStatus,
+  type H05CapabilitySchemaDescriptor,
+  type H05ExpectedCapabilityCardStatus,
+  type H05VerifiedCapabilityRef
+} from "./h05/capability-contracts.js";
