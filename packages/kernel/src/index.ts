@@ -214,6 +214,20 @@ export {
   type H04RecordGeneratorVerifiedRef
 } from "./h04/record-generator.js";
 export {
+  verifyH04FinalizeBoxConfig,
+  type H04ExpectedFinalizeBoxStatus,
+  type H04FinalizeBoxConfig,
+  type H04FinalizeBoxExpectation,
+  type H04FinalizeBoxFinding,
+  type H04FinalizeBoxReport,
+  type H04FinalizeBoxSchemaDescriptor,
+  type H04FinalizeBoxStatus,
+  type H04FinalizeBoxValidationResult,
+  type H04FinalizeBoxVerifiedRef,
+  type H04FinalizeCheckStatus,
+  type H04FinalizeGateResult
+} from "./h04/finalize-box.js";
+export {
   computeSourceAuthoritySetHash,
   verifyH03InputAuthorityConfig,
   type H03AcceptedInput,

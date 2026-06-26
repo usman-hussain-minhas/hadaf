@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://schemas/box_finalizer_output.schema.json",
+  "title": "HADAF Box Finalizer Output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "finalizer_id",
+    "box_id",
+    "product_sha",
+    "tree_hash",
+    "checks",
+    "check_results",
+    "unavailable_checks",
+    "approved_debt",
+    "blocking_findings",
+    "gate_result",
+    "cannot_claim"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "finalizer_id": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/id"
+    },
+    "box_id": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/id"
+    },
+    "product_sha": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/gitObjectHash"
+    },
+    "tree_hash": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/gitObjectHash"
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "check_results": {
+      "type": "array",
+      "items": {
+        "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/checkResult"
+      },
+      "default": []
+    },
+    "unavailable_checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "check_id",
+          "reason",
+          "cannot_claim"
+        ],
+        "properties": {
+          "check_id": {
+            "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/id"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "cannot_claim": {
+            "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/cannotClaim"
+          }
+        }
+      },
+      "default": []
+    },
+    "approved_debt": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "debt_id",
+          "owner",
+          "reason",
+          "remediation_ref"
+        ],
+        "properties": {
+          "debt_id": {
+            "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/id"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "remediation_ref": {
+            "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/ref"
+          }
+        }
+      },
+      "default": []
+    },
+    "blocking_findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "finding_id",
+          "severity",
+          "reason"
+        ],
+        "properties": {
+          "finding_id": {
+            "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/id"
+          },
+          "severity": {
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      },
+      "default": []
+    },
+    "gate_result": {
+      "enum": [
+        "GO",
+        "CONDITIONAL_GO",
+        "NO_GO",
+        "BLOCKED",
+        "UNABLE_TO_VERIFY"
+      ]
+    },
+    "cannot_claim": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/cannotClaim"
+    }
+  }
+}

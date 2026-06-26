@@ -1,0 +1,90 @@
+{
+  "logicalRoots": {
+    "fixture://boxes": "fixtures/h04-finalize-box/boxes",
+    "fixture://schemas": "fixtures/h04-finalize-box/schemas"
+  },
+  "schema": {
+    "ref": "fixture://schemas/box_finalizer_output.schema.json",
+    "sha256": "ac21ebfc9d1fb9b0e603cb43814abd5a32e2af1bf74d4fb05679d1561347a13d"
+  },
+  "schemaRefs": [
+    {
+      "ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json",
+      "sha256": "c1d00c67f6cf00d63a5e31bb204bc5c5637448afecb705d3dbbca68e110c5a2a"
+    }
+  ],
+  "expectedCurrentProductSha": "a6cd4c65babcd8e7462040c421e29b6313132d0d",
+  "expectedCurrentTreeHash": "b1e2edaaf4f0e67c9077ccd638e8015621139128",
+  "requiredFfetIds": [
+    "H04-F00",
+    "H04-F01",
+    "H04-F02",
+    "H04-F03",
+    "H04-F04"
+  ],
+  "allowedGateResults": [
+    "GO",
+    "CONDITIONAL_GO"
+  ],
+  "requiredCannotClaim": [
+    "h04_assurance_complete",
+    "h04_hmc_projection_implemented",
+    "h04_fully_implemented",
+    "self_hosting_ready",
+    "H07_proof_engine_implemented"
+  ],
+  "boxes": [
+    {
+      "boxId": "H04",
+      "ref": "fixture://boxes/valid-finalization.json",
+      "expectedStatus": "passed"
+    },
+    {
+      "boxId": "H04",
+      "ref": "fixture://boxes/open-ffet.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "required_ffet_check_missing"
+      ]
+    },
+    {
+      "boxId": "H04",
+      "ref": "fixture://boxes/missing-evidence.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "required_ffet_check_missing"
+      ]
+    },
+    {
+      "boxId": "H04",
+      "ref": "fixture://boxes/successor-blocking-debt.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "successor_blocking_debt"
+      ]
+    },
+    {
+      "boxId": "H04",
+      "ref": "fixture://boxes/missing-cannot-claim.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "cannot_claim_missing_required"
+      ]
+    },
+    {
+      "boxId": "H04",
+      "ref": "fixture://boxes/stale-product-sha.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "stale_product_sha"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "h04_assurance_complete",
+    "h04_hmc_projection_implemented",
+    "h04_fully_implemented",
+    "H07_proof_engine_implemented"
+  ],
+  "finalPostureRecommendation": "H04_F05_FINALIZE_BOX_FIXTURE_VERIFIED"
+}

@@ -1,0 +1,136 @@
+{
+  "schema_version": "1.0.0",
+  "finalizer_id": "H04-F05-finalizer",
+  "box_id": "H04",
+  "product_sha": "a6cd4c65babcd8e7462040c421e29b6313132d0d",
+  "tree_hash": "b1e2edaaf4f0e67c9077ccd638e8015621139128",
+  "checks": [
+    "ffet:H04-F00:closeout",
+    "ffet:H04-F00:learning",
+    "ffet:H04-F00:evidence_manifest",
+    "ffet:H04-F01:closeout",
+    "ffet:H04-F01:learning",
+    "ffet:H04-F01:evidence_manifest",
+    "ffet:H04-F02:closeout",
+    "ffet:H04-F02:learning",
+    "ffet:H04-F02:evidence_manifest",
+    "ffet:H04-F03:closeout",
+    "ffet:H04-F03:learning",
+    "ffet:H04-F03:evidence_manifest",
+    "ffet:H04-F04:closeout",
+    "ffet:H04-F04:learning",
+    "ffet:H04-F04:evidence_manifest",
+    "successor:gate:debt_classified"
+  ],
+  "check_results": [
+    {
+      "check_id": "ffet:H04-F00:closeout",
+      "status": "passed",
+      "evidence_ref": "product://fixtures/h04-finalize-box/closeouts/H04-F00",
+      "evidence_sha256": "1847bbc06f46ad94cba86ffd37a3ad10de6e3d187620f757e9979ec061a4b037"
+    },
+    {
+      "check_id": "ffet:H04-F00:learning",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F00:evidence_manifest",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F01:closeout",
+      "status": "passed",
+      "evidence_ref": "product://fixtures/h04-finalize-box/closeouts/H04-F01",
+      "evidence_sha256": "ced95bf97927ce052399cd49e6e91b7c9fb8411372b3e7de3b0ba47da4df7d98"
+    },
+    {
+      "check_id": "ffet:H04-F01:learning",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F01:evidence_manifest",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F02:closeout",
+      "status": "passed",
+      "evidence_ref": "product://fixtures/h04-finalize-box/closeouts/H04-F02",
+      "evidence_sha256": "9e1d06a3e1b4998efb4a449d80e778855ab6ae7874cfe4dff08977d3b56461bb"
+    },
+    {
+      "check_id": "ffet:H04-F02:learning",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F02:evidence_manifest",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F03:closeout",
+      "status": "passed",
+      "evidence_ref": "product://fixtures/h04-finalize-box/closeouts/H04-F03",
+      "evidence_sha256": "6278b53a08868ea99de9eddfe61f18f2f90fc58efdb474ff6243e45eaf302dfe"
+    },
+    {
+      "check_id": "ffet:H04-F03:learning",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F03:evidence_manifest",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F04:closeout",
+      "status": "passed",
+      "evidence_ref": "product://fixtures/h04-finalize-box/closeouts/H04-F04",
+      "evidence_sha256": "d05b28e01ed8b9eae39be8052c4a2f8373536c762c6747d2311f3c0d3e8b2b49"
+    },
+    {
+      "check_id": "ffet:H04-F04:learning",
+      "status": "passed",
+      "evidence_ref": "product://fixtures/h04-finalize-box/learning/H04-F04",
+      "evidence_sha256": "997a2252bf2b78c91cb18fb2107ae0a36d889366cf985de3a7a87b1145e41baf"
+    },
+    {
+      "check_id": "ffet:H04-F04:evidence_manifest",
+      "status": "passed",
+      "evidence_ref": "product://fixtures/h04-finalize-box/manifests/H04-F04",
+      "evidence_sha256": "661622e70ca5b7e7b3e7749b8d388943ff789d96ad6d00c3ae700cfdb8b0f5b3"
+    },
+    {
+      "check_id": "successor:gate:debt_classified",
+      "status": "passed",
+      "detail": "H04-F06 and H04 assurance remain successor scope."
+    }
+  ],
+  "unavailable_checks": [],
+  "approved_debt": [
+    {
+      "debt_id": "h04_hmc_projection_successor_scope",
+      "owner": "H04",
+      "reason": "H04-F06 HMC projection is a successor FFET, not H04-F05 scope.",
+      "remediation_ref": "product://fixtures/h04-finalize-box/successors/H04-F06"
+    },
+    {
+      "debt_id": "h04_assurance_successor_scope",
+      "owner": "H04",
+      "reason": "H04 Box assurance belongs to PART-04 after Product FFETs complete.",
+      "remediation_ref": "product://fixtures/h04-finalize-box/assurance/H04"
+    }
+  ],
+  "blocking_findings": [],
+  "gate_result": "CONDITIONAL_GO",
+  "cannot_claim": [
+    "h04_assurance_complete",
+    "h04_hmc_projection_implemented",
+    "h04_fully_implemented",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "stable_agents",
+    "independent_quality_auditor_qualified",
+    "independent_process_separation_proven",
+    "mechanically_independent_agents",
+    "H07_proof_engine_implemented"
+  ]
+}
