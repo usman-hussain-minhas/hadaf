@@ -44,6 +44,7 @@
     "verify:h03-plan-normalization": "node scripts/verify-h03-plan-normalization.mjs",
     "verify:h03-question-register": "node scripts/verify-h03-question-register.mjs",
     "verify:h03-delivery-constitution": "node scripts/verify-h03-delivery-constitution.mjs",
+    "verify:h03-constitution-readiness": "node scripts/verify-h03-constitution-readiness.mjs",
     "supply-chain": "node scripts/generate-supply-chain-artifacts.mjs"
   },
   "devDependencies": {

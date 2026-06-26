@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "approval_id": "fixture-approval-mismatch",
+  "constitution_id": "hadaf-h03-fixture-constitution",
+  "constitution_version": "1.1.0",
+  "constitution_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "constitution_document_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "decision": "approved",
+  "ratifier": "fixture-ratifier",
+  "ratified_at": "2026-06-26T00:00:00Z",
+  "authority_source": {
+    "ref": "fixture://authority/human-decision",
+    "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+  },
+  "conditions": [],
+  "cannot_claim": [
+    "fixture_not_real_approval"
+  ]
+}

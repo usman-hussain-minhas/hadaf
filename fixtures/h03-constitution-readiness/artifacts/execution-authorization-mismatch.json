@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "authorization_id": "fixture-execution-authorization-mismatch",
+  "constitution_id": "hadaf-h03-fixture-constitution",
+  "constitution_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "approval_record_ref": "fixture://h03-constitution-readiness/artifacts/approval-record-mismatch.json",
+  "approval_record_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "status": "authorized",
+  "authorized_scope": {
+    "box_ids": [
+      "H04"
+    ],
+    "ffet_ids": [],
+    "operations": [
+      "implement"
+    ]
+  },
+  "forbidden_scope": [
+    "production_activation"
+  ],
+  "constraints": [
+    "fixture only"
+  ],
+  "human_gates": [
+    "exact hash approval"
+  ],
+  "ratifier": "fixture-ratifier",
+  "authorized_at": "2026-06-26T00:00:00Z",
+  "expires_at": null,
+  "cannot_claim": [
+    "fixture_not_real_authorization"
+  ]
+}

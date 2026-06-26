@@ -212,3 +212,24 @@ export {
   type H03StructuredContractKey,
   type H03VerifiedCompanionArtifact
 } from "./h03/delivery-constitution.js";
+export {
+  canonicalizeJsonForHash,
+  hashDeliveryConstitutionContent,
+  verifyH03ConstitutionReadinessConfig,
+  type H03ApprovalExecutionSchemas,
+  type H03ApprovalState,
+  type H03CompletionGate,
+  type H03CompletionGateStatus,
+  type H03ConstitutionReadinessConfig,
+  type H03ConstitutionReadinessFinding,
+  type H03ConstitutionReadinessReport,
+  type H03ConstitutionReadinessStatus,
+  type H03CurrentProductTruth,
+  type H03DeliveryConstitutionOverrides,
+  type H03ExecutionAuthorizationState,
+  type H03PredecessorCloseoutExpectation,
+  type H03RecordBinding,
+  type H03SchemaBinding,
+  type H03VerifiedPredecessor,
+  type H03VerifiedRecord
+} from "./h03/constitution-readiness.js";
