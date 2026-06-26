@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://schemas/record_generator_output.schema.json",
+  "title": "H04 Record Generator Output Fixture Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generator_id",
+    "template_ref",
+    "template_hash",
+    "output_ref",
+    "output_hash",
+    "required_fields",
+    "missing_fields",
+    "placeholder_scan",
+    "artifact_purpose",
+    "claim_eligibility",
+    "cannot_claim"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "generator_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "template_ref": {
+      "type": "string",
+      "pattern": "^(fixture://|product://)[^\\s]+$"
+    },
+    "template_hash": {
+      "type": "string",
+      "pattern": "^(?!.*(?:pending|placeholder|todo|TBD|FIXME))[a-f0-9]{64}$"
+    },
+    "output_ref": {
+      "type": "string",
+      "pattern": "^(fixture://|product://)[^\\s]+$"
+    },
+    "output_hash": {
+      "type": "string",
+      "pattern": "^(?!.*(?:pending|placeholder|todo|TBD|FIXME))[a-f0-9]{64}$"
+    },
+    "required_fields": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "missing_fields": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "placeholder_scan": {
+      "enum": [
+        "passed",
+        "failed",
+        "not_run"
+      ]
+    },
+    "artifact_purpose": {
+      "enum": [
+        "authority",
+        "control",
+        "evidence",
+        "runtime",
+        "product_fixture",
+        "generated_view",
+        "validation",
+        "closeout",
+        "learning",
+        "assurance",
+        "current_state",
+        "continuation",
+        "draft"
+      ]
+    },
+    "claim_eligibility": {
+      "enum": [
+        "eligible",
+        "not_eligible",
+        "draft_only",
+        "blocked"
+      ]
+    },
+    "cannot_claim": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  }
+}

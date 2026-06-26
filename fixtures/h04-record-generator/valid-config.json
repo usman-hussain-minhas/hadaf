@@ -1,0 +1,74 @@
+{
+  "logicalRoots": {
+    "fixture://": "./fixtures/h04-record-generator"
+  },
+  "schema": {
+    "ref": "fixture://schemas/record_generator_output.schema.json",
+    "sha256": "012eb952f1eb215381015078035c81473f8d15c869d1be8207f02d31120c7f77"
+  },
+  "requiredCannotClaim": [
+    "h04_finalize_box_implemented",
+    "H07_proof_engine_implemented"
+  ],
+  "requests": [
+    {
+      "requestId": "H04-F04-valid-generator-request",
+      "ref": "fixture://inputs/valid-generator-request.json",
+      "expectedStatus": "passed"
+    },
+    {
+      "requestId": "H04-F04-transient-only-output",
+      "ref": "fixture://inputs/transient-only-output.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "output_ref_transient_only"
+      ]
+    },
+    {
+      "requestId": "H04-F04-private-path-output",
+      "ref": "fixture://inputs/private-path-output.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "private_path_in_request"
+      ]
+    },
+    {
+      "requestId": "H04-F04-missing-required-field",
+      "ref": "fixture://inputs/missing-required-field.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "required_fields_missing"
+      ]
+    },
+    {
+      "requestId": "H04-F04-placeholder-output-hash",
+      "ref": "fixture://inputs/placeholder-output-hash.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "output_hash_invalid"
+      ]
+    },
+    {
+      "requestId": "H04-F04-output-hash-mismatch",
+      "ref": "fixture://inputs/output-hash-mismatch.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "output_hash_mismatch"
+      ]
+    },
+    {
+      "requestId": "H04-F04-claim-overeligible",
+      "ref": "fixture://inputs/claim-overeligible.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "claim_eligibility_overclaim"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "h04_finalize_box_implemented",
+    "h04_hmc_projection_implemented",
+    "H07_proof_engine_implemented"
+  ],
+  "finalPostureRecommendation": "H04_F04_RECORD_GENERATOR_FIXTURE_VERIFIED"
+}
