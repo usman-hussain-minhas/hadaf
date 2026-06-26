@@ -11,11 +11,12 @@ test("derives a valid HMC fixture state with classified stale generated state", 
   assert.equal(report.classified_mismatches.length, 1);
   assert.equal(report.view.project.name, "HADAF v1");
   assert.equal(report.view.maturitySummary.fixture_backed > 0, true);
-  assert.equal(report.final_posture_recommendation, "H03_DELIVERY_CONSTITUTION_NOT_YET_READY_FOR_HUMAN_RATIFICATION");
+  assert.equal(report.final_posture_recommendation, "H03_PRODUCT_PIPELINE_COMPLETE_PENDING_BOX_ASSURANCE");
   assert.equal(report.view.h03Projection?.authority, "derived_view_only");
   assert.equal(report.view.h03Projection?.deliveryConstitution.approvalStatus, "for_human_review");
   assert.equal(report.view.h03Projection?.deliveryConstitution.executionAuthorized, false);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h03_stage:H03-F05" && ref.status === "closeout_complete"), true);
+  assert.equal(report.verified_refs.some((ref) => ref.ref === "h03_stage:H03-F06" && ref.status === "closeout_complete"), true);
   assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04" && ffet.status === "active"), false);
   assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04-R1" && ffet.status === "verified"), true);
 });
@@ -213,7 +214,7 @@ function validConfig(): HmcStateConfig {
       {
         id: "H03",
         name: "Plan Compiler and Delivery Constitution",
-        status: "compiler_pipeline_in_progress",
+        status: "product_pipeline_complete_pending_box_assurance",
         maturity: "fixture_backed",
         debt: ["human_ratification_pending", "h04_h06_execution_not_authorized"]
       }
@@ -282,7 +283,7 @@ function validConfig(): HmcStateConfig {
       {
         id: "H03-F06",
         title: "HMC derived projection",
-        status: "in_progress",
+        status: "closeout_complete",
         maturity: "fixture_backed"
       }
     ],
@@ -305,13 +306,13 @@ function validConfig(): HmcStateConfig {
     decisions: [
       {
         id: "h03-human-ratification",
-        status: "ready",
+        status: "blocked",
         maturity: "fixture_backed"
       }
     ],
     h03Projection: {
       id: "H03",
-      status: "compiler_pipeline_visible",
+      status: "product_pipeline_complete_pending_box_assurance",
       maturity: "fixture_backed",
       authority: "derived_view_only",
       freshness: "fresh",
@@ -361,9 +362,9 @@ function validConfig(): HmcStateConfig {
         {
           id: "H03-F06",
           title: "HMC derived projection",
-          status: "in_progress",
+          status: "closeout_complete",
           maturity: "fixture_backed",
-          closeoutStatus: "pending"
+          closeoutStatus: "closeout_complete"
         }
       ],
       deliveryConstitution: {
@@ -414,7 +415,7 @@ function validConfig(): HmcStateConfig {
       "execution_authorization_granted",
       "h04_h05_h06_execution_authorized"
     ],
-    finalPostureRecommendation: "H03_DELIVERY_CONSTITUTION_NOT_YET_READY_FOR_HUMAN_RATIFICATION"
+    finalPostureRecommendation: "H03_PRODUCT_PIPELINE_COMPLETE_PENDING_BOX_ASSURANCE"
   };
 }
 

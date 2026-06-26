@@ -76,10 +76,11 @@
               </div>
               <div class="status-strip" role="list" aria-label="Box status">
                 <span role="listitem" class="status-pill status-pill--active">compiler pipeline visible</span>
-                <span role="listitem" class="status-pill">F00-F05 closeout complete</span>
-                <span role="listitem" class="status-pill status-pill--warn">human ratification pending</span>
+                <span role="listitem" class="status-pill">F00-F06 closeout complete</span>
+                <span role="listitem" class="status-pill status-pill--warn">Box assurance pending</span>
+                <span role="listitem" class="status-pill status-pill--warn">human ratification not yet ready</span>
               </div>
-              <p class="summary" data-state-field="project-posture">H03_DELIVERY_CONSTITUTION_NOT_YET_READY_FOR_HUMAN_RATIFICATION</p>
+              <p class="summary" data-state-field="project-posture">H03_PRODUCT_PIPELINE_COMPLETE_PENDING_BOX_ASSURANCE</p>
             </section>
 
             <section class="panel" aria-labelledby="truth-title">
@@ -147,9 +148,9 @@
             </div>
             <div class="table-row" role="row">
               <span role="cell">H03 Plan Compiler and Delivery Constitution</span>
-              <span role="cell"><strong>in progress</strong></span>
+              <span role="cell"><strong>pending Box assurance</strong></span>
               <span role="cell">fixture-backed derived projection</span>
-              <span role="cell">human ratification pending</span>
+              <span role="cell">human ratification not yet ready</span>
             </div>
           </div>
         </section>
@@ -223,10 +224,10 @@
               <strong>Constitution readiness boundary</strong>
               <span>closeout complete</span>
             </article>
-            <article class="queue-item is-active">
+            <article class="queue-item is-done">
               <span class="queue-code">H03-F06</span>
               <strong data-state-field="active-ffet">HMC derived projection</strong>
-              <span>in progress</span>
+              <span>closeout complete</span>
             </article>
           </div>
         </section>
@@ -279,8 +280,8 @@
           <div class="state-grid" aria-label="Evidence state examples">
             <article class="state-card">
               <span class="state-label">loading</span>
-              <strong>H03 derived projection active</strong>
-              <p>Fixture-backed HMC state projects H03 compiler progress without becoming authority for lifecycle state.</p>
+              <strong>H03 Box assurance pending</strong>
+              <p>Fixture-backed HMC state projects H03 product pipeline completion without becoming authority for lifecycle state.</p>
             </article>
             <article class="state-card">
               <span class="state-label">constitution</span>
@@ -305,8 +306,8 @@
           </div>
           <div class="panel panel--wide">
             <div class="decision-row">
-              <span class="status-pill status-pill--active">ready</span>
-              <strong>Delivery Constitution requires human ratification.</strong>
+              <span class="status-pill status-pill--warn">blocked pending Box assurance</span>
+              <strong>Delivery Constitution will require human ratification after H03 Box assurance.</strong>
               <span data-state-field="projection-authority">derived_view_only</span>
             </div>
           </div>

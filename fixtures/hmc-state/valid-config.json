@@ -2,7 +2,7 @@
   "project": {
     "id": "hadaf",
     "name": "HADAF v1",
-    "posture": "H03_DELIVERY_CONSTITUTION_NOT_YET_READY_FOR_HUMAN_RATIFICATION",
+    "posture": "H03_PRODUCT_PIPELINE_COMPLETE_PENDING_BOX_ASSURANCE",
     "maturity": "fixture_backed"
   },
   "boxes": [
@@ -24,7 +24,7 @@
     {
       "id": "H03",
       "name": "Plan Compiler and Delivery Constitution",
-      "status": "compiler_pipeline_in_progress",
+      "status": "product_pipeline_complete_pending_box_assurance",
       "maturity": "fixture_backed",
       "debt": [
         "human_ratification_pending",
@@ -108,7 +108,7 @@
     {
       "id": "H03-F06",
       "title": "HMC derived projection",
-      "status": "in_progress",
+      "status": "closeout_complete",
       "maturity": "fixture_backed"
     }
   ],
@@ -177,13 +177,13 @@
   "decisions": [
     {
       "id": "h03-human-ratification",
-      "status": "ready",
+      "status": "blocked",
       "maturity": "fixture_backed"
     }
   ],
   "h03Projection": {
     "id": "H03",
-    "status": "compiler_pipeline_visible",
+    "status": "product_pipeline_complete_pending_box_assurance",
     "maturity": "fixture_backed",
     "authority": "derived_view_only",
     "freshness": "fresh",
@@ -233,9 +233,9 @@
       {
         "id": "H03-F06",
         "title": "HMC derived projection",
-        "status": "in_progress",
+        "status": "closeout_complete",
         "maturity": "fixture_backed",
-        "closeoutStatus": "pending"
+        "closeoutStatus": "closeout_complete"
       }
     ],
     "deliveryConstitution": {
@@ -253,13 +253,13 @@
     }
   },
   "git": {
-    "expectedMainSha": "6f571597fb80a7d71d449f300653ce1cceec52dd",
-    "actualMainSha": "6f571597fb80a7d71d449f300653ce1cceec52dd",
-    "originMainSha": "6f571597fb80a7d71d449f300653ce1cceec52dd"
+    "expectedMainSha": "f95715c0f8618679cd8d711dd4acc398c8d9f63b",
+    "actualMainSha": "f95715c0f8618679cd8d711dd4acc398c8d9f63b",
+    "originMainSha": "f95715c0f8618679cd8d711dd4acc398c8d9f63b"
   },
   "github": {
-    "expectedHeadSha": "6f571597fb80a7d71d449f300653ce1cceec52dd",
-    "currentHeadSha": "6f571597fb80a7d71d449f300653ce1cceec52dd",
+    "expectedHeadSha": "f95715c0f8618679cd8d711dd4acc398c8d9f63b",
+    "currentHeadSha": "f95715c0f8618679cd8d711dd4acc398c8d9f63b",
     "openPullRequests": 0
   },
   "generatedState": [
@@ -295,5 +295,5 @@
     "production_ready",
     "stable_agents"
   ],
-  "finalPostureRecommendation": "H03_DELIVERY_CONSTITUTION_NOT_YET_READY_FOR_HUMAN_RATIFICATION"
+  "finalPostureRecommendation": "H03_PRODUCT_PIPELINE_COMPLETE_PENDING_BOX_ASSURANCE"
 }
