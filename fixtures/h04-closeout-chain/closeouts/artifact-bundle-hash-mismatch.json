@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "chain_id": "H04-F03-artifact-bundle-hash-mismatch",
+  "scope_type": "ffet",
+  "scope_id": "H04-F03",
+  "source_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+  "artifact_bundle_hash": "9999999999999999999999999999999999999999999999999999999999999999",
+  "closeout_hash": "5555555555555555555555555555555555555555555555555555555555555555",
+  "ordered_links": [
+    {
+      "link_id": "source-record",
+      "ref": "fixture://source/H04-F03-source.json",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "role": "source"
+    },
+    {
+      "link_id": "validation-record",
+      "ref": "fixture://validation/H04-F03-validation.json",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "role": "validation"
+    },
+    {
+      "link_id": "artifact-bundle",
+      "ref": "fixture://bundles/H04-F03-artifact-bundle.json",
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "role": "artifact_bundle"
+    },
+    {
+      "link_id": "terminal-learning",
+      "ref": "fixture://learning/H04-F03-learning.json",
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "role": "learning"
+    },
+    {
+      "link_id": "closeout-record",
+      "ref": "fixture://closeouts/H04-F03-closeout.json",
+      "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+      "role": "closeout"
+    }
+  ],
+  "chain_status": "broken",
+  "stale_links": [
+    "artifact-bundle"
+  ],
+  "cannot_claim": [
+    "h04_assurance_not_complete",
+    "h04_record_generator_implemented",
+    "H07_proof_engine_implemented"
+  ]
+}

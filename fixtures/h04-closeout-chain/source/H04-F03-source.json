@@ -1,0 +1,10 @@
+{
+  "source_id": "H04-F03-fixture-source",
+  "purpose": "Fixture source authority for the H04 closeout hash-chain verifier.",
+  "authority_classification": "fixture_backed",
+  "cannot_claim": [
+    "h04_assurance_not_complete",
+    "h04_record_generator_implemented",
+    "H07_proof_engine_implemented"
+  ]
+}
