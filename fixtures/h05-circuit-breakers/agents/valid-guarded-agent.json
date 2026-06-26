@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0.0",
+  "agent_id": "agent.guard-valid",
+  "version": "0.1.0",
+  "role_family": "bounded_guarded_worker",
+  "capabilities": [
+    "model:generate_code",
+    "tool:run_tests",
+    "filesystem:read_product_files",
+    "circuit_breaker:stale_ffet_stop",
+    "circuit_breaker:forbidden_plane_stop",
+    "circuit_breaker:unbounded_write_stop",
+    "circuit_breaker:private_prompt_stop",
+    "circuit_breaker:unsupported_capability_stop",
+    "circuit_breaker:human_gate_stop"
+  ],
+  "allowed_planes": [
+    "product"
+  ],
+  "forbidden_planes": [
+    "control",
+    "evidence",
+    "runtime",
+    "release",
+    "input"
+  ],
+  "write_boundaries": [
+    "exact_ffet_owned_files"
+  ],
+  "qualification_status": "fixture_tested",
+  "bounded_use_status": "bounded_for_h05",
+  "evidence_requirements": [
+    {
+      "ref": "product://fixtures/h05-circuit-breakers/evidence/valid-guarded-agent.json",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    }
+  ],
+  "upskill_refs": [
+    {
+      "ref": "product://fixtures/h05-circuit-breakers/upskills/circuit-breaker-policy.json",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+    }
+  ],
+  "cannot_claim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified",
+    "runtime_circuit_breaker_enforcement",
+    "rogue_agent_absence_proven_in_live_runtime"
+  ]
+}

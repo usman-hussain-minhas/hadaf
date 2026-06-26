@@ -348,3 +348,15 @@ export {
   type H05ExpectedCapabilityCardStatus,
   type H05VerifiedCapabilityRef
 } from "./h05/capability-contracts.js";
+export {
+  verifyH05CircuitBreakerConfig,
+  type H05CircuitBreakerAgentExpectation,
+  type H05CircuitBreakerAgentValidationResult,
+  type H05CircuitBreakerConfig,
+  type H05CircuitBreakerFinding,
+  type H05CircuitBreakerReport,
+  type H05CircuitBreakerSchemaDescriptor,
+  type H05CircuitBreakerStatus,
+  type H05ExpectedCircuitBreakerAgentStatus,
+  type H05VerifiedCircuitBreakerRef
+} from "./h05/circuit-breakers.js";

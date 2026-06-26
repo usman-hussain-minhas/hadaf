@@ -40,6 +40,8 @@ const cases = [
   pnpmCase("h05-agent-registry-separator", ["verify:h05-agent-registry", "--", "fixtures/h05-agent-registry/valid-config.json"]),
   pnpmCase("h05-capability-contracts-direct", ["verify:h05-capability-contracts", "fixtures/h05-capability-contracts/valid-config.json"]),
   pnpmCase("h05-capability-contracts-separator", ["verify:h05-capability-contracts", "--", "fixtures/h05-capability-contracts/valid-config.json"]),
+  pnpmCase("h05-circuit-breakers-direct", ["verify:h05-circuit-breakers", "fixtures/h05-circuit-breakers/valid-config.json"]),
+  pnpmCase("h05-circuit-breakers-separator", ["verify:h05-circuit-breakers", "--", "fixtures/h05-circuit-breakers/valid-config.json"]),
   pnpmCase("target-guard-direct", ["check:target-guard", "fixtures/target-guard/valid-config.json"]),
   pnpmCase("target-guard-separator", ["check:target-guard", "--", "fixtures/target-guard/valid-config.json"]),
   nodeCase("pr-metadata-direct", ["scripts/check-pr-metadata-public-safety.mjs", fixturePaths.prBody]),
