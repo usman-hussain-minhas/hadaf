@@ -81,6 +81,30 @@ async function loadFixtureState() {
   if (projectionAuthority) {
     projectionAuthority.textContent = state.h03Projection.authority;
   }
+  const h04Status = document.querySelector("[data-state-field='h04-status']");
+  if (h04Status) {
+    h04Status.textContent = state.h04Projection.status;
+  }
+  const h04Ledger = document.querySelector("[data-state-field='h04-ledger']");
+  if (h04Ledger) {
+    h04Ledger.textContent = state.h04Projection.truthLedgerStatus;
+  }
+  const h04Finalizer = document.querySelector("[data-state-field='h04-finalizer']");
+  if (h04Finalizer) {
+    h04Finalizer.textContent = state.h04Projection.finalizerStatus;
+  }
+  const h04Gate = document.querySelector("[data-state-field='h04-successor-gate']");
+  if (h04Gate) {
+    h04Gate.textContent = state.h04Projection.successorGate;
+  }
+  const h04ActiveFfet = document.querySelector("[data-state-field='h04-active-ffet']");
+  if (h04ActiveFfet) {
+    h04ActiveFfet.textContent = state.h04Projection.activeFfet;
+  }
+  const h04ProjectionAuthority = document.querySelector("[data-state-field='h04-projection-authority']");
+  if (h04ProjectionAuthority) {
+    h04ProjectionAuthority.textContent = state.h04Projection.authority;
+  }
   const mismatch = document.querySelector("[data-state-field='classified-mismatch']");
   if (mismatch) {
     mismatch.textContent = state.classifiedMismatch;

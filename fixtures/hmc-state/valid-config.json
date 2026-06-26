@@ -2,7 +2,7 @@
   "project": {
     "id": "hadaf",
     "name": "HADAF v1",
-    "posture": "H03_PRODUCT_PIPELINE_COMPLETE_PENDING_BOX_ASSURANCE",
+    "posture": "H04_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED",
     "maturity": "fixture_backed"
   },
   "boxes": [
@@ -29,6 +29,16 @@
       "debt": [
         "human_ratification_pending",
         "h04_h06_execution_not_authorized"
+      ]
+    },
+    {
+      "id": "H04",
+      "name": "Lifecycle State and Run Ledger",
+      "status": "product_pipeline_active",
+      "maturity": "fixture_backed",
+      "debt": [
+        "box_assurance_pending",
+        "h05_h06_not_implemented"
       ]
     }
   ],
@@ -110,6 +120,42 @@
       "title": "HMC derived projection",
       "status": "closeout_complete",
       "maturity": "fixture_backed"
+    },
+    {
+      "id": "H04-F00",
+      "title": "Truth Ledger schema boundary",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H04-F01",
+      "title": "Box lifecycle state verifier",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H04-F02",
+      "title": "FFET lifecycle verifier",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H04-F03",
+      "title": "Closeout chain verifier",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H04-F05",
+      "title": "Finalize Box verifier",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H04-F06",
+      "title": "HMC lifecycle projection",
+      "status": "active",
+      "maturity": "fixture_backed"
     }
   ],
   "quality": [
@@ -169,6 +215,12 @@
     },
     {
       "id": "H03-F05",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "required": true
+    },
+    {
+      "id": "H04-F05",
       "status": "verified",
       "maturity": "fixture_backed",
       "required": true
@@ -252,14 +304,98 @@
       "maturity": "fixture_backed"
     }
   },
+  "h04Projection": {
+    "id": "H04",
+    "status": "product_pipeline_active",
+    "maturity": "fixture_backed",
+    "authority": "derived_view_only",
+    "freshness": "fresh",
+    "box": {
+      "id": "H04",
+      "status": "product_pipeline_active",
+      "maturity": "fixture_backed",
+      "assuranceStatus": "pending"
+    },
+    "ffets": [
+      {
+        "id": "H04-F00",
+        "title": "Truth Ledger schema boundary",
+        "status": "closeout_complete",
+        "maturity": "fixture_backed",
+        "truthSource": "fixture",
+        "closeoutStatus": "closeout_complete",
+        "freshness": "fresh"
+      },
+      {
+        "id": "H04-F01",
+        "title": "Box lifecycle state verifier",
+        "status": "closeout_complete",
+        "maturity": "fixture_backed",
+        "truthSource": "fixture",
+        "closeoutStatus": "closeout_complete",
+        "freshness": "fresh"
+      },
+      {
+        "id": "H04-F02",
+        "title": "FFET lifecycle verifier",
+        "status": "closeout_complete",
+        "maturity": "fixture_backed",
+        "truthSource": "fixture",
+        "closeoutStatus": "closeout_complete",
+        "freshness": "fresh"
+      },
+      {
+        "id": "H04-F03",
+        "title": "Closeout chain verifier",
+        "status": "closeout_complete",
+        "maturity": "fixture_backed",
+        "truthSource": "fixture",
+        "closeoutStatus": "closeout_complete",
+        "freshness": "fresh"
+      },
+      {
+        "id": "H04-F05",
+        "title": "Finalize Box verifier",
+        "status": "closeout_complete",
+        "maturity": "fixture_backed",
+        "truthSource": "fixture",
+        "closeoutStatus": "closeout_complete",
+        "freshness": "fresh"
+      },
+      {
+        "id": "H04-F06",
+        "title": "HMC lifecycle projection",
+        "status": "active",
+        "maturity": "fixture_backed",
+        "truthSource": "fixture",
+        "closeoutStatus": "pending",
+        "freshness": "fresh"
+      }
+    ],
+    "truthLedger": {
+      "status": "fixture_projected",
+      "maturity": "fixture_backed",
+      "authority": "derived_view_only",
+      "eventCount": 6,
+      "freshness": "fresh"
+    },
+    "finalizer": {
+      "status": "implemented",
+      "maturity": "fixture_backed",
+      "successorGate": "conditional_go",
+      "blockingDebt": [
+        "h04_box_assurance_pending"
+      ]
+    }
+  },
   "git": {
-    "expectedMainSha": "f95715c0f8618679cd8d711dd4acc398c8d9f63b",
-    "actualMainSha": "f95715c0f8618679cd8d711dd4acc398c8d9f63b",
-    "originMainSha": "f95715c0f8618679cd8d711dd4acc398c8d9f63b"
+    "expectedMainSha": "619bb8f0c81faca1025b62a48d542dc12fa02f0f",
+    "actualMainSha": "619bb8f0c81faca1025b62a48d542dc12fa02f0f",
+    "originMainSha": "619bb8f0c81faca1025b62a48d542dc12fa02f0f"
   },
   "github": {
-    "expectedHeadSha": "f95715c0f8618679cd8d711dd4acc398c8d9f63b",
-    "currentHeadSha": "f95715c0f8618679cd8d711dd4acc398c8d9f63b",
+    "expectedHeadSha": "619bb8f0c81faca1025b62a48d542dc12fa02f0f",
+    "currentHeadSha": "619bb8f0c81faca1025b62a48d542dc12fa02f0f",
     "openPullRequests": 0
   },
   "generatedState": [
@@ -291,9 +427,11 @@
     "h03_delivery_constitution_ready_for_human_ratification",
     "h03_implemented",
     "h04_h05_h06_execution_authorized",
+    "h04_assurance_complete",
+    "h04_fully_implemented",
     "self_hosting_ready",
     "production_ready",
     "stable_agents"
   ],
-  "finalPostureRecommendation": "H03_PRODUCT_PIPELINE_COMPLETE_PENDING_BOX_ASSURANCE"
+  "finalPostureRecommendation": "H04_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED"
 }

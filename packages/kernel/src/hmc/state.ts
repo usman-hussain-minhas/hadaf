@@ -14,6 +14,7 @@ export interface HmcStateConfig {
   readonly evidence: readonly HmcEvidenceInput[];
   readonly decisions: readonly HmcDecisionInput[];
   readonly h03Projection?: HmcH03ProjectionInput;
+  readonly h04Projection?: HmcH04ProjectionInput;
   readonly git?: HmcGitTruthInput;
   readonly github?: HmcGitHubTruthInput;
   readonly generatedState?: readonly HmcGeneratedStateInput[];
@@ -120,6 +121,51 @@ export interface HmcH03ContinuationProjectionInput {
   readonly maturity: HmcMaturity;
 }
 
+export interface HmcH04ProjectionInput {
+  readonly id: string;
+  readonly status: string;
+  readonly maturity: HmcMaturity;
+  readonly authority: "derived_view_only";
+  readonly freshness: "fresh" | "stale" | "unknown";
+  readonly claimsAuthority?: boolean;
+  readonly box: HmcH04BoxProjectionInput;
+  readonly ffets: readonly HmcH04FfetProjectionInput[];
+  readonly truthLedger: HmcH04TruthLedgerProjectionInput;
+  readonly finalizer: HmcH04FinalizerProjectionInput;
+}
+
+export interface HmcH04BoxProjectionInput {
+  readonly id: string;
+  readonly status: string;
+  readonly maturity: HmcMaturity;
+  readonly assuranceStatus: "not_started" | "pending" | "in_progress" | "complete";
+}
+
+export interface HmcH04FfetProjectionInput {
+  readonly id: string;
+  readonly title: string;
+  readonly status: string;
+  readonly maturity: HmcMaturity;
+  readonly truthSource: "fixture" | "verified_evidence" | "generated" | "unknown";
+  readonly closeoutStatus?: "not_applicable" | "pending" | "closeout_complete";
+  readonly freshness?: "fresh" | "stale" | "missing" | "conflict";
+}
+
+export interface HmcH04TruthLedgerProjectionInput {
+  readonly status: string;
+  readonly maturity: HmcMaturity;
+  readonly authority: "derived_view_only";
+  readonly eventCount: number;
+  readonly freshness: "fresh" | "stale" | "unknown";
+}
+
+export interface HmcH04FinalizerProjectionInput {
+  readonly status: string;
+  readonly maturity: HmcMaturity;
+  readonly successorGate: "not_ready" | "conditional_go" | "go";
+  readonly blockingDebt: readonly string[];
+}
+
 export interface HmcClassifiedMismatchInput {
   readonly kind: string;
   readonly ref: string;
@@ -166,6 +212,7 @@ export interface HmcDerivedView {
   readonly evidence: readonly HmcEvidenceInput[];
   readonly decisions: readonly HmcDecisionInput[];
   readonly h03Projection?: HmcH03ProjectionInput;
+  readonly h04Projection?: HmcH04ProjectionInput;
   readonly truthPrecedence: readonly string[];
   readonly maturitySummary: Record<HmcMaturity, number>;
 }
@@ -201,6 +248,7 @@ export function deriveHmcStateConfig(config: HmcStateConfig): HmcStateReport {
   validateEvidence(config, classified, findings);
   validateGeneratedState(config, classified, findings);
   validateH03Projection(config, classified, findings);
+  validateH04Projection(config, classified, findings);
 
   const verifiedRefs: HmcVerifiedRef[] = [
     ...config.boxes.map((box) => ({ ref: `box:${box.id}`, status: box.status, maturity: box.maturity })),
@@ -210,7 +258,8 @@ export function deriveHmcStateConfig(config: HmcStateConfig): HmcStateReport {
       status: evidence.status,
       maturity: evidence.maturity
     })),
-    ...h03VerifiedRefs(config.h03Projection)
+    ...h03VerifiedRefs(config.h03Projection),
+    ...h04VerifiedRefs(config.h04Projection)
   ];
 
   return {
@@ -234,7 +283,8 @@ export function deriveHmcStateConfig(config: HmcStateConfig): HmcStateReport {
         "fixtures_and_mocks"
       ],
       maturitySummary: summarizeMaturity(config),
-      ...(config.h03Projection ? { h03Projection: config.h03Projection } : {})
+      ...(config.h03Projection ? { h03Projection: config.h03Projection } : {}),
+      ...(config.h04Projection ? { h04Projection: config.h04Projection } : {})
     },
     cannot_claim: [...(config.cannotClaim ?? [])],
     final_posture_recommendation: config.finalPostureRecommendation ?? null
@@ -442,6 +492,103 @@ function validateH03Projection(
   }
 }
 
+function validateH04Projection(
+  config: HmcStateConfig,
+  classified: readonly HmcClassifiedMismatchInput[],
+  findings: HmcStateFinding[]
+): void {
+  const projection = config.h04Projection;
+  if (!projection) return;
+
+  validateMaturity(`h04:${projection.id}`, projection.maturity, config, findings);
+  validateMaturity(`h04_box:${projection.box.id}`, projection.box.maturity, config, findings);
+  validateMaturity("h04:truth_ledger", projection.truthLedger.maturity, config, findings);
+  validateMaturity("h04:finalizer", projection.finalizer.maturity, config, findings);
+  for (const ffet of projection.ffets) {
+    validateMaturity(`h04_ffet:${ffet.id}`, ffet.maturity, config, findings);
+  }
+
+  if (projection.authority !== "derived_view_only" || projection.claimsAuthority === true) {
+    findings.push({
+      kind: "h04_projection_claims_authority",
+      ref: `h04:${projection.id}`,
+      detail: "HMC may project H04 lifecycle state, but cannot create lifecycle authority."
+    });
+  }
+
+  if (projection.truthLedger.authority !== "derived_view_only") {
+    findings.push({
+      kind: "h04_truth_ledger_projection_claims_authority",
+      ref: "h04:truth_ledger",
+      detail: "Projected Truth Ledger state remains a derived HMC view."
+    });
+  }
+
+  if (projection.freshness !== "fresh") {
+    requireClassification("h04_projection_not_fresh", `h04:${projection.id}`, classified, findings, {
+      expected: "fresh",
+      actual: projection.freshness
+    });
+  }
+
+  if (projection.truthLedger.freshness !== "fresh") {
+    requireClassification("h04_truth_ledger_not_fresh", "h04:truth_ledger", classified, findings, {
+      expected: "fresh",
+      actual: projection.truthLedger.freshness
+    });
+  }
+
+  if (projection.maturity === "api_backed" || projection.maturity === "persistent" || projection.maturity === "production_connected") {
+    findings.push({
+      kind: "h04_projection_maturity_overclaim",
+      ref: `h04:${projection.id}`,
+      expected: "fixture_backed",
+      actual: projection.maturity
+    });
+  }
+
+  for (const ffet of projection.ffets) {
+    if (ffet.closeoutStatus === "closeout_complete" && ffet.status !== "closeout_complete") {
+      findings.push({
+        kind: "h04_ffet_closeout_status_conflict",
+        ref: `h04_ffet:${ffet.id}`,
+        expected: "closeout_complete",
+        actual: ffet.status
+      });
+    }
+    if (ffet.freshness && ffet.freshness !== "fresh") {
+      requireClassification("h04_ffet_not_fresh", `h04_ffet:${ffet.id}`, classified, findings, {
+        expected: "fresh",
+        actual: ffet.freshness
+      });
+    }
+  }
+
+  if (projection.finalizer.successorGate === "go" && projection.finalizer.blockingDebt.length > 0) {
+    findings.push({
+      kind: "h04_finalizer_go_with_blocking_debt",
+      ref: "h04:finalizer",
+      expected: "no blocking debt",
+      actual: projection.finalizer.blockingDebt.join(",")
+    });
+  }
+
+  for (const cannotClaim of [
+    "HMC_authoritative_state",
+    "live_github_adapter_implemented",
+    "persistent_state_store_implemented",
+    "h04_assurance_complete",
+    "h04_fully_implemented"
+  ]) {
+    if (config.cannotClaim?.includes(cannotClaim)) continue;
+    findings.push({
+      kind: "missing_h04_projection_cannot_claim",
+      ref: `cannot_claim:${cannotClaim}`,
+      detail: "H04 HMC projection must preserve precise cannot_claim boundaries."
+    });
+  }
+}
+
 function h03VerifiedRefs(projection: HmcH03ProjectionInput | undefined): HmcVerifiedRef[] {
   if (!projection) return [];
   return [
@@ -464,6 +611,37 @@ function h03VerifiedRefs(projection: HmcH03ProjectionInput | undefined): HmcVeri
       ref: "h03:continuation",
       status: projection.continuation.status,
       maturity: projection.continuation.maturity
+    }
+  ];
+}
+
+function h04VerifiedRefs(projection: HmcH04ProjectionInput | undefined): HmcVerifiedRef[] {
+  if (!projection) return [];
+  return [
+    {
+      ref: `h04:${projection.id}`,
+      status: projection.status,
+      maturity: projection.maturity
+    },
+    {
+      ref: `h04_box:${projection.box.id}`,
+      status: projection.box.status,
+      maturity: projection.box.maturity
+    },
+    ...projection.ffets.map((ffet) => ({
+      ref: `h04_ffet:${ffet.id}`,
+      status: ffet.status,
+      maturity: ffet.maturity
+    })),
+    {
+      ref: "h04:truth_ledger",
+      status: projection.truthLedger.status,
+      maturity: projection.truthLedger.maturity
+    },
+    {
+      ref: "h04:finalizer",
+      status: projection.finalizer.status,
+      maturity: projection.finalizer.maturity
     }
   ];
 }
@@ -517,11 +695,23 @@ function summarizeMaturity(config: HmcStateConfig): Record<HmcMaturity, number> 
     ...config.evidence.map((evidence) => evidence.maturity),
     ...config.decisions.map((decision) => decision.maturity),
     ...h03Maturities(config.h03Projection),
+    ...h04Maturities(config.h04Projection),
     ...(config.generatedState ?? []).map((state) => state.maturity)
   ]) {
     summary[maturity] += 1;
   }
   return summary;
+}
+
+function h04Maturities(projection: HmcH04ProjectionInput | undefined): HmcMaturity[] {
+  if (!projection) return [];
+  return [
+    projection.maturity,
+    projection.box.maturity,
+    ...projection.ffets.map((ffet) => ffet.maturity),
+    projection.truthLedger.maturity,
+    projection.finalizer.maturity
+  ];
 }
 
 function h03Maturities(projection: HmcH03ProjectionInput | undefined): HmcMaturity[] {

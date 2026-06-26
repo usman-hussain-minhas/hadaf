@@ -72,10 +72,11 @@ async function runSmoke() {
     const findings = [
       ...requireIncludes(html, [
         "HADAF Mission Control",
-        "H03 Plan Compiler and Delivery Constitution",
-        "H03_PRODUCT_PIPELINE_COMPLETE_PENDING_BOX_ASSURANCE",
+        "H04 Lifecycle State and Run Ledger",
+        "H04_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED",
         "H02-F04-R1",
         "H03-F06",
+        "H04-F06",
         "fixture_backed",
         "mocked",
         "for_human_review",
@@ -83,17 +84,20 @@ async function runSmoke() {
         "derived_view_only",
         "self_hosting_ready",
         "HMC_authoritative_state",
+        "h04_assurance_complete",
         "Product Preview",
         "H03 Box assurance pending",
+        "H04 lifecycle projection",
         "Generated state stale"
       ]),
       ...requireIncludes(css, [".app-shell", "@media", "--teal"]),
-      ...requireIncludes(js, ["setView", "aria-pressed", "state.fixture.json", "constitution-status"]),
+      ...requireIncludes(js, ["setView", "aria-pressed", "state.fixture.json", "constitution-status", "h04-status"]),
       ...requireIncludes(stateJson, [
         "adapterMaturity",
         "fixture_backed",
-        "H03 Box assurance pending",
-        "product_pipeline_complete_pending_box_assurance",
+        "H04-F06 HMC lifecycle projection",
+        "product_pipeline_active",
+        "fixture_projected",
         "derived_view_only"
       ])
     ];
