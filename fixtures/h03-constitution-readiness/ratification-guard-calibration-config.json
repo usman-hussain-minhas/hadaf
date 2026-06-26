@@ -1,0 +1,99 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures"
+  },
+  "deliveryConstitutionConfigRef": "fixture://h03-delivery-constitution/valid-config.json",
+  "deliveryConstitutionConfigSha256": "36d77972d4e95cdf04af616826a773baeba0552476e60ba3bf9cb03c15437b56",
+  "deliveryConstitutionOverrides": {
+    "constitutionHash": "8c886f9bd7ff0e660232dfeb3545e83e67c59e33aa4674d43df32459261ad1d2"
+  },
+  "readinessMode": "calibration_mode",
+  "terminalClaim": {
+    "claimId": "H03_RATIFICATION_GUARD_CALIBRATION",
+    "claimedPosture": "H03_RATIFICATION_GUARD_CALIBRATION_PASSED",
+    "minimumEvidencePurpose": "test_calibration",
+    "forbiddenEvidencePurposes": [
+      "generated_view"
+    ],
+    "forbiddenTruthSources": [
+      "generated_view",
+      "unavailable",
+      "stale",
+      "conflicting"
+    ],
+    "requiredAuthorityRoots": [
+      {
+        "evidenceId": "calibration-root",
+        "ref": "fixture://h03-constitution-readiness/artifacts/ratification-guard-calibration-root.json",
+        "sha256": "9ecfcee6fb1afb1c75a3d3d56780a1f451b4eee902bf526de0fc7d05eeadff28",
+        "purpose": "test_calibration",
+        "authorityClass": "test_calibration",
+        "truthSource": "fixture_state",
+        "required": true,
+        "freshnessStatus": "current"
+      }
+    ],
+    "mandatoryEvidence": [
+      {
+        "evidenceId": "calibration-root-copy",
+        "ref": "fixture://h03-constitution-readiness/artifacts/ratification-guard-calibration-root.json",
+        "sha256": "9ecfcee6fb1afb1c75a3d3d56780a1f451b4eee902bf526de0fc7d05eeadff28",
+        "purpose": "test_calibration",
+        "authorityClass": "test_calibration",
+        "truthSource": "fixture_state",
+        "required": true,
+        "freshnessStatus": "current"
+      }
+    ],
+    "hmcMaturity": "fixture_backed",
+    "separateRealRatificationPackageExists": false
+  },
+  "currentProduct": {
+    "expectedSha": "9c5800f84b54afb225b08f003dd41425cdd372a7",
+    "actualSha": "9c5800f84b54afb225b08f003dd41425cdd372a7",
+    "expectedTreeHash": "5d116fd878fa4f98dff3f2e9a9d82705e6144625",
+    "actualTreeHash": "5d116fd878fa4f98dff3f2e9a9d82705e6144625"
+  },
+  "predecessorCloseouts": [
+    {
+      "ffetId": "H03-F04",
+      "ref": "fixture://h03-constitution-readiness/predecessors/H03-F04-closeout.json",
+      "sha256": "8c1b7989c4a0123c8274ce47e793acf4a946e851f9207bba48003baf891e2aa0",
+      "expectedStatus": "closeout_complete"
+    }
+  ],
+  "schemas": {
+    "approvalRecord": {
+      "ref": "fixture://h03-constitution-readiness/schemas/constitution-approval-record.json",
+      "sha256": "74b2b39be4d443182df3af12f929a4a57533f1a8023ee01c91c630a1e979f3eb"
+    },
+    "executionAuthorizationRecord": {
+      "ref": "fixture://h03-constitution-readiness/schemas/execution-authorization-record.json",
+      "sha256": "c136dc3709894af1e4ef07dd08be0017bf80357cbc3b85520b6f685fb76ab024"
+    }
+  },
+  "completionGates": [
+    {
+      "gateId": "delivery_constitution_compiler",
+      "status": "passed",
+      "required": true
+    },
+    {
+      "gateId": "eligibility_calibration",
+      "status": "passed",
+      "required": true
+    }
+  ],
+  "expectedConstitutionContentHash": "8c886f9bd7ff0e660232dfeb3545e83e67c59e33aa4674d43df32459261ad1d2",
+  "expectedApprovalState": "for_human_review",
+  "expectedExecutionAuthorized": false,
+  "expectedCanonicalization": "RFC8785",
+  "cannotClaim": [
+    "real_h03_delivery_constitution_ratifiable",
+    "h03_ratification_ready",
+    "constitution_approved_by_human",
+    "execution_authorization_granted",
+    "h04_h05_h06_execution_authorized"
+  ],
+  "finalPostureRecommendation": "H03_RATIFICATION_GUARD_CALIBRATION_PASSED"
+}

@@ -1,0 +1,6 @@
+{
+  "artifact_id": "ratification-guard-calibration-root",
+  "artifact_purpose": "test_calibration",
+  "truth_source": "fixture_state",
+  "description": "Synthetic calibration artifact used to prove H03 readiness guard eligibility fields without claiming real H03 ratification readiness."
+}

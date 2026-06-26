@@ -15,6 +15,10 @@ function loadValidConfig(): H03ConstitutionReadinessConfig {
   return JSON.parse(readFileSync("fixtures/h03-constitution-readiness/valid-config.json", "utf8"));
 }
 
+function loadCalibrationConfig(): H03ConstitutionReadinessConfig {
+  return JSON.parse(readFileSync("fixtures/h03-constitution-readiness/ratification-guard-calibration-config.json", "utf8"));
+}
+
 function loadMutableConfig(): MutableConfig {
   return JSON.parse(readFileSync("fixtures/h03-constitution-readiness/valid-config.json", "utf8"));
 }
@@ -32,10 +36,82 @@ test("verifies an H03 constitution for human review without execution authorizat
   assert.equal(report.approval_state, "for_human_review");
   assert.equal(report.execution_authorization_state, "not_authorized");
   assert.equal(report.execution_authorized, false);
+  assert.equal(report.readiness_mode, "test_mode");
+  assert.equal(report.claim_eligibility, null);
   assert.equal(report.verified_predecessors.length, 1);
   assert.deepEqual(report.verified_records, []);
   assert.equal(report.cannot_claim.includes("execution_authorization_granted"), true);
   assert.equal(report.final_posture_recommendation, "H03_F05_CONSTITUTION_READINESS_BOUNDARY_VERIFIED");
+});
+
+test("calibrates eligibility fields without producing H03 ratification readiness", () => {
+  const report = verifyH03ConstitutionReadinessConfig(loadCalibrationConfig());
+
+  assert.equal(report.status, "passed");
+  assert.equal(report.readiness_mode, "calibration_mode");
+  assert.equal(report.claim_eligibility?.eligibility_result, "passed");
+  assert.equal(report.claim_eligibility?.weakest_mandatory_evidence_maturity, "test_calibration");
+  assert.equal(report.final_posture_recommendation, "H03_RATIFICATION_GUARD_CALIBRATION_PASSED");
+  assert.notEqual(report.final_posture_recommendation, "H03_RATIFICATION_READY");
+  assert.equal(report.cannot_claim.includes("h03_ratification_ready"), true);
+});
+
+test("rejects final mode when the package is fixture-bound and contains dummy hashes", () => {
+  const config = loadMutableConfig();
+  config.readinessMode = "final_mode";
+  config.terminalClaim = {
+    claimId: "H03_DELIVERY_CONSTITUTION_READY_FOR_HUMAN_RATIFICATION",
+    claimedPosture: "H03_RATIFICATION_READY",
+    minimumEvidencePurpose: "ratification_candidate",
+    forbiddenEvidencePurposes: ["fixture_only", "test_calibration", "generated_view"],
+    requiredAuthorityRoots: [
+      {
+        evidenceId: "fixture-delivery-config",
+        ref: "fixture://h03-delivery-constitution/valid-config.json",
+        sha256: "36d77972d4e95cdf04af616826a773baeba0552476e60ba3bf9cb03c15437b56",
+        purpose: "fixture_only",
+        authorityClass: "test_calibration",
+        truthSource: "fixture_state",
+        required: true,
+        freshnessStatus: "current"
+      }
+    ],
+    mandatoryEvidence: [],
+    hmcMaturity: "fixture_backed",
+    separateRealRatificationPackageExists: false
+  };
+  config.finalPostureRecommendation = "H03_RATIFICATION_READY";
+
+  const report = verifyMutableConfig(config);
+
+  assert.equal(report.status, "failed");
+  assert.equal(report.findings.some((finding) => finding.kind === "fixture_constitution_id_forbidden"), true);
+  assert.equal(report.findings.some((finding) => finding.kind === "fixture_ref_in_final_constitution"), true);
+  assert.equal(report.findings.some((finding) => finding.kind === "dummy_hash_in_final_constitution"), true);
+  assert.equal(report.findings.some((finding) => finding.kind === "ineligible_evidence_purpose"), true);
+  assert.equal(report.findings.some((finding) => finding.kind === "fixture_or_test_ref_forbidden_in_final_root"), true);
+  assert.equal(report.findings.some((finding) => finding.kind === "cross_plane_fixture_maturity_blocks_ratification"), true);
+  assert.equal(report.claim_eligibility?.eligibility_result, "failed");
+});
+
+test("rejects final mode without terminal claim evidence", () => {
+  const config = loadMutableConfig();
+  config.readinessMode = "final_mode";
+
+  const report = verifyMutableConfig(config);
+
+  assert.equal(report.status, "failed");
+  assert.equal(report.findings.some((finding) => finding.kind === "terminal_claim_missing"), true);
+});
+
+test("rejects ratification-ready posture outside final mode", () => {
+  const config = loadCalibrationConfig() as unknown as MutableConfig;
+  config.finalPostureRecommendation = "H03_RATIFICATION_READY";
+
+  const report = verifyMutableConfig(config);
+
+  assert.equal(report.status, "failed");
+  assert.equal(report.findings.some((finding) => finding.kind === "non_final_mode_ratification_ready_forbidden"), true);
 });
 
 test("canonicalizes JSON objects deterministically for constitution content hashing", () => {
