@@ -1,0 +1,16 @@
+{
+  "schema_version": "hadaf_ffet_closeout_v1",
+  "ffet_id": "H03-F04",
+  "box_id": "H03",
+  "status": "closeout_complete",
+  "implementation_status": "implemented",
+  "qualification_status": "boundedly_verified_with_advisory_audit",
+  "product": {
+    "repository": "usman-hussain-minhas/hadaf",
+    "merge_sha": "9c5800f84b54afb225b08f003dd41425cdd372a7"
+  },
+  "cannot_claim": [
+    "h03_delivery_constitution_ready_for_human_ratification",
+    "h03_implemented"
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://h03-constitution-readiness/schemas/constitution-approval-record.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "approval_id",
+    "constitution_id",
+    "constitution_version",
+    "constitution_hash",
+    "constitution_document_hash",
+    "decision",
+    "ratifier",
+    "ratified_at",
+    "authority_source",
+    "conditions",
+    "cannot_claim"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "approval_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "constitution_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "constitution_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "constitution_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "constitution_document_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "decision": {
+      "enum": [
+        "approved",
+        "rejected",
+        "superseded"
+      ]
+    },
+    "ratifier": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ratified_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "authority_source": {
+      "type": "object"
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "cannot_claim": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures"
+  },
+  "deliveryConstitutionConfigRef": "fixture://h03-delivery-constitution/valid-config.json",
+  "deliveryConstitutionConfigSha256": "36d77972d4e95cdf04af616826a773baeba0552476e60ba3bf9cb03c15437b56",
+  "deliveryConstitutionOverrides": {
+    "constitutionHash": "8c886f9bd7ff0e660232dfeb3545e83e67c59e33aa4674d43df32459261ad1d2"
+  },
+  "currentProduct": {
+    "expectedSha": "9c5800f84b54afb225b08f003dd41425cdd372a7",
+    "actualSha": "9c5800f84b54afb225b08f003dd41425cdd372a7",
+    "expectedTreeHash": "5d116fd878fa4f98dff3f2e9a9d82705e6144625",
+    "actualTreeHash": "5d116fd878fa4f98dff3f2e9a9d82705e6144625"
+  },
+  "predecessorCloseouts": [
+    {
+      "ffetId": "H03-F04",
+      "ref": "fixture://h03-constitution-readiness/predecessors/H03-F04-closeout.json",
+      "sha256": "8c1b7989c4a0123c8274ce47e793acf4a946e851f9207bba48003baf891e2aa0",
+      "expectedStatus": "closeout_complete"
+    }
+  ],
+  "schemas": {
+    "approvalRecord": {
+      "ref": "fixture://h03-constitution-readiness/schemas/constitution-approval-record.json",
+      "sha256": "74b2b39be4d443182df3af12f929a4a57533f1a8023ee01c91c630a1e979f3eb"
+    },
+    "executionAuthorizationRecord": {
+      "ref": "fixture://h03-constitution-readiness/schemas/execution-authorization-record.json",
+      "sha256": "c136dc3709894af1e4ef07dd08be0017bf80357cbc3b85520b6f685fb76ab024"
+    }
+  },
+  "completionGates": [
+    {
+      "gateId": "delivery_constitution_compiler",
+      "status": "passed",
+      "required": true
+    },
+    {
+      "gateId": "zero_broad_ambiguity",
+      "status": "passed",
+      "required": true
+    },
+    {
+      "gateId": "predecessor_closeouts",
+      "status": "passed",
+      "required": true
+    },
+    {
+      "gateId": "human_ratification",
+      "status": "not_applicable_with_reason",
+      "required": false,
+      "detail": "H03-F05 can prepare for human review but cannot perform human ratification."
+    }
+  ],
+  "expectedConstitutionContentHash": "8c886f9bd7ff0e660232dfeb3545e83e67c59e33aa4674d43df32459261ad1d2",
+  "expectedApprovalState": "for_human_review",
+  "expectedExecutionAuthorized": false,
+  "expectedCanonicalization": "RFC8785",
+  "cannotClaim": [
+    "constitution_approved_by_human",
+    "execution_authorization_granted",
+    "h03_delivery_constitution_ready_for_human_ratification",
+    "h03_implemented"
+  ],
+  "finalPostureRecommendation": "H03_F05_CONSTITUTION_READINESS_BOUNDARY_VERIFIED"
+}
