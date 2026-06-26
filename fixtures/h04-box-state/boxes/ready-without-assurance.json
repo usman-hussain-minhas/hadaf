@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "box_id": "H04-ready-without-assurance",
+  "state": "closed",
+  "allowed_transitions": [
+    "superseded"
+  ],
+  "dependencies": [],
+  "accepted_debt": [],
+  "blocking_debt": [],
+  "gate_result": "GO",
+  "gate_conditions": [
+    "closeout record exists"
+  ],
+  "closeout_ref": "fixture://closeouts/example.json",
+  "learning_ref": "fixture://learning/example.json",
+  "truth_ledger_refs": [],
+  "cannot_claim": [
+    "browser_accessibility_complete"
+  ]
+}

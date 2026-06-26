@@ -160,6 +160,18 @@ export {
   type H04VerifiedTruthLedgerRef
 } from "./h04/truth-ledger.js";
 export {
+  verifyH04BoxStateConfig,
+  type H04BoxExpectation,
+  type H04BoxStateConfig,
+  type H04BoxStateFinding,
+  type H04BoxStateReport,
+  type H04BoxStateSchemaDescriptor,
+  type H04BoxStateStatus,
+  type H04BoxValidationResult,
+  type H04ExpectedBoxStatus,
+  type H04VerifiedBoxStateRef
+} from "./h04/box-state.js";
+export {
   computeSourceAuthoritySetHash,
   verifyH03InputAuthorityConfig,
   type H03AcceptedInput,

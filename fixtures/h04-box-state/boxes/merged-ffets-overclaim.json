@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "box_id": "H04-merged-ffets-overclaim",
+  "state": "closed",
+  "allowed_transitions": [
+    "superseded"
+  ],
+  "dependencies": [],
+  "accepted_debt": [],
+  "blocking_debt": [],
+  "gate_result": "GO",
+  "gate_conditions": [
+    "All FFETs merged, so the Box is ready."
+  ],
+  "closeout_ref": "fixture://closeouts/example.json",
+  "learning_ref": "fixture://learning/example.json",
+  "truth_ledger_refs": [
+    {
+      "ref": "fixture://ledger/H04-truth-ledger.json",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "cannot_claim": [
+    "browser_accessibility_complete"
+  ]
+}
