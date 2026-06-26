@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://schemas/runtime_worktree_registry.schema.json",
+  "title": "HADAF Runtime Worktree Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "worktree_id",
+    "box_id",
+    "ffet_id",
+    "path_ref",
+    "branch_ref",
+    "base_sha",
+    "current_sha",
+    "status",
+    "allowed_roots",
+    "forbidden_roots",
+    "cwd_assertion_policy",
+    "cleanup_policy",
+    "cannot_claim"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "worktree_id": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/id"
+    },
+    "box_id": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/id"
+    },
+    "ffet_id": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/id"
+    },
+    "path_ref": {
+      "type": "string",
+      "pattern": "^fixture_h06_runtime/.+",
+      "not": {
+        "pattern": "^/"
+      }
+    },
+    "branch_ref": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/ref"
+    },
+    "base_sha": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/gitObjectHash"
+    },
+    "current_sha": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/gitObjectHash"
+    },
+    "status": {
+      "enum": [
+        "planned",
+        "active",
+        "stale",
+        "quarantined",
+        "cleaned",
+        "superseded"
+      ]
+    },
+    "allowed_roots": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^fixture_h06_runtime/.+"
+      },
+      "default": []
+    },
+    "forbidden_roots": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "cwd_assertion_policy": {
+      "type": "string"
+    },
+    "cleanup_policy": {
+      "type": "string"
+    },
+    "cannot_claim": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/cannotClaim"
+    }
+  }
+}

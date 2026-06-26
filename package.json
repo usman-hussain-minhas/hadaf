@@ -52,6 +52,7 @@
     "verify:h05-upskill-records": "node scripts/verify-h05-upskill-records.mjs",
     "verify:h05-agent-projection": "node scripts/verify-h05-agent-projection.mjs",
     "verify:h06-resource-quotas": "node scripts/verify-h06-resource-quotas.mjs",
+    "verify:h06-worktree-lifecycle": "node scripts/verify-h06-worktree-lifecycle.mjs",
     "supply-chain": "node scripts/generate-supply-chain-artifacts.mjs"
   },
   "devDependencies": {

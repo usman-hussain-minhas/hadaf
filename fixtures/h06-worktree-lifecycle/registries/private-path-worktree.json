@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "worktree_id": "wt-H06-F01-private-path",
+  "box_id": "H06",
+  "ffet_id": "H06-F01",
+  "path_ref": "fixture_h06_runtime/worktrees/wt-H06-F01-private-path",
+  "branch_ref": "refs/heads/hadaf/h06-f01-worktree-lifecycle",
+  "base_sha": "f61843413444431eec925c3de0759a69552ad6e5",
+  "current_sha": "f61843413444431eec925c3de0759a69552ad6e5",
+  "status": "active",
+  "allowed_roots": [
+    "fixture_h06_runtime/worktrees"
+  ],
+  "forbidden_roots": [
+    "control-plane",
+    "evidence-plane",
+    "canonical-input-plane",
+    "product-runtime-plane",
+    "release-plane"
+  ],
+  "cwd_assertion_policy": "absolute cwd must resolve under the registered runtime worktree root",
+  "cleanup_policy": "retain operator path \u002fUsers\u002fexample\u002fprivate-worktree until closeout",
+  "cannot_claim": [
+    "production_resource_orchestration",
+    "mechanically_independent_agents",
+    "stable_agents",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "H07_proof_engine_implemented",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ]
+}
