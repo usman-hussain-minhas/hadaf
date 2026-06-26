@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "upskill_id": "upskill.decision-guard",
+  "triggering_event_ref": {
+    "ref": "fixture://artifacts/terminal-event.json",
+    "sha256": "da47b9c42fbf7ce148276f91d68d49a060d71a6d43671395a6c2aad0c4e48112"
+  },
+  "learning_dimensions": [
+    "decision"
+  ],
+  "mistake_or_no_change_reason": "decision_context: generated state conflicted with GitHub truth. rejected_alternatives: trust fixture state; skip reconciliation. decision_failure: trusting derived state would overclaim currentness. corrected_rule: GitHub and verified evidence outrank generated views. future_stop_condition: stop if mismatch is not classified. regression_checklist: run status reconciler fixture before closeout.",
+  "durable_change_refs": [
+    {
+      "ref": "fixture://artifacts/decision-checklist.json",
+      "sha256": "12e1a91149a7e04787f68090d8d853e3c243a32a8cac357c8327efcc7926483b"
+    }
+  ],
+  "regression_fixture_refs": [
+    {
+      "ref": "fixture://artifacts/stop-condition.json",
+      "sha256": "4c281277a65dda6198f3a428482440c8d4c77dc5fbe8241ea5b23c136ec7a180"
+    }
+  ],
+  "effective_from": "product://fixtures/h05-upskill-records/effective/H05-F03.json",
+  "non_degradation_result": "passed",
+  "cannot_claim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified",
+    "runtime_upskill_enforcement"
+  ]
+}

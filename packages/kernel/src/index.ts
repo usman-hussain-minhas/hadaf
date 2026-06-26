@@ -360,3 +360,15 @@ export {
   type H05ExpectedCircuitBreakerAgentStatus,
   type H05VerifiedCircuitBreakerRef
 } from "./h05/circuit-breakers.js";
+export {
+  verifyH05UpskillRecordsConfig,
+  type H05ExpectedUpskillRecordStatus,
+  type H05UpskillRecordExpectation,
+  type H05UpskillRecordFinding,
+  type H05UpskillRecordsConfig,
+  type H05UpskillRecordsReport,
+  type H05UpskillRecordSchemaDescriptor,
+  type H05UpskillRecordStatus,
+  type H05UpskillRecordValidationResult,
+  type H05VerifiedUpskillRef
+} from "./h05/upskill-records.js";

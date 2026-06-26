@@ -1,0 +1,5 @@
+{
+  "artifact": "terminal_event_fixture",
+  "terminal_outcome": "pr_merged",
+  "requires_learning": true
+}

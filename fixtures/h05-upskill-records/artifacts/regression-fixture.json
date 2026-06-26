@@ -1,0 +1,4 @@
+{
+  "artifact": "regression_fixture",
+  "fixture": "lesson_without_durable_effect_fails"
+}

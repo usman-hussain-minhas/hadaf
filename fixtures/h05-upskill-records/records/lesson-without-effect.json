@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "upskill_id": "upskill.lesson-without-effect",
+  "triggering_event_ref": {
+    "ref": "fixture://artifacts/terminal-event.json",
+    "sha256": "da47b9c42fbf7ce148276f91d68d49a060d71a6d43671395a6c2aad0c4e48112"
+  },
+  "learning_dimensions": [
+    "planning"
+  ],
+  "mistake_or_no_change_reason": "Lesson learned, remember to be careful next time.",
+  "durable_change_refs": [],
+  "regression_fixture_refs": [],
+  "effective_from": "product://fixtures/h05-upskill-records/effective/H05-F03.json",
+  "non_degradation_result": "passed",
+  "cannot_claim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified",
+    "runtime_upskill_enforcement"
+  ]
+}

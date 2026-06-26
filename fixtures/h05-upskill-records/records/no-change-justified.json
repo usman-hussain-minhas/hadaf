@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "upskill_id": "upskill.no-change-justified",
+  "triggering_event_ref": {
+    "ref": "fixture://artifacts/terminal-event.json",
+    "sha256": "da47b9c42fbf7ce148276f91d68d49a060d71a6d43671395a6c2aad0c4e48112"
+  },
+  "learning_dimensions": [
+    "evidence"
+  ],
+  "mistake_or_no_change_reason": "No change required; existing guard already covered the terminal outcome and non-degradation was reviewed.",
+  "durable_change_refs": [],
+  "regression_fixture_refs": [],
+  "effective_from": "product://fixtures/h05-upskill-records/effective/H05-F03.json",
+  "non_degradation_result": "not_applicable_with_reason",
+  "cannot_claim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified",
+    "runtime_upskill_enforcement"
+  ]
+}
