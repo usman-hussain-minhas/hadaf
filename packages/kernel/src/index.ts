@@ -197,6 +197,23 @@ export {
   type H04VerifiedCloseoutChainRef
 } from "./h04/closeout-chain.js";
 export {
+  generateH04RecordFromRequest,
+  verifyH04RecordGeneratorConfig,
+  type H04ExpectedRecordGeneratorStatus,
+  type H04GeneratedRecord,
+  type H04RecordGeneratorClaimEligibility,
+  type H04RecordGeneratorConfig,
+  type H04RecordGeneratorExpectation,
+  type H04RecordGeneratorFinding,
+  type H04RecordGeneratorPlaceholderScan,
+  type H04RecordGeneratorReport,
+  type H04RecordGeneratorRequest,
+  type H04RecordGeneratorSchemaDescriptor,
+  type H04RecordGeneratorStatus,
+  type H04RecordGeneratorValidationResult,
+  type H04RecordGeneratorVerifiedRef
+} from "./h04/record-generator.js";
+export {
   computeSourceAuthoritySetHash,
   verifyH03InputAuthorityConfig,
   type H03AcceptedInput,

@@ -1,0 +1,5 @@
+{
+  "schema_version": "1.0.0",
+  "record_id": "H04-F04-valid-output",
+  "durable_ref": "fixture://outputs/valid-generated-record.json"
+}
