@@ -1,0 +1,99 @@
+{
+  "logicalRoots": {
+    "fixture://quotas": "fixtures/h06-resource-quotas/quotas",
+    "fixture://schemas": "fixtures/h06-resource-quotas/schemas"
+  },
+  "schema": {
+    "ref": "fixture://schemas/resource_quota_runtime_record.schema.json",
+    "sha256": "69776ad8386c76e72a7932e7955e02ffe2f8a6bb2494b3a52fdf27dd8c4a5676"
+  },
+  "schemaRefs": [
+    {
+      "ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json",
+      "sha256": "0e79630dc8f82f3bdbb766167ceb4ccc2f41aba6b3cf19914344892ee365fbef"
+    }
+  ],
+  "requiredCannotClaim": [
+    "production_resource_orchestration",
+    "mechanically_independent_agents",
+    "stable_agents",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "H07_proof_engine_implemented",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ],
+  "quotas": [
+    {
+      "quotaId": "quota-worktree-valid",
+      "ref": "fixture://quotas/valid-worktree-quota.json",
+      "sha256": "6fb6ba6c68df97e89df85d954792b28c2059a6e43ddfa84e30c8294ad9c1d2b9",
+      "expectedStatus": "passed"
+    },
+    {
+      "quotaId": "quota-soft-warning",
+      "ref": "fixture://quotas/soft-warning-quota.json",
+      "sha256": "3553f2f42b676cf39d41f5651ae0dfd6bef21d38798a8affc6db426de0fb17f0",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "soft_or_advisory_limit_breached"
+      ]
+    },
+    {
+      "quotaId": "quota-hard-breach",
+      "ref": "fixture://quotas/hard-breach-quota.json",
+      "sha256": "127931db27f7d32b3c665070dba94a26e016ad0d0fdc32fe16c1db23575ae823",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "hard_limit_breached"
+      ]
+    },
+    {
+      "quotaId": "quota-unknown-kind",
+      "ref": "fixture://quotas/unknown-resource-kind.json",
+      "sha256": "ac43ed95541a17a1ba533f2b00da8b0202ae28aee2ecf497cae3a334335236f5",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "schema_validation_failed"
+      ]
+    },
+    {
+      "quotaId": "quota-missing-cannot-claim",
+      "ref": "fixture://quotas/missing-cannot-claim.json",
+      "sha256": "5aa2e1d1909f3692472b6383467daf360c1846448bed93bc2c9311a862bb84eb",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "production_orchestration_cannot_claim_missing"
+      ]
+    },
+    {
+      "quotaId": "quota-private-path",
+      "ref": "fixture://quotas/private-path-quota.json",
+      "sha256": "f4ddef8e3c45737a33ab841031743f759ff80d7d9a59d5d54770b8e4aa60c55a",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "private_path_in_quota_record"
+      ]
+    },
+    {
+      "quotaId": "quota-overclaim",
+      "ref": "fixture://quotas/overclaim-quota.json",
+      "sha256": "d72e7e7a5592288123e3c16818a158c9d467e767405dbd11e084f5ea23a9b75e",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "production_orchestration_boundary_missing"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "production_resource_orchestration",
+    "mechanically_independent_agents",
+    "stable_agents",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "H07_proof_engine_implemented",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ],
+  "finalPostureRecommendation": "H06_F00_RESOURCE_QUOTAS_FIXTURE_VERIFIED"
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "quota_id": "quota-overclaim",
+  "scope_type": "box",
+  "scope_id": "H06",
+  "resource_kind": "worktrees",
+  "limit_type": "hard",
+  "value": 3,
+  "unit": "count",
+  "enforcement": "runtime_enforced",
+  "current_usage": 1,
+  "breach_status": "within_limit",
+  "human_override_required": true,
+  "cannot_claim": [
+    "mechanically_independent_agents",
+    "stable_agents",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "H07_proof_engine_implemented",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ]
+}

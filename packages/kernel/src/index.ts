@@ -383,3 +383,15 @@ export {
   type H05HmcDerivedAgentProjection,
   type H05HmcPrerequisiteInput
 } from "./h05/hmc-agent-projection.js";
+export {
+  verifyH06ResourceQuotaConfig,
+  type H06ExpectedResourceQuotaStatus,
+  type H06ResourceQuotaConfig,
+  type H06ResourceQuotaExpectation,
+  type H06ResourceQuotaFinding,
+  type H06ResourceQuotaReport,
+  type H06ResourceQuotaSchemaDescriptor,
+  type H06ResourceQuotaStatus,
+  type H06ResourceQuotaValidationResult,
+  type H06VerifiedResourceQuotaRef
+} from "./h06/resource-quotas.js";
