@@ -1,0 +1,10 @@
+{
+  "schema_version": "fixture_root_escape_manifest_v1",
+  "entries": [
+    {
+      "artifact_type": "forbidden_escape",
+      "ref": "artifact://../outside.json",
+      "sha256": "31207a2065f46a5b948fce6fe5c13e85abaf5631e2f894b47dcd4fce14f6c57b"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": "fixture_current_entries_manifest_v1",
+  "entries": [
+    {
+      "artifact_type": "entry_artifact",
+      "ref": "artifact://sample/other.json",
+      "sha256": "646039a0cf0da02b0bcc55fb9b88424317c6cf9262b4df325e45cc2e06824b47"
+    },
+    {
+      "artifact_type": "product_file",
+      "ref": "product://README.md",
+      "sha256": "56d5f097d1355dde57a6de4a6965bbb2f27df015187da2e3afac1275f18976e5"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": "fixture_legacy_artifacts_manifest_v1",
+  "artifacts": [
+    {
+      "ref": "artifact://sample/artifact.json",
+      "sha256": "6ab37762e26fac792a5b66015f3499f7529b999783499ea9a48e167a844733d4"
+    }
+  ]
+}
