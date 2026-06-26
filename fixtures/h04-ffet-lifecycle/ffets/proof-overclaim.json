@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "ffet_id": "H04-F02-proof-overclaim",
+  "box_id": "H04",
+  "state": "proof_ready",
+  "source_authority_refs": [
+    {
+      "ref": "fixture://authority/questions/H04-F02-question-register.json",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+    }
+  ],
+  "exact_files_expected_to_change": [
+    "packages/kernel/src/h04/ffet-lifecycle.ts"
+  ],
+  "files_forbidden_to_change": [
+    "control/**"
+  ],
+  "dependencies": [],
+  "validation_commands": [
+    "pnpm build",
+    "pnpm test",
+    "pnpm quality"
+  ],
+  "proof_requirements": [
+    "H07 proof engine implemented"
+  ],
+  "self_heal_budget": 3,
+  "stale_status": "fresh",
+  "cannot_claim": [
+    "ffet_closeout_complete"
+  ]
+}

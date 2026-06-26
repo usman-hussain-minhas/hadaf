@@ -1,0 +1,77 @@
+{
+  "logicalRoots": {
+    "fixture://": "./fixtures/h04-ffet-lifecycle"
+  },
+  "schema": {
+    "ref": "fixture://schemas/ffet_lifecycle_state.schema.json",
+    "sha256": "73bb9cf785b96714140ffab1cc34c685de544ebbd039f05391231abe08abd15b"
+  },
+  "requiredValidationCommands": [
+    "pnpm build",
+    "pnpm test",
+    "pnpm quality"
+  ],
+  "ffets": [
+    {
+      "ffetId": "H04-F02-valid",
+      "ref": "fixture://ffets/valid-ffet.json",
+      "expectedStatus": "passed"
+    },
+    {
+      "ffetId": "H04-F02-stale-base-sha",
+      "ref": "fixture://ffets/stale-base-sha.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "stale_ffet_blocks_execution"
+      ]
+    },
+    {
+      "ffetId": "H04-F02-broad-owned-files",
+      "ref": "fixture://ffets/broad-owned-files.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "owned_file_broad_or_glob"
+      ]
+    },
+    {
+      "ffetId": "H04-F02-forbidden-file-overlap",
+      "ref": "fixture://ffets/forbidden-file-overlap.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "owned_file_forbidden_overlap"
+      ]
+    },
+    {
+      "ffetId": "H04-F02-missing-question-default-link",
+      "ref": "fixture://ffets/missing-question-default-link.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "question_default_link_missing"
+      ]
+    },
+    {
+      "ffetId": "H04-F02-merged-without-closeout-learning",
+      "ref": "fixture://ffets/merged-without-closeout-learning.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "merged_without_closeout_or_learning"
+      ]
+    },
+    {
+      "ffetId": "H04-F02-proof-overclaim",
+      "ref": "fixture://ffets/proof-overclaim.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "proof_overclaim"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "dedicated_ffet_question_default_fields_implemented",
+    "h04_closeout_hash_chain_implemented",
+    "h04_record_generator_implemented",
+    "h04_finalize_box_implemented",
+    "h04_hmc_projection_implemented"
+  ],
+  "finalPostureRecommendation": "H04_F02_FFET_LIFECYCLE_FIXTURE_VERIFIED"
+}

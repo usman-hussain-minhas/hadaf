@@ -1,0 +1,5 @@
+{
+  "source_id": "H04-F02-source",
+  "purpose": "Public-safe fixture source for H04-F02 FFET lifecycle verification.",
+  "authority_boundary": "Fixture data calibrates Product verifier behavior only; external Control records remain authority."
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "ffet_id": "H04-F02-missing-question-default-link",
+  "box_id": "H04",
+  "state": "executable",
+  "source_authority_refs": [
+    {
+      "ref": "fixture://source/H04-F02-source.json",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    }
+  ],
+  "exact_files_expected_to_change": [
+    "packages/kernel/src/h04/ffet-lifecycle.ts"
+  ],
+  "files_forbidden_to_change": [
+    "control/**"
+  ],
+  "dependencies": [],
+  "validation_commands": [
+    "pnpm build",
+    "pnpm test",
+    "pnpm quality"
+  ],
+  "proof_requirements": [
+    "P2 domain validation"
+  ],
+  "self_heal_budget": 3,
+  "stale_status": "fresh",
+  "cannot_claim": [
+    "ffet_closeout_complete"
+  ]
+}

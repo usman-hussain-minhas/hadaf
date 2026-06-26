@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0.0",
+  "ffet_id": "H04-F02-valid",
+  "box_id": "H04",
+  "state": "executable",
+  "source_authority_refs": [
+    {
+      "ref": "fixture://source/H04-F02-source.json",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    {
+      "ref": "fixture://authority/questions/H04-F02-question-register.json",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+    },
+    {
+      "ref": "fixture://authority/defaults/H04-F02-safe-defaults.json",
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+    }
+  ],
+  "exact_files_expected_to_change": [
+    "packages/kernel/src/h04/ffet-lifecycle.ts",
+    "packages/kernel/src/h04/ffet-lifecycle.test.ts",
+    "scripts/verify-h04-ffet-lifecycle.mjs",
+    "fixtures/h04-ffet-lifecycle/valid-config.json"
+  ],
+  "files_forbidden_to_change": [
+    "control/**",
+    "evidence/**",
+    "runtime/**",
+    "releases/**",
+    "input/planning_bundle/**"
+  ],
+  "dependencies": [
+    {
+      "ref": "fixture://authority/closeouts/H04-F01-closeout.json",
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+    }
+  ],
+  "validation_commands": [
+    "pnpm build",
+    "pnpm test",
+    "pnpm quality",
+    "node scripts/verify-h04-ffet-lifecycle.mjs fixtures/h04-ffet-lifecycle/valid-config.json"
+  ],
+  "proof_requirements": [
+    "P2 domain validation for FFET lifecycle and stale-state negatives"
+  ],
+  "self_heal_budget": 3,
+  "branch_ref": "product://branches/hadaf/h04-f02-ffet-lifecycle",
+  "worktree_ref": "fixture://runtime/worktrees/h04-f02-ffet-lifecycle",
+  "stale_status": "fresh",
+  "cannot_claim": [
+    "ffet_closeout_complete",
+    "dedicated_ffet_question_default_fields_implemented"
+  ]
+}

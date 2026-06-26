@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://schemas/ffet_lifecycle_state.schema.json",
+  "title": "HADAF FFET Lifecycle State Fixture Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "ffet_id",
+    "box_id",
+    "state",
+    "source_authority_refs",
+    "exact_files_expected_to_change",
+    "files_forbidden_to_change",
+    "dependencies",
+    "validation_commands",
+    "proof_requirements",
+    "self_heal_budget",
+    "stale_status",
+    "cannot_claim"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "ffet_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "box_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "state": {
+      "enum": [
+        "candidate",
+        "audited",
+        "executable",
+        "implementing",
+        "proof_ready",
+        "pr_open",
+        "merged",
+        "closeout_complete",
+        "blocked",
+        "deferred",
+        "superseded"
+      ]
+    },
+    "source_authority_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/refHash"
+      },
+      "default": []
+    },
+    "exact_files_expected_to_change": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "not": {
+          "pattern": "^/"
+        }
+      },
+      "default": []
+    },
+    "files_forbidden_to_change": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "not": {
+          "pattern": "^/"
+        }
+      },
+      "default": []
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/refHash"
+      },
+      "default": []
+    },
+    "validation_commands": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "proof_requirements": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "self_heal_budget": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "branch_ref": {
+      "$ref": "#/$defs/ref"
+    },
+    "worktree_ref": {
+      "$ref": "#/$defs/ref"
+    },
+    "pr_ref": {
+      "$ref": "#/$defs/ref"
+    },
+    "merge_ref": {
+      "$ref": "#/$defs/refHash"
+    },
+    "closeout_ref": {
+      "$ref": "#/$defs/refHash"
+    },
+    "learning_ref": {
+      "$ref": "#/$defs/refHash"
+    },
+    "stale_status": {
+      "enum": [
+        "fresh",
+        "stale",
+        "superseded",
+        "unknown",
+        "not_applicable_with_reason"
+      ]
+    },
+    "cannot_claim": {
+      "$ref": "#/$defs/cannotClaim"
+    }
+  },
+  "$defs": {
+    "ref": {
+      "type": "string",
+      "pattern": "^(control|evidence|runtime|product|input|release|fixture)://[^\\s]+$|^[A-Za-z0-9_./:-]+$",
+      "not": {
+        "pattern": "^/"
+      }
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^(?!.*(?:pending|placeholder|todo|TBD|FIXME))[a-f0-9]{64}$"
+    },
+    "refHash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "sha256"
+      ],
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "cannotClaim": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  }
+}
