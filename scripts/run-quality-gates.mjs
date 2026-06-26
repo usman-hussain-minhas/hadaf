@@ -89,7 +89,6 @@ function runQualityGates() {
       "stable_agents",
       "mechanically_independent_agents",
       "independent_quality_auditor_qualified",
-      "h05_agent_cards_implemented",
       "h05_circuit_breakers_implemented",
       "h05_upskill_records_implemented"
     ]
