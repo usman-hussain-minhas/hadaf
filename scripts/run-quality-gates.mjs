@@ -24,7 +24,7 @@ function runQualityGates() {
   dimensions.push(commandDimension("license_file_absence", "ci_enforced", "node scripts/check-no-license-file.mjs"));
   dimensions.push(commandDimension("formatting", "ci_enforced", "node scripts/check-format.mjs"));
   dimensions.push(commandDimension("diff_hygiene", "ci_enforced", "node scripts/check-diff-hygiene.mjs"));
-  dimensions.push(commandDimension("lint_static_syntax", "ci_enforced", "node --check scripts/lib/cli-args.mjs && node --check scripts/check-cli-arg-normalization.mjs && node --check scripts/check-ci-workflow.mjs && node --check scripts/check-coverage.mjs && node --check scripts/check-dependency-licenses.mjs && node --check scripts/check-diff-hygiene.mjs && node --check scripts/check-format.mjs && node --check scripts/check-no-license-file.mjs && node --check scripts/check-package-metadata.mjs && node --check scripts/check-pr-metadata-public-safety.mjs && node --check scripts/check-public-safety.mjs && node --check scripts/check-target-guard.mjs && node --check scripts/serve-hmc.mjs && node --check scripts/serve-product-preview.mjs && node --check scripts/verify-hmc-state.mjs && node --check scripts/verify-product-preview.mjs && node --check scripts/verify-static-ui.mjs && node --check scripts/generate-supply-chain-artifacts.mjs && node --check scripts/reconcile-status.mjs && node --check scripts/run-quality-gates.mjs && node --check scripts/verify-evidence-manifest.mjs && node --check scripts/verify-quality-classification.mjs && node --check scripts/verify-source-manifest.mjs && node --check scripts/classify-source-authority.mjs && node --check scripts/verify-h03-schema-registry.mjs && node --check scripts/verify-h03-input-authority.mjs && node --check scripts/verify-h03-plan-normalization.mjs && node --check scripts/verify-h03-question-register.mjs && node --check scripts/verify-h03-delivery-constitution.mjs && node --check scripts/verify-h03-constitution-readiness.mjs && node --check scripts/verify-h03-ratification-readiness.mjs && node --check scripts/verify-h05-agent-registry.mjs && node --check scripts/verify-h05-capability-contracts.mjs"));
+  dimensions.push(commandDimension("lint_static_syntax", "ci_enforced", "node --check scripts/lib/cli-args.mjs && node --check scripts/check-cli-arg-normalization.mjs && node --check scripts/check-ci-workflow.mjs && node --check scripts/check-coverage.mjs && node --check scripts/check-dependency-licenses.mjs && node --check scripts/check-diff-hygiene.mjs && node --check scripts/check-format.mjs && node --check scripts/check-no-license-file.mjs && node --check scripts/check-package-metadata.mjs && node --check scripts/check-pr-metadata-public-safety.mjs && node --check scripts/check-public-safety.mjs && node --check scripts/check-target-guard.mjs && node --check scripts/serve-hmc.mjs && node --check scripts/serve-product-preview.mjs && node --check scripts/verify-hmc-state.mjs && node --check scripts/verify-product-preview.mjs && node --check scripts/verify-static-ui.mjs && node --check scripts/generate-supply-chain-artifacts.mjs && node --check scripts/reconcile-status.mjs && node --check scripts/run-quality-gates.mjs && node --check scripts/verify-evidence-manifest.mjs && node --check scripts/verify-quality-classification.mjs && node --check scripts/verify-source-manifest.mjs && node --check scripts/classify-source-authority.mjs && node --check scripts/verify-h03-schema-registry.mjs && node --check scripts/verify-h03-input-authority.mjs && node --check scripts/verify-h03-plan-normalization.mjs && node --check scripts/verify-h03-question-register.mjs && node --check scripts/verify-h03-delivery-constitution.mjs && node --check scripts/verify-h03-constitution-readiness.mjs && node --check scripts/verify-h03-ratification-readiness.mjs && node --check scripts/verify-h05-agent-registry.mjs && node --check scripts/verify-h05-capability-contracts.mjs && node --check scripts/verify-h05-circuit-breakers.mjs"));
   dimensions.push(commandDimension("secret_and_residue_scan", "ci_enforced", "node scripts/check-public-safety.mjs && node scripts/check-public-safety.mjs --self-test"));
   dimensions.push(commandDimension("target_guard", "ci_enforced", "pnpm build && node scripts/check-target-guard.mjs && node scripts/check-target-guard.mjs --self-test && node scripts/check-target-guard.mjs fixtures/target-guard/valid-config.json"));
   dimensions.push(commandDimension("cli_argument_normalization", "ci_enforced", "pnpm check:cli-args"));
@@ -89,7 +89,6 @@ function runQualityGates() {
       "stable_agents",
       "mechanically_independent_agents",
       "independent_quality_auditor_qualified",
-      "h05_circuit_breakers_implemented",
       "h05_upskill_records_implemented"
     ]
   }));
@@ -98,7 +97,17 @@ function runQualityGates() {
       "stable_agents",
       "mechanically_independent_agents",
       "independent_quality_auditor_qualified",
-      "h05_circuit_breakers_implemented",
+      "h05_upskill_records_implemented",
+      "h05_hmc_agent_projection_implemented"
+    ]
+  }));
+  dimensions.push(commandDimension("h05_circuit_breakers_no_rogue_controls", "ci_enforced", "pnpm build && node scripts/verify-h05-circuit-breakers.mjs fixtures/h05-circuit-breakers/valid-config.json", {
+    cannotClaim: [
+      "stable_agents",
+      "mechanically_independent_agents",
+      "independent_quality_auditor_qualified",
+      "runtime_circuit_breaker_enforcement",
+      "rogue_agent_absence_proven_in_live_runtime",
       "h05_upskill_records_implemented",
       "h05_hmc_agent_projection_implemented"
     ]

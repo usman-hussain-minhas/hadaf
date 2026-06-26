@@ -1,0 +1,123 @@
+{
+  "logicalRoots": {
+    "fixture://agents": "fixtures/h05-circuit-breakers/agents",
+    "fixture://schemas": "fixtures/h05-agent-registry/schemas"
+  },
+  "schema": {
+    "ref": "fixture://schemas/agent_registry_record.schema.json",
+    "sha256": "45e5e7167c76120ecaec8582278df2becb426ed8a128e88daebd743a8c4aae95"
+  },
+  "schemaRefs": [
+    {
+      "ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json",
+      "sha256": "7a83c465f4307fd2e30cf3bccfbab40eddae37a706a4cdbdd3588ba024fc75a9"
+    }
+  ],
+  "requiredCircuitBreakers": [
+    "circuit_breaker:stale_ffet_stop",
+    "circuit_breaker:forbidden_plane_stop",
+    "circuit_breaker:unbounded_write_stop",
+    "circuit_breaker:private_prompt_stop",
+    "circuit_breaker:unsupported_capability_stop",
+    "circuit_breaker:human_gate_stop"
+  ],
+  "forbiddenCapabilities": [
+    "git:force_push",
+    "policy:bypass_human_gate",
+    "no_rogue_agents_guaranteed"
+  ],
+  "forbiddenCapabilityPrefixes": [
+    "production",
+    "release",
+    "secret",
+    "live_provider",
+    "real_money"
+  ],
+  "forbiddenAllowedPlanes": [
+    "release"
+  ],
+  "requiredForbiddenPlanes": [
+    "release"
+  ],
+  "requiredCannotClaim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ],
+  "agents": [
+    {
+      "agentId": "agent.guard-valid",
+      "ref": "fixture://agents/valid-guarded-agent.json",
+      "sha256": "c574680afd358a8f45a39cbc5d279956ad547e9587423295bdde069d35f0f725",
+      "expectedStatus": "passed"
+    },
+    {
+      "agentId": "agent.missing-breaker",
+      "ref": "fixture://agents/missing-circuit-breaker.json",
+      "sha256": "a5ab9c4107bd971b0ddf04947f4b0b87ff2a271e37a19a99f35ab4f8f4d1ba39",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "required_circuit_breaker_missing"
+      ]
+    },
+    {
+      "agentId": "agent.release-plane",
+      "ref": "fixture://agents/release-plane-allowed.json",
+      "sha256": "0d15543d1ea9664b618fdebe59f131e9c15d26cf653f6b44f5498920a163e4da",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "forbidden_allowed_plane",
+        "required_forbidden_plane_missing"
+      ]
+    },
+    {
+      "agentId": "agent.force-push",
+      "ref": "fixture://agents/force-push-capability.json",
+      "sha256": "bebef3b5cdfce5601488b22e23fb032d6c1cb00095a4149b420d364d9c516d7d",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "forbidden_capability_claim",
+        "force_push_capability_forbidden"
+      ]
+    },
+    {
+      "agentId": "agent.unbounded-write",
+      "ref": "fixture://agents/unbounded-write.json",
+      "sha256": "7bda872046bbd978fe66c71384e3a6494057d3e93f924c5248b2c339806b0346",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "unbounded_write_boundary"
+      ]
+    },
+    {
+      "agentId": "agent.human-gate-bypass",
+      "ref": "fixture://agents/human-gate-bypass.json",
+      "sha256": "535ff671d4eef9265587b39cef4adf55a002cde94fb842ce3f2203cd744b9ad5",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "forbidden_capability_claim",
+        "human_gate_bypass_claim"
+      ]
+    },
+    {
+      "agentId": "agent.no-rogue-overclaim",
+      "ref": "fixture://agents/no-rogue-overclaim.json",
+      "sha256": "09a1c2ee98cb3d0a0c88a67170e8a32233b18660e30014b9ae1ba8a173ef42f1",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "forbidden_capability_claim",
+        "no_rogue_agent_overclaim"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified",
+    "runtime_circuit_breaker_enforcement",
+    "rogue_agent_absence_proven_in_live_runtime",
+    "h05_upskill_records_implemented",
+    "h05_hmc_agent_projection_implemented"
+  ],
+  "finalPostureRecommendation": "H05_F02_CIRCUIT_BREAKERS_NO_ROGUE_CONTROLS_FIXTURE_VERIFIED"
+}
