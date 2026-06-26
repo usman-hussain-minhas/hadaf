@@ -172,6 +172,18 @@ export {
   type H04VerifiedBoxStateRef
 } from "./h04/box-state.js";
 export {
+  verifyH04FfetLifecycleConfig,
+  type H04ExpectedFfetStatus,
+  type H04FfetExpectation,
+  type H04FfetLifecycleConfig,
+  type H04FfetLifecycleFinding,
+  type H04FfetLifecycleReport,
+  type H04FfetLifecycleSchemaDescriptor,
+  type H04FfetLifecycleStatus,
+  type H04FfetValidationResult,
+  type H04VerifiedFfetLifecycleRef
+} from "./h04/ffet-lifecycle.js";
+export {
   computeSourceAuthoritySetHash,
   verifyH03InputAuthorityConfig,
   type H03AcceptedInput,
