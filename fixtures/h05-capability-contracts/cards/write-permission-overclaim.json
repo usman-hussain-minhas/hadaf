@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "agent_id": "agent.write-overclaim",
+  "version": "0.1.0",
+  "role_family": "bounded_capability_worker",
+  "capabilities": [
+    "model:generate_code",
+    "tool:run_tests"
+  ],
+  "allowed_planes": [
+    "product",
+    "control"
+  ],
+  "forbidden_planes": [
+    "release"
+  ],
+  "write_boundaries": [
+    "write_all_planes"
+  ],
+  "qualification_status": "fixture_tested",
+  "bounded_use_status": "bounded_for_h05",
+  "evidence_requirements": [
+    {
+      "ref": "product://fixtures/h05-capability-contracts/evidence/write-overclaim.json",
+      "sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+    }
+  ],
+  "upskill_refs": [
+    {
+      "ref": "product://fixtures/h05-capability-contracts/upskills/write-overclaim.json",
+      "sha256": "6666666666666666666666666666666666666666666666666666666666666666"
+    }
+  ],
+  "cannot_claim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ]
+}

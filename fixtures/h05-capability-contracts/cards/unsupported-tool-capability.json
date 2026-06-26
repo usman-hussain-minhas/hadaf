@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "agent_id": "agent.unsupported-tool",
+  "version": "0.1.0",
+  "role_family": "bounded_capability_worker",
+  "capabilities": [
+    "model:generate_code",
+    "github:merge_pull_request"
+  ],
+  "allowed_planes": [
+    "product"
+  ],
+  "forbidden_planes": [
+    "release"
+  ],
+  "write_boundaries": [
+    "exact_ffet_owned_files"
+  ],
+  "qualification_status": "fixture_tested",
+  "bounded_use_status": "bounded_for_h05",
+  "evidence_requirements": [
+    {
+      "ref": "product://fixtures/h05-capability-contracts/evidence/unsupported-tool.json",
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+    }
+  ],
+  "upskill_refs": [
+    {
+      "ref": "product://fixtures/h05-capability-contracts/upskills/unsupported-tool.json",
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+    }
+  ],
+  "cannot_claim": [
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ]
+}
