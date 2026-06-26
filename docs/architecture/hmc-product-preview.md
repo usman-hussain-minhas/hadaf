@@ -75,6 +75,14 @@ HMC readers must apply this order when comparing state:
 
 Generated state may be helpful, but it is never enough to prove current delivery truth. If a state reader finds a mismatch, the UI must classify it as missing, stale, incomplete, or conflicting.
 
+## Claim Eligibility Projection
+
+HMC may display claim-eligibility results, artifact purposes, truth-source classes, and cannot-claim entries as a derived view. It must not turn those labels into authority.
+
+When HMC displays ratification, release, production, or self-hosting readiness, the backing state must identify the real authority roots and the weakest mandatory evidence maturity. A fixture-backed or generated HMC state may show that the UI can render the concept, but it cannot prove the terminal claim.
+
+If HMC maturity is `fixture_backed` and no separate real ratification package exists, HMC must not display H03 as ready for human ratification. It should instead show the state as fixture-backed, blocked, stale, incomplete, or awaiting real package verification, according to the supplied verified state.
+
 ## Product-Safe Configuration
 
 Product code may accept configuration paths or data objects at runtime. Product code must not hardcode private roots, private run identifiers, private GitHub snapshots, private evidence locations, or local filesystem details.
