@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "quota_id": "quota-soft-warning",
+  "scope_type": "ffet",
+  "scope_id": "H06-F00",
+  "resource_kind": "self_heals",
+  "limit_type": "soft",
+  "value": 1,
+  "unit": "count",
+  "enforcement": "locally_enforced",
+  "current_usage": 2,
+  "breach_status": "breached",
+  "human_override_required": false,
+  "cannot_claim": [
+    "production_resource_orchestration",
+    "mechanically_independent_agents",
+    "stable_agents",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "H07_proof_engine_implemented",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ]
+}

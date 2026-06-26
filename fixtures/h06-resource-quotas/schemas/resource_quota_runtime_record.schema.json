@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://schemas/resource_quota_runtime_record.schema.json",
+  "title": "HADAF Resource Quota Runtime Record Fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "quota_id",
+    "scope_type",
+    "scope_id",
+    "resource_kind",
+    "limit_type",
+    "value",
+    "unit",
+    "enforcement",
+    "current_usage",
+    "breach_status",
+    "human_override_required",
+    "cannot_claim"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "quota_id": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/id"
+    },
+    "scope_type": {
+      "enum": [
+        "box",
+        "ffet",
+        "pod",
+        "worktree",
+        "system"
+      ]
+    },
+    "scope_id": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/id"
+    },
+    "resource_kind": {
+      "enum": [
+        "disk",
+        "memory",
+        "cpu",
+        "ports",
+        "worktrees",
+        "databases",
+        "containers",
+        "wall_clock",
+        "network",
+        "model_cost",
+        "self_heals",
+        "retries"
+      ]
+    },
+    "limit_type": {
+      "enum": [
+        "hard",
+        "soft",
+        "advisory"
+      ]
+    },
+    "value": {
+      "type": "number",
+      "minimum": 0
+    },
+    "unit": {
+      "type": "string"
+    },
+    "enforcement": {
+      "enum": [
+        "declared",
+        "locally_enforced",
+        "runtime_enforced",
+        "advisory_only"
+      ]
+    },
+    "current_usage": {
+      "type": "number",
+      "minimum": 0
+    },
+    "breach_status": {
+      "enum": [
+        "within_limit",
+        "breached",
+        "unknown"
+      ]
+    },
+    "human_override_required": {
+      "type": "boolean"
+    },
+    "cannot_claim": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/cannotClaim"
+    }
+  }
+}
