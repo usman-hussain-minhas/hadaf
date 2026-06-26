@@ -1,0 +1,96 @@
+{
+  "schema_version": "1.0.0",
+  "finalizer_id": "H04-F05-finalizer",
+  "box_id": "H04",
+  "product_sha": "a6cd4c65babcd8e7462040c421e29b6313132d0d",
+  "tree_hash": "b1e2edaaf4f0e67c9077ccd638e8015621139128",
+  "checks": [
+    "ffet:H04-F00:closeout",
+    "ffet:H04-F00:learning",
+    "ffet:H04-F00:evidence_manifest",
+    "ffet:H04-F01:closeout",
+    "ffet:H04-F01:learning",
+    "ffet:H04-F01:evidence_manifest",
+    "ffet:H04-F02:closeout",
+    "ffet:H04-F02:learning",
+    "ffet:H04-F02:evidence_manifest",
+    "ffet:H04-F03:closeout",
+    "ffet:H04-F03:learning",
+    "ffet:H04-F03:evidence_manifest",
+    "ffet:H04-F04:closeout",
+    "ffet:H04-F04:learning",
+    "ffet:H04-F04:evidence_manifest"
+  ],
+  "check_results": [
+    {
+      "check_id": "ffet:H04-F00:closeout",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F00:learning",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F00:evidence_manifest",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F01:closeout",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F01:learning",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F01:evidence_manifest",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F02:closeout",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F02:learning",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F02:evidence_manifest",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F03:closeout",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F03:learning",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F03:evidence_manifest",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F04:closeout",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F04:learning",
+      "status": "passed"
+    },
+    {
+      "check_id": "ffet:H04-F04:evidence_manifest",
+      "status": "passed"
+    }
+  ],
+  "unavailable_checks": [],
+  "approved_debt": [],
+  "blocking_findings": [],
+  "gate_result": "CONDITIONAL_GO",
+  "cannot_claim": [
+    "h04_assurance_complete",
+    "h04_hmc_projection_implemented",
+    "h04_fully_implemented",
+    "self_hosting_ready"
+  ]
+}
