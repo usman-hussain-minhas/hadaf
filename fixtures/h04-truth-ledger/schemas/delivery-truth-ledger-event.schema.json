@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://schemas/delivery-truth-ledger-event.schema.json",
+  "title": "HADAF Delivery Truth Ledger Event Fixture Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "event_type",
+    "project_id",
+    "box_id",
+    "actor_or_system",
+    "source_ref",
+    "source_sha256",
+    "artifact_purpose",
+    "truth_source_class",
+    "freshness_status",
+    "created_at",
+    "cannot_claim"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "event_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "event_type": {
+      "enum": [
+        "box_planned",
+        "ffet_created",
+        "ffet_audited",
+        "branch_worktree_requested",
+        "validation_recorded",
+        "pr_opened",
+        "ci_state_recorded",
+        "merge_recorded",
+        "evidence_manifest_linked",
+        "closeout_recorded",
+        "learning_recorded",
+        "assurance_recorded",
+        "current_state_superseded",
+        "box_gate_decided",
+        "runtime_recorded"
+      ]
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "box_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "ffet_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "actor_or_system": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_ref": {
+      "type": "string",
+      "pattern": "^(control|evidence|runtime|product|input|release|fixture)://[^\\s]+$|^[A-Za-z0-9_./:-]+$",
+      "not": {
+        "pattern": "^/"
+      }
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^(?!.*(?:pending|placeholder|todo|TBD|FIXME))[a-f0-9]{64}$"
+    },
+    "product_sha": {
+      "type": "string",
+      "pattern": "^(?!.*(?:pending|placeholder|todo|TBD|FIXME))[a-f0-9]{40}$"
+    },
+    "tree_hash": {
+      "type": "string",
+      "pattern": "^(?!.*(?:pending|placeholder|todo|TBD|FIXME))[a-f0-9]{40}$"
+    },
+    "control_ref": {
+      "type": "string",
+      "pattern": "^(control|evidence|runtime|product|input|release|fixture)://[^\\s]+$|^[A-Za-z0-9_./:-]+$"
+    },
+    "evidence_ref": {
+      "type": "string",
+      "pattern": "^(control|evidence|runtime|product|input|release|fixture)://[^\\s]+$|^[A-Za-z0-9_./:-]+$"
+    },
+    "runtime_ref": {
+      "type": "string",
+      "pattern": "^(control|evidence|runtime|product|input|release|fixture)://[^\\s]+$|^[A-Za-z0-9_./:-]+$"
+    },
+    "artifact_purpose": {
+      "enum": [
+        "authority",
+        "control",
+        "evidence",
+        "runtime",
+        "product_fixture",
+        "generated_view",
+        "validation",
+        "closeout",
+        "learning",
+        "assurance",
+        "current_state",
+        "continuation",
+        "draft"
+      ]
+    },
+    "truth_source_class": {
+      "enum": [
+        "human_ratification",
+        "accepted_control",
+        "canonical_bundle",
+        "product_git",
+        "github_truth",
+        "evidence_attestation",
+        "runtime_state",
+        "generated_view",
+        "fixture_state",
+        "unavailable",
+        "stale",
+        "conflicting"
+      ]
+    },
+    "freshness_status": {
+      "enum": [
+        "fresh",
+        "stale",
+        "superseded",
+        "unknown",
+        "not_applicable_with_reason"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "supersedes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ref",
+          "sha256"
+        ],
+        "properties": {
+          "ref": {
+            "type": "string",
+            "pattern": "^(control|evidence|runtime|product|input|release|fixture)://[^\\s]+$|^[A-Za-z0-9_./:-]+$",
+            "not": {
+              "pattern": "^/"
+            }
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^(?!.*(?:pending|placeholder|todo|TBD|FIXME))[a-f0-9]{64}$"
+          }
+        }
+      },
+      "default": []
+    },
+    "cannot_claim": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  }
+}

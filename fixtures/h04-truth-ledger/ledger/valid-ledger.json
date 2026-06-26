@@ -1,0 +1,114 @@
+{
+  "ledger_id": "valid-ledger",
+  "events": [
+    {
+      "schema_version": "1.0.0",
+      "event_id": "evt-H04-F00-created",
+      "event_type": "ffet_created",
+      "project_id": "hadaf-v1",
+      "box_id": "H04",
+      "ffet_id": "H04-F00",
+      "actor_or_system": "codex.bootstrap",
+      "source_ref": "fixture://source/H04-F00-source.json",
+      "source_sha256": "808a4af1e25f4625500411f29d50fd4059764d85ceecfae16acdce8c91a53e5f",
+      "product_sha": "551a7626779c1a0807514852f3daec7cce81789f",
+      "tree_hash": "2bc016d0052e73103fe31eb205bf37b64cc433d7",
+      "artifact_purpose": "control",
+      "truth_source_class": "accepted_control",
+      "freshness_status": "fresh",
+      "created_at": "2026-06-26T16:15:51Z",
+      "supersedes": [],
+      "cannot_claim": [
+        "self_hosting_ready"
+      ]
+    },
+    {
+      "schema_version": "1.0.0",
+      "event_id": "evt-H04-F00-validated",
+      "event_type": "validation_recorded",
+      "project_id": "hadaf-v1",
+      "box_id": "H04",
+      "ffet_id": "H04-F00",
+      "actor_or_system": "codex.bootstrap",
+      "source_ref": "fixture://source/H04-F00-source.json",
+      "source_sha256": "808a4af1e25f4625500411f29d50fd4059764d85ceecfae16acdce8c91a53e5f",
+      "product_sha": "551a7626779c1a0807514852f3daec7cce81789f",
+      "tree_hash": "2bc016d0052e73103fe31eb205bf37b64cc433d7",
+      "artifact_purpose": "validation",
+      "truth_source_class": "evidence_attestation",
+      "freshness_status": "fresh",
+      "created_at": "2026-06-26T16:20:00Z",
+      "supersedes": [],
+      "cannot_claim": [
+        "self_hosting_ready"
+      ]
+    },
+    {
+      "schema_version": "1.0.0",
+      "event_id": "evt-H04-stale-current-state-classified",
+      "event_type": "current_state_superseded",
+      "project_id": "hadaf-v1",
+      "box_id": "H04",
+      "actor_or_system": "codex.bootstrap",
+      "source_ref": "fixture://source/H04-F00-source.json",
+      "source_sha256": "808a4af1e25f4625500411f29d50fd4059764d85ceecfae16acdce8c91a53e5f",
+      "product_sha": "357cce24f3c80c91cd7f9157feb9fd206fa6aa9c",
+      "tree_hash": "95248554554f441f4c077d31d079757f011ddcef",
+      "artifact_purpose": "current_state",
+      "truth_source_class": "stale",
+      "freshness_status": "superseded",
+      "created_at": "2026-06-26T16:21:00Z",
+      "supersedes": [
+        {
+          "ref": "fixture://state/old-current-state.json",
+          "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+        }
+      ],
+      "cannot_claim": [
+        "generated_runtime_state_as_authority"
+      ]
+    },
+    {
+      "schema_version": "1.0.0",
+      "event_id": "evt-H04-F00-closeout",
+      "event_type": "closeout_recorded",
+      "project_id": "hadaf-v1",
+      "box_id": "H04",
+      "ffet_id": "H04-F00",
+      "actor_or_system": "codex.bootstrap",
+      "source_ref": "fixture://source/H04-F00-source.json",
+      "source_sha256": "808a4af1e25f4625500411f29d50fd4059764d85ceecfae16acdce8c91a53e5f",
+      "product_sha": "551a7626779c1a0807514852f3daec7cce81789f",
+      "tree_hash": "2bc016d0052e73103fe31eb205bf37b64cc433d7",
+      "artifact_purpose": "closeout",
+      "truth_source_class": "accepted_control",
+      "freshness_status": "fresh",
+      "created_at": "2026-06-26T16:22:00Z",
+      "supersedes": [],
+      "cannot_claim": [
+        "self_hosting_ready"
+      ]
+    },
+    {
+      "schema_version": "1.0.0",
+      "event_id": "evt-H04-F00-learning",
+      "event_type": "learning_recorded",
+      "project_id": "hadaf-v1",
+      "box_id": "H04",
+      "ffet_id": "H04-F00",
+      "actor_or_system": "codex.bootstrap",
+      "source_ref": "fixture://source/H04-F00-source.json",
+      "source_sha256": "808a4af1e25f4625500411f29d50fd4059764d85ceecfae16acdce8c91a53e5f",
+      "product_sha": "551a7626779c1a0807514852f3daec7cce81789f",
+      "tree_hash": "2bc016d0052e73103fe31eb205bf37b64cc433d7",
+      "artifact_purpose": "learning",
+      "truth_source_class": "evidence_attestation",
+      "freshness_status": "fresh",
+      "created_at": "2026-06-26T16:23:00Z",
+      "supersedes": [],
+      "cannot_claim": [
+        "stable_agents"
+      ]
+    }
+  ]
+}

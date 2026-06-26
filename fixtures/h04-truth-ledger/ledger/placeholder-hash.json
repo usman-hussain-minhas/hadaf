@@ -1,0 +1,26 @@
+{
+  "ledger_id": "placeholder-hash",
+  "events": [
+    {
+      "schema_version": "1.0.0",
+      "event_id": "evt-placeholder-hash",
+      "event_type": "ffet_created",
+      "project_id": "hadaf-v1",
+      "box_id": "H04",
+      "ffet_id": "H04-F00",
+      "actor_or_system": "codex.bootstrap",
+      "source_ref": "fixture://source/H04-F00-source.json",
+      "source_sha256": "placeholder",
+      "product_sha": "551a7626779c1a0807514852f3daec7cce81789f",
+      "tree_hash": "2bc016d0052e73103fe31eb205bf37b64cc433d7",
+      "artifact_purpose": "control",
+      "truth_source_class": "accepted_control",
+      "freshness_status": "fresh",
+      "created_at": "2026-06-26T16:15:51Z",
+      "supersedes": [],
+      "cannot_claim": [
+        "self_hosting_ready"
+      ]
+    }
+  ]
+}
