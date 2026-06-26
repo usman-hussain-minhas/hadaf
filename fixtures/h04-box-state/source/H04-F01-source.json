@@ -1,0 +1,13 @@
+{
+  "source_id": "H04-F01-fixture-source",
+  "purpose": "Public-safe source marker for H04 Box state fixture calibration.",
+  "canonical_basis": [
+    "Box lifecycle states come from the immutable planning bundle.",
+    "H04 overlay states come from the accepted external Control schema amendment.",
+    "Merged FFETs never imply Box readiness."
+  ],
+  "cannot_claim": [
+    "h04_box_closed",
+    "h04_fully_implemented"
+  ]
+}

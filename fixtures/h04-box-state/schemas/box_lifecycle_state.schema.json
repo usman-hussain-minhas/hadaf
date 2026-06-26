@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://schemas/box_lifecycle_state.schema.json",
+  "title": "HADAF Box Lifecycle State Fixture Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "box_id",
+    "state",
+    "allowed_transitions",
+    "dependencies",
+    "accepted_debt",
+    "blocking_debt",
+    "gate_result",
+    "closeout_ref",
+    "learning_ref",
+    "truth_ledger_refs",
+    "cannot_claim"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "box_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "state": {
+      "enum": [
+        "planned",
+        "active",
+        "blocked",
+        "implemented",
+        "assured",
+        "closed",
+        "superseded"
+      ]
+    },
+    "allowed_transitions": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "planned",
+          "active",
+          "blocked",
+          "implemented",
+          "assured",
+          "closed",
+          "superseded"
+        ]
+      },
+      "default": []
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/refHash"
+      },
+      "default": []
+    },
+    "accepted_debt": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "debt_id",
+          "owner",
+          "remediation_ref",
+          "cannot_claim"
+        ],
+        "properties": {
+          "debt_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 1
+          },
+          "remediation_ref": {
+            "$ref": "#/$defs/ref"
+          },
+          "cannot_claim": {
+            "$ref": "#/$defs/cannotClaim"
+          }
+        }
+      },
+      "default": []
+    },
+    "blocking_debt": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "debt_id",
+          "reason"
+        ],
+        "properties": {
+          "debt_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "default": []
+    },
+    "gate_result": {
+      "enum": [
+        "GO",
+        "CONDITIONAL_GO",
+        "NO_GO",
+        "BLOCKED",
+        "UNABLE_TO_VERIFY",
+        "NOT_EVALUATED"
+      ]
+    },
+    "gate_conditions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "closeout_ref": {
+      "$ref": "#/$defs/ref"
+    },
+    "learning_ref": {
+      "$ref": "#/$defs/ref"
+    },
+    "truth_ledger_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/refHash"
+      },
+      "default": []
+    },
+    "cannot_claim": {
+      "$ref": "#/$defs/cannotClaim"
+    }
+  },
+  "$defs": {
+    "ref": {
+      "type": "string",
+      "pattern": "^(control|evidence|runtime|product|input|release|fixture)://[^\\s]+$|^[A-Za-z0-9_./:-]+$",
+      "not": {
+        "pattern": "^/"
+      }
+    },
+    "refHash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "sha256"
+      ],
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^(?!.*(?:pending|placeholder|todo|TBD|FIXME))[a-f0-9]{64}$"
+        }
+      }
+    },
+    "cannotClaim": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "box_id": "H04",
+  "state": "active",
+  "allowed_transitions": [
+    "blocked",
+    "implemented",
+    "superseded"
+  ],
+  "dependencies": [
+    {
+      "ref": "fixture://source/H04-F01-source.json",
+      "sha256": "bf6188862ae62ed5105b458f62ae4b23dc41e901992ad1d05a11b67bd6964a0d"
+    }
+  ],
+  "accepted_debt": [
+    {
+      "debt_id": "H04-later-ffets-remaining",
+      "owner": "codex.bootstrap",
+      "remediation_ref": "fixture://plan/H04-F02-through-H04-F06",
+      "cannot_claim": [
+        "h04_ffet_lifecycle_implemented",
+        "h04_closeout_hash_chain_implemented",
+        "h04_finalize_box_implemented"
+      ]
+    }
+  ],
+  "blocking_debt": [],
+  "gate_result": "NOT_EVALUATED",
+  "gate_conditions": [
+    "Box remains active until H04 assurance and closeout complete."
+  ],
+  "closeout_ref": "fixture://closeouts/H04-sample-closeout.json",
+  "learning_ref": "fixture://learning/H04-sample-learning.json",
+  "truth_ledger_refs": [
+    {
+      "ref": "fixture://ledger/H04-truth-ledger.json",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "cannot_claim": [
+    "h04_box_not_closed",
+    "h04_fully_implemented",
+    "self_hosting_ready",
+    "production_ready"
+  ]
+}

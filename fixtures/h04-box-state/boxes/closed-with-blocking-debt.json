@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "box_id": "H04-closed-with-blocking-debt",
+  "state": "closed",
+  "allowed_transitions": [
+    "superseded"
+  ],
+  "dependencies": [],
+  "accepted_debt": [],
+  "blocking_debt": [
+    {
+      "debt_id": "missing-assurance",
+      "reason": "Box assurance is absent."
+    }
+  ],
+  "gate_result": "GO",
+  "gate_conditions": [
+    "assurance pending"
+  ],
+  "closeout_ref": "fixture://closeouts/example.json",
+  "learning_ref": "fixture://learning/example.json",
+  "truth_ledger_refs": [
+    {
+      "ref": "fixture://ledger/H04-truth-ledger.json",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "cannot_claim": [
+    "h04_box_not_closed"
+  ]
+}

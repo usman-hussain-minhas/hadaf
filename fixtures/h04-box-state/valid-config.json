@@ -1,0 +1,74 @@
+{
+  "logicalRoots": {
+    "fixture://": "fixtures/h04-box-state"
+  },
+  "schema": {
+    "ref": "fixture://schemas/box_lifecycle_state.schema.json",
+    "sha256": "a924501e87ce8720dfdb4309b3d602cfeafcbb62936ec339b6bb75e7752b38cb"
+  },
+  "boxes": [
+    {
+      "boxId": "H04",
+      "ref": "fixture://boxes/valid-box.json",
+      "expectedStatus": "passed"
+    },
+    {
+      "boxId": "H04-invalid-transition",
+      "ref": "fixture://boxes/invalid-transition.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "invalid_state_transition"
+      ]
+    },
+    {
+      "boxId": "H04-ready-without-assurance",
+      "ref": "fixture://boxes/ready-without-assurance.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "readiness_without_assurance_or_truth_ledger"
+      ]
+    },
+    {
+      "boxId": "H04-closed-with-blocking-debt",
+      "ref": "fixture://boxes/closed-with-blocking-debt.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "assurance_or_closed_state_has_blocking_debt"
+      ]
+    },
+    {
+      "boxId": "H04-dependency-placeholder-hash",
+      "ref": "fixture://boxes/dependency-placeholder-hash.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "json_schema_pattern",
+        "dependency_sha256_invalid"
+      ]
+    },
+    {
+      "boxId": "H04-dependency-conflicting-hash",
+      "ref": "fixture://boxes/dependency-conflicting-hash.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "dependency_duplicate_ref_conflicting_hash"
+      ]
+    },
+    {
+      "boxId": "H04-merged-ffets-overclaim",
+      "ref": "fixture://boxes/merged-ffets-overclaim.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "readiness_inferred_from_merged_ffets"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "h04_ffet_lifecycle_implemented",
+    "h04_closeout_hash_chain_implemented",
+    "h04_record_generator_implemented",
+    "h04_finalize_box_implemented",
+    "h04_hmc_projection_implemented",
+    "h04_fully_implemented"
+  ],
+  "finalPostureRecommendation": "H04_F01_BOX_STATE_MACHINE_FIXTURE_VERIFIED"
+}

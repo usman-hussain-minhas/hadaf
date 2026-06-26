@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "box_id": "H04-dependency-conflicting-hash",
+  "state": "active",
+  "allowed_transitions": [
+    "blocked",
+    "implemented",
+    "superseded"
+  ],
+  "dependencies": [
+    {
+      "ref": "fixture://source/H04-F01-source.json",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "ref": "fixture://source/H04-F01-source.json",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  ],
+  "accepted_debt": [],
+  "blocking_debt": [],
+  "gate_result": "NOT_EVALUATED",
+  "gate_conditions": [],
+  "closeout_ref": "fixture://closeouts/example.json",
+  "learning_ref": "fixture://learning/example.json",
+  "truth_ledger_refs": [],
+  "cannot_claim": [
+    "h04_box_not_closed"
+  ]
+}
