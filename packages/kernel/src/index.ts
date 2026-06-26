@@ -148,6 +148,18 @@ export {
   type H03VerifiedSchema
 } from "./h03/schema-registry.js";
 export {
+  verifyH04TruthLedgerConfig,
+  type H04ExpectedLedgerStatus,
+  type H04LedgerExpectation,
+  type H04LedgerValidationResult,
+  type H04TruthLedgerConfig,
+  type H04TruthLedgerFinding,
+  type H04TruthLedgerReport,
+  type H04TruthLedgerSchemaDescriptor,
+  type H04TruthLedgerStatus,
+  type H04VerifiedTruthLedgerRef
+} from "./h04/truth-ledger.js";
+export {
   computeSourceAuthoritySetHash,
   verifyH03InputAuthorityConfig,
   type H03AcceptedInput,

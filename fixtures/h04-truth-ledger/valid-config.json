@@ -1,0 +1,80 @@
+{
+  "logicalRoots": {
+    "fixture://": "fixtures/h04-truth-ledger"
+  },
+  "schema": {
+    "ref": "fixture://schemas/delivery-truth-ledger-event.schema.json",
+    "sha256": "ebb9f53ef89004f28feadab3653549aa1db8ee03aedf68d0216c23c3f810c155"
+  },
+  "expectedCurrentProductSha": "551a7626779c1a0807514852f3daec7cce81789f",
+  "expectedCurrentTreeHash": "2bc016d0052e73103fe31eb205bf37b64cc433d7",
+  "ledgers": [
+    {
+      "ledgerId": "valid-ledger",
+      "ref": "fixture://ledger/valid-ledger.json",
+      "expectedStatus": "passed"
+    },
+    {
+      "ledgerId": "fixture-authority-overclaim",
+      "ref": "fixture://ledger/fixture-authority-overclaim.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "truth_source_authority_overclaim"
+      ]
+    },
+    {
+      "ledgerId": "git-sha-length-invalid",
+      "ref": "fixture://ledger/git-sha-length-invalid.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "json_schema_git_hash_pattern"
+      ]
+    },
+    {
+      "ledgerId": "placeholder-hash",
+      "ref": "fixture://ledger/placeholder-hash.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "source_sha256_invalid_placeholder"
+      ]
+    },
+    {
+      "ledgerId": "duplicate-event-conflict",
+      "ref": "fixture://ledger/duplicate-event-conflict.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "duplicate_event_id_conflict"
+      ]
+    },
+    {
+      "ledgerId": "stale-event-order",
+      "ref": "fixture://ledger/stale-event-order.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "stale_event_after_fresh_event"
+      ]
+    },
+    {
+      "ledgerId": "closeout-without-learning",
+      "ref": "fixture://ledger/closeout-without-learning.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "terminal_closeout_missing_learning"
+      ]
+    },
+    {
+      "ledgerId": "supersession-conflict",
+      "ref": "fixture://ledger/supersession-conflict.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "supersession_conflict"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "truth_ledger_durable_control_plane_implemented",
+    "truth_ledger_authoritative_over_git_or_github",
+    "self_hosting_ready"
+  ],
+  "finalPostureRecommendation": "H04_F00_TRUTH_LEDGER_CORE_FIXTURE_VERIFIED"
+}
