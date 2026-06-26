@@ -14,12 +14,37 @@ export type H03ConstitutionReadinessStatus = "passed" | "failed";
 export type H03ApprovalState = "for_human_review" | "approved" | "rejected" | "superseded";
 export type H03ExecutionAuthorizationState = "not_authorized" | "authorized" | "invalid";
 export type H03CompletionGateStatus = "passed" | "failed" | "blocked" | "not_applicable_with_reason";
+export type H03ReadinessMode = "test_mode" | "calibration_mode" | "final_mode";
+export type H03EvidencePurpose =
+  | "fixture_only"
+  | "test_calibration"
+  | "generated_view"
+  | "implementation_evidence"
+  | "qualification_evidence"
+  | "ratification_candidate"
+  | "ratified_authority"
+  | "release_candidate"
+  | "production_evidence";
+export type H03TruthSourceClass =
+  | "fixture_state"
+  | "generated_view"
+  | "runtime_checkpoint"
+  | "control_authority"
+  | "evidence_attestation"
+  | "git_truth"
+  | "github_truth"
+  | "human_ratification"
+  | "unavailable"
+  | "stale"
+  | "conflicting";
 
 export interface H03ConstitutionReadinessConfig {
   readonly logicalRoots: Record<string, string>;
   readonly deliveryConstitutionConfigRef: string;
   readonly deliveryConstitutionConfigSha256: string;
   readonly deliveryConstitutionOverrides?: H03DeliveryConstitutionOverrides;
+  readonly readinessMode?: H03ReadinessMode;
+  readonly terminalClaim?: H03TerminalClaimEligibilityConfig;
   readonly currentProduct: H03CurrentProductTruth;
   readonly predecessorCloseouts: readonly H03PredecessorCloseoutExpectation[];
   readonly schemas?: H03ApprovalExecutionSchemas;
@@ -32,6 +57,32 @@ export interface H03ConstitutionReadinessConfig {
   readonly expectedCanonicalization?: string;
   readonly cannotClaim?: readonly string[];
   readonly finalPostureRecommendation?: string;
+}
+
+export interface H03TerminalClaimEligibilityConfig {
+  readonly claimId: string;
+  readonly claimedPosture: string;
+  readonly minimumEvidencePurpose: H03EvidencePurpose;
+  readonly forbiddenEvidencePurposes: readonly H03EvidencePurpose[];
+  readonly forbiddenTruthSources?: readonly H03TruthSourceClass[];
+  readonly requiredAuthorityRoots: readonly H03ClaimEvidenceRoot[];
+  readonly mandatoryEvidence: readonly H03ClaimEvidenceRoot[];
+  readonly expectedRootOfTrustTrace?: readonly string[];
+  readonly hmcMaturity?: string;
+  readonly separateRealRatificationPackageExists?: boolean;
+}
+
+export interface H03ClaimEvidenceRoot {
+  readonly evidenceId: string;
+  readonly ref: string;
+  readonly sha256: string;
+  readonly purpose: H03EvidencePurpose;
+  readonly authorityClass: string;
+  readonly truthSource: H03TruthSourceClass;
+  readonly required: boolean;
+  readonly freshnessStatus: "current" | "stale" | "unavailable" | "conflicting";
+  readonly schemaRef?: string;
+  readonly schemaSha256?: string;
 }
 
 export interface H03DeliveryConstitutionOverrides {
@@ -88,11 +139,23 @@ export interface H03ConstitutionReadinessReport {
   readonly approval_state: H03ApprovalState | null;
   readonly execution_authorization_state: H03ExecutionAuthorizationState;
   readonly execution_authorized: boolean;
+  readonly readiness_mode: H03ReadinessMode;
+  readonly claim_eligibility: H03ClaimEligibilityResult | null;
   readonly verified_predecessors: readonly H03VerifiedPredecessor[];
   readonly verified_records: readonly H03VerifiedRecord[];
   readonly completion_gates: readonly H03CompletionGate[];
   readonly cannot_claim: readonly string[];
   readonly final_posture_recommendation: string | null;
+}
+
+export interface H03ClaimEligibilityResult {
+  readonly claim_id: string;
+  readonly claimed_posture: string;
+  readonly eligibility_result: "passed" | "failed" | "not_applicable_with_reason";
+  readonly weakest_mandatory_evidence_maturity: H03EvidencePurpose | null;
+  readonly forbidden_evidence_scan: readonly string[];
+  readonly root_of_trust_verified: boolean;
+  readonly blocking_reasons: readonly string[];
 }
 
 export interface H03VerifiedPredecessor {
@@ -139,6 +202,34 @@ const addFormats = ((addFormatsModule as unknown as { readonly default?: AddForm
 const SHA256_PATTERN = /^(?:sha256:)?[a-f0-9]{64}$/u;
 const PLACEHOLDER_PATTERN = /pending|placeholder|todo|TBD|FIXME/u;
 const PRIVATE_PATH_PATTERN = /(?:^|["'\s])(?:\/Users\/|\/Volumes\/|file:\/\/)/u;
+const FORBIDDEN_FINAL_REF_PATTERN = /(?:^|["'\s])(?:fixture:\/\/|test:\/\/|example:\/\/)|(?:^|\/)(?:fixtures?|__fixtures__|testdata|examples?)(?:\/|$)/u;
+const TRANSIENT_REF_PATTERN = /^(?:tmp|scratch|temp):\/\//u;
+const TRANSIENT_ROOT_PATTERN = /(?:^|\/)(?:tmp|var\/folders)(?:\/|$)|\/private\/var\//u;
+const HASH_STRING_PATTERN = /^[a-f0-9]{64}$/u;
+const PURPOSE_RANK: Record<H03EvidencePurpose, number> = {
+  fixture_only: 0,
+  test_calibration: 1,
+  generated_view: 2,
+  implementation_evidence: 3,
+  qualification_evidence: 4,
+  ratification_candidate: 5,
+  ratified_authority: 6,
+  release_candidate: 7,
+  production_evidence: 8
+};
+const DEFAULT_FINAL_FORBIDDEN_PURPOSES: readonly H03EvidencePurpose[] = [
+  "fixture_only",
+  "test_calibration",
+  "generated_view"
+];
+const DEFAULT_FINAL_FORBIDDEN_TRUTH_SOURCES: readonly H03TruthSourceClass[] = [
+  "fixture_state",
+  "generated_view",
+  "runtime_checkpoint",
+  "unavailable",
+  "stale",
+  "conflicting"
+];
 
 export function verifyH03ConstitutionReadinessConfig(
   config: H03ConstitutionReadinessConfig
@@ -166,6 +257,8 @@ export function verifyH03ConstitutionReadinessConfig(
   validateCurrentProduct(config.currentProduct, findings);
   validateCompletionGates(config.completionGates, findings);
   validateExpectations(config, constitutionContentHash, approvalResult.approvalState, executionResult.executionAuthorized, findings);
+  const readinessMode = config.readinessMode ?? "test_mode";
+  const claimEligibility = validateReadinessModeAndClaimEligibility(readinessMode, config, constitution, findings);
 
   return {
     status: findings.length === 0 ? "passed" : "failed",
@@ -176,6 +269,8 @@ export function verifyH03ConstitutionReadinessConfig(
     approval_state: approvalResult.approvalState,
     execution_authorization_state: executionResult.executionAuthorizationState,
     execution_authorized: executionResult.executionAuthorized,
+    readiness_mode: readinessMode,
+    claim_eligibility: claimEligibility,
     verified_predecessors: findings.length === 0 ? verifiedPredecessors : [],
     verified_records: findings.length === 0 ? [...approvalResult.verifiedRecords, ...executionResult.verifiedRecords] : [],
     completion_gates: [...config.completionGates],
@@ -522,6 +617,206 @@ function validateExpectations(
       actual: String(executionAuthorized)
     });
   }
+}
+
+function validateReadinessModeAndClaimEligibility(
+  readinessMode: H03ReadinessMode,
+  config: H03ConstitutionReadinessConfig,
+  constitution: H03DeliveryConstitution | null,
+  findings: H03ConstitutionReadinessFinding[]
+): H03ClaimEligibilityResult | null {
+  if (readinessMode !== "final_mode" && config.finalPostureRecommendation === "H03_RATIFICATION_READY") {
+    findings.push({
+      kind: "non_final_mode_ratification_ready_forbidden",
+      expected: "final_mode",
+      actual: readinessMode
+    });
+  }
+
+  if (!config.terminalClaim) {
+    if (readinessMode === "final_mode") {
+      findings.push({ kind: "terminal_claim_missing" });
+    }
+    return null;
+  }
+
+  const claim = config.terminalClaim;
+  const blockingReasons: string[] = [];
+  const forbiddenScan: string[] = [];
+
+  if (readinessMode !== "final_mode" && claim.claimedPosture === "H03_RATIFICATION_READY") {
+    findings.push({
+      kind: "non_final_mode_ratification_ready_forbidden",
+      expected: "final_mode",
+      actual: readinessMode
+    });
+    blockingReasons.push("non_final_mode_ratification_ready_forbidden");
+  }
+
+  const mandatoryEvidence = [...claim.requiredAuthorityRoots, ...claim.mandatoryEvidence];
+  if (mandatoryEvidence.length === 0) {
+    findings.push({ kind: "terminal_claim_mandatory_evidence_missing" });
+    blockingReasons.push("terminal_claim_mandatory_evidence_missing");
+  }
+
+  const forbiddenPurposes = new Set([
+    ...DEFAULT_FINAL_FORBIDDEN_PURPOSES,
+    ...claim.forbiddenEvidencePurposes
+  ]);
+  const forbiddenTruthSources = new Set([
+    ...DEFAULT_FINAL_FORBIDDEN_TRUTH_SOURCES,
+    ...(claim.forbiddenTruthSources ?? [])
+  ]);
+  let weakestPurpose: H03EvidencePurpose | null = null;
+
+  for (const evidence of mandatoryEvidence) {
+    const evidencePrefix = `terminal_claim.${evidence.evidenceId}`;
+    verifyClaimEvidenceRoot(evidencePrefix, evidence, config.logicalRoots, readinessMode === "final_mode", findings, blockingReasons, forbiddenScan);
+    if (readinessMode === "final_mode") {
+      if (forbiddenPurposes.has(evidence.purpose)) {
+        findings.push({ kind: "ineligible_evidence_purpose", ref: evidence.ref, expected: claim.minimumEvidencePurpose, actual: evidence.purpose });
+        blockingReasons.push(`ineligible_evidence_purpose:${evidence.evidenceId}`);
+      }
+      if (forbiddenTruthSources.has(evidence.truthSource)) {
+        findings.push({ kind: "ineligible_truth_source", ref: evidence.ref, actual: evidence.truthSource });
+        blockingReasons.push(`ineligible_truth_source:${evidence.evidenceId}`);
+      }
+      if (evidence.freshnessStatus !== "current") {
+        findings.push({ kind: "evidence_not_current", ref: evidence.ref, expected: "current", actual: evidence.freshnessStatus });
+        blockingReasons.push(`evidence_not_current:${evidence.evidenceId}`);
+      }
+      if (PURPOSE_RANK[evidence.purpose] < PURPOSE_RANK[claim.minimumEvidencePurpose]) {
+        findings.push({ kind: "weakest_evidence_below_claim_minimum", ref: evidence.ref, expected: claim.minimumEvidencePurpose, actual: evidence.purpose });
+        blockingReasons.push(`weakest_evidence_below_claim_minimum:${evidence.evidenceId}`);
+      }
+    }
+    weakestPurpose = weakerPurpose(weakestPurpose, evidence.purpose);
+  }
+
+  const constitutionText = constitution ? JSON.stringify(constitution) : "";
+  if (readinessMode === "final_mode") {
+    if (claim.hmcMaturity === "fixture_backed" && !claim.separateRealRatificationPackageExists) {
+      findings.push({ kind: "cross_plane_fixture_maturity_blocks_ratification" });
+      blockingReasons.push("cross_plane_fixture_maturity_blocks_ratification");
+    }
+    if (constitution?.constitution_id.toLowerCase().includes("fixture")) {
+      findings.push({ kind: "fixture_constitution_id_forbidden", actual: constitution.constitution_id });
+      blockingReasons.push("fixture_constitution_id_forbidden");
+    }
+    if (FORBIDDEN_FINAL_REF_PATTERN.test(constitutionText)) {
+      findings.push({ kind: "fixture_ref_in_final_constitution" });
+      forbiddenScan.push("fixture_ref_in_final_constitution");
+      blockingReasons.push("fixture_ref_in_final_constitution");
+    }
+    if (hasDummyHashValue(constitution)) {
+      findings.push({ kind: "dummy_hash_in_final_constitution" });
+      blockingReasons.push("dummy_hash_in_final_constitution");
+    }
+    if (claim.claimedPosture === "H03_RATIFICATION_READY" && PURPOSE_RANK[weakestPurpose ?? "fixture_only"] < PURPOSE_RANK[claim.minimumEvidencePurpose]) {
+      findings.push({
+        kind: "claim_maturity_exceeds_weakest_evidence",
+        expected: claim.minimumEvidencePurpose,
+        actual: weakestPurpose ?? "none"
+      });
+      blockingReasons.push("claim_maturity_exceeds_weakest_evidence");
+    }
+  }
+
+  return {
+    claim_id: claim.claimId,
+    claimed_posture: claim.claimedPosture,
+    eligibility_result: blockingReasons.length === 0 ? "passed" : "failed",
+    weakest_mandatory_evidence_maturity: weakestPurpose,
+    forbidden_evidence_scan: forbiddenScan,
+    root_of_trust_verified: blockingReasons.length === 0 && mandatoryEvidence.length > 0,
+    blocking_reasons: [...new Set(blockingReasons)]
+  };
+}
+
+function verifyClaimEvidenceRoot(
+  evidencePrefix: string,
+  evidence: H03ClaimEvidenceRoot,
+  logicalRoots: Record<string, string>,
+  strictFinalMode: boolean,
+  findings: H03ConstitutionReadinessFinding[],
+  blockingReasons: string[],
+  forbiddenScan: string[]
+): void {
+  const hashFinding = validateExpectedHash(evidencePrefix, evidence.sha256);
+  if (hashFinding) {
+    findings.push(hashFinding);
+    blockingReasons.push(`${evidence.evidenceId}:invalid_hash`);
+    return;
+  }
+  if (hasDummyHashString(normalizeSha256(evidence.sha256))) {
+    findings.push({ kind: "dummy_sha256", ref: evidence.ref, actual: normalizeSha256(evidence.sha256) });
+    blockingReasons.push(`${evidence.evidenceId}:dummy_hash`);
+  }
+  if (strictFinalMode && FORBIDDEN_FINAL_REF_PATTERN.test(evidence.ref)) {
+    findings.push({ kind: "fixture_or_test_ref_forbidden_in_final_root", ref: evidence.ref });
+    forbiddenScan.push(evidence.ref);
+    blockingReasons.push(`${evidence.evidenceId}:fixture_or_test_ref`);
+  }
+  if (strictFinalMode && TRANSIENT_REF_PATTERN.test(evidence.ref)) {
+    findings.push({ kind: "transient_ref_forbidden", ref: evidence.ref });
+    blockingReasons.push(`${evidence.evidenceId}:transient_ref`);
+  }
+  const path = resolveLogicalRef(evidence.ref, logicalRoots, findings);
+  if (!path || !existsSync(path)) {
+    findings.push({ kind: "missing_terminal_claim_ref", ref: evidence.ref, actual: path ?? "unresolved" });
+    blockingReasons.push(`${evidence.evidenceId}:missing_ref`);
+    return;
+  }
+  const scheme = evidence.ref.split("://", 1)[0] ?? "";
+  const root = logicalRoots[scheme];
+  if (strictFinalMode && root && TRANSIENT_ROOT_PATTERN.test(normalize(root))) {
+    findings.push({ kind: "transient_root_forbidden", ref: evidence.ref, actual: root });
+    blockingReasons.push(`${evidence.evidenceId}:transient_root`);
+  }
+  const text = readFileSync(path, "utf8");
+  if (PRIVATE_PATH_PATTERN.test(text)) {
+    findings.push({ kind: "private_path_in_terminal_claim_ref", ref: evidence.ref });
+    blockingReasons.push(`${evidence.evidenceId}:private_path`);
+  }
+  if (hasDummyHashValue(JSON.parse(safeJsonOrString(text)))) {
+    findings.push({ kind: "dummy_hash_in_terminal_claim_ref", ref: evidence.ref });
+    blockingReasons.push(`${evidence.evidenceId}:dummy_hash_in_content`);
+  }
+  const actualHash = sha256Text(text);
+  if (actualHash !== normalizeSha256(evidence.sha256)) {
+    findings.push({
+      kind: "terminal_claim_ref_hash_mismatch",
+      ref: evidence.ref,
+      expected: normalizeSha256(evidence.sha256),
+      actual: actualHash
+    });
+    blockingReasons.push(`${evidence.evidenceId}:hash_mismatch`);
+  }
+}
+
+function safeJsonOrString(text: string): string {
+  try {
+    return JSON.stringify(JSON.parse(text));
+  } catch {
+    return JSON.stringify(text);
+  }
+}
+
+function weakerPurpose(current: H03EvidencePurpose | null, candidate: H03EvidencePurpose): H03EvidencePurpose {
+  if (!current) return candidate;
+  return PURPOSE_RANK[candidate] < PURPOSE_RANK[current] ? candidate : current;
+}
+
+function hasDummyHashValue(value: unknown): boolean {
+  if (typeof value === "string") return HASH_STRING_PATTERN.test(value) && hasDummyHashString(value);
+  if (!value || typeof value !== "object") return false;
+  if (Array.isArray(value)) return value.some((entry) => hasDummyHashValue(entry));
+  return Object.values(value as Record<string, unknown>).some((entry) => hasDummyHashValue(entry));
+}
+
+function hasDummyHashString(hash: string): boolean {
+  const normalized = normalizeSha256(hash);
+  return HASH_STRING_PATTERN.test(normalized) && new Set(normalized.split("")).size === 1;
 }
 
 function compileSchema(schema: AnySchema): ValidateFunction<unknown> {
