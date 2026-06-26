@@ -7,6 +7,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  normalizeEvidenceVerificationConfig,
   verifyEvidenceConfig,
   type EvidenceVerificationConfig
 } from "./evidence.js";
@@ -44,6 +45,32 @@ test("verifies entries manifests and product blob references at an exact git sha
   assert.deepEqual(report.findings, []);
   assert.equal(
     report.verified_refs.some((item) => item.ref === `product://README.md@${fixture.gitSha}`),
+    true
+  );
+});
+
+test("normalizes relative logical roots against the config file directory", () => {
+  const fixture = buildFixture();
+  const configPath = join(fixture.root, "configs", "valid-config.json");
+  mkdirSync(join(fixture.root, "configs"), { recursive: true });
+  const normalizedConfig = normalizeEvidenceVerificationConfig(
+    {
+      ...fixture.config,
+      logicalRoots: {
+        control: "../control",
+        evidence: "../evidence",
+        product: "../product"
+      }
+    },
+    {
+      configPath
+    }
+  );
+  const report = verifyEvidenceConfig(normalizedConfig);
+
+  assert.equal(report.status, "passed");
+  assert.equal(
+    report.verified_refs.some((item) => item.ref === "evidence://sample/artifact.json"),
     true
   );
 });
@@ -238,6 +265,7 @@ test("rejects manifest entry invalid and placeholder hashes", () => {
 
 function buildFixture(): {
   readonly config: EvidenceVerificationConfig;
+  readonly root: string;
   readonly gitSha: string;
   readonly controlRoot: string;
   readonly artifactHash: string;
@@ -294,6 +322,7 @@ function buildFixture(): {
   );
 
   return {
+    root,
     gitSha,
     controlRoot,
     artifactHash,

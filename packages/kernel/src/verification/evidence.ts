@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
-import { isAbsolute, join, normalize, relative } from "node:path";
+import { dirname, isAbsolute, normalize, relative, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
 export type EvidenceVerificationStatus = "passed" | "failed";
@@ -14,6 +14,11 @@ export interface EvidenceVerificationConfig {
   readonly expectedProductGitSha?: string;
   readonly finalPostureRecommendation?: string;
   readonly cannotClaim?: readonly string[];
+}
+
+export interface EvidenceConfigPathNormalizationOptions {
+  readonly configPath?: string;
+  readonly baseDir?: string;
 }
 
 export interface EvidenceArtifactExpectation {
@@ -155,6 +160,22 @@ export function verifyEvidenceConfig(
     hash_failures: hashFailures,
     cannot_claim: [...(config.cannotClaim ?? [])],
     final_posture_recommendation: config.finalPostureRecommendation ?? null
+  };
+}
+
+export function normalizeEvidenceVerificationConfig(
+  config: EvidenceVerificationConfig,
+  options: EvidenceConfigPathNormalizationOptions = {}
+): EvidenceVerificationConfig {
+  const baseDir = normalize(resolve(options.baseDir ?? dirname(resolve(options.configPath ?? "."))));
+  return {
+    ...config,
+    logicalRoots: Object.fromEntries(
+      Object.entries(config.logicalRoots).map(([scheme, root]) => [
+        scheme,
+        isAbsolute(root) ? normalize(root) : normalize(resolve(baseDir, root))
+      ])
+    )
   };
 }
 
@@ -511,9 +532,10 @@ function resolveInsideRoot(root: string, body: string): string | null {
   if (!isRelativeProductPath(body)) {
     return null;
   }
-  const resolved = normalize(join(root, body));
-  const rootRelative = relative(root, resolved);
-  if (rootRelative.startsWith("..")) {
+  const absoluteRoot = normalize(resolve(root));
+  const resolved = normalize(resolve(absoluteRoot, body));
+  const rootRelative = relative(absoluteRoot, resolved);
+  if (rootRelative.startsWith("..") || isAbsolute(rootRelative)) {
     return null;
   }
   return resolved;

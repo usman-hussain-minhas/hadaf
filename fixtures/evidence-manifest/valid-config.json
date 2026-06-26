@@ -1,0 +1,20 @@
+{
+  "logicalRoots": {
+    "sample": "./sample-root",
+    "artifact": "./artifact-root",
+    "product": "./product-root"
+  },
+  "manifestRefs": [
+    "sample://manifests/legacy-artifacts-manifest.json",
+    "sample://manifests/current-entries-manifest.json"
+  ],
+  "requiredRefs": [
+    "artifact://sample/artifact.json",
+    "artifact://sample/other.json",
+    "product://README.md"
+  ],
+  "finalPostureRecommendation": "fixture_evidence_manifest_replay_passed",
+  "cannotClaim": [
+    "live_external_control_replay_without_config"
+  ]
+}
