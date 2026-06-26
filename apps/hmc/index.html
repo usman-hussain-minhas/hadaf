@@ -72,15 +72,15 @@
             <section class="panel panel--wide" aria-labelledby="active-box-title">
               <div class="panel-heading">
                 <p class="label">Current Truth</p>
-                <h2 id="active-box-title" data-state-field="active-box">H03 Plan Compiler and Delivery Constitution</h2>
+                <h2 id="active-box-title" data-state-field="active-box">H04 Lifecycle State and Run Ledger</h2>
               </div>
               <div class="status-strip" role="list" aria-label="Box status">
-                <span role="listitem" class="status-pill status-pill--active">compiler pipeline visible</span>
-                <span role="listitem" class="status-pill">F00-F06 closeout complete</span>
+                <span role="listitem" class="status-pill status-pill--active">H04 lifecycle visible</span>
+                <span role="listitem" class="status-pill">F00-F05 closeout complete</span>
+                <span role="listitem" class="status-pill status-pill--warn" data-state-field="h04-active-ffet">H04-F06</span>
                 <span role="listitem" class="status-pill status-pill--warn">Box assurance pending</span>
-                <span role="listitem" class="status-pill status-pill--warn">human ratification not yet ready</span>
               </div>
-              <p class="summary" data-state-field="project-posture">H03_PRODUCT_PIPELINE_COMPLETE_PENDING_BOX_ASSURANCE</p>
+              <p class="summary" data-state-field="project-posture">H04_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED</p>
             </section>
 
             <section class="panel" aria-labelledby="truth-title">
@@ -108,7 +108,32 @@
                 <li>stable_agents</li>
                 <li>HMC_authoritative_state</li>
                 <li>execution_authorization_granted</li>
+                <li>h04_assurance_complete</li>
               </ul>
+            </section>
+
+            <section class="panel panel--wide" aria-labelledby="h04-title">
+              <div class="panel-heading">
+                <p class="label">H04 Projection</p>
+                <h2 id="h04-title" data-state-field="h04-status">product_pipeline_active</h2>
+              </div>
+              <div class="projection-grid" aria-label="H04 lifecycle projection">
+                <article>
+                  <span class="state-label">Truth Ledger</span>
+                  <strong data-state-field="h04-ledger">fixture_projected</strong>
+                  <p>Projected for HMC display only.</p>
+                </article>
+                <article>
+                  <span class="state-label">Finalizer</span>
+                  <strong data-state-field="h04-finalizer">implemented</strong>
+                  <p>Successor gate: <span data-state-field="h04-successor-gate">conditional_go</span>.</p>
+                </article>
+                <article>
+                  <span class="state-label">Authority</span>
+                  <strong data-state-field="h04-projection-authority">derived_view_only</strong>
+                  <p>Control and Evidence remain authoritative.</p>
+                </article>
+              </div>
             </section>
           </div>
         </section>
@@ -151,6 +176,12 @@
               <span role="cell"><strong>pending Box assurance</strong></span>
               <span role="cell">fixture-backed derived projection</span>
               <span role="cell">human ratification not yet ready</span>
+            </div>
+            <div class="table-row" role="row">
+              <span role="cell">H04 Lifecycle State and Run Ledger</span>
+              <span role="cell"><strong>active</strong></span>
+              <span role="cell">fixture-backed lifecycle projection</span>
+              <span role="cell">Box assurance pending</span>
             </div>
           </div>
         </section>
@@ -229,6 +260,36 @@
               <strong data-state-field="active-ffet">HMC derived projection</strong>
               <span>closeout complete</span>
             </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H04-F00</span>
+              <strong>Truth Ledger schema boundary</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H04-F01</span>
+              <strong>Box lifecycle state verifier</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H04-F02</span>
+              <strong>FFET lifecycle verifier</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H04-F03</span>
+              <strong>Closeout chain verifier</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H04-F05</span>
+              <strong>Finalize Box verifier</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-active">
+              <span class="queue-code">H04-F06</span>
+              <strong>HMC lifecycle projection</strong>
+              <span>active</span>
+            </article>
           </div>
         </section>
 
@@ -252,6 +313,7 @@
                 <li><span class="status-dot status-dot--ok"></span> bundle verifier</li>
                 <li><span class="status-dot status-dot--ok"></span> static accessibility smoke</li>
                 <li><span class="status-dot status-dot--ok"></span> H03 projection guard</li>
+                <li><span class="status-dot status-dot--ok"></span> H04 projection guard</li>
               </ul>
             </section>
             <section class="panel" aria-labelledby="debt-title">
@@ -264,6 +326,7 @@
                 <li>browser_accessibility_complete</li>
                 <li>browser_performance_complete</li>
                 <li>live_h03_control_adapter_implemented</li>
+                <li>h04_fully_implemented</li>
               </ul>
             </section>
           </div>
@@ -282,6 +345,11 @@
               <span class="state-label">loading</span>
               <strong>H03 Box assurance pending</strong>
               <p>Fixture-backed HMC state projects H03 product pipeline completion without becoming authority for lifecycle state.</p>
+            </article>
+            <article class="state-card">
+              <span class="state-label">H04</span>
+              <strong data-state-field="h04-status">product_pipeline_active</strong>
+              <p>Truth Ledger is <span data-state-field="h04-ledger">fixture_projected</span>; finalizer is <span data-state-field="h04-finalizer">implemented</span>.</p>
             </article>
             <article class="state-card">
               <span class="state-label">constitution</span>
@@ -305,6 +373,11 @@
               <span class="maturity maturity--fixture">fixture_backed</span>
           </div>
           <div class="panel panel--wide">
+            <div class="decision-row">
+              <span class="status-pill status-pill--warn">H04 assurance pending</span>
+              <strong>H04 lifecycle projection is visible, fixture-backed, and non-authoritative.</strong>
+              <span data-state-field="h04-projection-authority">derived_view_only</span>
+            </div>
             <div class="decision-row">
               <span class="status-pill status-pill--warn">blocked pending Box assurance</span>
               <strong>Delivery Constitution will require human ratification after H03 Box assurance.</strong>

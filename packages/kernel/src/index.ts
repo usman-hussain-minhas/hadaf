@@ -228,6 +228,17 @@ export {
   type H04FinalizeGateResult
 } from "./h04/finalize-box.js";
 export {
+  deriveH04HmcProjection,
+  type H04HmcDerivedProjection,
+  type H04HmcFfetProjectionInput,
+  type H04HmcLedgerEventInput,
+  type H04HmcMaturity,
+  type H04HmcProjectionConfig,
+  type H04HmcProjectionFinding,
+  type H04HmcProjectionReport,
+  type H04HmcProjectionStatus
+} from "./h04/hmc-projection.js";
+export {
   computeSourceAuthoritySetHash,
   verifyH03InputAuthorityConfig,
   type H03AcceptedInput,

@@ -15,8 +15,12 @@ test("derives a valid HMC fixture state with classified stale generated state", 
   assert.equal(report.view.h03Projection?.authority, "derived_view_only");
   assert.equal(report.view.h03Projection?.deliveryConstitution.approvalStatus, "for_human_review");
   assert.equal(report.view.h03Projection?.deliveryConstitution.executionAuthorized, false);
+  assert.equal(report.view.h04Projection?.authority, "derived_view_only");
+  assert.equal(report.view.h04Projection?.finalizer.successorGate, "conditional_go");
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h03_stage:H03-F05" && ref.status === "closeout_complete"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h03_stage:H03-F06" && ref.status === "closeout_complete"), true);
+  assert.equal(report.verified_refs.some((ref) => ref.ref === "h04_ffet:H04-F05" && ref.status === "closeout_complete"), true);
+  assert.equal(report.verified_refs.some((ref) => ref.ref === "h04_ffet:H04-F06" && ref.status === "active"), true);
   assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04" && ffet.status === "active"), false);
   assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04-R1" && ffet.status === "verified"), true);
 });
@@ -168,6 +172,55 @@ test("fails H03 projection when precise cannot_claim entries are missing", () =>
   assertFinding(report, "missing_h03_projection_cannot_claim");
 });
 
+test("fails H04 projection authority and maturity overclaims", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h04Projection: {
+      ...validConfig().h04Projection!,
+      claimsAuthority: true,
+      maturity: "persistent"
+    }
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "h04_projection_claims_authority");
+  assertFinding(report, "h04_projection_maturity_overclaim");
+});
+
+test("fails stale H04 projection and stale FFET entries without classification", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h04Projection: {
+      ...validConfig().h04Projection!,
+      freshness: "stale",
+      ffets: [
+        {
+          id: "H04-F06",
+          title: "HMC lifecycle projection",
+          status: "active",
+          maturity: "fixture_backed",
+          truthSource: "fixture",
+          freshness: "conflict"
+        }
+      ]
+    },
+    classifiedMismatches: []
+  });
+
+  assert.equal(report.status, "failed");
+  assert.equal(findings(report, "unclassified_state_mismatch"), 3);
+});
+
+test("fails H04 projection when precise cannot_claim entries are missing", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    cannotClaim: ["live_github_adapter_implemented", "HMC_authoritative_state"]
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "missing_h04_projection_cannot_claim");
+});
+
 test("fails private paths in state config", () => {
   const report = deriveHmcStateConfig({
     ...validConfig(),
@@ -217,6 +270,13 @@ function validConfig(): HmcStateConfig {
         status: "product_pipeline_complete_pending_box_assurance",
         maturity: "fixture_backed",
         debt: ["human_ratification_pending", "h04_h06_execution_not_authorized"]
+      },
+      {
+        id: "H04",
+        name: "Lifecycle State and Run Ledger",
+        status: "product_pipeline_active",
+        maturity: "fixture_backed",
+        debt: ["box_assurance_pending", "h05_h06_not_implemented"]
       }
     ],
     ffets: [
@@ -284,6 +344,42 @@ function validConfig(): HmcStateConfig {
         id: "H03-F06",
         title: "HMC derived projection",
         status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H04-F00",
+        title: "Truth Ledger schema boundary",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H04-F01",
+        title: "Box lifecycle state verifier",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H04-F02",
+        title: "FFET lifecycle verifier",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H04-F03",
+        title: "Closeout chain verifier",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H04-F05",
+        title: "Finalize Box verifier",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H04-F06",
+        title: "HMC lifecycle projection",
+        status: "active",
         maturity: "fixture_backed"
       }
     ],
@@ -381,6 +477,40 @@ function validConfig(): HmcStateConfig {
         maturity: "fixture_backed"
       }
     },
+    h04Projection: {
+      id: "H04",
+      status: "product_pipeline_active",
+      maturity: "fixture_backed",
+      authority: "derived_view_only",
+      freshness: "fresh",
+      box: {
+        id: "H04",
+        status: "product_pipeline_active",
+        maturity: "fixture_backed",
+        assuranceStatus: "pending"
+      },
+      ffets: [
+        h04Ffet("H04-F00", "Truth Ledger schema boundary", "closeout_complete"),
+        h04Ffet("H04-F01", "Box lifecycle state verifier", "closeout_complete"),
+        h04Ffet("H04-F02", "FFET lifecycle verifier", "closeout_complete"),
+        h04Ffet("H04-F03", "Closeout chain verifier", "closeout_complete"),
+        h04Ffet("H04-F05", "Finalize Box verifier", "closeout_complete"),
+        h04Ffet("H04-F06", "HMC lifecycle projection", "active")
+      ],
+      truthLedger: {
+        status: "fixture_projected",
+        maturity: "fixture_backed",
+        authority: "derived_view_only",
+        eventCount: 6,
+        freshness: "fresh"
+      },
+      finalizer: {
+        status: "implemented",
+        maturity: "fixture_backed",
+        successorGate: "conditional_go",
+        blockingDebt: ["h04_box_assurance_pending"]
+      }
+    },
     git: {
       expectedMainSha: sha(),
       actualMainSha: sha(),
@@ -413,9 +543,23 @@ function validConfig(): HmcStateConfig {
       "live_h03_control_adapter_implemented",
       "constitution_approved_by_human",
       "execution_authorization_granted",
-      "h04_h05_h06_execution_authorized"
+      "h04_h05_h06_execution_authorized",
+      "h04_assurance_complete",
+      "h04_fully_implemented"
     ],
     finalPostureRecommendation: "H03_PRODUCT_PIPELINE_COMPLETE_PENDING_BOX_ASSURANCE"
+  };
+}
+
+function h04Ffet(id: string, title: string, status: string): NonNullable<HmcStateConfig["h04Projection"]>["ffets"][number] {
+  return {
+    id,
+    title,
+    status,
+    maturity: "fixture_backed",
+    truthSource: "fixture",
+    closeoutStatus: status === "closeout_complete" ? "closeout_complete" : "pending",
+    freshness: "fresh"
   };
 }
 

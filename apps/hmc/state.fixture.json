@@ -2,9 +2,10 @@
   "adapterStatus": "passed",
   "adapterMaturity": "fixture_backed",
   "projectName": "HADAF v1",
-  "projectPosture": "H03_PRODUCT_PIPELINE_COMPLETE_PENDING_BOX_ASSURANCE",
-  "activeBox": "H03 Plan Compiler and Delivery Constitution",
-  "activeFfet": "H03 Box assurance pending",
+  "projectPosture": "H04_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED",
+  "activeBox": "H04 Lifecycle State and Run Ledger",
+  "activeFfet": "H04-F06 HMC lifecycle projection",
+  "h03AssuranceStatus": "H03 Box assurance pending",
   "classifiedMismatch": "generated_state_not_fresh",
   "h03Projection": {
     "status": "product_pipeline_complete_pending_box_assurance",
@@ -20,6 +21,18 @@
       "h04H05H06ExecutionAuthorized": false
     }
   },
+  "h04Projection": {
+    "status": "product_pipeline_active",
+    "authority": "derived_view_only",
+    "boxStatus": "product_pipeline_active",
+    "truthLedgerStatus": "fixture_projected",
+    "finalizerStatus": "implemented",
+    "successorGate": "conditional_go",
+    "activeFfet": "H04-F06",
+    "closeoutComplete": 5,
+    "activeOrPending": 1,
+    "assuranceStatus": "pending"
+  },
   "cannotClaim": [
     "live_github_adapter_implemented",
     "live_h03_control_adapter_implemented",
@@ -34,6 +47,8 @@
     "h03_delivery_constitution_ready_for_human_ratification",
     "h03_implemented",
     "h04_h05_h06_execution_authorized",
+    "h04_assurance_complete",
+    "h04_fully_implemented",
     "self_hosting_ready",
     "production_ready",
     "stable_agents"
