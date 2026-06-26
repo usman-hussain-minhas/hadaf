@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "h03-fixture-agent-topology",
+  "artifact_type": "agent_topology",
+  "constitution_id": "hadaf-h03-fixture-constitution",
+  "version": "1.0.0",
+  "summary": "Fixture topology remains planning-only and serial.",
+  "requirements": [
+    "Codex bootstrap may implement H03 Product FFETs serially.",
+    "Role labels do not prove independent process separation.",
+    "No stable agent promotion is implied."
+  ],
+  "cannot_claim": [
+    "agent_registry_implemented",
+    "pod_scheduler_implemented",
+    "stable_agents",
+    "independent_process_separation_proven"
+  ]
+}

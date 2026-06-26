@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "h03-fixture-assurance-matrix",
+  "artifact_type": "assurance_matrix",
+  "constitution_id": "hadaf-h03-fixture-constitution",
+  "version": "1.0.0",
+  "summary": "Fixture assurance matrix requires advisory review and accepted-debt disclosure.",
+  "requirements": [
+    "Box assurance must preserve advisory-audit limitations.",
+    "Quality gates must remain enforced where implemented.",
+    "Cannot-claim entries must survive closeout."
+  ],
+  "cannot_claim": [
+    "box_assurance_engine_implemented",
+    "independent_quality_auditor_qualified"
+  ]
+}

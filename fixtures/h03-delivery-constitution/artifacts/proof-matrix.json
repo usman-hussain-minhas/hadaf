@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "h03-fixture-proof-matrix",
+  "artifact_type": "proof_matrix",
+  "constitution_id": "hadaf-h03-fixture-constitution",
+  "version": "1.0.0",
+  "summary": "Fixture proof matrix declares required proof without implementing a proof engine.",
+  "requirements": [
+    "H03 Product FFETs require exact-SHA PR evidence.",
+    "H03 closeout requires evidence manifests and cannot_claim preservation.",
+    "H04-H06 execution remains separately authorized."
+  ],
+  "cannot_claim": [
+    "proof_engine_implemented",
+    "h04_h05_h06_execution_authorized"
+  ]
+}

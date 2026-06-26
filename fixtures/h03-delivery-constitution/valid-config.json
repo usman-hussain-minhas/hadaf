@@ -1,0 +1,339 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h03-delivery-constitution"
+  },
+  "schemas": {
+    "authorityArtifactRef": {
+      "ref": "fixture://schemas/authority-ref.json",
+      "sha256": "884a856bb443b4c5dc0ef3ccab8d361a0fedaa549cc99efb49238348ffc3e919"
+    },
+    "deliveryConstitution": {
+      "ref": "fixture://schemas/delivery-constitution-v1-1.json",
+      "sha256": "206f3127ae624c1c4c4885f498d92b21835493edb24905458e7e898458fb599a",
+      "schemaVersion": "1.1.0"
+    }
+  },
+  "planNormalization": {
+    "inputAuthority": {
+      "logicalRoots": {
+        "fixture": "fixtures/h03-plan-normalization"
+      },
+      "sourceMode": "READ_ONLY_DIGEST",
+      "inputs": [
+        {
+          "inputId": "plan",
+          "form": "plain_language_plan",
+          "ref": "fixture://inputs/plan.md",
+          "sha256": "c08ae5c3d726fe2896b91583b3511b129bd180feb7c9ed0c8489ffae771d16f4",
+          "documentKind": "human_authorization",
+          "expectedClassification": "ratified_human_authority",
+          "required": true
+        },
+        {
+          "inputId": "generated-summary",
+          "form": "founder_notes",
+          "ref": "fixture://inputs/generated-summary.md",
+          "sha256": "26fc988b993520fadd3cf7b059f5cd8d4975d44c9db1c486d152823c4689fe2a",
+          "documentKind": "generated_view"
+        }
+      ],
+      "authorityManifest": [
+        {
+          "rank": 1,
+          "inputId": "plan",
+          "authority": "ratified_human_authority"
+        }
+      ],
+      "expectedSourceAuthoritySetHash": "d18693eb14327e1c67cfbd5e68445ba271c43dde9782dd9629fa2590f9b7253d"
+    },
+    "planSourceInputIds": [
+      "plan"
+    ],
+    "expectedSourceAuthoritySetHash": "d18693eb14327e1c67cfbd5e68445ba271c43dde9782dd9629fa2590f9b7253d",
+    "expectedNormalizedPlanHash": "2352e8961456756ef983d85b0f19b972a636242e7b2246d6f98ddd7cdaef30a5"
+  },
+  "questionRegister": {
+    "logicalRoots": {
+      "fixture": "fixtures/h03-question-register"
+    },
+    "questionRegisterSchema": {
+      "ref": "fixture://schemas/question-register-v1-1.json",
+      "sha256": "b538f780601c1cc44413b336a07ad9764bdf9ac1d5dc589fbd0b7e87a87c64ca",
+      "schemaVersion": "1.1.0"
+    },
+    "planNormalization": {
+      "inputAuthority": {
+        "logicalRoots": {
+          "fixture": "fixtures/h03-plan-normalization"
+        },
+        "sourceMode": "READ_ONLY_DIGEST",
+        "inputs": [
+          {
+            "inputId": "plan",
+            "form": "plain_language_plan",
+            "ref": "fixture://inputs/plan.md",
+            "sha256": "c08ae5c3d726fe2896b91583b3511b129bd180feb7c9ed0c8489ffae771d16f4",
+            "documentKind": "human_authorization",
+            "expectedClassification": "ratified_human_authority",
+            "required": true
+          },
+          {
+            "inputId": "generated-summary",
+            "form": "founder_notes",
+            "ref": "fixture://inputs/generated-summary.md",
+            "sha256": "26fc988b993520fadd3cf7b059f5cd8d4975d44c9db1c486d152823c4689fe2a",
+            "documentKind": "generated_view"
+          }
+        ],
+        "authorityManifest": [
+          {
+            "rank": 1,
+            "inputId": "plan",
+            "authority": "ratified_human_authority"
+          }
+        ],
+        "expectedSourceAuthoritySetHash": "d18693eb14327e1c67cfbd5e68445ba271c43dde9782dd9629fa2590f9b7253d"
+      },
+      "planSourceInputIds": [
+        "plan"
+      ],
+      "expectedSourceAuthoritySetHash": "d18693eb14327e1c67cfbd5e68445ba271c43dde9782dd9629fa2590f9b7253d",
+      "expectedNormalizedPlanHash": "2352e8961456756ef983d85b0f19b972a636242e7b2246d6f98ddd7cdaef30a5"
+    },
+    "expectedNormalizedPlanHash": "2352e8961456756ef983d85b0f19b972a636242e7b2246d6f98ddd7cdaef30a5",
+    "expectedQuestionRegisterHash": "539e4f78ef7729ad3cce4992a9f7782e48baa90c2789115e2cf08f48ef96bd62",
+    "questionCandidates": [
+      {
+        "candidateId": "execution-boundary-ratified",
+        "category": "human acceptance and irreversible activation",
+        "question": "Is H04-H06 implementation authorized by this H03 output?",
+        "context": {
+          "reason": "Continuation artifacts must remain draft until separately ratified."
+        },
+        "sourceSectionId": "human_gates",
+        "affectedBoxes": [
+          "H03",
+          "H04",
+          "H05",
+          "H06"
+        ],
+        "affectedFfets": [
+          "H03-F04",
+          "H03-F05"
+        ],
+        "scopeClass": "broad_systemic",
+        "riskClass": "high",
+        "options": [
+          "Keep execution authorization false until exact-hash human approval.",
+          "Authorize continuation immediately."
+        ],
+        "decisionDeadline": {
+          "kind": "before_affected_execution",
+          "at": null,
+          "basis": "Continuation execution is a human-only activation decision."
+        },
+        "humanAnswer": {
+          "selected": "Keep execution authorization false until exact-hash human approval."
+        },
+        "authorityRecord": "fixture://authority/h03-continuation-boundary",
+        "ratifiedAt": "2026-06-25T00:00:00Z",
+        "status": "ratified",
+        "cannotClaim": [
+          "h04_h05_h06_execution_authorized"
+        ]
+      },
+      {
+        "candidateId": "local-copy-default",
+        "category": "UI copy and interaction",
+        "question": "What copy should a fixture-only HMC view use when a field is not live?",
+        "context": {
+          "reason": "Fixture views must visibly avoid authority claims."
+        },
+        "sourceSectionId": "public_commitments",
+        "affectedBoxes": [
+          "H02",
+          "H03"
+        ],
+        "scopeClass": "narrow_local",
+        "riskClass": "low",
+        "options": [
+          "Use fixture-backed maturity labels.",
+          "Hide maturity labels."
+        ],
+        "recommendedDefault": "Use fixture-backed maturity labels.",
+        "safeDefaultAuthority": "fixture://authority/h03-local-copy",
+        "decisionDeadline": {
+          "kind": "before_box_acceptance",
+          "at": null,
+          "basis": "Local copy can proceed with ratified fixture-backed label policy."
+        },
+        "status": "default_authorized",
+        "cannotClaim": [
+          "hmc_authoritative_state"
+        ]
+      }
+    ],
+    "cannotClaim": [
+      "delivery_constitution_compiler_implemented",
+      "h03_delivery_constitution_ready_for_human_ratification",
+      "h03_implemented"
+    ],
+    "finalPostureRecommendation": "H03_F03_QUESTION_REGISTER_BOUNDARY_VERIFIED"
+  },
+  "constitution": {
+    "constitutionId": "hadaf-h03-fixture-constitution",
+    "version": "1.1.0",
+    "projectId": "hadaf-v1",
+    "sourceMode": "READ_ONLY_DIGEST",
+    "target": {
+      "type": "git_repository",
+      "location": "github.com/usman-hussain-minhas/hadaf",
+      "mutation_allowed": true
+    },
+    "boxes": [
+      "H03"
+    ],
+    "completionContract": "H03 output is ready for human ratification only after F05, H03 assurance, and H03 closeout.",
+    "projectPackRef": "fixture://project-pack/hadaf-v1",
+    "qualityProfileRef": "fixture://quality-profile/hadaf-dogfood-v1",
+    "qualityProfileHash": "1111111111111111111111111111111111111111111111111111111111111111",
+    "constitutionHash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "budgets": {
+      "max_parallel_product_ffets": 1,
+      "self_heal_budget": 3
+    },
+    "ratifiedDefaultPolicies": [
+      "fixture://authority/h03-local-copy"
+    ],
+    "rollbackPolicy": "Product rollback uses git revert; Control and Evidence are superseded append-only.",
+    "retirementContractRef": null,
+    "qualityOverrideRefs": [],
+    "qualityDebtPolicyRef": "fixture://quality-debt-policy/h03",
+    "releaseQualityConditions": [
+      "No release candidate claim in H03."
+    ]
+  },
+  "structuredContracts": {
+    "box_dependency_graph": {
+      "artifact_id": "h03-fixture-graph",
+      "artifact_version": "1.0.0",
+      "ref": "fixture://artifacts/box-dependency-graph.json",
+      "sha256": "e00b1e6fd15a7b9afef258a754505a479dc88d5b74c4b73ca5fc0dcec53ff6f0",
+      "schema_ref": "fixture://schemas/box-dependency-graph.json",
+      "schema_sha256": "be3f7b6877e0c8cf335fc0ab3f6e0b7110c97dc1bbd2dd0a9a8d814bc5e7dc93"
+    },
+    "agent_topology": {
+      "artifact_id": "h03-fixture-agent-topology",
+      "artifact_version": "1.0.0",
+      "ref": "fixture://artifacts/agent-topology.json",
+      "sha256": "1b9c15ea3880ecce5c3c6f9fcba05d594a5d8b9f112dff65914eda225e256e4d",
+      "schema_ref": "fixture://schemas/companion-contract.json",
+      "schema_sha256": "d5878107a2afc037dcef2a14fb8c4db6b82288493153cd0ea3c6d4681bb08b7d"
+    },
+    "proof_matrix": {
+      "artifact_id": "h03-fixture-proof-matrix",
+      "artifact_version": "1.0.0",
+      "ref": "fixture://artifacts/proof-matrix.json",
+      "sha256": "21db5b56aa4676bc8a222b556264e263d7793b2813cd11870e06f867aee19147",
+      "schema_ref": "fixture://schemas/companion-contract.json",
+      "schema_sha256": "d5878107a2afc037dcef2a14fb8c4db6b82288493153cd0ea3c6d4681bb08b7d"
+    },
+    "assurance_matrix": {
+      "artifact_id": "h03-fixture-assurance-matrix",
+      "artifact_version": "1.0.0",
+      "ref": "fixture://artifacts/assurance-matrix.json",
+      "sha256": "27416621e62302530dc857590077e44c4a749092774383e227ffa1f6a9f6fd19",
+      "schema_ref": "fixture://schemas/companion-contract.json",
+      "schema_sha256": "d5878107a2afc037dcef2a14fb8c4db6b82288493153cd0ea3c6d4681bb08b7d"
+    },
+    "resource_limits": {
+      "artifact_id": "h03-fixture-resource-limits",
+      "artifact_version": "1.0.0",
+      "ref": "fixture://artifacts/resource-limits.json",
+      "sha256": "896b0decf9ee202492c022d5643be557ca5fa9486b8899100d67a55dbb3e2c11",
+      "schema_ref": "fixture://schemas/companion-contract.json",
+      "schema_sha256": "d5878107a2afc037dcef2a14fb8c4db6b82288493153cd0ea3c6d4681bb08b7d"
+    },
+    "performance_environment_contract": {
+      "artifact_id": "h03-fixture-performance-environment",
+      "artifact_version": "1.0.0",
+      "ref": "fixture://artifacts/performance-environment-contract.json",
+      "sha256": "3b58a3b88798937603dd1eefaa1ab41d734002cd42e02f2a698b33480159e5b8",
+      "schema_ref": "fixture://schemas/companion-contract.json",
+      "schema_sha256": "d5878107a2afc037dcef2a14fb8c4db6b82288493153cd0ea3c6d4681bb08b7d"
+    },
+    "independent_review_policy": {
+      "artifact_id": "h03-fixture-independent-review-policy",
+      "artifact_version": "1.0.0",
+      "ref": "fixture://artifacts/independent-review-policy.json",
+      "sha256": "11fb7d0d7a9b642f490f164657b4efb4861fd1ab9e7300200e4e9f8385fafeea",
+      "schema_ref": "fixture://schemas/companion-contract.json",
+      "schema_sha256": "d5878107a2afc037dcef2a14fb8c4db6b82288493153cd0ea3c6d4681bb08b7d"
+    }
+  },
+  "questionRegisterArtifact": {
+    "artifact_id": "h03-fixture-question-register",
+    "artifact_version": "1.1.0",
+    "ref": "fixture://question-register/h03-f03-output",
+    "sha256": "539e4f78ef7729ad3cce4992a9f7782e48baa90c2789115e2cf08f48ef96bd62",
+    "schema_ref": "fixture://schemas/question-register-v1-1.json",
+    "schema_sha256": "b538f780601c1cc44413b336a07ad9764bdf9ac1d5dc589fbd0b7e87a87c64ca"
+  },
+  "companionArtifacts": {
+    "box_dependency_graph": {
+      "ref": "fixture://artifacts/box-dependency-graph.json",
+      "sha256": "e00b1e6fd15a7b9afef258a754505a479dc88d5b74c4b73ca5fc0dcec53ff6f0",
+      "schemaRef": "fixture://schemas/box-dependency-graph.json",
+      "schemaSha256": "be3f7b6877e0c8cf335fc0ab3f6e0b7110c97dc1bbd2dd0a9a8d814bc5e7dc93"
+    },
+    "agent_topology": {
+      "ref": "fixture://artifacts/agent-topology.json",
+      "sha256": "1b9c15ea3880ecce5c3c6f9fcba05d594a5d8b9f112dff65914eda225e256e4d",
+      "schemaRef": "fixture://schemas/companion-contract.json",
+      "schemaSha256": "d5878107a2afc037dcef2a14fb8c4db6b82288493153cd0ea3c6d4681bb08b7d"
+    },
+    "proof_matrix": {
+      "ref": "fixture://artifacts/proof-matrix.json",
+      "sha256": "21db5b56aa4676bc8a222b556264e263d7793b2813cd11870e06f867aee19147",
+      "schemaRef": "fixture://schemas/companion-contract.json",
+      "schemaSha256": "d5878107a2afc037dcef2a14fb8c4db6b82288493153cd0ea3c6d4681bb08b7d"
+    },
+    "assurance_matrix": {
+      "ref": "fixture://artifacts/assurance-matrix.json",
+      "sha256": "27416621e62302530dc857590077e44c4a749092774383e227ffa1f6a9f6fd19",
+      "schemaRef": "fixture://schemas/companion-contract.json",
+      "schemaSha256": "d5878107a2afc037dcef2a14fb8c4db6b82288493153cd0ea3c6d4681bb08b7d"
+    },
+    "resource_limits": {
+      "ref": "fixture://artifacts/resource-limits.json",
+      "sha256": "896b0decf9ee202492c022d5643be557ca5fa9486b8899100d67a55dbb3e2c11",
+      "schemaRef": "fixture://schemas/companion-contract.json",
+      "schemaSha256": "d5878107a2afc037dcef2a14fb8c4db6b82288493153cd0ea3c6d4681bb08b7d"
+    },
+    "performance_environment_contract": {
+      "ref": "fixture://artifacts/performance-environment-contract.json",
+      "sha256": "3b58a3b88798937603dd1eefaa1ab41d734002cd42e02f2a698b33480159e5b8",
+      "schemaRef": "fixture://schemas/companion-contract.json",
+      "schemaSha256": "d5878107a2afc037dcef2a14fb8c4db6b82288493153cd0ea3c6d4681bb08b7d"
+    },
+    "independent_review_policy": {
+      "ref": "fixture://artifacts/independent-review-policy.json",
+      "sha256": "11fb7d0d7a9b642f490f164657b4efb4861fd1ab9e7300200e4e9f8385fafeea",
+      "schemaRef": "fixture://schemas/companion-contract.json",
+      "schemaSha256": "d5878107a2afc037dcef2a14fb8c4db6b82288493153cd0ea3c6d4681bb08b7d"
+    }
+  },
+  "ratifiedAnswerRefs": [],
+  "safeDefaultPolicyRefs": [],
+  "pendingLocalQuestionLimit": 0,
+  "correctionFfetRequiredWhenAnswerDiffers": true,
+  "expectedConstitutionCandidateHash": "4a284b1e4633ad457e65f140ecc0e6df18c3383b441500c23b39a267919b84c1",
+  "cannotClaim": [
+    "rfc8785_constitution_content_hash_implemented",
+    "constitution_approval_record_workflow_implemented",
+    "execution_authorization_boundary_implemented",
+    "h03_delivery_constitution_ready_for_human_ratification",
+    "h03_implemented"
+  ],
+  "finalPostureRecommendation": "H03_F04_DELIVERY_CONSTITUTION_COMPILER_VERIFIED"
+}
