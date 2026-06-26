@@ -1,0 +1,140 @@
+{
+  "logicalRoots": {
+    "fixture://registries": "fixtures/h06-worktree-lifecycle/registries",
+    "fixture://schemas": "fixtures/h06-worktree-lifecycle/schemas",
+    "fixture_h06_runtime/worktrees": "fixtures/h06-worktree-lifecycle/runtime-worktrees"
+  },
+  "schema": {
+    "ref": "fixture://schemas/runtime_worktree_registry.schema.json",
+    "sha256": "824109a14802f14460a51b2b5fb1a18e7c67b1edd4be2ee0c53a0d206cb1775e"
+  },
+  "schemaRefs": [
+    {
+      "ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json",
+      "sha256": "c1d00c67f6cf00d63a5e31bb204bc5c5637448afecb705d3dbbca68e110c5a2a"
+    }
+  ],
+  "requiredCannotClaim": [
+    "production_resource_orchestration",
+    "mechanically_independent_agents",
+    "stable_agents",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "H07_proof_engine_implemented",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ],
+  "requiredForbiddenRoots": [
+    "control-plane",
+    "evidence-plane",
+    "canonical-input-plane",
+    "product-runtime-plane",
+    "release-plane"
+  ],
+  "registries": [
+    {
+      "registryId": "wt-H06-F01-active",
+      "ref": "fixture://registries/active-worktree.json",
+      "sha256": "a7305ad16bc7ea70a29094526d6f82879805a55fb1c906726dfcbd90b90f1191",
+      "expectedStatus": "passed",
+      "expectedPathSuffix": "wt-H06-F01-active",
+      "expectedBranchContains": "h06-f01-worktree-lifecycle"
+    },
+    {
+      "registryId": "wt-H06-F01-cleaned",
+      "ref": "fixture://registries/cleaned-worktree.json",
+      "sha256": "b84a19ad0a4463bfd79af75c308061a4e30b280cb984bb7b5583cee723cd57ce",
+      "expectedStatus": "passed",
+      "expectedPathSuffix": "wt-H06-F01-cleaned",
+      "expectedBranchContains": "h06-f01-worktree-lifecycle"
+    },
+    {
+      "registryId": "wt-H06-F01-relative-cwd",
+      "ref": "fixture://registries/relative-cwd-worktree.json",
+      "sha256": "0adfddbaef935959b06c95b9e89ae0f1cc0ab6330214fa88cac353e02e1f1b0e",
+      "expectedStatus": "failed",
+      "expectedPathSuffix": "wt-H06-F01-relative-cwd",
+      "expectedBranchContains": "h06-f01-worktree-lifecycle",
+      "expectedFindingKinds": [
+        "relative_cwd_allowed"
+      ]
+    },
+    {
+      "registryId": "wt-H06-F01-wrong-path",
+      "ref": "fixture://registries/wrong-worktree-path.json",
+      "sha256": "cc596ef827b42cd266dc8c90360ca1faff002854ab87df71aac8db3c504e9e73",
+      "expectedStatus": "failed",
+      "expectedPathSuffix": "wt-H06-F01-wrong-path",
+      "expectedBranchContains": "h06-f01-worktree-lifecycle",
+      "expectedFindingKinds": [
+        "worktree_path_suffix_mismatch"
+      ]
+    },
+    {
+      "registryId": "wt-H06-F01-branch-mismatch",
+      "ref": "fixture://registries/branch-mismatch.json",
+      "sha256": "b21f550ec3c3c5fbc49d8115cb519597a71bcfaec46ba27fbb260199b69ba2cb",
+      "expectedStatus": "failed",
+      "expectedPathSuffix": "wt-H06-F01-branch-mismatch",
+      "expectedBranchContains": "h06-f01-worktree-lifecycle",
+      "expectedFindingKinds": [
+        "branch_identity_mismatch"
+      ]
+    },
+    {
+      "registryId": "wt-H06-F01-product-runtime",
+      "ref": "fixture://registries/product-git-runtime-record.json",
+      "sha256": "a4bd17d3856585c94a3c7dc5069c4228a8ab9bce00f90df44981f1823593d02f",
+      "expectedStatus": "failed",
+      "expectedPathSuffix": "wt-H06-F01-product-runtime",
+      "expectedBranchContains": "h06-f01-worktree-lifecycle",
+      "expectedFindingKinds": [
+        "schema_validation_failed"
+      ]
+    },
+    {
+      "registryId": "wt-H06-F01-private-path",
+      "ref": "fixture://registries/private-path-worktree.json",
+      "sha256": "f71c035ce288966e770de003d21d3d00aade796b8338576bde3db1805ad18533",
+      "expectedStatus": "failed",
+      "expectedPathSuffix": "wt-H06-F01-private-path",
+      "expectedBranchContains": "h06-f01-worktree-lifecycle",
+      "expectedFindingKinds": [
+        "private_path_in_worktree_registry"
+      ]
+    },
+    {
+      "registryId": "wt-H06-F01-source-mutation",
+      "ref": "fixture://registries/source-mutation-worktree.json",
+      "sha256": "9ee0aa32c8695285d7920a6ef243be9882f10cc18d13b2b369136366d79bfbc9",
+      "expectedStatus": "failed",
+      "expectedPathSuffix": "wt-H06-F01-source-mutation",
+      "expectedBranchContains": "h06-f01-worktree-lifecycle",
+      "expectedFindingKinds": [
+        "source_mutation_boundary_violation"
+      ]
+    },
+    {
+      "registryId": "wt-H06-F01-missing-cannot-claim",
+      "ref": "fixture://registries/missing-cannot-claim.json",
+      "sha256": "f81936db66e96c7367a357084a1f372a0a39074729c603e4fbea6b3cb56f8090",
+      "expectedStatus": "failed",
+      "expectedPathSuffix": "wt-H06-F01-missing-cannot-claim",
+      "expectedBranchContains": "h06-f01-worktree-lifecycle",
+      "expectedFindingKinds": [
+        "required_cannot_claim_missing"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "production_resource_orchestration",
+    "mechanically_independent_agents",
+    "stable_agents",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "H07_proof_engine_implemented",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ],
+  "finalPostureRecommendation": "H06_F01_WORKTREE_LIFECYCLE_FIXTURE_VERIFIED"
+}

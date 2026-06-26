@@ -395,3 +395,15 @@ export {
   type H06ResourceQuotaValidationResult,
   type H06VerifiedResourceQuotaRef
 } from "./h06/resource-quotas.js";
+export {
+  verifyH06WorktreeLifecycleConfig,
+  type H06ExpectedWorktreeLifecycleStatus,
+  type H06VerifiedWorktreeLifecycleRef,
+  type H06WorktreeLifecycleConfig,
+  type H06WorktreeLifecycleExpectation,
+  type H06WorktreeLifecycleFinding,
+  type H06WorktreeLifecycleReport,
+  type H06WorktreeLifecycleSchemaDescriptor,
+  type H06WorktreeLifecycleStatus,
+  type H06WorktreeLifecycleValidationResult
+} from "./h06/worktree-lifecycle.js";
