@@ -184,6 +184,19 @@ export {
   type H04VerifiedFfetLifecycleRef
 } from "./h04/ffet-lifecycle.js";
 export {
+  verifyH04CloseoutChainConfig,
+  type H04CloseoutChainConfig,
+  type H04CloseoutChainExpectation,
+  type H04CloseoutChainFinding,
+  type H04CloseoutChainReport,
+  type H04CloseoutChainRole,
+  type H04CloseoutChainSchemaDescriptor,
+  type H04CloseoutChainStatus,
+  type H04CloseoutChainValidationResult,
+  type H04ExpectedCloseoutChainStatus,
+  type H04VerifiedCloseoutChainRef
+} from "./h04/closeout-chain.js";
+export {
   computeSourceAuthoritySetHash,
   verifyH03InputAuthorityConfig,
   type H03AcceptedInput,

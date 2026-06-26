@@ -1,0 +1,74 @@
+{
+  "logicalRoots": {
+    "fixture://": "./fixtures/h04-closeout-chain"
+  },
+  "schema": {
+    "ref": "fixture://schemas/closeout_hash_chain.schema.json",
+    "sha256": "a45e437e2e4c5dfdd47abd7201afb5ed54d93fb8c02231c136947a8e22e292c8"
+  },
+  "requiredRoles": [
+    "source",
+    "validation",
+    "artifact_bundle",
+    "learning",
+    "closeout"
+  ],
+  "requiredCannotClaim": [
+    "h04_assurance_not_complete",
+    "h04_record_generator_implemented",
+    "H07_proof_engine_implemented"
+  ],
+  "chains": [
+    {
+      "chainId": "H04-F03-valid-chain",
+      "ref": "fixture://closeouts/valid-chain.json",
+      "expectedStatus": "passed"
+    },
+    {
+      "chainId": "H04-F03-missing-learning",
+      "ref": "fixture://closeouts/missing-learning.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "terminal_learning_missing"
+      ]
+    },
+    {
+      "chainId": "H04-F03-placeholder-hash",
+      "ref": "fixture://closeouts/placeholder-hash.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "link_sha256_invalid"
+      ]
+    },
+    {
+      "chainId": "H04-F03-overclaim",
+      "ref": "fixture://closeouts/overclaim.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "cannot_claim_missing_required"
+      ]
+    },
+    {
+      "chainId": "H04-F03-artifact-bundle-hash-mismatch",
+      "ref": "fixture://closeouts/artifact-bundle-hash-mismatch.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "artifact_bundle_declared_hash_mismatch"
+      ]
+    },
+    {
+      "chainId": "H04-F03-stale-link-marked-valid",
+      "ref": "fixture://closeouts/stale-link-marked-valid.json",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "valid_chain_has_stale_links"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "h04_assurance_not_complete",
+    "h04_record_generator_implemented",
+    "H07_proof_engine_implemented"
+  ],
+  "finalPostureRecommendation": "H04_F03_CLOSEOUT_CHAIN_FIXTURE_VERIFIED"
+}
