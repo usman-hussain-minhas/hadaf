@@ -27,7 +27,7 @@ async function verifyStaticUi() {
         "browser_performance_complete"
       ],
       requiredCssTokens: ["--teal", "--amber", "--blue", "--green"],
-      requiredStateText: ["fixture_backed", "H03-F06 HMC derived projection", "generated_state_not_fresh"]
+      requiredStateText: ["fixture_backed", "H03 Box assurance pending", "generated_state_not_fresh"]
     },
     {
       id: "product_preview",

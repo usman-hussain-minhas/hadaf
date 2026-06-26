@@ -73,7 +73,7 @@ async function runSmoke() {
       ...requireIncludes(html, [
         "HADAF Mission Control",
         "H03 Plan Compiler and Delivery Constitution",
-        "H03_DELIVERY_CONSTITUTION_NOT_YET_READY_FOR_HUMAN_RATIFICATION",
+        "H03_PRODUCT_PIPELINE_COMPLETE_PENDING_BOX_ASSURANCE",
         "H02-F04-R1",
         "H03-F06",
         "fixture_backed",
@@ -84,12 +84,18 @@ async function runSmoke() {
         "self_hosting_ready",
         "HMC_authoritative_state",
         "Product Preview",
-        "H03 derived projection active",
+        "H03 Box assurance pending",
         "Generated state stale"
       ]),
       ...requireIncludes(css, [".app-shell", "@media", "--teal"]),
       ...requireIncludes(js, ["setView", "aria-pressed", "state.fixture.json", "constitution-status"]),
-      ...requireIncludes(stateJson, ["adapterMaturity", "fixture_backed", "H03-F06", "derived_view_only"])
+      ...requireIncludes(stateJson, [
+        "adapterMaturity",
+        "fixture_backed",
+        "H03 Box assurance pending",
+        "product_pipeline_complete_pending_box_assurance",
+        "derived_view_only"
+      ])
     ];
     await assertFile(join(hmcDir, "index.html"));
     await assertFile(join(hmcDir, "styles.css"));

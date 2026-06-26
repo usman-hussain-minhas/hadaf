@@ -2,12 +2,12 @@
   "adapterStatus": "passed",
   "adapterMaturity": "fixture_backed",
   "projectName": "HADAF v1",
-  "projectPosture": "H03_DELIVERY_CONSTITUTION_NOT_YET_READY_FOR_HUMAN_RATIFICATION",
+  "projectPosture": "H03_PRODUCT_PIPELINE_COMPLETE_PENDING_BOX_ASSURANCE",
   "activeBox": "H03 Plan Compiler and Delivery Constitution",
-  "activeFfet": "H03-F06 HMC derived projection",
+  "activeFfet": "H03 Box assurance pending",
   "classifiedMismatch": "generated_state_not_fresh",
   "h03Projection": {
-    "status": "compiler_pipeline_visible",
+    "status": "product_pipeline_complete_pending_box_assurance",
     "authority": "derived_view_only",
     "deliveryConstitution": {
       "readinessStatus": "boundary_verified",
