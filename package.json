@@ -66,6 +66,7 @@
     "verify:h08-merge-readiness": "node scripts/verify-h08-merge-readiness.mjs",
     "verify:h08-conductor": "node scripts/verify-h08-conductor.mjs",
     "verify:h08-git-projection": "node scripts/verify-h08-git-projection.mjs",
+    "verify:h09-recovery-policy": "node scripts/verify-h09-recovery-policy.mjs",
     "supply-chain": "node scripts/generate-supply-chain-artifacts.mjs"
   },
   "devDependencies": {

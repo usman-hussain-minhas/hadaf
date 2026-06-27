@@ -1,0 +1,53 @@
+{
+  "schema_version": "hadaf_h09_recovery_policy_v1",
+  "policy_id": "h09-stable-independent-overclaim",
+  "mode": "policy",
+  "budgets": {
+    "max_self_heals_per_ffet": 3,
+    "max_self_heals_per_box": 10,
+    "max_self_heals_for_full_h07_h12_run": 30,
+    "repeated_same_class_failure_after_two_ffets": "systemic_blocker",
+    "exhausted_budget_outcome": "SELF_HEAL_EXHAUSTED_HARD_STOP"
+  },
+  "allowed_recovery_actions": [
+    {
+      "action_id": "correction_pr",
+      "deterministic": true,
+      "scoped": true,
+      "evidence_preserving": true,
+      "allowed": true
+    }
+  ],
+  "hard_stop_classes": [
+    {
+      "class_id": "authority_conflict",
+      "severity": "critical",
+      "self_heal_allowed": false,
+      "human_decision_required": true,
+      "hard_stop": true,
+      "evidence_preserving_required": true
+    }
+  ],
+  "failure_classifications": [],
+  "recovery_boundaries": {
+    "deterministic_only": true,
+    "evidence_preserving": true,
+    "scoped": true,
+    "no_authority_repair_without_human_decision": true,
+    "no_schema_semantics_repair_without_human_decision": true,
+    "no_security_exposure_self_heal": true,
+    "no_license_conflict_self_heal": true,
+    "no_scope_expansion_self_heal": true,
+    "no_free_autonomous_fixing": true
+  },
+  "claims": {
+    "stable_agents": true,
+    "independent_audit": true,
+    "production_recovery": true
+  },
+  "cannot_claim": [
+    "H09_recovery_engine_implemented",
+    "unbounded_self_heal",
+    "authority_repair_without_human_decision"
+  ]
+}

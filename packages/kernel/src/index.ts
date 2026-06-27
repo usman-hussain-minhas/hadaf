@@ -599,3 +599,18 @@ export {
   type H08HmcProjectionMaturity,
   type H08VerifiedHmcGitProjectionRef
 } from "./h08/hmc-git-projection.js";
+export {
+  verifyH09RecoveryPolicyConfig,
+  type H09ExpectedRecoveryPolicyStatus,
+  type H09FailureSeverity,
+  type H09RecoveryDecision,
+  type H09RecoveryPolicyConfig,
+  type H09RecoveryPolicyExpectedRecord,
+  type H09RecoveryPolicyFinding,
+  type H09RecoveryPolicyReport,
+  type H09RecoveryPolicyScenarioExpectation,
+  type H09RecoveryPolicyScenarioResult,
+  type H09RecoveryPolicyStatus,
+  type H09RecoveryPolicySummary,
+  type H09VerifiedRecoveryPolicyRef
+} from "./h09/recovery-policy.js";
