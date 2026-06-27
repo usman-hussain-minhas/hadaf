@@ -1,0 +1,56 @@
+{
+  "schema_version": "hadaf_h10_upskill_proposal_v1",
+  "proposal_id": "H10-UPSKILL-MODEL-WEIGHT-OVERCLAIM-001",
+  "agent_id": "codex.bootstrap",
+  "agent_version": "h10-bounded",
+  "upskill_type": "decision",
+  "trigger": {
+    "ref": "ffet://H10-F02",
+    "sha256": "1717171717171717171717171717171717171717171717171717171717171717",
+    "product_sha": "43eac1c164c4ee4191d3fc28ca93c3c2ef4111ce"
+  },
+  "old_behavior": "Agent used fixture-backed rules.",
+  "proposed_behavior": "Claim model weights were updated.",
+  "durable_effect": {
+    "effect_type": "stop_condition",
+    "ref": "artifact://model-weight-stop-condition.json",
+    "sha256": "1818181818181818181818181818181818181818181818181818181818181818"
+  },
+  "decision_upskill": {
+    "decision_context": "Negative fixture for model update overclaim.",
+    "rejected_alternatives": [
+      "Claim model updates"
+    ],
+    "decision_failure": "Model weights cannot be changed by HADAF Product records.",
+    "corrected_rule": "Upskill proposals describe behavior contracts and guards, not model-weight mutation.",
+    "future_stop_or_ask_condition": "Stop if a record claims model weights changed.",
+    "regression_checklist": [
+      "scan claims.model_weights_updated"
+    ],
+    "cannot_claim": [
+      "model_weights_updated"
+    ]
+  },
+  "non_degradation": {
+    "ref": "artifact://quality-report.json",
+    "sha256": "1919191919191919191919191919191919191919191919191919191919191919"
+  },
+  "authority_change": {
+    "changes_governing_authority": false
+  },
+  "promotion_gate": {
+    "requested_status": "fixture_tested",
+    "status_reason": "Negative fixture.",
+    "cannot_claim_until_met": [
+      "model_weights_updated"
+    ]
+  },
+  "claims": {
+    "stable_agents": false,
+    "model_weights_updated": true
+  },
+  "cannot_claim": [
+    "stable_agents",
+    "independent_quality_auditor_qualified"
+  ]
+}

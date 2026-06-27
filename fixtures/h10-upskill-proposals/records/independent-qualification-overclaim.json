@@ -1,0 +1,42 @@
+{
+  "schema_version": "hadaf_h10_upskill_proposal_v1",
+  "proposal_id": "H10-UPSKILL-INDEPENDENCE-OVERCLAIM-001",
+  "agent_id": "quality.auditor",
+  "agent_version": "0.1",
+  "upskill_type": "evidence",
+  "trigger": {
+    "ref": "ffet://H10-F02",
+    "sha256": "1212121212121212121212121212121212121212121212121212121212121212",
+    "product_sha": "43eac1c164c4ee4191d3fc28ca93c3c2ef4111ce"
+  },
+  "old_behavior": "Advisory-only audit.",
+  "proposed_behavior": "Claim independent qualification.",
+  "durable_effect": {
+    "effect_type": "verifier_rule",
+    "ref": "artifact://independence-rule.json",
+    "sha256": "1313131313131313131313131313131313131313131313131313131313131313"
+  },
+  "non_degradation": {
+    "ref": "artifact://quality-report.json",
+    "sha256": "1414141414141414141414141414141414141414141414141414141414141414"
+  },
+  "authority_change": {
+    "changes_governing_authority": false
+  },
+  "promotion_gate": {
+    "requested_status": "independently_qualified",
+    "status_reason": "Negative fixture.",
+    "cannot_claim_until_met": [
+      "independent_quality_auditor_qualified"
+    ]
+  },
+  "claims": {
+    "independently_qualified_agents": true,
+    "independent_quality_auditor_qualified": true,
+    "model_weights_updated": false
+  },
+  "cannot_claim": [
+    "stable_agents",
+    "model_weights_updated"
+  ]
+}

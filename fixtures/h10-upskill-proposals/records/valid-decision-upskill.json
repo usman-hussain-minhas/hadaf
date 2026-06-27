@@ -1,0 +1,64 @@
+{
+  "schema_version": "hadaf_h10_upskill_proposal_v1",
+  "proposal_id": "H10-UPSKILL-VALID-DECISION-001",
+  "agent_id": "codex.bootstrap",
+  "agent_version": "h10-bounded",
+  "upskill_type": "decision",
+  "trigger": {
+    "ref": "pr://81",
+    "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "product_sha": "43eac1c164c4ee4191d3fc28ca93c3c2ef4111ce"
+  },
+  "old_behavior": "Accepted a preplanned FFET after predecessor mutations.",
+  "proposed_behavior": "Require a fresh JIT supersession whenever predecessor closeout changes Product main.",
+  "durable_effect": {
+    "effect_type": "fixture",
+    "ref": "fixture://valid-decision-upskill.json",
+    "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+  },
+  "decision_upskill": {
+    "decision_context": "H10-F02 started after H10-F01 changed Product main.",
+    "rejected_alternatives": [
+      "Use the original planned FFET anyway",
+      "Treat the stale base as harmless"
+    ],
+    "decision_failure": "A preplanned FFET can become stale even when its scope remains correct.",
+    "corrected_rule": "Supersede stale planned FFETs with fresh JIT execution records before Product mutation.",
+    "future_stop_or_ask_condition": "Stop if the current Product SHA differs from the FFET freshness basis.",
+    "regression_checklist": [
+      "compare FFET base to current main",
+      "verify predecessor closeout",
+      "create JIT supersession if stale"
+    ],
+    "cannot_claim": [
+      "stale_ffet_execution_prevented_without_freshness_check"
+    ]
+  },
+  "non_degradation": {
+    "ref": "artifact://quality-report.json",
+    "sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+  },
+  "authority_change": {
+    "changes_governing_authority": false
+  },
+  "promotion_gate": {
+    "requested_status": "fixture_tested",
+    "status_reason": "Decision upskill structure is fixture-backed only.",
+    "cannot_claim_until_met": [
+      "stable_agents"
+    ]
+  },
+  "claims": {
+    "stable_agents": false,
+    "globally_qualified_agents": false,
+    "independently_qualified_agents": false,
+    "independent_quality_auditor_qualified": false,
+    "model_weights_updated": false,
+    "all_future_mistakes_prevented": false
+  },
+  "cannot_claim": [
+    "stable_agents",
+    "model_weights_updated",
+    "independent_quality_auditor_qualified"
+  ]
+}

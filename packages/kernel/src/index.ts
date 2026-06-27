@@ -182,6 +182,22 @@ export {
   type H10VerifiedLearningRef
 } from "./h10/learning-ingestion.js";
 export {
+  verifyH10UpskillProposalConfig,
+  type H10DurableUpskillEffectType,
+  type H10ExpectedUpskillProposalStatus,
+  type H10ExpectedUpskillProposalRecord,
+  type H10PromotionStatus,
+  type H10UpskillProposalConfig,
+  type H10UpskillProposalFinding,
+  type H10UpskillProposalReport,
+  type H10UpskillProposalScenarioExpectation,
+  type H10UpskillProposalScenarioResult,
+  type H10UpskillProposalStatus,
+  type H10UpskillProposalSummary,
+  type H10UpskillType,
+  type H10VerifiedUpskillProposalRef
+} from "./h10/upskill-proposals.js";
+export {
   verifyProductPreviewConfig,
   type ProductPreviewConfig,
   type ProductPreviewFinding,

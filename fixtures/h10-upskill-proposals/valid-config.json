@@ -1,0 +1,99 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h10-upskill-proposals/records"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "valid-decision-upskill",
+      "recordRef": "fixture://valid-decision-upskill.json",
+      "recordSha256": "18a32548005ffff98e6ad98c53ff46383ab7e8cc0a89b992ebdcaab36ad3ae68",
+      "expectedStatus": "passed",
+      "expected": {
+        "upskillType": "decision",
+        "requestedStatus": "fixture_tested",
+        "durableEffectType": "fixture"
+      }
+    },
+    {
+      "scenarioId": "valid-bounded-promotion",
+      "recordRef": "fixture://valid-bounded-promotion.json",
+      "recordSha256": "67d1382c44dbb82ea945e10f7a085484c03ad0d92f3574acb4e3756b9c60e092",
+      "expectedStatus": "passed",
+      "expected": {
+        "upskillType": "evidence",
+        "requestedStatus": "qualified_for_bounded_use",
+        "durableEffectType": "verifier_rule"
+      }
+    },
+    {
+      "scenarioId": "lesson-without-effect",
+      "recordRef": "fixture://lesson-without-effect.json",
+      "recordSha256": "8ca72da2a0a1ddf29284f24385152f9b892cf2869a6688ece5bfd32f65fd48dd",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "durable_effect_missing"
+      ]
+    },
+    {
+      "scenarioId": "silent-authority-change",
+      "recordRef": "fixture://silent-authority-change.json",
+      "recordSha256": "208276ebccf77e9883e91bf74f20a1cd0c90fa73fa74f754f1d1d6be5725ff4c",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "silent_authority_change",
+        "authority_change_hash_invalid"
+      ]
+    },
+    {
+      "scenarioId": "stable-promotion",
+      "recordRef": "fixture://stable-promotion.json",
+      "recordSha256": "4e31f247cdde5ad18687e885c1b3abce64f3b924dfd7612c7ef93736d1f634ba",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "forbidden_promotion_status",
+        "stable_agents_overclaim",
+        "required_cannot_claim_missing"
+      ]
+    },
+    {
+      "scenarioId": "independent-qualification-overclaim",
+      "recordRef": "fixture://independent-qualification-overclaim.json",
+      "recordSha256": "b9a165aaa0af2d893d13f2cf0e716668aacaac06da6752c069d1eeee44e62459",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "forbidden_promotion_status",
+        "independently_qualified_agents_overclaim",
+        "independent_quality_auditor_overclaim",
+        "required_cannot_claim_missing"
+      ]
+    },
+    {
+      "scenarioId": "missing-non-degradation",
+      "recordRef": "fixture://missing-non-degradation.json",
+      "recordSha256": "44c8e316d923c2844e08bf52ff6f02508c28e11cd5a2eba852ece2e72ab1d62b",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "non_degradation_missing"
+      ]
+    },
+    {
+      "scenarioId": "model-weight-update-overclaim",
+      "recordRef": "fixture://model-weight-update-overclaim.json",
+      "recordSha256": "d41d0a7d4940de418420f15680e937550261012c4a838ee47af8b9ba90410af8",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "model_weight_update_overclaim",
+        "required_cannot_claim_missing"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "stable_agents",
+    "globally_qualified_agents",
+    "independently_qualified_agents",
+    "independent_quality_auditor_qualified",
+    "model_weights_updated",
+    "automated_model_updating"
+  ],
+  "finalPostureRecommendation": "H10_UPSKILL_PROPOSALS_FIXTURE_BACKED"
+}
