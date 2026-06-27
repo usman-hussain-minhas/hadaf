@@ -553,3 +553,10 @@ export {
   type H08MergeReadinessSummary,
   type H08VerifiedMergeReadinessRef
 } from "./h08/merge-readiness.js";
+export {
+  detectStrictOptionalAntiPatterns,
+  findUndefinedPropertyPaths,
+  omitUndefinedProperties,
+  withOptionalField,
+  type H08StrictOptionalAntiPattern
+} from "./h08/optional-fields.js";

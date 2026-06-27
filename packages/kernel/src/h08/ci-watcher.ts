@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { isAbsolute, normalize, relative, resolve } from "node:path";
+import { withOptionalField } from "./optional-fields.js";
 
 export type H08CiWatcherStatus = "passed" | "failed";
 export type H08ExpectedCiWatcherStatus = "passed" | "failed";
@@ -437,14 +438,14 @@ function classifyOptionalCheck(
 }
 
 function withOptionalDetail(finding: H08CiWatcherFinding, detail: string | undefined): H08CiWatcherFinding {
-  return detail ? { ...finding, detail } : finding;
+  return withOptionalField(finding, "detail", detail);
 }
 
 function withOptionalCheckName(
   classification: H08CiWatcherClassification,
   checkName: string | undefined
 ): H08CiWatcherClassification {
-  return checkName ? { ...classification, checkName } : classification;
+  return withOptionalField(classification, "checkName", checkName);
 }
 
 function requiredChecksFor(expectation: H08CiWatcherScenarioExpectation, record: H08CiStatusRecord | null): string[] {
