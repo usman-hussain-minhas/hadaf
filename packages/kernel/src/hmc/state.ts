@@ -18,6 +18,7 @@ export interface HmcStateConfig {
   readonly h05Projection?: HmcH05ProjectionInput;
   readonly h06Projection?: HmcH06ProjectionInput;
   readonly h07Projection?: HmcH07ProjectionInput;
+  readonly h08Projection?: HmcH08ProjectionInput;
   readonly git?: HmcGitTruthInput;
   readonly github?: HmcGitHubTruthInput;
   readonly generatedState?: readonly HmcGeneratedStateInput[];
@@ -335,6 +336,86 @@ export interface HmcH07PrerequisiteProjectionInput {
   readonly terminalLearningStatus: "complete" | "missing" | "stale" | "conflict";
 }
 
+export interface HmcH08ProjectionInput {
+  readonly id: string;
+  readonly status: string;
+  readonly maturity: HmcMaturity;
+  readonly authority: "derived_view_only";
+  readonly freshness: "fresh" | "stale" | "unknown";
+  readonly box: HmcH08BoxProjectionInput;
+  readonly components: readonly HmcH08ComponentProjectionInput[];
+  readonly githubSettings: HmcH08GitHubSettingsProjectionInput;
+  readonly conductor: HmcH08ConductorProjectionInput;
+  readonly dogfood: HmcH08DogfoodProjectionInput;
+  readonly blockedClaims: readonly HmcH08BlockedClaimProjectionInput[];
+  readonly prerequisiteCloseouts: readonly HmcH08PrerequisiteProjectionInput[];
+  readonly claimsAuthority?: boolean;
+  readonly claimFullConductor?: boolean;
+  readonly claimSettingsMutation?: boolean;
+  readonly claimBranchProtectionMutation?: boolean;
+  readonly claimLiveAdapter?: boolean;
+  readonly claimPersistence?: boolean;
+  readonly claimProductionConnected?: boolean;
+  readonly claimH13SystemAssurance?: boolean;
+}
+
+export interface HmcH08BoxProjectionInput {
+  readonly id: string;
+  readonly status: string;
+  readonly maturity: HmcMaturity;
+  readonly assuranceStatus: "not_started" | "pending" | "in_progress" | "complete";
+}
+
+export interface HmcH08ComponentProjectionInput {
+  readonly id: "git_truth" | "pr_lifecycle" | "ci_watcher" | "merge_readiness" | "conductor";
+  readonly title: string;
+  readonly status: string;
+  readonly maturity: HmcMaturity;
+  readonly evidenceStatus: "verified" | "missing" | "stale" | "conflict";
+  readonly truthSource: "fixture" | "verified_evidence" | "generated" | "unknown";
+  readonly freshness: "fresh" | "stale" | "missing" | "conflict";
+  readonly required?: boolean;
+}
+
+export interface HmcH08GitHubSettingsProjectionInput {
+  readonly inspectionStatus: "verified" | "missing" | "stale" | "conflict";
+  readonly settingsMutationAuthorized: boolean;
+  readonly branchProtectionMutationAuthorized: boolean;
+  readonly platformShaPinningRequiredClaimed: boolean;
+}
+
+export interface HmcH08ConductorProjectionInput {
+  readonly status: string;
+  readonly maturity: HmcMaturity;
+  readonly boundedEnvelopeVerified: boolean;
+  readonly dryRunDefault: boolean;
+  readonly fullConductorImplemented: boolean;
+  readonly liveMutationPermitted: boolean;
+  readonly freshness: "fresh" | "stale" | "missing" | "conflict";
+}
+
+export interface HmcH08DogfoodProjectionInput {
+  readonly mode: "fixture" | "dry_run" | "limited_current_repo" | "live";
+  readonly limitedCurrentRepoMergeAllowed: boolean;
+  readonly liveGithubAdapterImplemented: boolean;
+  readonly persistentStateStoreImplemented: boolean;
+  readonly productionConnected: boolean;
+}
+
+export interface HmcH08BlockedClaimProjectionInput {
+  readonly claimId: string;
+  readonly reason: string;
+  readonly cannotClaim: string;
+}
+
+export interface HmcH08PrerequisiteProjectionInput {
+  readonly id: string;
+  readonly status: string;
+  readonly closeoutStatus: "not_applicable" | "pending" | "closeout_complete";
+  readonly evidenceStatus: "verified" | "missing" | "stale" | "conflict";
+  readonly terminalLearningStatus: "complete" | "missing" | "stale" | "conflict";
+}
+
 export interface HmcClassifiedMismatchInput {
   readonly kind: string;
   readonly ref: string;
@@ -385,6 +466,7 @@ export interface HmcDerivedView {
   readonly h05Projection?: HmcH05ProjectionInput;
   readonly h06Projection?: HmcH06ProjectionInput;
   readonly h07Projection?: HmcH07ProjectionInput;
+  readonly h08Projection?: HmcH08ProjectionInput;
   readonly truthPrecedence: readonly string[];
   readonly maturitySummary: Record<HmcMaturity, number>;
 }
@@ -427,6 +509,7 @@ export function deriveHmcStateConfig(config: HmcStateConfig): HmcStateReport {
   validateH05Projection(config, classified, findings);
   validateH06Projection(config, classified, findings);
   validateH07Projection(config, classified, findings);
+  validateH08Projection(config, classified, findings);
 
   const verifiedRefs: HmcVerifiedRef[] = [
     ...config.boxes.map((box) => ({ ref: `box:${box.id}`, status: box.status, maturity: box.maturity })),
@@ -440,7 +523,8 @@ export function deriveHmcStateConfig(config: HmcStateConfig): HmcStateReport {
     ...h04VerifiedRefs(config.h04Projection),
     ...h05VerifiedRefs(config.h05Projection),
     ...h06VerifiedRefs(config.h06Projection),
-    ...h07VerifiedRefs(config.h07Projection)
+    ...h07VerifiedRefs(config.h07Projection),
+    ...h08VerifiedRefs(config.h08Projection)
   ];
 
   return {
@@ -468,7 +552,8 @@ export function deriveHmcStateConfig(config: HmcStateConfig): HmcStateReport {
       ...(config.h04Projection ? { h04Projection: config.h04Projection } : {}),
       ...(config.h05Projection ? { h05Projection: config.h05Projection } : {}),
       ...(config.h06Projection ? { h06Projection: config.h06Projection } : {}),
-      ...(config.h07Projection ? { h07Projection: config.h07Projection } : {})
+      ...(config.h07Projection ? { h07Projection: config.h07Projection } : {}),
+      ...(config.h08Projection ? { h08Projection: config.h08Projection } : {})
     },
     cannot_claim: [...(config.cannotClaim ?? [])],
     final_posture_recommendation: config.finalPostureRecommendation ?? null
@@ -1204,6 +1289,222 @@ function validateH07Projection(
   }
 }
 
+function validateH08Projection(
+  config: HmcStateConfig,
+  classified: readonly HmcClassifiedMismatchInput[],
+  findings: HmcStateFinding[]
+): void {
+  const projection = config.h08Projection;
+  if (!projection) return;
+
+  validateMaturity(`h08:${projection.id}`, projection.maturity, config, findings);
+  validateMaturity(`h08_box:${projection.box.id}`, projection.box.maturity, config, findings);
+  validateMaturity("h08:conductor", projection.conductor.maturity, config, findings);
+  for (const component of projection.components) {
+    validateMaturity(`h08_component:${component.id}`, component.maturity, config, findings);
+  }
+
+  if (projection.authority !== "derived_view_only" || projection.claimsAuthority === true) {
+    findings.push({
+      kind: "h08_projection_claims_authority",
+      ref: `h08:${projection.id}`,
+      detail: "HMC may project H08 Git/CI/PR/conductor state, but cannot create lifecycle authority."
+    });
+  }
+
+  if (projection.freshness !== "fresh") {
+    requireClassification("h08_projection_not_fresh", `h08:${projection.id}`, classified, findings, {
+      expected: "fresh",
+      actual: projection.freshness
+    });
+  }
+
+  if (projection.maturity === "api_backed" || projection.maturity === "persistent" || projection.maturity === "production_connected") {
+    findings.push({
+      kind: "h08_projection_maturity_overclaim",
+      ref: `h08:${projection.id}`,
+      expected: "fixture_backed",
+      actual: projection.maturity
+    });
+  }
+
+  for (const component of projection.components) {
+    if (component.required === true && component.evidenceStatus !== "verified") {
+      requireClassification("h08_component_not_verified", `h08_component:${component.id}`, classified, findings, {
+        expected: "verified",
+        actual: component.evidenceStatus
+      });
+    }
+    if (component.freshness !== "fresh") {
+      requireClassification("h08_component_not_fresh", `h08_component:${component.id}`, classified, findings, {
+        expected: "fresh",
+        actual: component.freshness
+      });
+    }
+  }
+
+  if (projection.githubSettings.inspectionStatus !== "verified") {
+    requireClassification("h08_github_settings_not_verified", "h08:github_settings", classified, findings, {
+      expected: "verified",
+      actual: projection.githubSettings.inspectionStatus
+    });
+  }
+  if (projection.githubSettings.settingsMutationAuthorized === true) {
+    findings.push({
+      kind: "h08_settings_mutation_overclaim",
+      ref: "h08:github_settings",
+      expected: "false",
+      actual: "true"
+    });
+  }
+  if (projection.githubSettings.branchProtectionMutationAuthorized === true) {
+    findings.push({
+      kind: "h08_branch_protection_mutation_overclaim",
+      ref: "h08:github_settings",
+      expected: "false",
+      actual: "true"
+    });
+  }
+  if (projection.githubSettings.platformShaPinningRequiredClaimed === true) {
+    findings.push({
+      kind: "h08_platform_sha_pinning_overclaim",
+      ref: "h08:github_settings",
+      expected: "scanner_or_policy_report_only",
+      actual: "claimed"
+    });
+  }
+
+  if (projection.conductor.freshness !== "fresh") {
+    requireClassification("h08_conductor_not_fresh", "h08:conductor", classified, findings, {
+      expected: "fresh",
+      actual: projection.conductor.freshness
+    });
+  }
+  if (projection.conductor.boundedEnvelopeVerified !== true) {
+    findings.push({
+      kind: "h08_conductor_envelope_not_verified",
+      ref: "h08:conductor",
+      expected: "boundedEnvelopeVerified=true",
+      actual: String(projection.conductor.boundedEnvelopeVerified)
+    });
+  }
+  if (projection.conductor.dryRunDefault !== true) {
+    findings.push({
+      kind: "h08_conductor_dry_run_default_missing",
+      ref: "h08:conductor",
+      expected: "dryRunDefault=true",
+      actual: String(projection.conductor.dryRunDefault)
+    });
+  }
+  if (projection.conductor.fullConductorImplemented === true) {
+    findings.push({
+      kind: "h08_full_conductor_overclaim",
+      ref: "h08:conductor",
+      expected: "false",
+      actual: "true"
+    });
+  }
+  if (projection.conductor.liveMutationPermitted === true) {
+    findings.push({
+      kind: "h08_live_mutation_overclaim",
+      ref: "h08:conductor",
+      expected: "false",
+      actual: "true"
+    });
+  }
+
+  if (projection.dogfood.mode === "live") {
+    findings.push({
+      kind: "h08_live_dogfood_overclaim",
+      ref: "h08:dogfood",
+      expected: "fixture_or_dry_run_or_limited_current_repo",
+      actual: projection.dogfood.mode
+    });
+  }
+  if (projection.dogfood.liveGithubAdapterImplemented === true) {
+    findings.push({
+      kind: "h08_live_adapter_overclaim",
+      ref: "h08:dogfood",
+      expected: "false",
+      actual: "true"
+    });
+  }
+  if (projection.dogfood.persistentStateStoreImplemented === true) {
+    findings.push({
+      kind: "h08_persistence_overclaim",
+      ref: "h08:dogfood",
+      expected: "false",
+      actual: "true"
+    });
+  }
+  if (projection.dogfood.productionConnected === true) {
+    findings.push({
+      kind: "h08_production_connected_overclaim",
+      ref: "h08:dogfood",
+      expected: "false",
+      actual: "true"
+    });
+  }
+
+  for (const prerequisite of projection.prerequisiteCloseouts) {
+    if (
+      prerequisite.closeoutStatus === "closeout_complete" &&
+      prerequisite.evidenceStatus === "verified" &&
+      prerequisite.terminalLearningStatus === "complete"
+    ) {
+      continue;
+    }
+    findings.push({
+      kind: "h08_prerequisite_not_closeout_complete",
+      ref: `h08_prerequisite:${prerequisite.id}`,
+      expected: "closeout_complete/verified/complete",
+      actual: `${prerequisite.closeoutStatus}/${prerequisite.evidenceStatus}/${prerequisite.terminalLearningStatus}`
+    });
+  }
+
+  const claimChecks: readonly [boolean | undefined, string, string][] = [
+    [projection.claimFullConductor, "h08_full_conductor_overclaim", "H08_git_ci_pr_merge_conductor_implemented"],
+    [projection.claimSettingsMutation, "h08_settings_mutation_overclaim", "github_settings_mutation_authorized"],
+    [projection.claimBranchProtectionMutation, "h08_branch_protection_mutation_overclaim", "branch_protection_mutation_authorized"],
+    [projection.claimLiveAdapter, "h08_live_adapter_overclaim", "live_github_adapter_implemented"],
+    [projection.claimPersistence, "h08_persistence_overclaim", "persistent_state_store_implemented"],
+    [projection.claimProductionConnected, "h08_production_connected_overclaim", "production_ready"],
+    [projection.claimH13SystemAssurance, "h08_h13_system_assurance_overclaim", "H13_system_assurance_engine_implemented"]
+  ];
+  for (const [enabled, kind, ref] of claimChecks) {
+    if (enabled !== true) continue;
+    findings.push({ kind, ref, expected: "cannot_claim_preserved", actual: "claimed" });
+  }
+
+  for (const blocked of projection.blockedClaims) {
+    if (config.cannotClaim?.includes(blocked.cannotClaim)) continue;
+    findings.push({
+      kind: "h08_blocked_claim_missing_cannot_claim",
+      ref: `h08_claim:${blocked.claimId}`,
+      expected: blocked.cannotClaim
+    });
+  }
+
+  for (const cannotClaim of [
+    "HMC_authoritative_state",
+    "H08_git_ci_pr_merge_conductor_implemented",
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized",
+    "live_github_adapter_implemented",
+    "persistent_state_store_implemented",
+    "H13_system_assurance_engine_implemented",
+    "self_hosting_ready",
+    "production_ready"
+  ]) {
+    if (config.cannotClaim?.includes(cannotClaim)) continue;
+    findings.push({
+      kind: "missing_h08_projection_cannot_claim",
+      ref: `cannot_claim:${cannotClaim}`,
+      detail: "H08 HMC Git/CI/PR/conductor projection must preserve precise cannot_claim boundaries."
+    });
+  }
+}
+
 function h03VerifiedRefs(projection: HmcH03ProjectionInput | undefined): HmcVerifiedRef[] {
   if (!projection) return [];
   return [
@@ -1344,6 +1645,42 @@ function h07VerifiedRefs(projection: HmcH07ProjectionInput | undefined): HmcVeri
   ];
 }
 
+function h08VerifiedRefs(projection: HmcH08ProjectionInput | undefined): HmcVerifiedRef[] {
+  if (!projection) return [];
+  return [
+    {
+      ref: `h08:${projection.id}`,
+      status: projection.status,
+      maturity: projection.maturity
+    },
+    {
+      ref: `h08_box:${projection.box.id}`,
+      status: projection.box.status,
+      maturity: projection.box.maturity
+    },
+    ...projection.components.map((component) => ({
+      ref: `h08_component:${component.id}`,
+      status: component.status,
+      maturity: component.maturity
+    })),
+    {
+      ref: "h08:github_settings",
+      status: projection.githubSettings.inspectionStatus,
+      maturity: projection.maturity
+    },
+    {
+      ref: "h08:conductor",
+      status: projection.conductor.status,
+      maturity: projection.conductor.maturity
+    },
+    ...projection.prerequisiteCloseouts.map((prerequisite) => ({
+      ref: `h08_prerequisite:${prerequisite.id}`,
+      status: prerequisite.closeoutStatus,
+      maturity: projection.maturity
+    }))
+  ];
+}
+
 function h06RuntimeRefs(projection: HmcH06ProjectionInput): HmcH06RuntimeRefProjectionInput[] {
   return [
     ...projection.worktrees,
@@ -1406,6 +1743,7 @@ function summarizeMaturity(config: HmcStateConfig): Record<HmcMaturity, number> 
     ...h04Maturities(config.h04Projection),
     ...h05Maturities(config.h05Projection),
     ...h06Maturities(config.h06Projection),
+    ...h08Maturities(config.h08Projection),
     ...(config.generatedState ?? []).map((state) => state.maturity)
   ]) {
     summary[maturity] += 1;
@@ -1451,5 +1789,15 @@ function h03Maturities(projection: HmcH03ProjectionInput | undefined): HmcMaturi
     ...projection.compilerStages.map((stage) => stage.maturity),
     projection.deliveryConstitution.maturity,
     projection.continuation.maturity
+  ];
+}
+
+function h08Maturities(projection: HmcH08ProjectionInput | undefined): HmcMaturity[] {
+  if (!projection) return [];
+  return [
+    projection.maturity,
+    projection.box.maturity,
+    ...projection.components.map((component) => component.maturity),
+    projection.conductor.maturity
   ];
 }

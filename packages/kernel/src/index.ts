@@ -110,6 +110,14 @@ export {
   type HmcGeneratedStateInput,
   type HmcGitHubTruthInput,
   type HmcGitTruthInput,
+  type HmcH08BlockedClaimProjectionInput,
+  type HmcH08BoxProjectionInput,
+  type HmcH08ComponentProjectionInput,
+  type HmcH08ConductorProjectionInput,
+  type HmcH08DogfoodProjectionInput,
+  type HmcH08GitHubSettingsProjectionInput,
+  type HmcH08PrerequisiteProjectionInput,
+  type HmcH08ProjectionInput,
   type HmcMaturity,
   type HmcProjectInput,
   type HmcQualityInput,
@@ -575,3 +583,19 @@ export {
   type H08ExpectedConductorStatus,
   type H08VerifiedConductorRef
 } from "./h08/conductor.js";
+export {
+  verifyH08HmcGitProjectionConfig,
+  type H08ExpectedHmcGitProjectionRecord,
+  type H08ExpectedHmcGitProjectionStatus,
+  type H08HmcGitProjectionConfig,
+  type H08HmcGitProjectionFinding,
+  type H08HmcGitProjectionReport,
+  type H08HmcGitProjectionScenarioExpectation,
+  type H08HmcGitProjectionScenarioResult,
+  type H08HmcGitProjectionStatus,
+  type H08HmcGitProjectionSummary,
+  type H08HmcProjectionEvidenceStatus,
+  type H08HmcProjectionFreshness,
+  type H08HmcProjectionMaturity,
+  type H08VerifiedHmcGitProjectionRef
+} from "./h08/hmc-git-projection.js";

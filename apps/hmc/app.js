@@ -247,6 +247,56 @@ async function loadFixtureState() {
       })
     );
   }
+  const h08Status = document.querySelector("[data-state-field='h08-status']");
+  if (h08Status) {
+    h08Status.textContent = state.h08Projection.status;
+  }
+  const h08ActiveFfet = document.querySelector("[data-state-field='h08-active-ffet']");
+  if (h08ActiveFfet) {
+    h08ActiveFfet.textContent = state.h08Projection.activeFfet;
+  }
+  const h08ProjectionAuthority = document.querySelector("[data-state-field='h08-projection-authority']");
+  if (h08ProjectionAuthority) {
+    h08ProjectionAuthority.textContent = state.h08Projection.authority;
+  }
+  const h08GitTruth = document.querySelector("[data-state-field='h08-git-truth']");
+  if (h08GitTruth) {
+    h08GitTruth.textContent = state.h08Projection.gitTruthStatus;
+  }
+  const h08PrLifecycle = document.querySelector("[data-state-field='h08-pr-lifecycle']");
+  if (h08PrLifecycle) {
+    h08PrLifecycle.textContent = state.h08Projection.prLifecycleStatus;
+  }
+  const h08CiWatcher = document.querySelector("[data-state-field='h08-ci-watcher']");
+  if (h08CiWatcher) {
+    h08CiWatcher.textContent = state.h08Projection.ciWatcherStatus;
+  }
+  const h08MergeReadiness = document.querySelector("[data-state-field='h08-merge-readiness']");
+  if (h08MergeReadiness) {
+    h08MergeReadiness.textContent = state.h08Projection.mergeReadinessStatus;
+  }
+  const h08Conductor = document.querySelector("[data-state-field='h08-conductor']");
+  if (h08Conductor) {
+    h08Conductor.textContent = state.h08Projection.conductorStatus;
+  }
+  const h08Settings = document.querySelector("[data-state-field='h08-settings']");
+  if (h08Settings) {
+    h08Settings.textContent = state.h08Projection.githubSettingsStatus;
+  }
+  const h08DogfoodMode = document.querySelector("[data-state-field='h08-dogfood-mode']");
+  if (h08DogfoodMode) {
+    h08DogfoodMode.textContent = state.h08Projection.dogfoodMode;
+  }
+  const h08BlockedClaims = document.querySelector("[data-state-field='h08-blocked-claims']");
+  if (h08BlockedClaims) {
+    h08BlockedClaims.replaceChildren(
+      ...state.h08Projection.blockedClaims.map((claim) => {
+        const item = document.createElement("li");
+        item.textContent = claim;
+        return item;
+      })
+    );
+  }
   const mismatch = document.querySelector("[data-state-field='classified-mismatch']");
   if (mismatch) {
     mismatch.textContent = state.classifiedMismatch;

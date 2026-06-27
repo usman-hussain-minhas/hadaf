@@ -1,0 +1,47 @@
+{
+  "schema_version": "h08_hmc_git_projection_v1",
+  "projection_id": "h08-hmc-git-projection-live-persistent-overclaim",
+  "status": "product_pipeline_active",
+  "maturity": "persistent",
+  "authority": "derived_view_only",
+  "freshness": "fresh",
+  "active_ffet": "H08-F06",
+  "components": [],
+  "github_settings": {
+    "inspection_status": "verified",
+    "settings_mutation_authorized": false,
+    "branch_protection_mutation_authorized": false,
+    "sha_pinning_platform_required_claimed": false
+  },
+  "conductor": {
+    "status": "bounded_envelope_verified",
+    "bounded_envelope_verified": true,
+    "dry_run_default": true,
+    "full_conductor_implemented": true,
+    "live_mutation_permitted": true
+  },
+  "dogfood": {
+    "mode": "live",
+    "limited_current_repo_merge_allowed": true,
+    "live_github_adapter_implemented": true,
+    "persistent_state_store_implemented": true,
+    "production_connected": true
+  },
+  "claims": {
+    "full_conductor": true,
+    "live_adapter": true,
+    "persistence": true,
+    "production_connected": true
+  },
+  "cannot_claim": [
+    "HMC_authoritative_state",
+    "H08_git_ci_pr_merge_conductor_implemented",
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized",
+    "live_github_adapter_implemented",
+    "persistent_state_store_implemented",
+    "H13_system_assurance_engine_implemented",
+    "self_hosting_ready",
+    "production_ready"
+  ]
+}

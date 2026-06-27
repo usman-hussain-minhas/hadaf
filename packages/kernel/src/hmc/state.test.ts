@@ -11,7 +11,7 @@ test("derives a valid HMC fixture state with classified stale generated state", 
   assert.equal(report.classified_mismatches.length, 1);
   assert.equal(report.view.project.name, "HADAF v1");
   assert.equal(report.view.maturitySummary.fixture_backed > 0, true);
-  assert.equal(report.final_posture_recommendation, "H07_PROOF_FOUNDATION_ACTIVE_FIXTURE_BACKED");
+  assert.equal(report.final_posture_recommendation, "H08_GIT_CI_PR_CONDUCTOR_PROJECTION_ACTIVE_FIXTURE_BACKED");
   assert.equal(report.view.h03Projection?.authority, "derived_view_only");
   assert.equal(report.view.h03Projection?.deliveryConstitution.approvalStatus, "for_human_review");
   assert.equal(report.view.h03Projection?.deliveryConstitution.executionAuthorized, false);
@@ -25,6 +25,9 @@ test("derives a valid HMC fixture state with classified stale generated state", 
   assert.equal(report.view.h07Projection?.authority, "derived_view_only");
   assert.equal(report.view.h07Projection?.proofLevels.some((proof) => proof.level === "P5" && proof.status === "verified"), true);
   assert.equal(report.view.h07Projection?.proofLevels.some((proof) => proof.level === "P9" && proof.status === "non_operational"), true);
+  assert.equal(report.view.h08Projection?.authority, "derived_view_only");
+  assert.equal(report.view.h08Projection?.conductor.boundedEnvelopeVerified, true);
+  assert.equal(report.view.h08Projection?.dogfood.liveGithubAdapterImplemented, false);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h03_stage:H03-F05" && ref.status === "closeout_complete"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h03_stage:H03-F06" && ref.status === "closeout_complete"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h04_ffet:H04-F05" && ref.status === "closeout_complete"), true);
@@ -34,6 +37,8 @@ test("derives a valid HMC fixture state with classified stale generated state", 
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h06_runtime:pod-scheduler" && ref.status === "verified"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h07_proof:P5" && ref.status === "verified"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h07_prerequisite:H07-F03" && ref.status === "closeout_complete"), true);
+  assert.equal(report.verified_refs.some((ref) => ref.ref === "h08_component:conductor" && ref.status === "bounded_envelope_verified"), true);
+  assert.equal(report.verified_refs.some((ref) => ref.ref === "h08_prerequisite:H08-F05" && ref.status === "closeout_complete"), true);
   assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04" && ffet.status === "active"), false);
   assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04-R1" && ffet.status === "verified"), true);
 });
@@ -488,6 +493,86 @@ test("fails H07 projection when precise cannot_claim entries are missing", () =>
   assertFinding(report, "h07_blocked_claim_missing_cannot_claim");
 });
 
+test("fails H08 projection authority, mutation, live, persistence, and H13 overclaims", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h08Projection: {
+      ...validConfig().h08Projection!,
+      claimsAuthority: true,
+      claimFullConductor: true,
+      claimSettingsMutation: true,
+      claimBranchProtectionMutation: true,
+      claimLiveAdapter: true,
+      claimPersistence: true,
+      claimProductionConnected: true,
+      claimH13SystemAssurance: true,
+      maturity: "persistent",
+      githubSettings: {
+        ...validConfig().h08Projection!.githubSettings,
+        settingsMutationAuthorized: true,
+        branchProtectionMutationAuthorized: true,
+        platformShaPinningRequiredClaimed: true
+      },
+      conductor: {
+        ...validConfig().h08Projection!.conductor,
+        fullConductorImplemented: true,
+        liveMutationPermitted: true
+      },
+      dogfood: {
+        ...validConfig().h08Projection!.dogfood,
+        mode: "live",
+        liveGithubAdapterImplemented: true,
+        persistentStateStoreImplemented: true,
+        productionConnected: true
+      }
+    }
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "h08_projection_claims_authority");
+  assertFinding(report, "h08_projection_maturity_overclaim");
+  assertFinding(report, "h08_settings_mutation_overclaim");
+  assertFinding(report, "h08_branch_protection_mutation_overclaim");
+  assertFinding(report, "h08_platform_sha_pinning_overclaim");
+  assertFinding(report, "h08_full_conductor_overclaim");
+  assertFinding(report, "h08_live_adapter_overclaim");
+  assertFinding(report, "h08_persistence_overclaim");
+  assertFinding(report, "h08_production_connected_overclaim");
+  assertFinding(report, "h08_h13_system_assurance_overclaim");
+});
+
+test("fails stale H08 projection and missing H08 component evidence without classification", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h08Projection: {
+      ...validConfig().h08Projection!,
+      freshness: "stale",
+      components: [
+        {
+          ...validConfig().h08Projection!.components[0]!,
+          evidenceStatus: "missing",
+          freshness: "missing"
+        }
+      ]
+    },
+    classifiedMismatches: [...(validConfig().classifiedMismatches ?? [])]
+  });
+
+  assert.equal(report.status, "failed");
+  assert.equal(findings(report, "unclassified_state_mismatch"), 3);
+});
+
+test("fails H08 projection when precise cannot_claim entries are missing", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    cannotClaim: ["live_github_adapter_implemented", "HMC_authoritative_state"]
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "missing_h08_projection_cannot_claim");
+  assertFinding(report, "h08_blocked_claim_missing_cannot_claim");
+});
+
 test("fails private paths in state config", () => {
   const report = deriveHmcStateConfig({
     ...validConfig(),
@@ -514,7 +599,7 @@ function validConfig(): HmcStateConfig {
     project: {
       id: "hadaf",
       name: "HADAF v1",
-      posture: "H06_RUNTIME_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED",
+      posture: "H08_GIT_CI_PR_CONDUCTOR_PROJECTION_ACTIVE_FIXTURE_BACKED",
       maturity: "fixture_backed"
     },
     boxes: [
@@ -565,6 +650,13 @@ function validConfig(): HmcStateConfig {
         status: "product_pipeline_complete_pending_box_assurance",
         maturity: "fixture_backed",
         debt: ["box_assurance_pending", "P8_P9_non_operational"]
+      },
+      {
+        id: "H08",
+        name: "Git, CI, PR, and Merge Conductor",
+        status: "product_pipeline_active",
+        maturity: "fixture_backed",
+        debt: ["box_assurance_pending", "full_conductor_gate_pending"]
       }
     ],
     ffets: [
@@ -765,6 +857,48 @@ function validConfig(): HmcStateConfig {
         title: "HMC proof projection",
         status: "active",
         maturity: "fixture_backed"
+      },
+      {
+        id: "H08-F00",
+        title: "Git/GitHub truth adapter",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H08-F01",
+        title: "PR lifecycle state model",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H08-F02",
+        title: "CI watcher",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H08-F03",
+        title: "Merge readiness verifier",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H08-F04",
+        title: "Limited dogfood merge readiness",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H08-F05",
+        title: "Bounded dogfood conductor envelope",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H08-F06",
+        title: "HMC Git/CI/PR conductor projection",
+        status: "active",
+        maturity: "fixture_backed"
       }
     ],
     quality: [
@@ -810,6 +944,20 @@ function validConfig(): HmcStateConfig {
           "production_proof_complete",
           "H12_box_assurance_engine_implemented"
         ]
+      },
+      {
+        id: "h08_hmc_git_projection",
+        status: "passed",
+        maturity: "fixture_backed",
+        cannotClaim: [
+          "HMC_authoritative_state",
+          "H08_git_ci_pr_merge_conductor_implemented",
+          "github_settings_mutation_authorized",
+          "branch_protection_mutation_authorized",
+          "live_github_adapter_implemented",
+          "persistent_state_store_implemented",
+          "H13_system_assurance_engine_implemented"
+        ]
       }
     ],
     evidence: [
@@ -833,6 +981,12 @@ function validConfig(): HmcStateConfig {
       },
       {
         id: "H07-F03",
+        status: "verified",
+        maturity: "fixture_backed",
+        required: true
+      },
+      {
+        id: "H08-F05",
         status: "verified",
         maturity: "fixture_backed",
         required: true
@@ -1063,6 +1217,73 @@ function validConfig(): HmcStateConfig {
         h07Prerequisite("H07-F03")
       ]
     },
+    h08Projection: {
+      id: "H08",
+      status: "product_pipeline_active",
+      maturity: "fixture_backed",
+      authority: "derived_view_only",
+      freshness: "fresh",
+      box: {
+        id: "H08",
+        status: "product_pipeline_active",
+        maturity: "fixture_backed",
+        assuranceStatus: "pending"
+      },
+      components: [
+        h08Component("git_truth", "Git and GitHub truth", "verified"),
+        h08Component("pr_lifecycle", "PR lifecycle", "verified"),
+        h08Component("ci_watcher", "CI watcher", "verified"),
+        h08Component("merge_readiness", "Merge readiness", "verified"),
+        h08Component("conductor", "Bounded dogfood conductor envelope", "bounded_envelope_verified")
+      ],
+      githubSettings: {
+        inspectionStatus: "verified",
+        settingsMutationAuthorized: false,
+        branchProtectionMutationAuthorized: false,
+        platformShaPinningRequiredClaimed: false
+      },
+      conductor: {
+        status: "bounded_envelope_verified",
+        maturity: "fixture_backed",
+        boundedEnvelopeVerified: true,
+        dryRunDefault: true,
+        fullConductorImplemented: false,
+        liveMutationPermitted: false,
+        freshness: "fresh"
+      },
+      dogfood: {
+        mode: "limited_current_repo",
+        limitedCurrentRepoMergeAllowed: true,
+        liveGithubAdapterImplemented: false,
+        persistentStateStoreImplemented: false,
+        productionConnected: false
+      },
+      blockedClaims: [
+        {
+          claimId: "H08_git_ci_pr_merge_conductor_implemented",
+          reason: "H08-F06 projects a bounded fixture-backed conductor state only.",
+          cannotClaim: "H08_git_ci_pr_merge_conductor_implemented"
+        },
+        {
+          claimId: "github_settings_mutation_authorized",
+          reason: "H08 may inspect and report GitHub settings only.",
+          cannotClaim: "github_settings_mutation_authorized"
+        },
+        {
+          claimId: "branch_protection_mutation_authorized",
+          reason: "Branch-protection mutation requires separate approval.",
+          cannotClaim: "branch_protection_mutation_authorized"
+        }
+      ],
+      prerequisiteCloseouts: [
+        h08Prerequisite("H08-F00"),
+        h08Prerequisite("H08-F01"),
+        h08Prerequisite("H08-F02"),
+        h08Prerequisite("H08-F03"),
+        h08Prerequisite("H08-F04"),
+        h08Prerequisite("H08-F05")
+      ]
+    },
     git: {
       expectedMainSha: sha(),
       actualMainSha: sha(),
@@ -1104,10 +1325,13 @@ function validConfig(): HmcStateConfig {
       "runtime_circuit_breaker_enforcement",
       "runtime_upskill_enforcement",
       "live_autonomous_worktree_orchestration",
-      "live_parallel_pod_execution",
-      "live_lifecycle_runner_execution",
-      "H08_git_ci_pr_merge_conductor_implemented",
-      "production_resource_orchestration",
+    "live_parallel_pod_execution",
+    "live_lifecycle_runner_execution",
+    "H08_git_ci_pr_merge_conductor_implemented",
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized",
+    "H13_system_assurance_engine_implemented",
+    "production_resource_orchestration",
       "h06_box_assurance_complete",
       "H07_proof_engine_implemented",
       "release_candidate",
@@ -1118,7 +1342,7 @@ function validConfig(): HmcStateConfig {
       "mechanically_independent_audit",
       "H12_box_assurance_engine_implemented"
     ],
-    finalPostureRecommendation: "H07_PROOF_FOUNDATION_ACTIVE_FIXTURE_BACKED"
+    finalPostureRecommendation: "H08_GIT_CI_PR_CONDUCTOR_PROJECTION_ACTIVE_FIXTURE_BACKED"
   };
 }
 
@@ -1203,6 +1427,33 @@ function h07Proof(
 }
 
 function h07Prerequisite(id: string): NonNullable<HmcStateConfig["h07Projection"]>["prerequisiteCloseouts"][number] {
+  return {
+    id,
+    status: "closeout_complete",
+    closeoutStatus: "closeout_complete",
+    evidenceStatus: "verified",
+    terminalLearningStatus: "complete"
+  };
+}
+
+function h08Component(
+  id: NonNullable<HmcStateConfig["h08Projection"]>["components"][number]["id"],
+  title: string,
+  status: string
+): NonNullable<HmcStateConfig["h08Projection"]>["components"][number] {
+  return {
+    id,
+    title,
+    status,
+    maturity: "fixture_backed",
+    evidenceStatus: "verified",
+    truthSource: "fixture",
+    freshness: "fresh",
+    required: true
+  };
+}
+
+function h08Prerequisite(id: string): NonNullable<HmcStateConfig["h08Projection"]>["prerequisiteCloseouts"][number] {
   return {
     id,
     status: "closeout_complete",

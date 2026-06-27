@@ -2,7 +2,7 @@
   "project": {
     "id": "hadaf",
     "name": "HADAF v1",
-    "posture": "H07_PROOF_FOUNDATION_ACTIVE_FIXTURE_BACKED",
+    "posture": "H08_GIT_CI_PR_CONDUCTOR_PROJECTION_ACTIVE_FIXTURE_BACKED",
     "maturity": "fixture_backed"
   },
   "boxes": [
@@ -67,6 +67,16 @@
       "debt": [
         "box_assurance_pending",
         "P8_P9_non_operational"
+      ]
+    },
+    {
+      "id": "H08",
+      "name": "Git, CI, PR, and Merge Conductor",
+      "status": "product_pipeline_active",
+      "maturity": "fixture_backed",
+      "debt": [
+        "box_assurance_pending",
+        "full_conductor_gate_pending"
       ]
     }
   ],
@@ -280,6 +290,48 @@
       "title": "HMC proof projection",
       "status": "active",
       "maturity": "fixture_backed"
+    },
+    {
+      "id": "H08-F00",
+      "title": "Git/GitHub truth adapter",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H08-F01",
+      "title": "PR lifecycle state model",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H08-F02",
+      "title": "CI watcher",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H08-F03",
+      "title": "Merge readiness verifier",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H08-F04",
+      "title": "Limited dogfood merge readiness",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H08-F05",
+      "title": "Bounded dogfood conductor envelope",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H08-F06",
+      "title": "HMC Git/CI/PR conductor projection",
+      "status": "active",
+      "maturity": "fixture_backed"
     }
   ],
   "quality": [
@@ -359,6 +411,20 @@
         "production_proof_complete",
         "H12_box_assurance_engine_implemented"
       ]
+    },
+    {
+      "id": "h08_hmc_git_projection",
+      "status": "passed",
+      "maturity": "fixture_backed",
+      "cannotClaim": [
+        "HMC_authoritative_state",
+        "H08_git_ci_pr_merge_conductor_implemented",
+        "github_settings_mutation_authorized",
+        "branch_protection_mutation_authorized",
+        "live_github_adapter_implemented",
+        "persistent_state_store_implemented",
+        "H13_system_assurance_engine_implemented"
+      ]
     }
   ],
   "evidence": [
@@ -400,6 +466,12 @@
     },
     {
       "id": "H07-F03",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "required": true
+    },
+    {
+      "id": "H08-F05",
       "status": "verified",
       "maturity": "fixture_backed",
       "required": true
@@ -925,6 +997,154 @@
       }
     ]
   },
+  "h08Projection": {
+    "id": "H08",
+    "status": "product_pipeline_active",
+    "maturity": "fixture_backed",
+    "authority": "derived_view_only",
+    "freshness": "fresh",
+    "box": {
+      "id": "H08",
+      "status": "product_pipeline_active",
+      "maturity": "fixture_backed",
+      "assuranceStatus": "pending"
+    },
+    "components": [
+      {
+        "id": "git_truth",
+        "title": "Git and GitHub truth",
+        "status": "verified",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      },
+      {
+        "id": "pr_lifecycle",
+        "title": "PR lifecycle",
+        "status": "verified",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      },
+      {
+        "id": "ci_watcher",
+        "title": "CI watcher",
+        "status": "verified",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      },
+      {
+        "id": "merge_readiness",
+        "title": "Merge readiness",
+        "status": "verified",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      },
+      {
+        "id": "conductor",
+        "title": "Bounded dogfood conductor envelope",
+        "status": "bounded_envelope_verified",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      }
+    ],
+    "githubSettings": {
+      "inspectionStatus": "verified",
+      "settingsMutationAuthorized": false,
+      "branchProtectionMutationAuthorized": false,
+      "platformShaPinningRequiredClaimed": false
+    },
+    "conductor": {
+      "status": "bounded_envelope_verified",
+      "maturity": "fixture_backed",
+      "boundedEnvelopeVerified": true,
+      "dryRunDefault": true,
+      "fullConductorImplemented": false,
+      "liveMutationPermitted": false,
+      "freshness": "fresh"
+    },
+    "dogfood": {
+      "mode": "limited_current_repo",
+      "limitedCurrentRepoMergeAllowed": true,
+      "liveGithubAdapterImplemented": false,
+      "persistentStateStoreImplemented": false,
+      "productionConnected": false
+    },
+    "blockedClaims": [
+      {
+        "claimId": "H08_git_ci_pr_merge_conductor_implemented",
+        "reason": "H08-F06 projects a bounded fixture-backed conductor state only.",
+        "cannotClaim": "H08_git_ci_pr_merge_conductor_implemented"
+      },
+      {
+        "claimId": "github_settings_mutation_authorized",
+        "reason": "H08 may inspect and report GitHub settings only.",
+        "cannotClaim": "github_settings_mutation_authorized"
+      },
+      {
+        "claimId": "branch_protection_mutation_authorized",
+        "reason": "Branch-protection mutation requires separate approval.",
+        "cannotClaim": "branch_protection_mutation_authorized"
+      }
+    ],
+    "prerequisiteCloseouts": [
+      {
+        "id": "H08-F00",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      },
+      {
+        "id": "H08-F01",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      },
+      {
+        "id": "H08-F02",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      },
+      {
+        "id": "H08-F03",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      },
+      {
+        "id": "H08-F04",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      },
+      {
+        "id": "H08-F05",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      }
+    ]
+  },
   "git": {
     "expectedMainSha": "619bb8f0c81faca1025b62a48d542dc12fa02f0f",
     "actualMainSha": "619bb8f0c81faca1025b62a48d542dc12fa02f0f",
@@ -974,6 +1194,9 @@
     "live_parallel_pod_execution",
     "live_lifecycle_runner_execution",
     "H08_git_ci_pr_merge_conductor_implemented",
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized",
+    "H13_system_assurance_engine_implemented",
     "production_resource_orchestration",
     "h06_box_assurance_complete",
     "H07_proof_engine_implemented",
@@ -986,5 +1209,5 @@
     "production_ready",
     "stable_agents"
   ],
-  "finalPostureRecommendation": "H07_PROOF_FOUNDATION_ACTIVE_FIXTURE_BACKED"
+  "finalPostureRecommendation": "H08_GIT_CI_PR_CONDUCTOR_PROJECTION_ACTIVE_FIXTURE_BACKED"
 }
