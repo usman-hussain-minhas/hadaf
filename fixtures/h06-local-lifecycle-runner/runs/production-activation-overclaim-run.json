@@ -1,0 +1,33 @@
+{
+  "schema_version": "fixture_h06_local_lifecycle_runner_scenario_v1",
+  "run_id": "run-H06-F04-production-activation-overclaim",
+  "box_id": "H06",
+  "ffet_id": "H06-F04",
+  "maturity": "fixture_backed",
+  "lifecycle_mode": "fixture_replay",
+  "run_status": "completed",
+  "record_refs": [],
+  "emitted_record_refs": [],
+  "restart_reconcile": {
+    "checkpoint_ref": "fixture://h06-locks-checkpoints-quarantine/checkpoints/fresh-checkpoint.json",
+    "freshness_status": "fresh",
+    "reconcile_action": "resume_allowed"
+  },
+  "provider_policy": {
+    "network_policy": "offline_fixture_only",
+    "live_provider_calls_allowed": false,
+    "provider_refs": []
+  },
+  "output_policy": {
+    "durable_outputs_required": true,
+    "transient_only_allowed": false,
+    "durable_output_refs": []
+  },
+  "claims": [
+    "production_ready",
+    "production_activation"
+  ],
+  "cannot_claim": [
+    "release_candidate"
+  ]
+}

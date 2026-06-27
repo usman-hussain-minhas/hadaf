@@ -54,6 +54,8 @@ const cases = [
   pnpmCase("h06-locks-checkpoints-quarantine-separator", ["verify:h06-locks-checkpoints-quarantine", "--", "fixtures/h06-locks-checkpoints-quarantine/valid-config.json"]),
   pnpmCase("h06-pod-scheduler-direct", ["verify:h06-pod-scheduler", "fixtures/h06-pod-scheduler/valid-config.json"]),
   pnpmCase("h06-pod-scheduler-separator", ["verify:h06-pod-scheduler", "--", "fixtures/h06-pod-scheduler/valid-config.json"]),
+  pnpmCase("h06-local-lifecycle-runner-direct", ["verify:h06-local-lifecycle-runner", "fixtures/h06-local-lifecycle-runner/valid-config.json"]),
+  pnpmCase("h06-local-lifecycle-runner-separator", ["verify:h06-local-lifecycle-runner", "--", "fixtures/h06-local-lifecycle-runner/valid-config.json"]),
   pnpmCase("target-guard-direct", ["check:target-guard", "fixtures/target-guard/valid-config.json"]),
   pnpmCase("target-guard-separator", ["check:target-guard", "--", "fixtures/target-guard/valid-config.json"]),
   nodeCase("pr-metadata-direct", ["scripts/check-pr-metadata-public-safety.mjs", fixturePaths.prBody]),

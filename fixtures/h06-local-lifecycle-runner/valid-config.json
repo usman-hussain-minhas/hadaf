@@ -1,0 +1,126 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures"
+  },
+  "schemas": {
+    "common": {
+      "ref": "fixture://h06-worktree-lifecycle/schemas/h04_h06_lifecycle_common.definitions.schema.json",
+      "sha256": "c1d00c67f6cf00d63a5e31bb204bc5c5637448afecb705d3dbbca68e110c5a2a"
+    },
+    "worktree": {
+      "ref": "fixture://h06-worktree-lifecycle/schemas/runtime_worktree_registry.schema.json",
+      "sha256": "824109a14802f14460a51b2b5fb1a18e7c67b1edd4be2ee0c53a0d206cb1775e"
+    },
+    "lock": {
+      "ref": "fixture://h06-locks-checkpoints-quarantine/schemas/lock_record.schema.json",
+      "sha256": "3aecf8c6a8c1078269726ec29cd208dc2f4ea3c0bfea1bcd34d52abc951cfb32"
+    },
+    "checkpoint": {
+      "ref": "fixture://h06-locks-checkpoints-quarantine/schemas/checkpoint_record.schema.json",
+      "sha256": "8319671bddcd32222127691272eb06f7ae48710a0f726af645801bed64b8b293"
+    },
+    "quarantine": {
+      "ref": "fixture://h06-locks-checkpoints-quarantine/schemas/quarantine_record.schema.json",
+      "sha256": "dfb8df84d29f896f42099fc429a68c9ae33ce760f29a41e25e903104b4072b58"
+    },
+    "pod": {
+      "ref": "fixture://h06-pod-scheduler/schemas/pod_scheduler_record.schema.json",
+      "sha256": "8fa47765e18ad56de3146041428f1fca5002bc65f0503e4c56c99a2beb922e2a"
+    },
+    "truthLedgerEvent": {
+      "ref": "fixture://h04-truth-ledger/schemas/delivery-truth-ledger-event.schema.json",
+      "sha256": "ebb9f53ef89004f28feadab3653549aa1db8ee03aedf68d0216c23c3f810c155"
+    }
+  },
+  "runs": [
+    {
+      "runId": "run-H06-F04-valid",
+      "ref": "fixture://h06-local-lifecycle-runner/runs/valid-fixture-run.json",
+      "sha256": "59fe3e6e5c4c6d5074e5e78550da9d573712cd43f7a3657ac837d99872997b8b",
+      "expectedStatus": "passed"
+    },
+    {
+      "runId": "run-H06-F04-missing-emitted-record",
+      "ref": "fixture://h06-local-lifecycle-runner/runs/missing-emitted-record-run.json",
+      "sha256": "fef2e2a1c795b028ff9086c9351404973702620ce394c1805f68297da8a844db",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "missing_emitted_record_kind",
+        "durable_output_ref_missing_for_record"
+      ]
+    },
+    {
+      "runId": "run-H06-F04-stale-restart-reconcile",
+      "ref": "fixture://h06-local-lifecycle-runner/runs/stale-restart-reconcile-run.json",
+      "sha256": "267c468537061223254e2962a4cbce7b5e17d7138ce4357bd360d0052ede546e",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "stale_restart_reconcile_state"
+      ]
+    },
+    {
+      "runId": "run-H06-F04-live-provider-overclaim",
+      "ref": "fixture://h06-local-lifecycle-runner/runs/live-provider-overclaim-run.json",
+      "sha256": "cc38ba01edacaf8023c2aa317ae9d4183a4b02a212bbabbcb9a8e34a862f1955",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "live_provider_call_overclaim"
+      ]
+    },
+    {
+      "runId": "run-H06-F04-production-activation-overclaim",
+      "ref": "fixture://h06-local-lifecycle-runner/runs/production-activation-overclaim-run.json",
+      "sha256": "baaf0ba7bb8dc21cb3a8f4604f450c416e9c8bfbd0193b41ee02bad262d9bfea",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "production_activation_overclaim"
+      ]
+    },
+    {
+      "runId": "run-H06-F04-transient-output-only",
+      "ref": "fixture://h06-local-lifecycle-runner/runs/transient-output-only-run.json",
+      "sha256": "a9057383c15ea01d0578190bc69c98589d92a0cfbef03c71b409be9b4e306e8c",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "transient_only_output_not_terminal_evidence"
+      ]
+    }
+  ],
+  "requiredEmittedKinds": [
+    "worktree",
+    "checkpoint",
+    "pod",
+    "truth_ledger"
+  ],
+  "requiredCannotClaim": [
+    "live_lifecycle_runner_execution",
+    "live_provider_calls_allowed",
+    "production_activation",
+    "production_resource_orchestration",
+    "live_autonomous_worktree_orchestration",
+    "live_parallel_pod_execution",
+    "mechanically_independent_agents",
+    "stable_agents",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "H07_proof_engine_implemented",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ],
+  "cannotClaim": [
+    "live_lifecycle_runner_execution",
+    "live_provider_calls_allowed",
+    "production_activation",
+    "production_resource_orchestration",
+    "live_autonomous_worktree_orchestration",
+    "live_parallel_pod_execution",
+    "mechanically_independent_agents",
+    "stable_agents",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "H07_proof_engine_implemented",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ],
+  "finalPostureRecommendation": "H06_F04_LOCAL_LIFECYCLE_RUNNER_FOUNDATION_FIXTURE_VERIFIED"
+}
