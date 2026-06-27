@@ -1,0 +1,38 @@
+{
+  "schema_version": "hadaf_h09_recovery_execution_v1",
+  "execution_id": "h09-rollback-missing-target",
+  "mode": "execution_record",
+  "planner_decision": "plan_ready",
+  "recovery_action": "rollback_routing",
+  "failure_class": "deterministic_fixture_correction",
+  "unsafe_state": false,
+  "evidence": {
+    "durable_output_ref": "artifact://h09/recovery/rollback-output.json",
+    "durable_output_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "evidence_manifest_ref": "artifact://h09/recovery/rollback-manifest.json",
+    "evidence_manifest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "transient_only": false
+  },
+  "rollback": {
+    "required": true,
+    "route": "scoped_revert",
+    "evidence_preserving": true,
+    "production_rollback": false
+  },
+  "cleanup": {
+    "broad_cleanup": false,
+    "local_branch_delete": false,
+    "remote_branch_delete": false,
+    "closeout_complete": true,
+    "worktree_cleanup": false,
+    "exact_scope": []
+  },
+  "claims": {},
+  "cannot_claim": [
+    "production_rollback_executed",
+    "unscoped_cleanup_authorized",
+    "remote_branch_cleanup_without_closeout",
+    "stable_agents",
+    "mechanically_independent_agents"
+  ]
+}

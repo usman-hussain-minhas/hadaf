@@ -1,0 +1,40 @@
+{
+  "schema_version": "hadaf_h09_recovery_execution_v1",
+  "execution_id": "h09-transient-only-evidence",
+  "mode": "execution_record",
+  "planner_decision": "plan_ready",
+  "recovery_action": "validation_rerun",
+  "failure_class": "deterministic_formatting_failure",
+  "unsafe_state": false,
+  "evidence": {
+    "durable_output_ref": "artifact://h09/recovery/transient-output.json",
+    "durable_output_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "evidence_manifest_ref": "artifact://h09/recovery/transient-manifest.json",
+    "evidence_manifest_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "transient_only": true
+  },
+  "rollback": {
+    "required": false,
+    "route": "none",
+    "evidence_preserving": true,
+    "production_rollback": false
+  },
+  "cleanup": {
+    "broad_cleanup": false,
+    "local_branch_delete": false,
+    "remote_branch_delete": false,
+    "closeout_complete": true,
+    "worktree_cleanup": false,
+    "exact_scope": []
+  },
+  "claims": {
+    "transient_evidence_supports_terminal_claim": true
+  },
+  "cannot_claim": [
+    "production_rollback_executed",
+    "unscoped_cleanup_authorized",
+    "remote_branch_cleanup_without_closeout",
+    "stable_agents",
+    "mechanically_independent_agents"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": "hadaf_h09_recovery_execution_v1",
+  "execution_id": "h09-remote-branch-delete-without-closeout",
+  "mode": "execution_record",
+  "planner_decision": "plan_ready",
+  "recovery_action": "cleanup",
+  "failure_class": "deterministic_fixture_correction",
+  "unsafe_state": false,
+  "evidence": {
+    "durable_output_ref": "artifact://h09/recovery/remote-delete-output.json",
+    "durable_output_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+    "evidence_manifest_ref": "artifact://h09/recovery/remote-delete-manifest.json",
+    "evidence_manifest_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+    "transient_only": false
+  },
+  "rollback": {
+    "required": false,
+    "route": "none",
+    "evidence_preserving": true,
+    "production_rollback": false
+  },
+  "cleanup": {
+    "broad_cleanup": false,
+    "local_branch_delete": true,
+    "remote_branch_delete": true,
+    "closeout_complete": false,
+    "worktree_cleanup": true,
+    "exact_scope": [
+      "current-run branch"
+    ]
+  },
+  "claims": {
+    "remote_branch_cleanup_without_closeout": true
+  },
+  "cannot_claim": [
+    "production_rollback_executed",
+    "unscoped_cleanup_authorized",
+    "remote_branch_cleanup_without_closeout",
+    "stable_agents",
+    "mechanically_independent_agents"
+  ]
+}

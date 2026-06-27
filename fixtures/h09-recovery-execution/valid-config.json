@@ -1,0 +1,77 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h09-recovery-execution/records"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "valid-recovery-execution",
+      "executionRef": "fixture://valid-recovery-execution.json",
+      "executionSha256": "f19ca2f9b54c471fc2574c3f2a4c61f71676f9afa88c6b30d35a8a76416f8799",
+      "expectedStatus": "passed",
+      "expectedDecision": "execution_record_valid"
+    },
+    {
+      "scenarioId": "transient-only-evidence",
+      "executionRef": "fixture://transient-only-evidence.json",
+      "executionSha256": "d23f090fb8a869e3f1fa2364fbc7561dc15b6cacf4bc88f4867c0f125b325c03",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "transient_only_terminal_evidence",
+        "transient_evidence_terminal_claim_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "rollback-missing-target",
+      "executionRef": "fixture://rollback-missing-target.json",
+      "executionSha256": "f276e290ccee5d2f527ece76703964aa66c8f52a5a7d1dd96cdc4bc42010ee4f",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "rollback_exact_target_missing_or_invalid"
+      ]
+    },
+    {
+      "scenarioId": "quarantine-omitted",
+      "executionRef": "fixture://quarantine-omitted.json",
+      "executionSha256": "4c292b223d4c58aadd5c69dcaeb3d48e37f38b5d2b9cc0b048e1421853fbf2e5",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "quarantine_not_performed_for_unsafe_state"
+      ]
+    },
+    {
+      "scenarioId": "broad-cleanup",
+      "executionRef": "fixture://broad-cleanup.json",
+      "executionSha256": "fe7a4ac4f36b431cf63855585bfd1dd6b8bfc85a9e3c2d02f9af012dd8b227f4",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "broad_cleanup_planned",
+        "unscoped_cleanup_authorized_overclaim",
+        "worktree_cleanup_scope_missing"
+      ]
+    },
+    {
+      "scenarioId": "remote-branch-delete-without-closeout",
+      "executionRef": "fixture://remote-branch-delete-without-closeout.json",
+      "executionSha256": "2c332e081098456cfb8c4eda26b2ab1c1e6a2ec1b8bc78901c6f73fa0d1d1205",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "remote_branch_delete_without_closeout",
+        "remote_branch_cleanup_without_closeout_overclaim"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "production_rollback_executed",
+    "unscoped_cleanup_authorized",
+    "remote_branch_cleanup_without_closeout",
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ],
+  "finalPostureRecommendation": "H09_RECOVERY_EXECUTION_FIXTURE_BACKED"
+}

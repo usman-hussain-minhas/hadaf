@@ -1,0 +1,40 @@
+{
+  "schema_version": "hadaf_h09_recovery_execution_v1",
+  "execution_id": "h09-broad-cleanup",
+  "mode": "execution_record",
+  "planner_decision": "plan_ready",
+  "recovery_action": "cleanup",
+  "failure_class": "deterministic_fixture_correction",
+  "unsafe_state": false,
+  "evidence": {
+    "durable_output_ref": "artifact://h09/recovery/cleanup-output.json",
+    "durable_output_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+    "evidence_manifest_ref": "artifact://h09/recovery/cleanup-manifest.json",
+    "evidence_manifest_sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+    "transient_only": false
+  },
+  "rollback": {
+    "required": false,
+    "route": "none",
+    "evidence_preserving": true,
+    "production_rollback": false
+  },
+  "cleanup": {
+    "broad_cleanup": true,
+    "local_branch_delete": true,
+    "remote_branch_delete": false,
+    "closeout_complete": true,
+    "worktree_cleanup": true,
+    "exact_scope": []
+  },
+  "claims": {
+    "unscoped_cleanup_authorized": true
+  },
+  "cannot_claim": [
+    "production_rollback_executed",
+    "unscoped_cleanup_authorized",
+    "remote_branch_cleanup_without_closeout",
+    "stable_agents",
+    "mechanically_independent_agents"
+  ]
+}

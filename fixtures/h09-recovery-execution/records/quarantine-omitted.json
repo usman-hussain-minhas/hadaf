@@ -1,0 +1,44 @@
+{
+  "schema_version": "hadaf_h09_recovery_execution_v1",
+  "execution_id": "h09-quarantine-omitted",
+  "mode": "execution_record",
+  "planner_decision": "plan_ready",
+  "recovery_action": "quarantine",
+  "failure_class": "deterministic_fixture_correction",
+  "unsafe_state": true,
+  "evidence": {
+    "durable_output_ref": "artifact://h09/recovery/quarantine-omitted-output.json",
+    "durable_output_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "evidence_manifest_ref": "artifact://h09/recovery/quarantine-omitted-manifest.json",
+    "evidence_manifest_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+    "transient_only": false
+  },
+  "quarantine": {
+    "required": true,
+    "performed": false,
+    "quarantine_ref": "artifact://h09/recovery/missing-quarantine.json",
+    "quarantine_sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+  },
+  "rollback": {
+    "required": false,
+    "route": "none",
+    "evidence_preserving": true,
+    "production_rollback": false
+  },
+  "cleanup": {
+    "broad_cleanup": false,
+    "local_branch_delete": false,
+    "remote_branch_delete": false,
+    "closeout_complete": true,
+    "worktree_cleanup": false,
+    "exact_scope": []
+  },
+  "claims": {},
+  "cannot_claim": [
+    "production_rollback_executed",
+    "unscoped_cleanup_authorized",
+    "remote_branch_cleanup_without_closeout",
+    "stable_agents",
+    "mechanically_independent_agents"
+  ]
+}
