@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "policy_id": "valid-h07-policy",
+  "claim_classes": [
+    "P0_authority",
+    "P1_static",
+    "P2_domain",
+    "P5_proof_engine"
+  ],
+  "evidence_classes": [
+    "authority_hash",
+    "product_sha",
+    "tree_hash",
+    "evidence_manifest_hash",
+    "negative_fixture"
+  ],
+  "eligibility_rules": [
+    {
+      "claim_class": "P5_proof_engine",
+      "minimum_evidence_classes": [
+        "product_sha",
+        "tree_hash",
+        "evidence_manifest_hash",
+        "negative_fixture"
+      ],
+      "exact_sha_required": true,
+      "negative_fixture_required": true,
+      "allowed_status": "supported"
+    }
+  ],
+  "freshness_policy": {
+    "product_sha_required": true,
+    "tree_hash_required": true,
+    "evidence_manifest_hash_required": true
+  },
+  "cannot_claim": [
+    "release_candidate",
+    "production_ready",
+    "mechanically_independent_audit"
+  ]
+}

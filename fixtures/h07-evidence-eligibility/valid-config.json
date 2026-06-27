@@ -1,0 +1,69 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h07-evidence-eligibility"
+  },
+  "requiredCannotClaim": [
+    "release_candidate",
+    "production_ready",
+    "mechanically_independent_audit"
+  ],
+  "policies": [
+    {
+      "policyId": "valid-h07-policy",
+      "ref": "fixture://policies/valid-policy.json",
+      "sha256": "ccb199022f619fd7fd8c0e9de0f06dbfd0c941e998c943a66f50badd9a171e53",
+      "expectedStatus": "passed"
+    },
+    {
+      "policyId": "missing-exact-sha",
+      "ref": "fixture://policies/missing-exact-sha.json",
+      "sha256": "6ec91d4e17f70ac6d93df08842983416a15d5c28b8659e0534b5341d817fdada",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "exact_sha_requirement_missing"
+      ]
+    },
+    {
+      "policyId": "unknown-evidence-class",
+      "ref": "fixture://policies/unknown-evidence-class.json",
+      "sha256": "b0d03e1ba8bff3bb1c008f14e3dffb6236766f7100b1d55c0c28a2cb63d662ce",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "rule_evidence_class_unknown"
+      ]
+    },
+    {
+      "policyId": "missing-negative-fixture",
+      "ref": "fixture://policies/missing-negative-fixture.json",
+      "sha256": "767edaae3ab1c4f992d190783f6410edb04dcfb32ed3f449955345514e2a32e2",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "negative_fixture_requirement_missing"
+      ]
+    },
+    {
+      "policyId": "production-supported",
+      "ref": "fixture://policies/production-supported.json",
+      "sha256": "63a1cf71e720172926b211d73751db47a6f213f03bf1a3f41fa244fa23f0ece2",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "future_operational_claim_supported"
+      ]
+    },
+    {
+      "policyId": "missing-cannot-claim",
+      "ref": "fixture://policies/missing-cannot-claim.json",
+      "sha256": "7290c2493e03567ef39d9374bd3e575a1994d6cb6aebf99ea9a6f8f248c6e740",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "required_cannot_claim_missing"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "release_candidate",
+    "production_ready",
+    "mechanically_independent_audit"
+  ],
+  "finalPostureRecommendation": "H07_EVIDENCE_ELIGIBILITY_VERIFIED"
+}

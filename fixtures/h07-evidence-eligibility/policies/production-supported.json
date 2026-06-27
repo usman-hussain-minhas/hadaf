@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "policy_id": "production-supported",
+  "claim_classes": [
+    "production_ready"
+  ],
+  "evidence_classes": [
+    "product_sha",
+    "tree_hash",
+    "evidence_manifest_hash",
+    "negative_fixture"
+  ],
+  "eligibility_rules": [
+    {
+      "claim_class": "production_ready",
+      "minimum_evidence_classes": [
+        "product_sha",
+        "tree_hash",
+        "evidence_manifest_hash",
+        "negative_fixture"
+      ],
+      "exact_sha_required": true,
+      "negative_fixture_required": true,
+      "allowed_status": "supported"
+    }
+  ],
+  "freshness_policy": {
+    "product_sha_required": true,
+    "tree_hash_required": true,
+    "evidence_manifest_hash_required": true
+  },
+  "cannot_claim": [
+    "release_candidate",
+    "production_ready",
+    "mechanically_independent_audit"
+  ]
+}
