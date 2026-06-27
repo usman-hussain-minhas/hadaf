@@ -1,0 +1,107 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h10-learning-ingestion/records"
+  },
+  "currentProductSha": "30cda26b3623ca61ec2951aab2a90a25f23b5999",
+  "scenarios": [
+    {
+      "scenarioId": "valid-pr-learning",
+      "recordRef": "fixture://valid-pr-learning.json",
+      "recordSha256": "d0e8f316be4162cd2a0d3dec2e02d30686596fa4816acb5e2e86294e3d533a05",
+      "expectedStatus": "passed",
+      "expected": {
+        "eventType": "product_pr",
+        "terminalOutcome": "merged",
+        "durableEffectType": "fixture",
+        "evidenceRefCount": 2
+      }
+    },
+    {
+      "scenarioId": "valid-ffet-learning",
+      "recordRef": "fixture://valid-ffet-learning.json",
+      "recordSha256": "9ae6a5faa016ae98c13575d42f6c92fba753416eb08471b3c687be7c0cba39ce",
+      "expectedStatus": "passed",
+      "expected": {
+        "eventType": "ffet",
+        "terminalOutcome": "complete",
+        "durableEffectType": "checklist_item",
+        "evidenceRefCount": 1
+      }
+    },
+    {
+      "scenarioId": "valid-transaction-learning",
+      "recordRef": "fixture://valid-transaction-learning.json",
+      "recordSha256": "d27562f0d4711dfa3694e279f04568e3e89de3740a3f54c5575693e3c55a8bbb",
+      "expectedStatus": "passed",
+      "expected": {
+        "eventType": "control_transaction",
+        "terminalOutcome": "complete",
+        "durableEffectType": "verifier_rule",
+        "evidenceRefCount": 1
+      }
+    },
+    {
+      "scenarioId": "missing-closeout",
+      "recordRef": "fixture://missing-closeout.json",
+      "recordSha256": "ee279a63d36f2158c63e32544ec5f0b4f2f46adc5c5cfd933030c87ba236ece4",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "closeout_missing"
+      ]
+    },
+    {
+      "scenarioId": "missing-evidence-hash",
+      "recordRef": "fixture://missing-evidence-hash.json",
+      "recordSha256": "efae0567e9cb426ac170448089c8327db50d77aba03bd9c508f9f5ca7c1e1ed5",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "evidence_hash_invalid"
+      ]
+    },
+    {
+      "scenarioId": "stale-product-sha",
+      "recordRef": "fixture://stale-product-sha.json",
+      "recordSha256": "55f85643ff3ad67edb31b7b3094423536164a5e49be1de9ba951a60f3342c7c5",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "source_event_product_sha_stale"
+      ]
+    },
+    {
+      "scenarioId": "lesson-without-durable-effect",
+      "recordRef": "fixture://lesson-without-durable-effect.json",
+      "recordSha256": "d823ddce198861c7d1a459b96e2e0a66cd85ba827d3c62dd2c62ef3299255fb1",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "durable_effect_missing"
+      ]
+    },
+    {
+      "scenarioId": "generated-status-authority",
+      "recordRef": "fixture://generated-status-authority.json",
+      "recordSha256": "68c228f15f047d390035c7ed0b250d78f629c9b9f26e26a751c5229be12e3397",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "generated_status_authority_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "private-metadata-residue",
+      "recordRef": "fixture://private-metadata-residue.json",
+      "recordSha256": "e16811c50c85bd2a9c96fdb1dc47972bdd6fc90df948f4f402b51e695d5bc94e",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "private_metadata_detected"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "H10_learning_engine_implemented",
+    "stable_agents",
+    "globally_qualified_agents",
+    "independently_qualified_agents",
+    "model_weights_updated",
+    "automated_model_updating"
+  ],
+  "finalPostureRecommendation": "H10_TERMINAL_LEARNING_INGESTION_FIXTURE_BACKED"
+}

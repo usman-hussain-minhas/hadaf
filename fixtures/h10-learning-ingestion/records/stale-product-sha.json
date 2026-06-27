@@ -1,0 +1,50 @@
+{
+  "schema_version": "hadaf_h10_terminal_learning_v1",
+  "learning_id": "H10-LEARNING-STALE-PRODUCT-SHA-001",
+  "source_event": {
+    "event_type": "product_pr",
+    "ref": "pr://79",
+    "sha256": "2121212121212121212121212121212121212121212121212121212121212121",
+    "product_sha": "b722001a0301ac62c3a9c68a54410216104d0b0f",
+    "terminal_outcome": "merged"
+  },
+  "closeout": {
+    "ref": "artifact://closeout.json",
+    "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "status": "closeout_complete"
+  },
+  "evidence": {
+    "refs": [
+      {
+        "ref": "artifact://validation.json",
+        "sha256": "2323232323232323232323232323232323232323232323232323232323232323",
+        "purpose": "validation"
+      }
+    ]
+  },
+  "lesson": {
+    "summary": "This record intentionally binds to a stale product SHA.",
+    "durable_effect": {
+      "effect_type": "stop_condition",
+      "ref": "artifact://stale-sha-stop-condition.json",
+      "sha256": "2424242424242424242424242424242424242424242424242424242424242424"
+    }
+  },
+  "non_degradation": {
+    "ref": "artifact://quality-report.json",
+    "sha256": "2525252525252525252525252525252525252525252525252525252525252525"
+  },
+  "authority": {
+    "generated_status_used_as_authority": false
+  },
+  "claims": {
+    "all_future_mistakes_prevented": false,
+    "stable_agents": false,
+    "model_weights_updated": false
+  },
+  "cannot_claim": [
+    "stable_agents",
+    "model_weights_updated",
+    "automated_model_updating"
+  ]
+}

@@ -166,6 +166,22 @@ export {
   type H10VerifiedMistakeLedgerRef
 } from "./h10/mistake-ledger.js";
 export {
+  verifyH10LearningIngestionConfig,
+  type H10DurableEffectType,
+  type H10ExpectedLearningIngestionStatus,
+  type H10ExpectedLearningRecord,
+  type H10LearningIngestionConfig,
+  type H10LearningIngestionFinding,
+  type H10LearningIngestionReport,
+  type H10LearningIngestionScenarioExpectation,
+  type H10LearningIngestionScenarioResult,
+  type H10LearningIngestionStatus,
+  type H10LearningIngestionSummary,
+  type H10TerminalLearningEventType,
+  type H10TerminalOutcome,
+  type H10VerifiedLearningRef
+} from "./h10/learning-ingestion.js";
+export {
   verifyProductPreviewConfig,
   type ProductPreviewConfig,
   type ProductPreviewFinding,

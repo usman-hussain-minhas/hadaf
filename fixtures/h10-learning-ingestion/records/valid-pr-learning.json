@@ -1,0 +1,55 @@
+{
+  "schema_version": "hadaf_h10_terminal_learning_v1",
+  "learning_id": "H10-LEARNING-VALID-PR-001",
+  "source_event": {
+    "event_type": "product_pr",
+    "ref": "pr://80",
+    "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "product_sha": "30cda26b3623ca61ec2951aab2a90a25f23b5999",
+    "terminal_outcome": "merged"
+  },
+  "closeout": {
+    "ref": "artifact://h10-f01-closeout.json",
+    "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "status": "closeout_complete"
+  },
+  "evidence": {
+    "refs": [
+      {
+        "ref": "artifact://h10-f01-validation.json",
+        "sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "purpose": "validation"
+      },
+      {
+        "ref": "artifact://h10-f01-learning.json",
+        "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+        "purpose": "terminal_learning"
+      }
+    ]
+  },
+  "lesson": {
+    "summary": "Expected negative-calibration findings must not be counted as true blocking findings.",
+    "durable_effect": {
+      "effect_type": "fixture",
+      "ref": "fixture://valid-pr-learning.json",
+      "sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+    }
+  },
+  "non_degradation": {
+    "ref": "artifact://quality-report.json",
+    "sha256": "6666666666666666666666666666666666666666666666666666666666666666"
+  },
+  "authority": {
+    "generated_status_used_as_authority": false
+  },
+  "claims": {
+    "all_future_mistakes_prevented": false,
+    "stable_agents": false,
+    "model_weights_updated": false
+  },
+  "cannot_claim": [
+    "stable_agents",
+    "model_weights_updated",
+    "automated_model_updating"
+  ]
+}
