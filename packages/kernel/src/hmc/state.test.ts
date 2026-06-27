@@ -11,19 +11,24 @@ test("derives a valid HMC fixture state with classified stale generated state", 
   assert.equal(report.classified_mismatches.length, 1);
   assert.equal(report.view.project.name, "HADAF v1");
   assert.equal(report.view.maturitySummary.fixture_backed > 0, true);
-  assert.equal(report.final_posture_recommendation, "H05_AGENT_FOUNDATION_ACTIVE_FIXTURE_BACKED");
+  assert.equal(report.final_posture_recommendation, "H06_RUNTIME_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED");
   assert.equal(report.view.h03Projection?.authority, "derived_view_only");
   assert.equal(report.view.h03Projection?.deliveryConstitution.approvalStatus, "for_human_review");
   assert.equal(report.view.h03Projection?.deliveryConstitution.executionAuthorized, false);
   assert.equal(report.view.h04Projection?.authority, "derived_view_only");
   assert.equal(report.view.h04Projection?.finalizer.successorGate, "conditional_go");
   assert.equal(report.view.h05Projection?.authority, "derived_view_only");
-  assert.equal(report.view.h05Projection?.box.assuranceStatus, "pending");
+  assert.equal(report.view.h05Projection?.box.assuranceStatus, "complete");
+  assert.equal(report.view.h06Projection?.authority, "derived_view_only");
+  assert.equal(report.view.h06Projection?.runtime.layoutStatus, "verified");
+  assert.equal(report.view.h06Projection?.runner.liveProviderStatus, "not_claimed");
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h03_stage:H03-F05" && ref.status === "closeout_complete"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h03_stage:H03-F06" && ref.status === "closeout_complete"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h04_ffet:H04-F05" && ref.status === "closeout_complete"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h04_ffet:H04-F06" && ref.status === "closeout_complete"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h05_agent:codex.bootstrap" && ref.status === "fixture_projected"), true);
+  assert.equal(report.verified_refs.some((ref) => ref.ref === "h06_runtime:worktree-registry" && ref.status === "verified"), true);
+  assert.equal(report.verified_refs.some((ref) => ref.ref === "h06_runtime:pod-scheduler" && ref.status === "verified"), true);
   assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04" && ffet.status === "active"), false);
   assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04-R1" && ffet.status === "verified"), true);
 });
@@ -58,7 +63,7 @@ test("fails generated state authority overclaims", () => {
         maturity: "mocked"
       }
     ],
-    classifiedMismatches: []
+    classifiedMismatches: [...(validConfig().classifiedMismatches ?? [])]
   });
 
   assert.equal(report.status, "failed");
@@ -310,6 +315,108 @@ test("fails H05 projection when precise cannot_claim entries are missing", () =>
   assertFinding(report, "missing_h05_projection_cannot_claim");
 });
 
+test("fails H06 projection authority, maturity, live, persistent, and conductor overclaims", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h06Projection: {
+      ...validConfig().h06Projection!,
+      claimsAuthority: true,
+      claimLiveRuntime: true,
+      claimPersistence: true,
+      claimH08Conductor: true,
+      claimMechanicalIndependence: true,
+      claimProductionOrchestration: true,
+      maturity: "persistent",
+      runner: {
+        ...validConfig().h06Projection!.runner,
+        liveProviderStatus: "claimed",
+        productionActivationStatus: "claimed"
+      }
+    }
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "h06_projection_claims_authority");
+  assertFinding(report, "h06_projection_maturity_overclaim");
+  assertFinding(report, "h06_live_runtime_overclaim");
+  assertFinding(report, "h06_persistence_overclaim");
+  assertFinding(report, "h06_h08_conductor_overclaim");
+  assertFinding(report, "h06_mechanical_independence_overclaim");
+  assertFinding(report, "h06_production_orchestration_overclaim");
+  assertFinding(report, "h06_live_provider_overclaim");
+  assertFinding(report, "h06_production_activation_overclaim");
+});
+
+test("fails stale or missing H06 runtime refs without visible classification", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h06Projection: {
+      ...validConfig().h06Projection!,
+      worktrees: [
+        {
+          ...validConfig().h06Projection!.worktrees[0]!,
+          evidenceStatus: "missing",
+          freshness: "missing"
+        }
+      ],
+      checkpoints: [
+        {
+          ...validConfig().h06Projection!.checkpoints[0]!,
+          freshness: "stale"
+        }
+      ]
+    },
+    classifiedMismatches: [...(validConfig().classifiedMismatches ?? [])]
+  });
+
+  assert.equal(report.status, "failed");
+  assert.equal(findings(report, "unclassified_state_mismatch"), 3);
+});
+
+test("passes H06 stale or missing runtime refs when visibly classified", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h06Projection: {
+      ...validConfig().h06Projection!,
+      worktrees: [
+        {
+          ...validConfig().h06Projection!.worktrees[0]!,
+          evidenceStatus: "missing",
+          freshness: "missing"
+        }
+      ]
+    },
+    classifiedMismatches: [
+      ...(validConfig().classifiedMismatches ?? []),
+      {
+        kind: "h06_runtime_ref_not_verified",
+        ref: "h06_runtime:worktree-registry",
+        classification: "missing",
+        detail: "Fixture intentionally projects a missing worktree ref."
+      },
+      {
+        kind: "h06_runtime_ref_not_fresh",
+        ref: "h06_runtime:worktree-registry",
+        classification: "missing",
+        detail: "Fixture intentionally projects a missing worktree ref."
+      }
+    ]
+  });
+
+  assert.equal(report.status, "passed");
+  assert.equal(report.classified_mismatches.some((mismatch) => mismatch.ref === "h06_runtime:worktree-registry"), true);
+});
+
+test("fails H06 projection when precise cannot_claim entries are missing", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    cannotClaim: ["live_github_adapter_implemented", "HMC_authoritative_state"]
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "missing_h06_projection_cannot_claim");
+});
+
 test("fails private paths in state config", () => {
   const report = deriveHmcStateConfig({
     ...validConfig(),
@@ -336,7 +443,7 @@ function validConfig(): HmcStateConfig {
     project: {
       id: "hadaf",
       name: "HADAF v1",
-      posture: "HADAF_H01_H02_FOUNDATION_IMPLEMENTED_AND_BOUNDEDLY_VERIFIED",
+      posture: "H06_RUNTIME_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED",
       maturity: "fixture_backed"
     },
     boxes: [
@@ -365,14 +472,21 @@ function validConfig(): HmcStateConfig {
         name: "Lifecycle State and Run Ledger",
         status: "conditional_go_to_h05",
         maturity: "fixture_backed",
-        debt: ["h05_box_assurance_pending", "h06_not_implemented"]
+        debt: ["successor_debt_classified"]
       },
       {
         id: "H05",
         name: "Agent Registry and Circuit Breakers",
+        status: "conditional_go_to_h06",
+        maturity: "fixture_backed",
+        debt: ["runtime_agent_execution_not_implemented"]
+      },
+      {
+        id: "H06",
+        name: "Worktree, Lock, Checkpoint, and Pod Scheduler",
         status: "product_pipeline_active",
         maturity: "fixture_backed",
-        debt: ["box_assurance_pending", "runtime_agent_execution_not_implemented"]
+        debt: ["box_assurance_pending", "live_runtime_execution_not_implemented"]
       }
     ],
     ffets: [
@@ -505,6 +619,42 @@ function validConfig(): HmcStateConfig {
       {
         id: "H05-F04",
         title: "HMC agent projection",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H06-F00",
+        title: "Resource limits and quota controller",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H06-F01",
+        title: "Worktree lifecycle and absolute cwd enforcement",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H06-F02",
+        title: "Locks, checkpoints, and quarantine",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H06-F03",
+        title: "Pod scheduler and serial fallback",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H06-F04",
+        title: "Local lifecycle runner foundation",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H06-F05",
+        title: "HMC runtime projection",
         status: "active",
         maturity: "fixture_backed"
       }
@@ -527,6 +677,18 @@ function validConfig(): HmcStateConfig {
           "runtime_upskill_enforcement",
           "HMC_authoritative_state"
         ]
+      },
+      {
+        id: "h06_hmc_runtime_projection",
+        status: "passed",
+        maturity: "fixture_backed",
+        cannotClaim: [
+          "HMC_authoritative_state",
+          "live_autonomous_worktree_orchestration",
+          "live_parallel_pod_execution",
+          "live_lifecycle_runner_execution",
+          "persistent_state_store_implemented"
+        ]
       }
     ],
     evidence: [
@@ -538,6 +700,12 @@ function validConfig(): HmcStateConfig {
       },
       {
         id: "H05-F03",
+        status: "verified",
+        maturity: "fixture_backed",
+        required: true
+      },
+      {
+        id: "H06-F04",
         status: "verified",
         maturity: "fixture_backed",
         required: true
@@ -657,15 +825,15 @@ function validConfig(): HmcStateConfig {
     },
     h05Projection: {
       id: "H05",
-      status: "product_pipeline_active",
+      status: "conditional_go_to_h06",
       maturity: "fixture_backed",
       authority: "derived_view_only",
       freshness: "fresh",
       box: {
         id: "H05",
-        status: "product_pipeline_active",
+        status: "conditional_go_to_h06",
         maturity: "fixture_backed",
-        assuranceStatus: "pending"
+        assuranceStatus: "complete"
       },
       agents: [
         h05Agent("codex.bootstrap", "Bootstrap Execution Adapter"),
@@ -676,7 +844,50 @@ function validConfig(): HmcStateConfig {
         h05Prerequisite("H05-F00"),
         h05Prerequisite("H05-F01"),
         h05Prerequisite("H05-F02"),
-        h05Prerequisite("H05-F03")
+        h05Prerequisite("H05-F03"),
+        h05Prerequisite("H05-F04")
+      ]
+    },
+    h06Projection: {
+      id: "H06",
+      status: "product_pipeline_active",
+      maturity: "fixture_backed",
+      authority: "derived_view_only",
+      freshness: "fresh",
+      box: {
+        id: "H06",
+        status: "product_pipeline_active",
+        maturity: "fixture_backed",
+        assuranceStatus: "pending"
+      },
+      runtime: {
+        status: "fixture_projected",
+        maturity: "fixture_backed",
+        layoutStatus: "verified",
+        recordStatus: "verified",
+        cleanupStatus: "verified",
+        freshness: "fresh"
+      },
+      worktrees: [h06RuntimeRef("worktree-registry", "Worktree registry")],
+      locks: [h06RuntimeRef("write-locks", "Write locks")],
+      checkpoints: [h06RuntimeRef("checkpoint-chain", "Checkpoint chain")],
+      quarantines: [h06RuntimeRef("quarantine-records", "Quarantine records")],
+      pods: [h06RuntimeRef("pod-scheduler", "Pod scheduler")],
+      runner: {
+        status: "fixture_projected",
+        maturity: "fixture_backed",
+        emissionStatus: "verified",
+        restartReconcileStatus: "verified",
+        liveProviderStatus: "not_claimed",
+        productionActivationStatus: "not_claimed",
+        freshness: "fresh"
+      },
+      prerequisiteCloseouts: [
+        h06Prerequisite("H06-F00"),
+        h06Prerequisite("H06-F01"),
+        h06Prerequisite("H06-F02"),
+        h06Prerequisite("H06-F03"),
+        h06Prerequisite("H06-F04")
       ]
     },
     git: {
@@ -718,9 +929,15 @@ function validConfig(): HmcStateConfig {
       "mechanically_independent_agents",
       "independent_quality_auditor_qualified",
       "runtime_circuit_breaker_enforcement",
-      "runtime_upskill_enforcement"
+      "runtime_upskill_enforcement",
+      "live_autonomous_worktree_orchestration",
+      "live_parallel_pod_execution",
+      "live_lifecycle_runner_execution",
+      "H08_git_ci_pr_merge_conductor_implemented",
+      "production_resource_orchestration",
+      "h06_box_assurance_complete"
     ],
-    finalPostureRecommendation: "H05_AGENT_FOUNDATION_ACTIVE_FIXTURE_BACKED"
+    finalPostureRecommendation: "H06_RUNTIME_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED"
   };
 }
 
@@ -754,6 +971,29 @@ function h05Agent(agentId: string, title: string): NonNullable<HmcStateConfig["h
 }
 
 function h05Prerequisite(id: string): NonNullable<HmcStateConfig["h05Projection"]>["prerequisiteCloseouts"][number] {
+  return {
+    id,
+    status: "closeout_complete",
+    closeoutStatus: "closeout_complete",
+    evidenceStatus: "verified",
+    terminalLearningStatus: "complete"
+  };
+}
+
+function h06RuntimeRef(id: string, title: string): NonNullable<HmcStateConfig["h06Projection"]>["worktrees"][number] {
+  return {
+    id,
+    title,
+    status: "fixture_projected",
+    maturity: "fixture_backed",
+    evidenceStatus: "verified",
+    truthSource: "fixture",
+    freshness: "fresh",
+    required: true
+  };
+}
+
+function h06Prerequisite(id: string): NonNullable<HmcStateConfig["h06Projection"]>["prerequisiteCloseouts"][number] {
   return {
     id,
     status: "closeout_complete",

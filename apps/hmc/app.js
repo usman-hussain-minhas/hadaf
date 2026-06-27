@@ -149,6 +149,58 @@ async function loadFixtureState() {
       })
     );
   }
+  const h06Status = document.querySelector("[data-state-field='h06-status']");
+  if (h06Status) {
+    h06Status.textContent = state.h06Projection.status;
+  }
+  const h06Runtime = document.querySelector("[data-state-field='h06-runtime']");
+  if (h06Runtime) {
+    h06Runtime.textContent = state.h06Projection.runtimeStatus;
+  }
+  const h06Worktrees = document.querySelector("[data-state-field='h06-worktrees']");
+  if (h06Worktrees) {
+    h06Worktrees.textContent = state.h06Projection.worktreeStatus;
+  }
+  const h06Locks = document.querySelector("[data-state-field='h06-locks']");
+  if (h06Locks) {
+    h06Locks.textContent = state.h06Projection.lockStatus;
+  }
+  const h06Checkpoints = document.querySelector("[data-state-field='h06-checkpoints']");
+  if (h06Checkpoints) {
+    h06Checkpoints.textContent = state.h06Projection.checkpointStatus;
+  }
+  const h06Quarantine = document.querySelector("[data-state-field='h06-quarantine']");
+  if (h06Quarantine) {
+    h06Quarantine.textContent = state.h06Projection.quarantineStatus;
+  }
+  const h06Pods = document.querySelector("[data-state-field='h06-pods']");
+  if (h06Pods) {
+    h06Pods.textContent = state.h06Projection.podStatus;
+  }
+  const h06Runner = document.querySelector("[data-state-field='h06-runner']");
+  if (h06Runner) {
+    h06Runner.textContent = state.h06Projection.runnerStatus;
+  }
+  const h06ActiveFfet = document.querySelector("[data-state-field='h06-active-ffet']");
+  if (h06ActiveFfet) {
+    h06ActiveFfet.textContent = state.h06Projection.activeFfet;
+  }
+  const h06ProjectionAuthority = document.querySelector("[data-state-field='h06-projection-authority']");
+  if (h06ProjectionAuthority) {
+    h06ProjectionAuthority.textContent = state.h06Projection.authority;
+  }
+  const h06RuntimeList = document.querySelector("[data-state-field='h06-runtime-list']");
+  if (h06RuntimeList) {
+    h06RuntimeList.replaceChildren(
+      ...state.h06Projection.runtimeRefs.map((runtimeRef) => {
+        const item = document.createElement("li");
+        item.innerHTML = `<strong></strong><span></span>`;
+        item.querySelector("strong").textContent = runtimeRef.title;
+        item.querySelector("span").textContent = runtimeRef.status;
+        return item;
+      })
+    );
+  }
   const mismatch = document.querySelector("[data-state-field='classified-mismatch']");
   if (mismatch) {
     mismatch.textContent = state.classifiedMismatch;

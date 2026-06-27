@@ -2,7 +2,7 @@
   "project": {
     "id": "hadaf",
     "name": "HADAF v1",
-    "posture": "H05_AGENT_FOUNDATION_ACTIVE_FIXTURE_BACKED",
+    "posture": "H06_RUNTIME_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED",
     "maturity": "fixture_backed"
   },
   "boxes": [
@@ -37,18 +37,26 @@
       "status": "conditional_go_to_h05",
       "maturity": "fixture_backed",
       "debt": [
-        "h05_box_assurance_pending",
-        "h06_not_implemented"
+        "successor_debt_classified"
       ]
     },
     {
       "id": "H05",
       "name": "Agent Registry and Circuit Breakers",
+      "status": "conditional_go_to_h06",
+      "maturity": "fixture_backed",
+      "debt": [
+        "runtime_agent_execution_not_implemented"
+      ]
+    },
+    {
+      "id": "H06",
+      "name": "Worktree, Lock, Checkpoint, and Pod Scheduler",
       "status": "product_pipeline_active",
       "maturity": "fixture_backed",
       "debt": [
         "box_assurance_pending",
-        "runtime_agent_execution_not_implemented"
+        "live_runtime_execution_not_implemented"
       ]
     }
   ],
@@ -194,6 +202,42 @@
     {
       "id": "H05-F04",
       "title": "HMC agent projection",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H06-F00",
+      "title": "Resource limits and quota controller",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H06-F01",
+      "title": "Worktree lifecycle and absolute cwd enforcement",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H06-F02",
+      "title": "Locks, checkpoints, and quarantine",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H06-F03",
+      "title": "Pod scheduler and serial fallback",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H06-F04",
+      "title": "Local lifecycle runner foundation",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H06-F05",
+      "title": "HMC runtime projection",
       "status": "active",
       "maturity": "fixture_backed"
     }
@@ -250,6 +294,18 @@
         "runtime_upskill_enforcement",
         "HMC_authoritative_state"
       ]
+    },
+    {
+      "id": "h06_hmc_runtime_projection",
+      "status": "passed",
+      "maturity": "fixture_backed",
+      "cannotClaim": [
+        "HMC_authoritative_state",
+        "live_autonomous_worktree_orchestration",
+        "live_parallel_pod_execution",
+        "live_lifecycle_runner_execution",
+        "persistent_state_store_implemented"
+      ]
     }
   ],
   "evidence": [
@@ -279,6 +335,12 @@
     },
     {
       "id": "H05-F03",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "required": true
+    },
+    {
+      "id": "H06-F04",
       "status": "verified",
       "maturity": "fixture_backed",
       "required": true
@@ -446,15 +508,15 @@
   },
   "h05Projection": {
     "id": "H05",
-    "status": "product_pipeline_active",
+    "status": "conditional_go_to_h06",
     "maturity": "fixture_backed",
     "authority": "derived_view_only",
     "freshness": "fresh",
     "box": {
       "id": "H05",
-      "status": "product_pipeline_active",
+      "status": "conditional_go_to_h06",
       "maturity": "fixture_backed",
-      "assuranceStatus": "pending"
+      "assuranceStatus": "complete"
     },
     "agents": [
       {
@@ -528,6 +590,140 @@
         "closeoutStatus": "closeout_complete",
         "evidenceStatus": "verified",
         "terminalLearningStatus": "complete"
+      },
+      {
+        "id": "H05-F04",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      }
+    ]
+  },
+  "h06Projection": {
+    "id": "H06",
+    "status": "product_pipeline_active",
+    "maturity": "fixture_backed",
+    "authority": "derived_view_only",
+    "freshness": "fresh",
+    "box": {
+      "id": "H06",
+      "status": "product_pipeline_active",
+      "maturity": "fixture_backed",
+      "assuranceStatus": "pending"
+    },
+    "runtime": {
+      "status": "fixture_projected",
+      "maturity": "fixture_backed",
+      "layoutStatus": "verified",
+      "recordStatus": "verified",
+      "cleanupStatus": "verified",
+      "freshness": "fresh"
+    },
+    "worktrees": [
+      {
+        "id": "worktree-registry",
+        "title": "Worktree registry",
+        "status": "fixture_projected",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      }
+    ],
+    "locks": [
+      {
+        "id": "write-locks",
+        "title": "Write locks",
+        "status": "fixture_projected",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      }
+    ],
+    "checkpoints": [
+      {
+        "id": "checkpoint-chain",
+        "title": "Checkpoint chain",
+        "status": "fixture_projected",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      }
+    ],
+    "quarantines": [
+      {
+        "id": "quarantine-records",
+        "title": "Quarantine records",
+        "status": "fixture_projected",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      }
+    ],
+    "pods": [
+      {
+        "id": "pod-scheduler",
+        "title": "Pod scheduler",
+        "status": "fixture_projected",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      }
+    ],
+    "runner": {
+      "status": "fixture_projected",
+      "maturity": "fixture_backed",
+      "emissionStatus": "verified",
+      "restartReconcileStatus": "verified",
+      "liveProviderStatus": "not_claimed",
+      "productionActivationStatus": "not_claimed",
+      "freshness": "fresh"
+    },
+    "prerequisiteCloseouts": [
+      {
+        "id": "H06-F00",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      },
+      {
+        "id": "H06-F01",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      },
+      {
+        "id": "H06-F02",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      },
+      {
+        "id": "H06-F03",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      },
+      {
+        "id": "H06-F04",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
       }
     ]
   },
@@ -576,9 +772,15 @@
     "independent_quality_auditor_qualified",
     "runtime_circuit_breaker_enforcement",
     "runtime_upskill_enforcement",
+    "live_autonomous_worktree_orchestration",
+    "live_parallel_pod_execution",
+    "live_lifecycle_runner_execution",
+    "H08_git_ci_pr_merge_conductor_implemented",
+    "production_resource_orchestration",
+    "h06_box_assurance_complete",
     "self_hosting_ready",
     "production_ready",
     "stable_agents"
   ],
-  "finalPostureRecommendation": "H05_AGENT_FOUNDATION_ACTIVE_FIXTURE_BACKED"
+  "finalPostureRecommendation": "H06_RUNTIME_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED"
 }

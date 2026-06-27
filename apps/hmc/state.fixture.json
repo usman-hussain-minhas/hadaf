@@ -2,9 +2,9 @@
   "adapterStatus": "passed",
   "adapterMaturity": "fixture_backed",
   "projectName": "HADAF v1",
-  "projectPosture": "H05_AGENT_FOUNDATION_ACTIVE_FIXTURE_BACKED",
-  "activeBox": "H05 Agent Registry and Circuit Breakers",
-  "activeFfet": "H05-F04 HMC agent projection",
+  "projectPosture": "H06_RUNTIME_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED",
+  "activeBox": "H06 Worktree, Lock, Checkpoint, and Pod Scheduler",
+  "activeFfet": "H06-F05 HMC runtime projection",
   "h03AssuranceStatus": "H03 Box assurance pending",
   "classifiedMismatch": "generated_state_not_fresh",
   "h03Projection": {
@@ -34,16 +34,16 @@
     "assuranceStatus": "complete"
   },
   "h05Projection": {
-    "status": "product_pipeline_active",
+    "status": "conditional_go_to_h06",
     "authority": "derived_view_only",
-    "boxStatus": "product_pipeline_active",
+    "boxStatus": "conditional_go_to_h06",
     "agentCount": 3,
     "registryStatus": "verified",
     "capabilityStatus": "verified",
     "circuitBreakerStatus": "verified",
     "upskillStatus": "verified",
-    "activeFfet": "H05-F04",
-    "assuranceStatus": "pending",
+    "activeFfet": "H05-F04 closeout_complete",
+    "assuranceStatus": "complete",
     "maturity": "fixture_backed",
     "agents": [
       {
@@ -69,6 +69,46 @@
       }
     ]
   },
+  "h06Projection": {
+    "status": "product_pipeline_active",
+    "authority": "derived_view_only",
+    "boxStatus": "product_pipeline_active",
+    "runtimeStatus": "fixture_projected",
+    "worktreeStatus": "verified",
+    "lockStatus": "verified",
+    "checkpointStatus": "verified",
+    "quarantineStatus": "verified",
+    "podStatus": "verified",
+    "runnerStatus": "verified",
+    "cleanupStatus": "verified",
+    "liveProviderStatus": "not_claimed",
+    "productionActivationStatus": "not_claimed",
+    "activeFfet": "H06-F05",
+    "assuranceStatus": "pending",
+    "maturity": "fixture_backed",
+    "runtimeRefs": [
+      {
+        "title": "Worktree registry",
+        "status": "verified"
+      },
+      {
+        "title": "Write locks",
+        "status": "verified"
+      },
+      {
+        "title": "Checkpoint chain",
+        "status": "verified"
+      },
+      {
+        "title": "Quarantine records",
+        "status": "verified"
+      },
+      {
+        "title": "Pod scheduler",
+        "status": "verified"
+      }
+    ]
+  },
   "cannotClaim": [
     "live_github_adapter_implemented",
     "live_h03_control_adapter_implemented",
@@ -89,6 +129,12 @@
     "independent_quality_auditor_qualified",
     "runtime_circuit_breaker_enforcement",
     "runtime_upskill_enforcement",
+    "live_autonomous_worktree_orchestration",
+    "live_parallel_pod_execution",
+    "live_lifecycle_runner_execution",
+    "H08_git_ci_pr_merge_conductor_implemented",
+    "production_resource_orchestration",
+    "h06_box_assurance_complete",
     "self_hosting_ready",
     "production_ready",
     "stable_agents"

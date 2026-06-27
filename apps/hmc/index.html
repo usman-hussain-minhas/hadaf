@@ -39,6 +39,10 @@
             <span aria-hidden="true">A</span>
             <span>Agents</span>
           </button>
+          <button class="nav-item" type="button" data-view="runtime" aria-pressed="false">
+            <span aria-hidden="true">R</span>
+            <span>Runtime</span>
+          </button>
           <button class="nav-item" type="button" data-view="ffets" aria-pressed="false">
             <span aria-hidden="true">F</span>
             <span>FFETs</span>
@@ -76,16 +80,16 @@
             <section class="panel panel--wide" aria-labelledby="active-box-title">
               <div class="panel-heading">
                 <p class="label">Current Truth</p>
-                <h2 id="active-box-title" data-state-field="active-box">H04 Lifecycle State and Run Ledger</h2>
+                <h2 id="active-box-title" data-state-field="active-box">H06 Worktree, Lock, Checkpoint, and Pod Scheduler</h2>
               </div>
               <div class="status-strip" role="list" aria-label="Box status">
-                <span role="listitem" class="status-pill status-pill--active">H04 lifecycle visible</span>
                 <span role="listitem" class="status-pill">H04 closeout complete</span>
-                <span role="listitem" class="status-pill status-pill--active">H05 agent state visible</span>
-                <span role="listitem" class="status-pill status-pill--warn" data-state-field="h05-active-ffet">H05-F04</span>
+                <span role="listitem" class="status-pill">H05 closeout complete</span>
+                <span role="listitem" class="status-pill status-pill--active">H06 runtime state visible</span>
+                <span role="listitem" class="status-pill status-pill--warn" data-state-field="h06-active-ffet">H06-F05</span>
                 <span role="listitem" class="status-pill status-pill--warn">Box assurance pending</span>
               </div>
-              <p class="summary" data-state-field="project-posture">H05_AGENT_FOUNDATION_ACTIVE_FIXTURE_BACKED</p>
+              <p class="summary" data-state-field="project-posture">H06_RUNTIME_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED</p>
             </section>
 
             <section class="panel" aria-labelledby="truth-title">
@@ -114,9 +118,12 @@
                 <li>mechanically_independent_agents</li>
                 <li>runtime_circuit_breaker_enforcement</li>
                 <li>runtime_upskill_enforcement</li>
+                <li>live_autonomous_worktree_orchestration</li>
+                <li>live_lifecycle_runner_execution</li>
+                <li>H08_git_ci_pr_merge_conductor_implemented</li>
                 <li>HMC_authoritative_state</li>
                 <li>execution_authorization_granted</li>
-                <li>h04_assurance_complete</li>
+                <li>h06_box_assurance_complete</li>
               </ul>
             </section>
 
@@ -147,7 +154,7 @@
             <section class="panel panel--wide" aria-labelledby="h05-title">
               <div class="panel-heading">
                 <p class="label">H05 Projection</p>
-                <h2 id="h05-title" data-state-field="h05-status">product_pipeline_active</h2>
+                <h2 id="h05-title" data-state-field="h05-status">conditional_go_to_h06</h2>
               </div>
               <div class="projection-grid" aria-label="H05 agent projection">
                 <article>
@@ -164,6 +171,30 @@
                   <span class="state-label">Authority</span>
                   <strong data-state-field="h05-projection-authority">derived_view_only</strong>
                   <p>Registry, circuit, and learning authority remain external.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="panel panel--wide" aria-labelledby="h06-title">
+              <div class="panel-heading">
+                <p class="label">H06 Projection</p>
+                <h2 id="h06-title" data-state-field="h06-status">product_pipeline_active</h2>
+              </div>
+              <div class="projection-grid" aria-label="H06 runtime projection">
+                <article>
+                  <span class="state-label">Runtime</span>
+                  <strong data-state-field="h06-runtime">fixture_projected</strong>
+                  <p>Derived from fixture-backed Runtime records.</p>
+                </article>
+                <article>
+                  <span class="state-label">Worktrees</span>
+                  <strong data-state-field="h06-worktrees">verified</strong>
+                  <p>Local disposable worktree state is displayed only.</p>
+                </article>
+                <article>
+                  <span class="state-label">Authority</span>
+                  <strong data-state-field="h06-projection-authority">derived_view_only</strong>
+                  <p>Runtime, Control, and Evidence remain authoritative.</p>
                 </article>
               </div>
             </section>
@@ -229,6 +260,83 @@
           </div>
         </section>
 
+        <section class="view" id="view-runtime" data-view-panel="runtime" aria-labelledby="runtime-title" hidden>
+          <div class="view-heading">
+            <div>
+              <p class="label">Runtime</p>
+              <h1 id="runtime-title">Lifecycle Projection</h1>
+            </div>
+            <span class="maturity maturity--fixture">fixture_backed</span>
+          </div>
+          <div class="dashboard-grid">
+            <section class="panel panel--wide" aria-labelledby="runtime-state-title">
+              <div class="panel-heading">
+                <p class="label">Derived State</p>
+                <h2 id="runtime-state-title">H06 Runtime Projection</h2>
+              </div>
+              <div class="projection-grid" aria-label="Runtime lifecycle controls">
+                <article>
+                  <span class="state-label">Locks</span>
+                  <strong data-state-field="h06-locks">verified</strong>
+                  <p>Write-set protection is fixture-backed.</p>
+                </article>
+                <article>
+                  <span class="state-label">Checkpoints</span>
+                  <strong data-state-field="h06-checkpoints">verified</strong>
+                  <p>Checkpoint chain status is projected, not authoritative.</p>
+                </article>
+                <article>
+                  <span class="state-label">Quarantine</span>
+                  <strong data-state-field="h06-quarantine">verified</strong>
+                  <p>Unsafe cleanup state remains external Runtime truth.</p>
+                </article>
+                <article>
+                  <span class="state-label">Pods</span>
+                  <strong data-state-field="h06-pods">verified</strong>
+                  <p>Serial fallback is visible without H08 conductor claims.</p>
+                </article>
+                <article>
+                  <span class="state-label">Runner</span>
+                  <strong data-state-field="h06-runner">verified</strong>
+                  <p>Fixture-backed local lifecycle runner contract only.</p>
+                </article>
+                <article>
+                  <span class="state-label">Authority</span>
+                  <strong data-state-field="h06-projection-authority">derived_view_only</strong>
+                  <p>HMC never becomes Runtime authority.</p>
+                </article>
+              </div>
+            </section>
+            <section class="panel" aria-labelledby="runtime-list-title">
+              <div class="panel-heading">
+                <p class="label">Runtime Refs</p>
+                <h2 id="runtime-list-title">Classified</h2>
+              </div>
+              <ul class="agent-list" data-state-field="h06-runtime-list" aria-label="Fixture-backed runtime refs">
+                <li><strong>Worktree registry</strong><span>verified</span></li>
+                <li><strong>Write locks</strong><span>verified</span></li>
+                <li><strong>Checkpoint chain</strong><span>verified</span></li>
+                <li><strong>Quarantine records</strong><span>verified</span></li>
+                <li><strong>Pod scheduler</strong><span>verified</span></li>
+              </ul>
+            </section>
+            <section class="panel" aria-labelledby="runtime-boundaries-title">
+              <div class="panel-heading">
+                <p class="label">Cannot Claim</p>
+                <h2 id="runtime-boundaries-title">Preserved</h2>
+              </div>
+              <ul class="tag-list" aria-label="Runtime cannot claim entries">
+                <li>live_autonomous_worktree_orchestration</li>
+                <li>live_parallel_pod_execution</li>
+                <li>live_lifecycle_runner_execution</li>
+                <li>H08_git_ci_pr_merge_conductor_implemented</li>
+                <li>production_resource_orchestration</li>
+                <li>h06_box_assurance_complete</li>
+              </ul>
+            </section>
+          </div>
+        </section>
+
         <section class="view" id="view-boxes" data-view-panel="boxes" aria-labelledby="boxes-title" hidden>
           <div class="view-heading">
             <div>
@@ -272,13 +380,19 @@
               <span role="cell">H04 Lifecycle State and Run Ledger</span>
               <span role="cell"><strong>conditional go</strong></span>
               <span role="cell">fixture-backed lifecycle projection</span>
-              <span role="cell">H06 not implemented</span>
+              <span role="cell">successor debt classified</span>
             </div>
             <div class="table-row" role="row">
               <span role="cell">H05 Agent Registry and Circuit Breakers</span>
-              <span role="cell"><strong>active</strong></span>
+              <span role="cell"><strong>conditional go</strong></span>
               <span role="cell">fixture-backed agent projection</span>
               <span role="cell">runtime enforcement not claimed</span>
+            </div>
+            <div class="table-row" role="row">
+              <span role="cell">H06 Worktree, Lock, Checkpoint, and Pod Scheduler</span>
+              <span role="cell"><strong>active</strong></span>
+              <span role="cell">fixture-backed runtime projection</span>
+              <span role="cell">live orchestration not claimed</span>
             </div>
           </div>
         </section>
@@ -382,9 +496,64 @@
               <strong>Finalize Box verifier</strong>
               <span>closeout complete</span>
             </article>
-            <article class="queue-item is-active">
+            <article class="queue-item is-done">
               <span class="queue-code">H04-F06</span>
               <strong>HMC lifecycle projection</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H05-F00</span>
+              <strong>Agent registry state model</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H05-F01</span>
+              <strong>Capability contracts</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H05-F02</span>
+              <strong>Circuit breakers</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H05-F03</span>
+              <strong>Upskill records</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H05-F04</span>
+              <strong>HMC agent projection</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H06-F00</span>
+              <strong>Resource quotas</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H06-F01</span>
+              <strong>Worktree lifecycle</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H06-F02</span>
+              <strong>Locks, checkpoints, quarantine</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H06-F03</span>
+              <strong>Pod scheduler</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H06-F04</span>
+              <strong>Local lifecycle runner</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-active">
+              <span class="queue-code">H06-F05</span>
+              <strong data-state-field="active-ffet">HMC runtime projection</strong>
               <span>active</span>
             </article>
           </div>
@@ -411,6 +580,8 @@
                 <li><span class="status-dot status-dot--ok"></span> static accessibility smoke</li>
                 <li><span class="status-dot status-dot--ok"></span> H03 projection guard</li>
                 <li><span class="status-dot status-dot--ok"></span> H04 projection guard</li>
+                <li><span class="status-dot status-dot--ok"></span> H05 projection guard</li>
+                <li><span class="status-dot status-dot--ok"></span> H06 runtime projection guard</li>
               </ul>
             </section>
             <section class="panel" aria-labelledby="debt-title">
@@ -424,6 +595,9 @@
                 <li>browser_performance_complete</li>
                 <li>live_h03_control_adapter_implemented</li>
                 <li>h04_fully_implemented</li>
+                <li>live_lifecycle_runner_execution</li>
+                <li>production_resource_orchestration</li>
+                <li>h06_box_assurance_complete</li>
               </ul>
             </section>
           </div>
@@ -449,6 +623,11 @@
               <p>Truth Ledger is <span data-state-field="h04-ledger">fixture_projected</span>; finalizer is <span data-state-field="h04-finalizer">implemented</span>.</p>
             </article>
             <article class="state-card">
+              <span class="state-label">H06</span>
+              <strong data-state-field="h06-status">product_pipeline_active</strong>
+              <p>Runtime is <span data-state-field="h06-runtime">fixture_projected</span>; runner is <span data-state-field="h06-runner">verified</span>.</p>
+            </article>
+            <article class="state-card">
               <span class="state-label">constitution</span>
               <strong data-state-field="constitution-status">boundary_verified</strong>
               <p>Approval remains <span data-state-field="approval-status">for_human_review</span>; execution is <span data-state-field="execution-status">execution_not_authorized</span>.</p>
@@ -471,9 +650,9 @@
           </div>
           <div class="panel panel--wide">
             <div class="decision-row">
-              <span class="status-pill status-pill--warn">H04 assurance pending</span>
-              <strong>H04 lifecycle projection is visible, fixture-backed, and non-authoritative.</strong>
-              <span data-state-field="h04-projection-authority">derived_view_only</span>
+              <span class="status-pill status-pill--warn">H06 assurance pending</span>
+              <strong>H06 runtime projection is visible, fixture-backed, and non-authoritative.</strong>
+              <span data-state-field="h06-projection-authority">derived_view_only</span>
             </div>
             <div class="decision-row">
               <span class="status-pill status-pill--warn">blocked pending Box assurance</span>
