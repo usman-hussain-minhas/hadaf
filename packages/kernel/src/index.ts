@@ -508,3 +508,18 @@ export {
   type H08GitTruthSummary,
   type H08VerifiedGitTruthRef
 } from "./h08/git-truth.js";
+export {
+  verifyH08PrLifecycleConfig,
+  type H08ExpectedPrLifecycleStatus,
+  type H08PrLifecycleConfig,
+  type H08PrLifecycleExpectedRecord,
+  type H08PrLifecycleFinding,
+  type H08PrLifecycleReport,
+  type H08PrLifecycleRole,
+  type H08PrLifecycleScenarioExpectation,
+  type H08PrLifecycleScenarioResult,
+  type H08PrLifecycleStatus,
+  type H08PrLifecycleSummary,
+  type H08PrTerminalState,
+  type H08VerifiedPrLifecycleRef
+} from "./h08/pr-lifecycle.js";

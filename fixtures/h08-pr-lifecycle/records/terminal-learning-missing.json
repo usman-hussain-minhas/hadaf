@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0.0",
+  "lifecycle_id": "terminal-learning-missing",
+  "captured_at": "2026-06-27T06:20:00Z",
+  "pr": {
+    "number": 73,
+    "title": "terminal learning missing fixture",
+    "body": "This fixture should fail terminal learning requirements.",
+    "state": "merged",
+    "is_draft": false,
+    "base_sha": "57231b1a3b7f70cd19929d1d82237afb6ef359cd",
+    "head_sha": "dededededededededededededededededededede",
+    "merge_sha": "efefefefefefefefefefefefefefefefefefefef",
+    "changed_files": [
+      "packages/kernel/src/h08/pr-lifecycle.ts"
+    ]
+  },
+  "work_unit": {
+    "ffet_id": "H08-F02",
+    "role": "product_mutation",
+    "declared_roles": [
+      "product_mutation"
+    ]
+  },
+  "metadata_safety": {
+    "title_scanned": true,
+    "body_scanned": true,
+    "findings": [],
+    "private_metadata_detected": false
+  },
+  "closeout": {
+    "required": true,
+    "ref": "fixture://closeouts/learning-missing.json",
+    "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "status": "closeout_complete"
+  },
+  "terminal_learning": {
+    "required": true,
+    "status": "missing"
+  },
+  "public_attestation": {
+    "pr_body_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "exact_head_sha": "dededededededededededededededededededede",
+    "merge_sha": "efefefefefefefefefefefefefefefefefefefef"
+  },
+  "cannot_claim": [
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ]
+}
