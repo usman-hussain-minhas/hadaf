@@ -614,3 +614,18 @@ export {
   type H09RecoveryPolicySummary,
   type H09VerifiedRecoveryPolicyRef
 } from "./h09/recovery-policy.js";
+export {
+  verifyH09SelfHealPlannerConfig,
+  type H09ExpectedSelfHealPlannerStatus,
+  type H09SelfHealBudgetLimits,
+  type H09SelfHealDecision,
+  type H09SelfHealPlannerConfig,
+  type H09SelfHealPlannerFinding,
+  type H09SelfHealPlannerReport,
+  type H09SelfHealPlannerStatus,
+  type H09SelfHealPlannerSummary,
+  type H09SelfHealScenarioExpectation,
+  type H09SelfHealScenarioResult,
+  type H09SelfHealSeverity,
+  type H09VerifiedSelfHealPlanRef
+} from "./h09/self-heal-planner.js";

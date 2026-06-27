@@ -1,0 +1,92 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h09-self-heal-planner/requests"
+  },
+  "budgets": {
+    "maxSelfHealsPerFfet": 3,
+    "maxSelfHealsPerBox": 10,
+    "maxSelfHealsForFullRun": 30,
+    "repeatedSameClassFailureAfterFfets": 2
+  },
+  "scenarios": [
+    {
+      "scenarioId": "valid-formatting-correction",
+      "requestRef": "fixture://valid-formatting-correction.json",
+      "requestSha256": "6b2a092f05d7dab2c69275a053592ad81dca4c365cbe5dba25e9fb12ed187889",
+      "expectedStatus": "passed",
+      "expectedDecision": "plan_ready",
+      "expectedPlanActions": [
+        "correction_pr",
+        "validation_rerun"
+      ]
+    },
+    {
+      "scenarioId": "schema-authority-gap",
+      "requestRef": "fixture://schema-authority-gap.json",
+      "requestSha256": "e45c141256ecf58b90f9f725f0c28872d24d8fe48ae82c4e6f5db28b10486ddb",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "hard_stop_requires_human_decision",
+        "schema_repair_without_human_decision",
+        "schema_repair_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "secret-exposure",
+      "requestRef": "fixture://secret-exposure.json",
+      "requestSha256": "68d77b95203c17baf85dc741dddd585d2b772a070d5ed3553bbc33c329ffb33f",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "hard_stop_requires_human_decision",
+        "security_repair_without_human_decision",
+        "security_repair_without_hard_stop_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "licence-conflict",
+      "requestRef": "fixture://licence-conflict.json",
+      "requestSha256": "1d0c6e0eeac61d4a37990ef4e645914d8d56f2ce85e9a434f7b35549d399c1b6",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "hard_stop_requires_human_decision",
+        "license_repair_without_human_decision",
+        "license_repair_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "scope-expansion",
+      "requestRef": "fixture://scope-expansion.json",
+      "requestSha256": "1b499219ca4b7baab89b6fd79d995afc008730112f9b0bc0d86e0b6cd2508841",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "hard_stop_requires_human_decision",
+        "scope_expansion_without_human_decision",
+        "scope_expansion_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "repeated-same-class",
+      "requestRef": "fixture://repeated-same-class.json",
+      "requestSha256": "7edf45efa39263086d4cf1a45885c4f10999fe2de433b13047f7b794041ee9da",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "repeated_same_class_systemic_blocker",
+        "free_autonomous_fixing_overclaim"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "free_autonomous_fixing",
+    "authority_repair_without_human_decision",
+    "security_repair_without_hard_stop",
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ],
+  "finalPostureRecommendation": "H09_SELF_HEAL_PLANNER_FIXTURE_BACKED"
+}
