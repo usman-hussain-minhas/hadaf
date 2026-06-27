@@ -1,0 +1,148 @@
+{
+  "schema_version": "hadaf_h09_recovery_policy_v1",
+  "policy_id": "h09-valid-recovery-policy",
+  "mode": "policy",
+  "budgets": {
+    "max_self_heals_per_ffet": 3,
+    "max_self_heals_per_box": 10,
+    "max_self_heals_for_full_h07_h12_run": 30,
+    "repeated_same_class_failure_after_two_ffets": "systemic_blocker",
+    "exhausted_budget_outcome": "SELF_HEAL_EXHAUSTED_HARD_STOP"
+  },
+  "allowed_recovery_actions": [
+    {
+      "action_id": "correction_pr",
+      "deterministic": true,
+      "scoped": true,
+      "evidence_preserving": true,
+      "allowed": true
+    },
+    {
+      "action_id": "append_only_supersession",
+      "deterministic": true,
+      "scoped": true,
+      "evidence_preserving": true,
+      "allowed": true
+    },
+    {
+      "action_id": "quarantine",
+      "deterministic": true,
+      "scoped": true,
+      "evidence_preserving": true,
+      "allowed": true
+    },
+    {
+      "action_id": "validation_rerun",
+      "deterministic": true,
+      "scoped": true,
+      "evidence_preserving": true,
+      "allowed": true
+    },
+    {
+      "action_id": "rollback_routing",
+      "deterministic": true,
+      "scoped": true,
+      "evidence_preserving": true,
+      "allowed": true
+    }
+  ],
+  "hard_stop_classes": [
+    {
+      "class_id": "authority_conflict",
+      "severity": "critical",
+      "self_heal_allowed": false,
+      "human_decision_required": true,
+      "hard_stop": true,
+      "evidence_preserving_required": true,
+      "cannot_claim": "authority_repair_without_human_decision"
+    },
+    {
+      "class_id": "schema_authority_gap",
+      "severity": "critical",
+      "self_heal_allowed": false,
+      "human_decision_required": true,
+      "hard_stop": true,
+      "evidence_preserving_required": true,
+      "cannot_claim": "schema_semantics_repair_without_human_decision"
+    },
+    {
+      "class_id": "secret_or_private_data_exposure",
+      "severity": "critical",
+      "self_heal_allowed": false,
+      "human_decision_required": true,
+      "hard_stop": true,
+      "evidence_preserving_required": true,
+      "cannot_claim": "security_exposure_self_heal"
+    },
+    {
+      "class_id": "licence_conflict",
+      "severity": "critical",
+      "self_heal_allowed": false,
+      "human_decision_required": true,
+      "hard_stop": true,
+      "evidence_preserving_required": true,
+      "cannot_claim": "license_conflict_self_heal"
+    },
+    {
+      "class_id": "scope_expansion",
+      "severity": "high",
+      "self_heal_allowed": false,
+      "human_decision_required": true,
+      "hard_stop": true,
+      "evidence_preserving_required": true,
+      "cannot_claim": "scope_expansion_self_heal"
+    },
+    {
+      "class_id": "product_plane_contamination",
+      "severity": "critical",
+      "self_heal_allowed": false,
+      "human_decision_required": true,
+      "hard_stop": true,
+      "evidence_preserving_required": true,
+      "cannot_claim": "product_plane_contamination_self_heal"
+    }
+  ],
+  "failure_classifications": [
+    {
+      "class_id": "deterministic_formatting_failure",
+      "severity": "low",
+      "self_heal_allowed": true,
+      "human_decision_required": false,
+      "hard_stop": false,
+      "evidence_preserving_required": true,
+      "cannot_claim": "self_heal_success_without_validation"
+    }
+  ],
+  "recovery_boundaries": {
+    "deterministic_only": true,
+    "evidence_preserving": true,
+    "scoped": true,
+    "no_authority_repair_without_human_decision": true,
+    "no_schema_semantics_repair_without_human_decision": true,
+    "no_security_exposure_self_heal": true,
+    "no_license_conflict_self_heal": true,
+    "no_scope_expansion_self_heal": true,
+    "no_free_autonomous_fixing": true
+  },
+  "claims": {
+    "unbounded_self_heal": false,
+    "authority_repair_without_human_decision": false,
+    "schema_semantics_repair_without_human_decision": false,
+    "security_exposure_self_heal": false,
+    "license_conflict_self_heal": false,
+    "scope_expansion_self_heal": false,
+    "budget_exhaustion_success": false,
+    "stable_agents": false,
+    "independent_audit": false,
+    "production_recovery": false
+  },
+  "cannot_claim": [
+    "H09_recovery_engine_implemented",
+    "unbounded_self_heal",
+    "authority_repair_without_human_decision",
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified",
+    "production_ready"
+  ]
+}

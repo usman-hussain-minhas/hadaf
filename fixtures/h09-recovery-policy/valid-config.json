@@ -1,0 +1,92 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h09-recovery-policy/records"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "valid-policy",
+      "policyRef": "fixture://valid-policy.json",
+      "policySha256": "26601bb85463f04c4787665ebdab540803d8f08b0137ae09dc2ec9f578549898",
+      "expectedStatus": "passed",
+      "expectedDecision": "self_heal_allowed",
+      "expected": {
+        "maxSelfHealsPerFfet": 3,
+        "maxSelfHealsPerBox": 10,
+        "maxSelfHealsForFullRun": 30,
+        "exhaustedBudgetOutcome": "SELF_HEAL_EXHAUSTED_HARD_STOP"
+      }
+    },
+    {
+      "scenarioId": "unbounded-self-heal",
+      "policyRef": "fixture://unbounded-self-heal.json",
+      "policySha256": "53cb18a4044e85a2c8adddf97dffa46066c699f6765d5d30a5144f7ef7693dc2",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "budget_exceeds_run_control",
+        "same_class_failure_not_systemic_blocker",
+        "budget_exhaustion_not_hard_stop",
+        "unbounded_self_heal_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "authority-repair-overclaim",
+      "policyRef": "fixture://authority-repair-overclaim.json",
+      "policySha256": "d37f8935162c179f3d3fae35050ccdfd70fe2235da851e26d38e31ad4d563b57",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "hard_stop_self_heal_allowed",
+        "hard_stop_human_decision_not_required",
+        "hard_stop_flag_missing",
+        "authority_repair_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "security-exposure-self-heal",
+      "policyRef": "fixture://security-exposure-self-heal.json",
+      "policySha256": "67e095e97a8300a4113a63aa576a1dc54d93864351745448315fa9620b89c19c",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "hard_stop_self_heal_allowed",
+        "hard_stop_human_decision_not_required",
+        "hard_stop_flag_missing",
+        "security_exposure_self_heal_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "budget-exhaustion-success",
+      "policyRef": "fixture://budget-exhaustion-success.json",
+      "policySha256": "efe3be46a6165b9efd21d38e8ed17216dcb510afdebc9acc689368ed2beecb6b",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "budget_exhaustion_not_hard_stop",
+        "budget_exhaustion_success_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "stable-independent-overclaim",
+      "policyRef": "fixture://stable-independent-overclaim.json",
+      "policySha256": "47f311ea6ff1bd3782e9038f501aedab99a42589ccc540e53acf9044e01b4ea0",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "stable_agents_overclaim",
+        "independent_audit_overclaim",
+        "production_recovery_overclaim",
+        "required_cannot_claim_missing"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "H09_recovery_engine_implemented",
+    "unbounded_self_heal",
+    "authority_repair_without_human_decision",
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ],
+  "finalPostureRecommendation": "H09_RECOVERY_POLICY_BUDGET_CLASSIFIER_FIXTURE_BACKED"
+}

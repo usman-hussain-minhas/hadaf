@@ -1,0 +1,44 @@
+{
+  "schema_version": "hadaf_h09_recovery_policy_v1",
+  "policy_id": "h09-budget-exhaustion-success",
+  "mode": "policy",
+  "budgets": {
+    "max_self_heals_per_ffet": 3,
+    "max_self_heals_per_box": 10,
+    "max_self_heals_for_full_h07_h12_run": 30,
+    "repeated_same_class_failure_after_two_ffets": "systemic_blocker",
+    "exhausted_budget_outcome": "accepted_debt"
+  },
+  "allowed_recovery_actions": [
+    {
+      "action_id": "validation_rerun",
+      "deterministic": true,
+      "scoped": true,
+      "evidence_preserving": true,
+      "allowed": true
+    }
+  ],
+  "hard_stop_classes": [],
+  "failure_classifications": [],
+  "recovery_boundaries": {
+    "deterministic_only": true,
+    "evidence_preserving": true,
+    "scoped": true,
+    "no_authority_repair_without_human_decision": true,
+    "no_schema_semantics_repair_without_human_decision": true,
+    "no_security_exposure_self_heal": true,
+    "no_license_conflict_self_heal": true,
+    "no_scope_expansion_self_heal": true,
+    "no_free_autonomous_fixing": true
+  },
+  "claims": {
+    "budget_exhaustion_success": true
+  },
+  "cannot_claim": [
+    "H09_recovery_engine_implemented",
+    "unbounded_self_heal",
+    "authority_repair_without_human_decision",
+    "stable_agents",
+    "mechanically_independent_agents"
+  ]
+}
