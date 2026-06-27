@@ -1,0 +1,166 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h06-locks-checkpoints-quarantine"
+  },
+  "schemas": {
+    "common": {
+      "ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json",
+      "sha256": "9b5698d4d7d9278b33c1a19c6177284e17f931c0efe5e42ae0537cf8e7cd44b5"
+    },
+    "lock": {
+      "ref": "fixture://schemas/lock_record.schema.json",
+      "sha256": "3aecf8c6a8c1078269726ec29cd208dc2f4ea3c0bfea1bcd34d52abc951cfb32"
+    },
+    "checkpoint": {
+      "ref": "fixture://schemas/checkpoint_record.schema.json",
+      "sha256": "8319671bddcd32222127691272eb06f7ae48710a0f726af645801bed64b8b293"
+    },
+    "quarantine": {
+      "ref": "fixture://schemas/quarantine_record.schema.json",
+      "sha256": "dfb8df84d29f896f42099fc429a68c9ae33ce760f29a41e25e903104b4072b58"
+    }
+  },
+  "expectedProductSha": "3bc817863973681eed769295fbc6dbbaba5be557",
+  "expectedTreeHash": "44cc144b53d21b1013ac88acf1f278947d7a384a",
+  "freshnessCheckedAt": "2026-06-26T23:49:42Z",
+  "requiredCannotClaim": [
+    "production_resource_orchestration",
+    "live_autonomous_worktree_orchestration",
+    "mechanically_independent_agents",
+    "stable_agents"
+  ],
+  "locks": [
+    {
+      "recordId": "lock-H06-F02-active",
+      "ref": "fixture://locks/active-lock.json",
+      "sha256": "36b7e21d7d3ff560b6db009628a6c123efd3c073be3cda4e1871bfedbd10b9dc",
+      "collisionRole": "holder",
+      "expectedStatus": "passed"
+    },
+    {
+      "recordId": "lock-H06-F02-released",
+      "ref": "fixture://locks/released-lock.json",
+      "sha256": "e29da19354236608b18043028c2a9f15fbe22072f77f3ad89fe3238d236c3af5",
+      "expectedStatus": "passed"
+    },
+    {
+      "recordId": "lock-H06-F02-stale-active",
+      "ref": "fixture://locks/stale-active-lock.json",
+      "sha256": "1c7aa279a4991346cd85b3ceb8b2155140d01fd13f8171c40c8f713061a3382f",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "stale_active_lock"
+      ]
+    },
+    {
+      "recordId": "lock-H06-F02-conflict",
+      "ref": "fixture://locks/conflicting-write-set-lock.json",
+      "sha256": "c6d3320f4c94459d17794acc1e5bdd6dddb33223696001f9d029f5544270c71d",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "write_set_collision_detected"
+      ]
+    },
+    {
+      "recordId": "lock-H06-F02-missing-cannot-claim",
+      "ref": "fixture://locks/missing-cannot-claim.json",
+      "sha256": "ee8b10f987a84c59d3a55a23cf3191bb2f884e692176428ef3ce8d1c4b3e7d69",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "required_cannot_claim_missing"
+      ]
+    }
+  ],
+  "checkpoints": [
+    {
+      "recordId": "checkpoint-H06-F02-fresh",
+      "ref": "fixture://checkpoints/fresh-checkpoint.json",
+      "sha256": "2be7e3f87fc5234f7352d21dfef1a9357198acbc2f1eb71f4b7f30787d85056f",
+      "expectedStatus": "passed"
+    },
+    {
+      "recordId": "checkpoint-H06-F02-stale-sha",
+      "ref": "fixture://checkpoints/stale-product-sha.json",
+      "sha256": "f70fff45f994a77df516ca21566da42c22bc8e99f13e569e801b995525f73d62",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "checkpoint_product_sha_stale",
+        "checkpoint_tree_hash_stale"
+      ]
+    },
+    {
+      "recordId": "checkpoint-H06-F02-stale-freshness",
+      "ref": "fixture://checkpoints/stale-freshness.json",
+      "sha256": "dafe280c663a490cf11d6249eab4ff98bd291bcfffdfdfc717b74c0e7c1d50ae",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "checkpoint_freshness_not_fresh"
+      ]
+    },
+    {
+      "recordId": "checkpoint-H06-F02-placeholder",
+      "ref": "fixture://checkpoints/placeholder-state-hash.json",
+      "sha256": "ef573a616a9281e25a345b74f5c16c68f0fe457479858896e7808cd83d67df9a",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "checkpoint_placeholder_state_hash"
+      ]
+    }
+  ],
+  "quarantines": [
+    {
+      "recordId": "quarantine-H06-F02-contained",
+      "ref": "fixture://quarantine/contained-quarantine.json",
+      "sha256": "50086b7156b1608f9f3476ae4a30f8215fe0f3ace3ddaf509faf7e30ee400c1c",
+      "expectedStatus": "passed"
+    },
+    {
+      "recordId": "quarantine-H06-F02-human-required",
+      "ref": "fixture://quarantine/cleanup-pending-human-required.json",
+      "sha256": "923c67bb58da50aca4610778723cd491e9adf25c514e7169cdfdb8b33629c951",
+      "expectedStatus": "passed"
+    },
+    {
+      "recordId": "quarantine-H06-F02-secret-cleanup",
+      "ref": "fixture://quarantine/secret-cleanup-allowed.json",
+      "sha256": "aaedead0bf1ca6d0c1f4f10876e25ee0d1899a96d4436d293b1385299c271cd0",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "secret_exposure_cleanup_allowed_without_human_decision",
+        "human_required_cleanup_allowed"
+      ]
+    },
+    {
+      "recordId": "quarantine-H06-F02-absolute-path",
+      "ref": "fixture://quarantine/absolute-affected-path.json",
+      "sha256": "88936f76d7aaa46390efa211e88907333301cab5a0ed6d75b15c9b7f594835f6",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "schema_validation_failed",
+        "absolute_affected_path"
+      ]
+    },
+    {
+      "recordId": "quarantine-H06-F02-missing-evidence",
+      "ref": "fixture://quarantine/missing-evidence-hash.json",
+      "sha256": "a83d12a3bc3602d67ea65c7545b37594d7e878332d4cf7e7353cbf25bd6ecdd3",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "schema_validation_failed",
+        "quarantine_evidence_hash_invalid_placeholder"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "production_resource_orchestration",
+    "live_autonomous_worktree_orchestration",
+    "mechanically_independent_agents",
+    "stable_agents",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "H07_proof_engine_implemented",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ],
+  "finalPostureRecommendation": "H06_F02_LOCKS_CHECKPOINTS_QUARANTINE_FIXTURE_VERIFIED"
+}

@@ -407,3 +407,17 @@ export {
   type H06WorktreeLifecycleStatus,
   type H06WorktreeLifecycleValidationResult
 } from "./h06/worktree-lifecycle.js";
+export {
+  isGitSha,
+  verifyH06LocksCheckpointsQuarantineConfig,
+  type H06ExpectedRuntimeRecordStatus,
+  type H06LocksCheckpointsQuarantineConfig,
+  type H06LocksCheckpointsQuarantineFinding,
+  type H06LocksCheckpointsQuarantineReport,
+  type H06LocksCheckpointsQuarantineStatus,
+  type H06RuntimeRecordExpectation,
+  type H06RuntimeSchemaDescriptor,
+  type H06RuntimeSchemaSet,
+  type H06RuntimeValidationResult,
+  type H06VerifiedRuntimeRef
+} from "./h06/locks-checkpoints-quarantine.js";

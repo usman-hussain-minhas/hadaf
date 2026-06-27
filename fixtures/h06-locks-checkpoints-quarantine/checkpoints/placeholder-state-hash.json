@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "checkpoint_id": "checkpoint-H06-F02-placeholder",
+  "box_id": "H06",
+  "ffet_id": "H06-F02",
+  "product_sha": "3bc817863973681eed769295fbc6dbbaba5be557",
+  "tree_hash": "44cc144b53d21b1013ac88acf1f278947d7a384a",
+  "control_state_hash": "pending-control-state-hash",
+  "evidence_state_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+  "runtime_state_hash": "3333333333333333333333333333333333333333333333333333333333333333",
+  "resume_part": "PART-09:H06-F02",
+  "rollback_ref": "product://commits/3bc817863973681eed769295fbc6dbbaba5be557",
+  "freshness_status": "fresh",
+  "cannot_claim": [
+    "production_resource_orchestration",
+    "live_autonomous_worktree_orchestration",
+    "mechanically_independent_agents",
+    "stable_agents"
+  ]
+}

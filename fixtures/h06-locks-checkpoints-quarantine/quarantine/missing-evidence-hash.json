@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "quarantine_id": "quarantine-H06-F02-missing-evidence",
+  "incident_type": "lock_conflict",
+  "affected_paths_or_resources": [
+    "product/hadaf/packages/kernel/src/h06/locks-checkpoints-quarantine.ts"
+  ],
+  "source_worktree_ref": "fixture://runtime/worktrees/h06-f02-hadaf",
+  "detected_at": "2026-06-26T23:49:42Z",
+  "evidence_ref": {
+    "ref": "fixture://evidence/H06/lock-conflict.json",
+    "sha256": "pending-quarantine-evidence-hash"
+  },
+  "disposition": "contained",
+  "cleanup_allowed": false,
+  "human_decision_required": false,
+  "cannot_claim": [
+    "production_resource_orchestration",
+    "live_autonomous_worktree_orchestration",
+    "mechanically_independent_agents",
+    "stable_agents"
+  ]
+}

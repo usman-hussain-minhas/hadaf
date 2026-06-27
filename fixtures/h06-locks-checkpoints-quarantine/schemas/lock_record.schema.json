@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://schemas/runtime_lock_record.schema.json",
+  "title": "HADAF Runtime Lock Record Fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "lock_id",
+    "lock_type",
+    "resource_ref",
+    "owner_ref",
+    "scope",
+    "acquired_at",
+    "expires_at",
+    "status",
+    "stale_policy",
+    "release_policy",
+    "cannot_claim"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "lock_id": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/id"
+    },
+    "lock_type": {
+      "enum": [
+        "file_write_set",
+        "resource",
+        "port",
+        "worktree",
+        "database",
+        "shared_object"
+      ]
+    },
+    "resource_ref": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/ref"
+    },
+    "owner_ref": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/ref"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "acquired_at": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/timestamp"
+    },
+    "expires_at": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/timestamp"
+    },
+    "status": {
+      "enum": [
+        "active",
+        "released",
+        "stale",
+        "blocked",
+        "superseded"
+      ]
+    },
+    "stale_policy": {
+      "type": "string"
+    },
+    "release_policy": {
+      "type": "string"
+    },
+    "cannot_claim": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/cannotClaim"
+    }
+  }
+}

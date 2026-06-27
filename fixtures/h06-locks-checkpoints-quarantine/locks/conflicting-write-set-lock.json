@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "lock_id": "lock-H06-F02-conflict",
+  "lock_type": "file_write_set",
+  "resource_ref": "product://packages/kernel/src/h06/locks-checkpoints-quarantine.ts",
+  "owner_ref": "fixture://owners/H06-F02-other",
+  "scope": "H06-F02 conflicting write-set lock negative",
+  "acquired_at": "2026-06-26T23:50:00Z",
+  "expires_at": "2026-06-27T00:50:00Z",
+  "status": "active",
+  "stale_policy": "block concurrent writers until ownership is reconciled",
+  "release_policy": "release after conflict is resolved",
+  "cannot_claim": [
+    "production_resource_orchestration",
+    "live_autonomous_worktree_orchestration",
+    "mechanically_independent_agents",
+    "stable_agents"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "lock_id": "lock-H06-F02-released",
+  "lock_type": "worktree",
+  "resource_ref": "fixture://runtime/worktrees/h06-f02-hadaf",
+  "owner_ref": "fixture://owners/H06-F02",
+  "scope": "H06-F02 released worktree lifecycle lock",
+  "acquired_at": "2026-06-26T23:49:42Z",
+  "expires_at": "2026-06-27T00:49:42Z",
+  "status": "released",
+  "stale_policy": "quarantine if cleanup cannot be proven",
+  "release_policy": "released after cleanup and closeout evidence",
+  "cannot_claim": [
+    "production_resource_orchestration",
+    "live_autonomous_worktree_orchestration",
+    "mechanically_independent_agents",
+    "stable_agents"
+  ]
+}

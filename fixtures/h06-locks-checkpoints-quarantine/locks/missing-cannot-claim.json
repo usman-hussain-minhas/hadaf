@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "lock_id": "lock-H06-F02-missing-cannot-claim",
+  "lock_type": "resource",
+  "resource_ref": "fixture://runtime/locks/missing-cannot-claim",
+  "owner_ref": "fixture://owners/H06-F02",
+  "scope": "H06-F02 missing cannot_claim negative",
+  "acquired_at": "2026-06-26T23:49:42Z",
+  "expires_at": "2026-06-27T00:49:42Z",
+  "status": "active",
+  "stale_policy": "release or quarantine when expired",
+  "release_policy": "release after closeout",
+  "cannot_claim": [
+    "mechanically_independent_agents",
+    "stable_agents"
+  ]
+}

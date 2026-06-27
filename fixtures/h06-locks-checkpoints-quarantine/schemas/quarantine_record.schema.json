@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://schemas/runtime_quarantine_record.schema.json",
+  "title": "HADAF Runtime Quarantine Record Fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "quarantine_id",
+    "incident_type",
+    "affected_paths_or_resources",
+    "source_worktree_ref",
+    "detected_at",
+    "evidence_ref",
+    "disposition",
+    "cleanup_allowed",
+    "human_decision_required",
+    "cannot_claim"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "quarantine_id": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/id"
+    },
+    "incident_type": {
+      "enum": [
+        "product_contamination",
+        "wrong_cwd",
+        "lock_conflict",
+        "secret_exposure",
+        "stale_checkpoint",
+        "unknown"
+      ]
+    },
+    "affected_paths_or_resources": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "not": {
+          "pattern": "^/"
+        }
+      },
+      "default": []
+    },
+    "source_worktree_ref": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/ref"
+    },
+    "detected_at": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/timestamp"
+    },
+    "evidence_ref": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/refHash"
+    },
+    "disposition": {
+      "enum": [
+        "contained",
+        "cleanup_pending",
+        "human_decision_required",
+        "released",
+        "superseded"
+      ]
+    },
+    "cleanup_allowed": {
+      "type": "boolean"
+    },
+    "human_decision_required": {
+      "type": "boolean"
+    },
+    "cannot_claim": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/cannotClaim"
+    }
+  }
+}

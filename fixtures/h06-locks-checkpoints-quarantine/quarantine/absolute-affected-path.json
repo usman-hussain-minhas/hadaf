@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "quarantine_id": "quarantine-H06-F02-absolute-path",
+  "incident_type": "wrong_cwd",
+  "affected_paths_or_resources": [
+    "/fixture/absolute-runtime-path"
+  ],
+  "source_worktree_ref": "fixture://runtime/worktrees/h06-f02-hadaf",
+  "detected_at": "2026-06-26T23:49:42Z",
+  "evidence_ref": {
+    "ref": "fixture://evidence/H06/absolute-path.json",
+    "sha256": "7777777777777777777777777777777777777777777777777777777777777777"
+  },
+  "disposition": "contained",
+  "cleanup_allowed": false,
+  "human_decision_required": false,
+  "cannot_claim": [
+    "production_resource_orchestration",
+    "live_autonomous_worktree_orchestration",
+    "mechanically_independent_agents",
+    "stable_agents"
+  ]
+}
