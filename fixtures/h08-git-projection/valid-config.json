@@ -1,0 +1,83 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h08-git-projection"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "valid-projection",
+      "projectionRef": "fixture://records/valid-projection.json",
+      "projectionSha256": "abc6bb8dbd412070bdca43133d5911e9197452610c5a0eb22e68affa5500a535",
+      "expectedStatus": "passed",
+      "expected": {
+        "status": "product_pipeline_active",
+        "activeFfet": "H08-F06",
+        "gitTruthStatus": "verified",
+        "conductorStatus": "bounded_envelope_verified"
+      }
+    },
+    {
+      "scenarioId": "authority-overclaim",
+      "projectionRef": "fixture://records/authority-overclaim.json",
+      "projectionSha256": "c5530837c8d2388356301590815461b77e49fb379a717c9646d8a0a3486742ff",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "h08_projection_claims_authority"
+      ]
+    },
+    {
+      "scenarioId": "settings-mutation-overclaim",
+      "projectionRef": "fixture://records/settings-mutation-overclaim.json",
+      "projectionSha256": "ad2428796916f5e6b589092ccdf01c0ed26e98516981d61ad7efb06876d08dca",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "h08_settings_mutation_overclaim",
+        "h08_branch_protection_mutation_overclaim",
+        "h08_platform_sha_pinning_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "live-persistent-overclaim",
+      "projectionRef": "fixture://records/live-persistent-overclaim.json",
+      "projectionSha256": "21e9874c928c375337a5f4320f834948c2f99e9987097a6cb5e0940a5bf8b387",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "h08_projection_maturity_overclaim",
+        "h08_full_conductor_overclaim",
+        "h08_live_adapter_overclaim",
+        "h08_persistence_overclaim",
+        "h08_production_connected_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "stale-unclassified",
+      "projectionRef": "fixture://records/stale-unclassified.json",
+      "projectionSha256": "76fa8df58d2155743e140d317e5d6a4daeb8a32a2a416385d65cd1e9bdfecf08",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "h08_projection_not_fresh",
+        "h08_component_not_fresh"
+      ]
+    },
+    {
+      "scenarioId": "h13-overclaim",
+      "projectionRef": "fixture://records/h13-overclaim.json",
+      "projectionSha256": "f1bf89d0ea451fd2e27996149803da5acc41e8249ed95a6343e276e21d040d79",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "h08_h13_system_assurance_overclaim"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "HMC_authoritative_state",
+    "H08_git_ci_pr_merge_conductor_implemented",
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized",
+    "live_github_adapter_implemented",
+    "persistent_state_store_implemented",
+    "H13_system_assurance_engine_implemented",
+    "self_hosting_ready",
+    "production_ready"
+  ],
+  "finalPostureRecommendation": "H08_GIT_CI_PR_CONDUCTOR_PROJECTION_ACTIVE_FIXTURE_BACKED"
+}

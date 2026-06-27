@@ -47,6 +47,10 @@
             <span aria-hidden="true">P5</span>
             <span>Proof</span>
           </button>
+          <button class="nav-item" type="button" data-view="git" aria-pressed="false">
+            <span aria-hidden="true">G</span>
+            <span>Git</span>
+          </button>
           <button class="nav-item" type="button" data-view="ffets" aria-pressed="false">
             <span aria-hidden="true">F</span>
             <span>FFETs</span>
@@ -84,16 +88,17 @@
             <section class="panel panel--wide" aria-labelledby="active-box-title">
               <div class="panel-heading">
                 <p class="label">Current Truth</p>
-                <h2 id="active-box-title" data-state-field="active-box">H06 Worktree, Lock, Checkpoint, and Pod Scheduler</h2>
+                <h2 id="active-box-title" data-state-field="active-box">H08 Git, CI, PR, and Merge Conductor</h2>
               </div>
               <div class="status-strip" role="list" aria-label="Box status">
                 <span role="listitem" class="status-pill">H04 closeout complete</span>
                 <span role="listitem" class="status-pill">H05 closeout complete</span>
                 <span role="listitem" class="status-pill status-pill--active">H07 proof state visible</span>
-                <span role="listitem" class="status-pill status-pill--warn" data-state-field="h07-active-ffet">H07-F04</span>
+                <span role="listitem" class="status-pill status-pill--active">H08 conductor state visible</span>
+                <span role="listitem" class="status-pill status-pill--warn" data-state-field="h08-active-ffet">H08-F06</span>
                 <span role="listitem" class="status-pill status-pill--warn">Box assurance pending</span>
               </div>
-              <p class="summary" data-state-field="project-posture">H06_RUNTIME_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED</p>
+              <p class="summary" data-state-field="project-posture">H08_GIT_CI_PR_CONDUCTOR_PROJECTION_ACTIVE_FIXTURE_BACKED</p>
             </section>
 
             <section class="panel" aria-labelledby="truth-title">
@@ -125,6 +130,8 @@
                 <li>live_autonomous_worktree_orchestration</li>
                 <li>live_lifecycle_runner_execution</li>
                 <li>H08_git_ci_pr_merge_conductor_implemented</li>
+                <li>github_settings_mutation_authorized</li>
+                <li>branch_protection_mutation_authorized</li>
                 <li>HMC_authoritative_state</li>
                 <li>execution_authorization_granted</li>
                 <li>h06_box_assurance_complete</li>
@@ -223,6 +230,30 @@
                   <span class="state-label">Authority</span>
                   <strong data-state-field="h07-projection-authority">derived_view_only</strong>
                   <p>HMC displays proof state without becoming proof authority.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="panel panel--wide" aria-labelledby="h08-title">
+              <div class="panel-heading">
+                <p class="label">H08 Projection</p>
+                <h2 id="h08-title" data-state-field="h08-status">product_pipeline_active</h2>
+              </div>
+              <div class="projection-grid" aria-label="H08 Git and conductor projection">
+                <article>
+                  <span class="state-label">Git Truth</span>
+                  <strong data-state-field="h08-git-truth">verified</strong>
+                  <p>Fixture-backed Git/GitHub state is displayed only.</p>
+                </article>
+                <article>
+                  <span class="state-label">Conductor</span>
+                  <strong data-state-field="h08-conductor">bounded_envelope_verified</strong>
+                  <p>Full conductor implementation remains blocked.</p>
+                </article>
+                <article>
+                  <span class="state-label">Authority</span>
+                  <strong data-state-field="h08-projection-authority">derived_view_only</strong>
+                  <p>HMC displays H08 state without becoming Git authority.</p>
                 </article>
               </div>
             </section>
@@ -432,6 +463,84 @@
           </div>
         </section>
 
+        <section class="view" id="view-git" data-view-panel="git" aria-labelledby="git-title" hidden>
+          <div class="view-heading">
+            <div>
+              <p class="label">Git</p>
+              <h1 id="git-title">CI and PR Projection</h1>
+            </div>
+            <span class="maturity maturity--fixture">fixture_backed</span>
+          </div>
+          <div class="dashboard-grid">
+            <section class="panel panel--wide" aria-labelledby="git-state-title">
+              <div class="panel-heading">
+                <p class="label">Derived State</p>
+                <h2 id="git-state-title" data-state-field="h08-status">product_pipeline_active</h2>
+              </div>
+              <div class="projection-grid" aria-label="H08 Git projection summary">
+                <article>
+                  <span class="state-label">Git Truth</span>
+                  <strong data-state-field="h08-git-truth">verified</strong>
+                  <p>Read-only fixture-backed Git/GitHub truth.</p>
+                </article>
+                <article>
+                  <span class="state-label">PR Lifecycle</span>
+                  <strong data-state-field="h08-pr-lifecycle">verified</strong>
+                  <p>Terminal PR records remain external truth.</p>
+                </article>
+                <article>
+                  <span class="state-label">CI Watcher</span>
+                  <strong data-state-field="h08-ci-watcher">verified</strong>
+                  <p>Exact-head checks are displayed, not inferred.</p>
+                </article>
+                <article>
+                  <span class="state-label">Merge Readiness</span>
+                  <strong data-state-field="h08-merge-readiness">verified</strong>
+                  <p>Merge eligibility remains gate-bound.</p>
+                </article>
+                <article>
+                  <span class="state-label">Conductor</span>
+                  <strong data-state-field="h08-conductor">bounded_envelope_verified</strong>
+                  <p>Dry-run default is preserved.</p>
+                </article>
+                <article>
+                  <span class="state-label">Settings</span>
+                  <strong data-state-field="h08-settings">verified</strong>
+                  <p>No GitHub settings mutation is authorized.</p>
+                </article>
+              </div>
+            </section>
+            <section class="panel" aria-labelledby="git-dogfood-title">
+              <div class="panel-heading">
+                <p class="label">Dogfood</p>
+                <h2 id="git-dogfood-title">Mode</h2>
+              </div>
+              <strong data-state-field="h08-dogfood-mode">limited_current_repo</strong>
+              <p>Live adapters, persistence, and production connection are not claimed.</p>
+            </section>
+            <section class="panel" aria-labelledby="git-boundaries-title">
+              <div class="panel-heading">
+                <p class="label">Cannot Claim</p>
+                <h2 id="git-boundaries-title">Blocked</h2>
+              </div>
+              <ul class="tag-list" data-state-field="h08-blocked-claims" aria-label="H08 cannot claim entries">
+                <li>H08_git_ci_pr_merge_conductor_implemented</li>
+                <li>github_settings_mutation_authorized</li>
+                <li>branch_protection_mutation_authorized</li>
+                <li>H13_system_assurance_engine_implemented</li>
+              </ul>
+            </section>
+            <section class="panel" aria-labelledby="git-authority-title">
+              <div class="panel-heading">
+                <p class="label">Authority</p>
+                <h2 id="git-authority-title">Derived</h2>
+              </div>
+              <strong data-state-field="h08-projection-authority">derived_view_only</strong>
+              <p>HMC does not become Git, CI, PR, merge, or settings authority.</p>
+            </section>
+          </div>
+        </section>
+
         <section class="view" id="view-boxes" data-view-panel="boxes" aria-labelledby="boxes-title" hidden>
           <div class="view-heading">
             <div>
@@ -494,6 +603,12 @@
               <span role="cell"><strong>active</strong></span>
               <span role="cell">fixture-backed proof projection</span>
               <span role="cell">P8/P9 non-operational</span>
+            </div>
+            <div class="table-row" role="row">
+              <span role="cell">H08 Git, CI, PR, and Merge Conductor</span>
+              <span role="cell"><strong>active</strong></span>
+              <span role="cell">fixture-backed conductor projection</span>
+              <span role="cell">settings mutation not authorized</span>
             </div>
           </div>
         </section>
@@ -677,9 +792,44 @@
               <strong>Proof verifier aggregation</strong>
               <span>closeout complete</span>
             </article>
-            <article class="queue-item is-active">
+            <article class="queue-item is-done">
               <span class="queue-code">H07-F04</span>
               <strong data-state-field="h07-active-ffet">HMC proof projection</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H08-F00</span>
+              <strong>Git/GitHub truth adapter</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H08-F01</span>
+              <strong>PR lifecycle state model</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H08-F02</span>
+              <strong>CI watcher</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H08-F03</span>
+              <strong>Merge readiness verifier</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H08-F04</span>
+              <strong>Limited dogfood merge readiness</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H08-F05</span>
+              <strong>Bounded dogfood conductor envelope</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-active">
+              <span class="queue-code">H08-F06</span>
+              <strong data-state-field="h08-active-ffet">HMC Git/CI/PR conductor projection</strong>
               <span>active</span>
             </article>
           </div>
@@ -709,6 +859,7 @@
                 <li><span class="status-dot status-dot--ok"></span> H05 projection guard</li>
                 <li><span class="status-dot status-dot--ok"></span> H06 runtime projection guard</li>
                 <li><span class="status-dot status-dot--ok"></span> H07 proof projection guard</li>
+                <li><span class="status-dot status-dot--ok"></span> H08 Git projection guard</li>
               </ul>
             </section>
             <section class="panel" aria-labelledby="debt-title">
@@ -726,6 +877,9 @@
                 <li>release_proof_complete</li>
                 <li>production_proof_complete</li>
                 <li>H12_box_assurance_engine_implemented</li>
+                <li>github_settings_mutation_authorized</li>
+                <li>branch_protection_mutation_authorized</li>
+                <li>H13_system_assurance_engine_implemented</li>
                 <li>production_resource_orchestration</li>
                 <li>h06_box_assurance_complete</li>
               </ul>
@@ -761,6 +915,11 @@
               <span class="state-label">H07</span>
               <strong data-state-field="h07-status">product_pipeline_complete_pending_box_assurance</strong>
               <p><span data-state-field="h07-verified-proof-count">5</span> proof levels are verified; P8/P9 remain non-operational.</p>
+            </article>
+            <article class="state-card">
+              <span class="state-label">H08</span>
+              <strong data-state-field="h08-status">product_pipeline_active</strong>
+              <p>Conductor is <span data-state-field="h08-conductor">bounded_envelope_verified</span>; settings mutation remains blocked.</p>
             </article>
             <article class="state-card">
               <span class="state-label">constitution</span>
