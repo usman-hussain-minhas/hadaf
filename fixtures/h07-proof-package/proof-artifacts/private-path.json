@@ -1,0 +1,11 @@
+{
+  "artifact_id": "private-path-proof",
+  "operator_path_segments": [
+    "",
+    "Users",
+    "example",
+    "private",
+    "control-record.json"
+  ],
+  "classification": "not_public_safe_fixture"
+}

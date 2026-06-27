@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "valid-proof-package",
+  "product_sha": "e9ed156fc05b6e342b51662bd9847571082eb560",
+  "tree_hash": "2e58a8416b406d02c35b72fd2392aeef18e721e0",
+  "proof_level": "P5",
+  "exact_product_binding_required": true,
+  "stale_invalidation": {
+    "invalidate_on_product_sha_change": true,
+    "invalidate_on_tree_hash_change": true,
+    "invalidate_on_evidence_hash_change": true
+  },
+  "claims": [
+    {
+      "claim_id": "bounded-h07-proof-verifier",
+      "claim_class": "P5_claim_verification",
+      "status": "supported",
+      "evidence_refs": [
+        "fixture://proof-artifacts/authority.json",
+        "fixture://proof-artifacts/schema.json"
+      ],
+      "minimum_evidence_classes": [
+        "authority",
+        "schema"
+      ]
+    },
+    {
+      "claim_id": "release-proof",
+      "claim_class": "P8_release",
+      "status": "not_claimed",
+      "evidence_refs": []
+    }
+  ],
+  "evidence": [
+    {
+      "ref": "fixture://proof-artifacts/authority.json",
+      "sha256": "b4c5e7d18c197786e7bce3ecec551ed44dc639e3836ed893b40747baeccb6b9b",
+      "evidence_class": "authority",
+      "public_safe": true,
+      "redaction_status": "public_safe"
+    },
+    {
+      "ref": "fixture://proof-artifacts/schema.json",
+      "sha256": "27b466bad803adf6526d5f87d1c2020537ca825706e7210e1bb43acbdd8cf3e6",
+      "evidence_class": "schema",
+      "public_safe": true,
+      "redaction_status": "public_safe"
+    }
+  ],
+  "redaction": {
+    "public_safe": true,
+    "redacted_refs": []
+  },
+  "cannot_claim": [
+    "release_candidate",
+    "production_ready",
+    "self_hosting_ready",
+    "mechanically_independent_audit"
+  ]
+}

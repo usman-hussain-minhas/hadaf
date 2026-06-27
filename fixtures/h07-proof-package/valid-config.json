@@ -1,0 +1,107 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h07-proof-package"
+  },
+  "expectedProductSha": "e9ed156fc05b6e342b51662bd9847571082eb560",
+  "expectedTreeHash": "2e58a8416b406d02c35b72fd2392aeef18e721e0",
+  "unsupportedClaimClasses": [
+    "P8_release",
+    "P9_production",
+    "release_candidate",
+    "production_ready",
+    "self_hosting_ready"
+  ],
+  "requiredCannotClaim": [
+    "release_candidate",
+    "production_ready",
+    "self_hosting_ready",
+    "mechanically_independent_audit"
+  ],
+  "packages": [
+    {
+      "packageId": "valid-proof-package",
+      "ref": "fixture://packages/valid-proof-package.json",
+      "sha256": "e35799f1a979bfc1b8a3db2a3814357629c1eb1c1f114b4463191404dd793bfb",
+      "expectedStatus": "passed"
+    },
+    {
+      "packageId": "stale-product-sha",
+      "ref": "fixture://packages/stale-product-sha.json",
+      "sha256": "e7f586570261ac178584f16e68fbab589b88982e4ee9bfe73c6133955c9e8bbc",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "stale_product_sha"
+      ]
+    },
+    {
+      "packageId": "tree-hash-mismatch",
+      "ref": "fixture://packages/tree-hash-mismatch.json",
+      "sha256": "329cc3cfb7fc045f2e0d74467748db696989f225155125fb6fddfc3f18fb0aea",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "tree_hash_mismatch"
+      ]
+    },
+    {
+      "packageId": "missing-evidence-ref",
+      "ref": "fixture://packages/missing-evidence-ref.json",
+      "sha256": "9c3c1cf2b611d4f0949078ad799232fd742dab3f7d834f6505e8a12ffd6c7397",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "claim_evidence_ref_missing"
+      ]
+    },
+    {
+      "packageId": "hash-mismatch",
+      "ref": "fixture://packages/hash-mismatch.json",
+      "sha256": "da0263a47fdeff0281c2fb48e5813be3e50c4db7e20585163efcb9a91c9fb311",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "evidence_hash_mismatch"
+      ]
+    },
+    {
+      "packageId": "placeholder-hash",
+      "ref": "fixture://packages/placeholder-hash.json",
+      "sha256": "3d83dcce17699a3f0a529744af6dba26c5298a93cbafed09bbe58276a77f5ed4",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "evidence_hash_invalid"
+      ]
+    },
+    {
+      "packageId": "unsupported-claim-supported",
+      "ref": "fixture://packages/unsupported-claim-supported.json",
+      "sha256": "403b96bd4c4025156adfd40747b7806473b571ab83433675039d511833a4a75c",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "unsupported_claim_supported"
+      ]
+    },
+    {
+      "packageId": "private-path-evidence",
+      "ref": "fixture://packages/private-path-evidence.json",
+      "sha256": "b9a2c3d98fdb43cadc4342e41eb4577d23e4cdb937d763ebb05d4bd2fc69cca4",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "private_path_in_evidence"
+      ]
+    },
+    {
+      "packageId": "redaction-failure",
+      "ref": "fixture://packages/redaction-failure.json",
+      "sha256": "cf7f86dbd0c28f4d9b15172e041bb558132de2afc48460166947cceecea49e32",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "redaction_not_public_safe"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "release_candidate",
+    "production_ready",
+    "self_hosting_ready",
+    "mechanically_independent_audit"
+  ],
+  "finalPostureRecommendation": "H07_F02_PROOF_PACKAGE_VERIFIER_BOUNDARY_VERIFIED"
+}
