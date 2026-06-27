@@ -1,0 +1,35 @@
+{
+  "schema_version": "hadaf_h09_anti_theatre_attempt_v1",
+  "attempt_id": "h09-budget-exhausted-continuation",
+  "mode": "attempt_record",
+  "failure_class": "deterministic_formatting_failure",
+  "attempt_state": {
+    "self_heals_used_for_ffet": 3,
+    "self_heals_used_for_box": 5,
+    "self_heals_used_for_run": 9,
+    "same_class_failures_across_ffets": 1
+  },
+  "evidence_change": {
+    "before_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+    "after_sha256": "9999999999999999999999999999999999999999999999999999999999999999",
+    "changed_files": [
+      "packages/kernel/src/h09/example.ts"
+    ],
+    "changed_evidence": true
+  },
+  "validation": {
+    "rerun_after_attempt": true,
+    "validation_output_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "non_degradation_passed": true,
+    "non_degradation_output_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "claims": {
+    "continue_after_self_heal_budget_exhausted": true
+  },
+  "cannot_claim": [
+    "self_heal_success_without_changed_evidence",
+    "continue_after_self_heal_budget_exhausted",
+    "stable_agents",
+    "mechanically_independent_agents"
+  ]
+}

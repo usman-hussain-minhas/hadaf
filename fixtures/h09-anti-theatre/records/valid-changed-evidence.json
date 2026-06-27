@@ -1,0 +1,40 @@
+{
+  "schema_version": "hadaf_h09_anti_theatre_attempt_v1",
+  "attempt_id": "h09-valid-changed-evidence",
+  "mode": "attempt_record",
+  "failure_class": "deterministic_formatting_failure",
+  "attempt_state": {
+    "self_heals_used_for_ffet": 1,
+    "self_heals_used_for_box": 4,
+    "self_heals_used_for_run": 8,
+    "same_class_failures_across_ffets": 1
+  },
+  "evidence_change": {
+    "before_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "after_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "changed_files": [
+      "packages/kernel/src/h09/example.ts"
+    ],
+    "changed_evidence": true
+  },
+  "validation": {
+    "rerun_after_attempt": true,
+    "validation_output_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+    "non_degradation_passed": true,
+    "non_degradation_output_sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+  },
+  "claims": {
+    "self_heal_success_without_changed_evidence": false,
+    "continue_after_self_heal_budget_exhausted": false,
+    "validation_optional_after_recovery": false,
+    "repeated_same_class_not_systemic": false,
+    "stable_agents": false,
+    "independent_audit": false
+  },
+  "cannot_claim": [
+    "self_heal_success_without_changed_evidence",
+    "continue_after_self_heal_budget_exhausted",
+    "stable_agents",
+    "mechanically_independent_agents"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": "hadaf_h09_anti_theatre_attempt_v1",
+  "attempt_id": "h09-validation-omitted",
+  "mode": "attempt_record",
+  "failure_class": "deterministic_formatting_failure",
+  "attempt_state": {
+    "self_heals_used_for_ffet": 1,
+    "self_heals_used_for_box": 5,
+    "self_heals_used_for_run": 9,
+    "same_class_failures_across_ffets": 1
+  },
+  "evidence_change": {
+    "before_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "after_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "changed_files": [
+      "packages/kernel/src/h09/example.ts"
+    ],
+    "changed_evidence": true
+  },
+  "validation": {
+    "rerun_after_attempt": false,
+    "validation_output_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "non_degradation_passed": false,
+    "non_degradation_output_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+  },
+  "claims": {
+    "validation_optional_after_recovery": true
+  },
+  "cannot_claim": [
+    "self_heal_success_without_changed_evidence",
+    "continue_after_self_heal_budget_exhausted",
+    "stable_agents",
+    "mechanically_independent_agents"
+  ]
+}

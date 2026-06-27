@@ -615,6 +615,20 @@ export {
   type H09VerifiedRecoveryPolicyRef
 } from "./h09/recovery-policy.js";
 export {
+  verifyH09AntiTheatreConfig,
+  type H09AntiTheatreBudgetLimits,
+  type H09AntiTheatreConfig,
+  type H09AntiTheatreDecision,
+  type H09AntiTheatreFinding,
+  type H09AntiTheatreReport,
+  type H09AntiTheatreScenarioExpectation,
+  type H09AntiTheatreScenarioResult,
+  type H09AntiTheatreStatus,
+  type H09AntiTheatreSummary,
+  type H09ExpectedAntiTheatreStatus,
+  type H09VerifiedAntiTheatreRef
+} from "./h09/anti-theatre.js";
+export {
   verifyH09RecoveryExecutionConfig,
   type H09ExpectedRecoveryExecutionStatus,
   type H09RecoveryExecutionConfig,
