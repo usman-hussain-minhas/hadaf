@@ -1,0 +1,74 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h09-anti-theatre/records"
+  },
+  "budgets": {
+    "maxSelfHealsPerFfet": 3,
+    "maxSelfHealsPerBox": 10,
+    "maxSelfHealsForFullRun": 30,
+    "repeatedSameClassFailureAfterFfets": 2
+  },
+  "scenarios": [
+    {
+      "scenarioId": "valid-changed-evidence",
+      "attemptRef": "fixture://valid-changed-evidence.json",
+      "attemptSha256": "17e501bca3ed14118a7e15f076d43de39f627eee26e4641177732ab88a632780",
+      "expectedStatus": "passed",
+      "expectedDecision": "self_heal_credit_allowed"
+    },
+    {
+      "scenarioId": "no-op-self-heal",
+      "attemptRef": "fixture://no-op-self-heal.json",
+      "attemptSha256": "fc216105d1dba300e35babc73c69301fd109b5b59e390540c378ae407d3f0078",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "self_heal_no_changed_evidence",
+        "self_heal_success_without_changed_evidence_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "budget-exhausted-continuation",
+      "attemptRef": "fixture://budget-exhausted-continuation.json",
+      "attemptSha256": "bb616becd8f33c91ebbce85c897255dc50f85fbfddebda8bdf9ce49c947fed7b",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "self_heal_budget_exhausted",
+        "budget_exhausted_without_accepted_debt",
+        "continue_after_self_heal_budget_exhausted_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "validation-omitted",
+      "attemptRef": "fixture://validation-omitted.json",
+      "attemptSha256": "8d52d2fc3c27089f4d5999bc4a2da84b89f7ad770331de16fa97626d0b273df0",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "validation_not_rerun_after_recovery",
+        "non_degradation_not_passed",
+        "validation_optional_after_recovery_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "same-class-ignored",
+      "attemptRef": "fixture://same-class-ignored.json",
+      "attemptSha256": "e655d6673b69633e008a5ec778af805caa0e3b66a3e7977005a4de5c3195c61a",
+      "expectedStatus": "failed",
+      "expectedDecision": "hard_stop",
+      "expectedFindingKinds": [
+        "repeated_same_class_systemic_blocker",
+        "repeated_same_class_not_systemic_overclaim"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "self_heal_success_without_changed_evidence",
+    "continue_after_self_heal_budget_exhausted",
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ],
+  "finalPostureRecommendation": "H09_ANTI_THEATRE_FIXTURE_BACKED"
+}

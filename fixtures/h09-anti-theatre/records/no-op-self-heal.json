@@ -1,0 +1,33 @@
+{
+  "schema_version": "hadaf_h09_anti_theatre_attempt_v1",
+  "attempt_id": "h09-no-op-self-heal",
+  "mode": "attempt_record",
+  "failure_class": "deterministic_formatting_failure",
+  "attempt_state": {
+    "self_heals_used_for_ffet": 1,
+    "self_heals_used_for_box": 4,
+    "self_heals_used_for_run": 8,
+    "same_class_failures_across_ffets": 1
+  },
+  "evidence_change": {
+    "before_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+    "after_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+    "changed_files": [],
+    "changed_evidence": false
+  },
+  "validation": {
+    "rerun_after_attempt": true,
+    "validation_output_sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+    "non_degradation_passed": true,
+    "non_degradation_output_sha256": "7777777777777777777777777777777777777777777777777777777777777777"
+  },
+  "claims": {
+    "self_heal_success_without_changed_evidence": true
+  },
+  "cannot_claim": [
+    "self_heal_success_without_changed_evidence",
+    "continue_after_self_heal_budget_exhausted",
+    "stable_agents",
+    "mechanically_independent_agents"
+  ]
+}
