@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "status_id": "stale-head-check",
+  "captured_at": "2026-06-27T06:40:00Z",
+  "capture_mode": "fixture",
+  "repository": {
+    "owner": "usman-hussain-minhas",
+    "name": "hadaf",
+    "default_branch": "main"
+  },
+  "github": {
+    "availability": "available"
+  },
+  "subject": {
+    "pull_request_number": 70,
+    "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "base_branch": "main",
+    "required_checks": [
+      "Seed quality checks"
+    ],
+    "optional_checks": []
+  },
+  "checks": [
+    {
+      "name": "Seed quality checks",
+      "source": "github_actions",
+      "required": true,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  ],
+  "watcher": {
+    "exact_head_required": true,
+    "required_checks_must_pass": true,
+    "pending_blocks": true,
+    "github_unavailable_blocks": true
+  },
+  "cannot_claim": [
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized"
+  ]
+}

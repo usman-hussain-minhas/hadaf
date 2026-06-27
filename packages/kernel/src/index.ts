@@ -523,3 +523,19 @@ export {
   type H08PrTerminalState,
   type H08VerifiedPrLifecycleRef
 } from "./h08/pr-lifecycle.js";
+export {
+  verifyH08CiWatcherConfig,
+  type H08CheckConclusion,
+  type H08CheckStatus,
+  type H08CiWatcherClassification,
+  type H08CiWatcherConfig,
+  type H08CiWatcherExpectedStatus,
+  type H08CiWatcherFinding,
+  type H08CiWatcherReport,
+  type H08CiWatcherScenarioExpectation,
+  type H08CiWatcherScenarioResult,
+  type H08CiWatcherStatus,
+  type H08CiWatcherSummary,
+  type H08ExpectedCiWatcherStatus,
+  type H08VerifiedCiWatcherRef
+} from "./h08/ci-watcher.js";

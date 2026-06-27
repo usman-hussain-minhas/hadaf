@@ -1,0 +1,135 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h08-ci-watcher"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "valid-ci-status",
+      "statusRef": "fixture://statuses/valid-ci-status.json",
+      "statusSha256": "c0c1a63b80c6ee81b41a008986b3584308d5f5b745eb9dd69b0b31f65732eb49",
+      "expectedStatus": "passed",
+      "expected": {
+        "repository": "usman-hussain-minhas/hadaf",
+        "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "requiredCheckNames": [
+          "Seed quality checks",
+          "CodeQL analysis",
+          "Dependency review"
+        ],
+        "githubAvailability": "available"
+      }
+    },
+    {
+      "scenarioId": "stale-head-check",
+      "statusRef": "fixture://statuses/stale-head-check.json",
+      "statusSha256": "93e781e5e91bd47b60f013e58bf2e225a86ade1091765506285f5a24f3177571",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "required_check_stale_head"
+      ],
+      "expected": {
+        "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "requiredCheckNames": [
+          "Seed quality checks"
+        ],
+        "githubAvailability": "available"
+      }
+    },
+    {
+      "scenarioId": "missing-required-check",
+      "statusRef": "fixture://statuses/missing-required-check.json",
+      "statusSha256": "f601b80887dae1001e047e9eef4687971df37c2abade0301dcd681f364b84ff1",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "required_check_missing"
+      ],
+      "expected": {
+        "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "requiredCheckNames": [
+          "Seed quality checks",
+          "CodeQL analysis"
+        ],
+        "githubAvailability": "available"
+      }
+    },
+    {
+      "scenarioId": "pending-required-check",
+      "statusRef": "fixture://statuses/pending-required-check.json",
+      "statusSha256": "60db5ebea1467023d8d6852de3736fd607d39e863b83392abf26456313b0bbcd",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "required_check_pending"
+      ],
+      "expected": {
+        "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "requiredCheckNames": [
+          "Seed quality checks"
+        ],
+        "githubAvailability": "available"
+      }
+    },
+    {
+      "scenarioId": "required-check-failed",
+      "statusRef": "fixture://statuses/required-check-failed.json",
+      "statusSha256": "11be720c46934a8f4d5602397f5327a838885096f93b9302439ca162e3a5b17e",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "required_check_failed"
+      ],
+      "expected": {
+        "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "requiredCheckNames": [
+          "Seed quality checks"
+        ],
+        "githubAvailability": "available"
+      }
+    },
+    {
+      "scenarioId": "github-unavailable",
+      "statusRef": "fixture://statuses/github-unavailable.json",
+      "statusSha256": "4a2284471b2863ae954bd2140a92e09be18a7bb5853b5c4b6ad4ec3ddbd43e98",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "github_truth_unavailable"
+      ],
+      "expected": {
+        "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "requiredCheckNames": [
+          "Seed quality checks"
+        ],
+        "githubAvailability": "unavailable"
+      }
+    },
+    {
+      "scenarioId": "optional-check-failed",
+      "statusRef": "fixture://statuses/optional-check-failed.json",
+      "statusSha256": "f41f0782c862506b04f6d42a9e941776a0944c90fd287a2e640bc240b6b68243",
+      "expectedStatus": "passed",
+      "expectedClassificationKinds": [
+        "optional_check_failed"
+      ],
+      "expected": {
+        "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "requiredCheckNames": [
+          "Seed quality checks"
+        ],
+        "optionalCheckNames": [
+          "Advisory docs lint"
+        ],
+        "githubAvailability": "available"
+      }
+    }
+  ],
+  "cannotClaim": [
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized",
+    "H08_git_ci_pr_merge_conductor_implemented",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ],
+  "finalPostureRecommendation": "H08_F03_EXACT_HEAD_CI_WATCHER_FIXTURE_TESTED"
+}
