@@ -2,7 +2,7 @@
   "project": {
     "id": "hadaf",
     "name": "HADAF v1",
-    "posture": "H08_GIT_CI_PR_CONDUCTOR_PROJECTION_ACTIVE_FIXTURE_BACKED",
+    "posture": "H09_RECOVERY_PROJECTION_ACTIVE_FIXTURE_BACKED",
     "maturity": "fixture_backed"
   },
   "boxes": [
@@ -77,6 +77,16 @@
       "debt": [
         "box_assurance_pending",
         "full_conductor_gate_pending"
+      ]
+    },
+    {
+      "id": "H09",
+      "name": "Self-Audit, Self-Heal, and Recovery",
+      "status": "product_pipeline_active",
+      "maturity": "fixture_backed",
+      "debt": [
+        "box_assurance_pending",
+        "live_autonomous_recovery_not_implemented"
       ]
     }
   ],
@@ -330,6 +340,42 @@
     {
       "id": "H08-F06",
       "title": "HMC Git/CI/PR conductor projection",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H09-F00",
+      "title": "H09 plan and FFET graph",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H09-F01",
+      "title": "Recovery policy and budget model",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H09-F02",
+      "title": "Self-heal planner",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H09-F03",
+      "title": "Recovery execution records",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H09-F04",
+      "title": "Anti-theatre checks",
+      "status": "closeout_complete",
+      "maturity": "fixture_backed"
+    },
+    {
+      "id": "H09-F05",
+      "title": "HMC recovery projection",
       "status": "active",
       "maturity": "fixture_backed"
     }
@@ -425,6 +471,21 @@
         "persistent_state_store_implemented",
         "H13_system_assurance_engine_implemented"
       ]
+    },
+    {
+      "id": "h09_hmc_recovery_projection",
+      "status": "passed",
+      "maturity": "fixture_backed",
+      "cannotClaim": [
+        "HMC_authoritative_state",
+        "H09_recovery_engine_implemented",
+        "live_autonomous_recovery_execution",
+        "production_rollback_executed",
+        "H10_learning_engine_implemented",
+        "H11_impact_graph_implemented",
+        "H12_box_assurance_engine_implemented",
+        "H13_system_assurance_engine_implemented"
+      ]
     }
   ],
   "evidence": [
@@ -472,6 +533,12 @@
     },
     {
       "id": "H08-F05",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "required": true
+    },
+    {
+      "id": "H09-F04",
       "status": "verified",
       "maturity": "fixture_backed",
       "required": true
@@ -1145,6 +1212,191 @@
       }
     ]
   },
+  "h09Projection": {
+    "id": "H09",
+    "status": "product_pipeline_active",
+    "maturity": "fixture_backed",
+    "authority": "derived_view_only",
+    "freshness": "fresh",
+    "box": {
+      "id": "H09",
+      "status": "product_pipeline_active",
+      "maturity": "fixture_backed",
+      "assuranceStatus": "pending"
+    },
+    "components": [
+      {
+        "id": "recovery_policy",
+        "title": "Recovery policy",
+        "status": "verified",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      },
+      {
+        "id": "self_heal_budget",
+        "title": "Self-heal budget",
+        "status": "verified",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      },
+      {
+        "id": "hard_stop_detector",
+        "title": "Hard-stop detector",
+        "status": "verified",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      },
+      {
+        "id": "self_heal_planner",
+        "title": "Self-heal planner",
+        "status": "verified",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      },
+      {
+        "id": "recovery_execution",
+        "title": "Recovery execution records",
+        "status": "verified",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      },
+      {
+        "id": "quarantine",
+        "title": "Quarantine routing",
+        "status": "verified",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      },
+      {
+        "id": "rollback",
+        "title": "Rollback routing",
+        "status": "verified",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      },
+      {
+        "id": "anti_theatre",
+        "title": "Anti-theatre checks",
+        "status": "verified",
+        "maturity": "fixture_backed",
+        "evidenceStatus": "verified",
+        "truthSource": "fixture",
+        "freshness": "fresh",
+        "required": true
+      }
+    ],
+    "selfHealBudget": {
+      "maxSelfHealsPerFfet": 3,
+      "maxSelfHealsPerBox": 10,
+      "maxSelfHealsForFullRun": 30,
+      "usedForFfet": 0,
+      "usedForBox": 4,
+      "usedForFullRun": 4,
+      "exhausted": false,
+      "exhaustionClassification": "not_exhausted",
+      "freshness": "fresh"
+    },
+    "recovery": {
+      "policyStatus": "verified",
+      "hardStopStatus": "verified",
+      "plannerStatus": "verified",
+      "executionStatus": "verified",
+      "quarantineStatus": "verified",
+      "rollbackStatus": "verified",
+      "antiTheatreStatus": "verified",
+      "liveAutonomousRecovery": false,
+      "productionRollbackExecuted": false,
+      "freshness": "fresh"
+    },
+    "blockedClaims": [
+      {
+        "claimId": "H09_recovery_engine_implemented",
+        "reason": "H09-F05 projects fixture-backed recovery state before H09 Box assurance and closeout.",
+        "cannotClaim": "H09_recovery_engine_implemented"
+      },
+      {
+        "claimId": "live_autonomous_recovery_execution",
+        "reason": "H09-F05 displays recovery state only and does not execute live autonomous recovery.",
+        "cannotClaim": "live_autonomous_recovery_execution"
+      },
+      {
+        "claimId": "production_rollback_executed",
+        "reason": "H09 rollback routing is fixture-backed and never production rollback.",
+        "cannotClaim": "production_rollback_executed"
+      },
+      {
+        "claimId": "H10_learning_engine_implemented",
+        "reason": "H10 has not started.",
+        "cannotClaim": "H10_learning_engine_implemented"
+      },
+      {
+        "claimId": "H11_impact_graph_implemented",
+        "reason": "H11 has not started.",
+        "cannotClaim": "H11_impact_graph_implemented"
+      },
+      {
+        "claimId": "H12_box_assurance_engine_implemented",
+        "reason": "H12 has not started.",
+        "cannotClaim": "H12_box_assurance_engine_implemented"
+      },
+      {
+        "claimId": "H13_system_assurance_engine_implemented",
+        "reason": "H13 is not authorized.",
+        "cannotClaim": "H13_system_assurance_engine_implemented"
+      }
+    ],
+    "prerequisiteCloseouts": [
+      {
+        "id": "H09-F01",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      },
+      {
+        "id": "H09-F02",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      },
+      {
+        "id": "H09-F03",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      },
+      {
+        "id": "H09-F04",
+        "status": "closeout_complete",
+        "closeoutStatus": "closeout_complete",
+        "evidenceStatus": "verified",
+        "terminalLearningStatus": "complete"
+      }
+    ]
+  },
   "git": {
     "expectedMainSha": "619bb8f0c81faca1025b62a48d542dc12fa02f0f",
     "actualMainSha": "619bb8f0c81faca1025b62a48d542dc12fa02f0f",
@@ -1197,6 +1449,11 @@
     "github_settings_mutation_authorized",
     "branch_protection_mutation_authorized",
     "H13_system_assurance_engine_implemented",
+    "H09_recovery_engine_implemented",
+    "live_autonomous_recovery_execution",
+    "production_rollback_executed",
+    "H10_learning_engine_implemented",
+    "H11_impact_graph_implemented",
     "production_resource_orchestration",
     "h06_box_assurance_complete",
     "H07_proof_engine_implemented",
@@ -1209,5 +1466,5 @@
     "production_ready",
     "stable_agents"
   ],
-  "finalPostureRecommendation": "H08_GIT_CI_PR_CONDUCTOR_PROJECTION_ACTIVE_FIXTURE_BACKED"
+  "finalPostureRecommendation": "H09_RECOVERY_PROJECTION_ACTIVE_FIXTURE_BACKED"
 }

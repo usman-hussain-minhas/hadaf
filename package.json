@@ -70,6 +70,7 @@
     "verify:h09-anti-theatre": "node scripts/verify-h09-anti-theatre.mjs",
     "verify:h09-recovery-execution": "node scripts/verify-h09-recovery-execution.mjs",
     "verify:h09-self-heal-planner": "node scripts/verify-h09-self-heal-planner.mjs",
+    "verify:h09-recovery-projection": "node scripts/verify-h09-recovery-projection.mjs",
     "supply-chain": "node scripts/generate-supply-chain-artifacts.mjs"
   },
   "devDependencies": {

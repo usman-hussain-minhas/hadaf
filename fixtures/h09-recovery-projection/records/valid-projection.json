@@ -1,0 +1,210 @@
+{
+  "schema_version": "h09_hmc_recovery_projection_v1",
+  "projection_id": "h09-hmc-recovery-projection-valid",
+  "status": "product_pipeline_active",
+  "maturity": "fixture_backed",
+  "authority": "derived_view_only",
+  "freshness": "fresh",
+  "active_ffet": "H09-F05",
+  "box": {
+    "id": "H09",
+    "status": "product_pipeline_active",
+    "assurance_status": "pending"
+  },
+  "components": [
+    {
+      "component_id": "recovery_policy",
+      "title": "Recovery policy",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "evidence_status": "verified",
+      "freshness": "fresh",
+      "truth_source": "fixture",
+      "required": true
+    },
+    {
+      "component_id": "self_heal_budget",
+      "title": "Self-heal budget",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "evidence_status": "verified",
+      "freshness": "fresh",
+      "truth_source": "fixture",
+      "required": true
+    },
+    {
+      "component_id": "hard_stop_detector",
+      "title": "Hard-stop detector",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "evidence_status": "verified",
+      "freshness": "fresh",
+      "truth_source": "fixture",
+      "required": true
+    },
+    {
+      "component_id": "self_heal_planner",
+      "title": "Self-heal planner",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "evidence_status": "verified",
+      "freshness": "fresh",
+      "truth_source": "fixture",
+      "required": true
+    },
+    {
+      "component_id": "recovery_execution",
+      "title": "Recovery execution records",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "evidence_status": "verified",
+      "freshness": "fresh",
+      "truth_source": "fixture",
+      "required": true
+    },
+    {
+      "component_id": "quarantine",
+      "title": "Quarantine routing",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "evidence_status": "verified",
+      "freshness": "fresh",
+      "truth_source": "fixture",
+      "required": true
+    },
+    {
+      "component_id": "rollback",
+      "title": "Rollback routing",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "evidence_status": "verified",
+      "freshness": "fresh",
+      "truth_source": "fixture",
+      "required": true
+    },
+    {
+      "component_id": "anti_theatre",
+      "title": "Anti-theatre checks",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "evidence_status": "verified",
+      "freshness": "fresh",
+      "truth_source": "fixture",
+      "required": true
+    }
+  ],
+  "self_heal_budget": {
+    "max_self_heals_per_ffet": 3,
+    "max_self_heals_per_box": 10,
+    "max_self_heals_for_full_run": 30,
+    "used_for_ffet": 0,
+    "used_for_box": 4,
+    "used_for_full_run": 4,
+    "exhausted": false,
+    "exhaustion_classification": "not_exhausted",
+    "freshness": "fresh"
+  },
+  "recovery": {
+    "policy_status": "verified",
+    "hard_stop_status": "verified",
+    "planner_status": "verified",
+    "execution_status": "verified",
+    "quarantine_status": "verified",
+    "rollback_status": "verified",
+    "anti_theatre_status": "verified",
+    "live_autonomous_recovery": false,
+    "production_rollback_executed": false,
+    "freshness": "fresh"
+  },
+  "blocked_claims": [
+    {
+      "claim_id": "H09_recovery_engine_implemented",
+      "reason": "H09-F05 projects fixture-backed recovery state before H09 Box assurance and closeout.",
+      "cannot_claim": "H09_recovery_engine_implemented"
+    },
+    {
+      "claim_id": "live_autonomous_recovery_execution",
+      "reason": "H09-F05 displays recovery state only and does not execute live autonomous recovery.",
+      "cannot_claim": "live_autonomous_recovery_execution"
+    },
+    {
+      "claim_id": "production_rollback_executed",
+      "reason": "H09 rollback routing is fixture-backed and never production rollback.",
+      "cannot_claim": "production_rollback_executed"
+    },
+    {
+      "claim_id": "H10_learning_engine_implemented",
+      "reason": "H10 has not started.",
+      "cannot_claim": "H10_learning_engine_implemented"
+    },
+    {
+      "claim_id": "H11_impact_graph_implemented",
+      "reason": "H11 has not started.",
+      "cannot_claim": "H11_impact_graph_implemented"
+    },
+    {
+      "claim_id": "H12_box_assurance_engine_implemented",
+      "reason": "H12 has not started.",
+      "cannot_claim": "H12_box_assurance_engine_implemented"
+    },
+    {
+      "claim_id": "H13_system_assurance_engine_implemented",
+      "reason": "H13 is not authorized.",
+      "cannot_claim": "H13_system_assurance_engine_implemented"
+    }
+  ],
+  "prerequisite_closeouts": [
+    {
+      "id": "H09-F01",
+      "status": "closeout_complete",
+      "closeout_status": "closeout_complete",
+      "evidence_status": "verified",
+      "terminal_learning_status": "complete"
+    },
+    {
+      "id": "H09-F02",
+      "status": "closeout_complete",
+      "closeout_status": "closeout_complete",
+      "evidence_status": "verified",
+      "terminal_learning_status": "complete"
+    },
+    {
+      "id": "H09-F03",
+      "status": "closeout_complete",
+      "closeout_status": "closeout_complete",
+      "evidence_status": "verified",
+      "terminal_learning_status": "complete"
+    },
+    {
+      "id": "H09-F04",
+      "status": "closeout_complete",
+      "closeout_status": "closeout_complete",
+      "evidence_status": "verified",
+      "terminal_learning_status": "complete"
+    }
+  ],
+  "claims": {
+    "hmc_authority": false,
+    "live_autonomous_recovery": false,
+    "production_rollback": false,
+    "h10_learning_engine": false,
+    "h11_impact_graph": false,
+    "h12_box_assurance": false,
+    "h13_system_assurance": false,
+    "stable_agents": false,
+    "independent_audit": false
+  },
+  "cannot_claim": [
+    "HMC_authoritative_state",
+    "H09_recovery_engine_implemented",
+    "live_autonomous_recovery_execution",
+    "production_rollback_executed",
+    "H10_learning_engine_implemented",
+    "H11_impact_graph_implemented",
+    "H12_box_assurance_engine_implemented",
+    "H13_system_assurance_engine_implemented",
+    "stable_agents",
+    "self_hosting_ready",
+    "production_ready"
+  ]
+}

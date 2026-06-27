@@ -1,0 +1,76 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h09-recovery-projection"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "valid-projection",
+      "projectionRef": "fixture://records/valid-projection.json",
+      "projectionSha256": "3d577e0bcb24923f4862ef75af50c4cf6c30b6192b46edacd362aeddc0724a88",
+      "expectedStatus": "passed",
+      "expected": {
+        "status": "product_pipeline_active",
+        "activeFfet": "H09-F05",
+        "recoveryPolicyStatus": "verified",
+        "selfHealPlannerStatus": "verified",
+        "antiTheatreStatus": "verified"
+      }
+    },
+    {
+      "scenarioId": "authority-overclaim",
+      "projectionRef": "fixture://records/authority-overclaim.json",
+      "projectionSha256": "b98476ce7bdeeabc7daf20c1bdb2c9bd105711e65347bf8958eee4a2b7922063",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "h09_projection_claims_authority"
+      ]
+    },
+    {
+      "scenarioId": "live-recovery-overclaim",
+      "projectionRef": "fixture://records/live-recovery-overclaim.json",
+      "projectionSha256": "da5edd1096be1a3c6ed7836c2cf3f32e7528a22bcaac7064b978f2817d64d130",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "h09_live_autonomous_recovery_overclaim",
+        "h09_production_rollback_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "future-box-overclaim",
+      "projectionRef": "fixture://records/future-box-overclaim.json",
+      "projectionSha256": "6c6396e93b952ca9ae229fc5635750ac06877528575d8976cc78a88d62f371a1",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "h09_h10_learning_engine_overclaim",
+        "h09_h11_impact_graph_overclaim",
+        "h09_h12_box_assurance_overclaim",
+        "h09_h13_system_assurance_overclaim",
+        "h09_stable_agents_overclaim",
+        "h09_independent_audit_overclaim"
+      ]
+    },
+    {
+      "scenarioId": "exhausted-unclassified",
+      "projectionRef": "fixture://records/exhausted-unclassified.json",
+      "projectionSha256": "7d085120167cdccc4a74f27c98a207215131cecb383ed69c922a3be8313b7cfc",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "h09_exhausted_budget_unclassified"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "HMC_authoritative_state",
+    "H09_recovery_engine_implemented",
+    "live_autonomous_recovery_execution",
+    "production_rollback_executed",
+    "H10_learning_engine_implemented",
+    "H11_impact_graph_implemented",
+    "H12_box_assurance_engine_implemented",
+    "H13_system_assurance_engine_implemented",
+    "stable_agents",
+    "self_hosting_ready",
+    "production_ready"
+  ],
+  "finalPostureRecommendation": "H09_RECOVERY_PROJECTION_ACTIVE_FIXTURE_BACKED"
+}

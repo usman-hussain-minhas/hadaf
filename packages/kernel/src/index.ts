@@ -118,6 +118,13 @@ export {
   type HmcH08GitHubSettingsProjectionInput,
   type HmcH08PrerequisiteProjectionInput,
   type HmcH08ProjectionInput,
+  type HmcH09BlockedClaimProjectionInput,
+  type HmcH09BoxProjectionInput,
+  type HmcH09ComponentProjectionInput,
+  type HmcH09PrerequisiteProjectionInput,
+  type HmcH09ProjectionInput,
+  type HmcH09RecoveryProjectionInput,
+  type HmcH09SelfHealBudgetProjectionInput,
   type HmcMaturity,
   type HmcProjectInput,
   type HmcQualityInput,
@@ -127,6 +134,22 @@ export {
   type HmcStateStatus,
   type HmcVerifiedRef
 } from "./hmc/state.js";
+export {
+  verifyH09HmcRecoveryProjectionConfig,
+  type H09ExpectedHmcRecoveryProjectionRecord,
+  type H09ExpectedHmcRecoveryProjectionStatus,
+  type H09HmcRecoveryProjectionConfig,
+  type H09HmcRecoveryProjectionFinding,
+  type H09HmcRecoveryProjectionReport,
+  type H09HmcRecoveryProjectionScenarioExpectation,
+  type H09HmcRecoveryProjectionScenarioResult,
+  type H09HmcRecoveryProjectionStatus,
+  type H09HmcRecoveryProjectionSummary,
+  type H09RecoveryProjectionEvidenceStatus,
+  type H09RecoveryProjectionFreshness,
+  type H09RecoveryProjectionMaturity,
+  type H09VerifiedHmcRecoveryProjectionRef
+} from "./h09/hmc-recovery-projection.js";
 export {
   verifyProductPreviewConfig,
   type ProductPreviewConfig,

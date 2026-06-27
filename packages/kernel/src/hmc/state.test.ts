@@ -11,7 +11,7 @@ test("derives a valid HMC fixture state with classified stale generated state", 
   assert.equal(report.classified_mismatches.length, 1);
   assert.equal(report.view.project.name, "HADAF v1");
   assert.equal(report.view.maturitySummary.fixture_backed > 0, true);
-  assert.equal(report.final_posture_recommendation, "H08_GIT_CI_PR_CONDUCTOR_PROJECTION_ACTIVE_FIXTURE_BACKED");
+  assert.equal(report.final_posture_recommendation, "H09_RECOVERY_PROJECTION_ACTIVE_FIXTURE_BACKED");
   assert.equal(report.view.h03Projection?.authority, "derived_view_only");
   assert.equal(report.view.h03Projection?.deliveryConstitution.approvalStatus, "for_human_review");
   assert.equal(report.view.h03Projection?.deliveryConstitution.executionAuthorized, false);
@@ -28,6 +28,10 @@ test("derives a valid HMC fixture state with classified stale generated state", 
   assert.equal(report.view.h08Projection?.authority, "derived_view_only");
   assert.equal(report.view.h08Projection?.conductor.boundedEnvelopeVerified, true);
   assert.equal(report.view.h08Projection?.dogfood.liveGithubAdapterImplemented, false);
+  assert.equal(report.view.h09Projection?.authority, "derived_view_only");
+  assert.equal(report.view.h09Projection?.selfHealBudget.maxSelfHealsPerFfet, 3);
+  assert.equal(report.view.h09Projection?.recovery.liveAutonomousRecovery, false);
+  assert.equal(report.view.h09Projection?.recovery.productionRollbackExecuted, false);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h03_stage:H03-F05" && ref.status === "closeout_complete"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h03_stage:H03-F06" && ref.status === "closeout_complete"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h04_ffet:H04-F05" && ref.status === "closeout_complete"), true);
@@ -39,6 +43,8 @@ test("derives a valid HMC fixture state with classified stale generated state", 
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h07_prerequisite:H07-F03" && ref.status === "closeout_complete"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h08_component:conductor" && ref.status === "bounded_envelope_verified"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h08_prerequisite:H08-F05" && ref.status === "closeout_complete"), true);
+  assert.equal(report.verified_refs.some((ref) => ref.ref === "h09_component:anti_theatre" && ref.status === "verified"), true);
+  assert.equal(report.verified_refs.some((ref) => ref.ref === "h09_prerequisite:H09-F04" && ref.status === "closeout_complete"), true);
   assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04" && ffet.status === "active"), false);
   assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04-R1" && ffet.status === "verified"), true);
 });
@@ -573,6 +579,100 @@ test("fails H08 projection when precise cannot_claim entries are missing", () =>
   assertFinding(report, "h08_blocked_claim_missing_cannot_claim");
 });
 
+test("fails H09 projection authority, maturity, live recovery, and production rollback overclaims", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h09Projection: {
+      ...validConfig().h09Projection!,
+      claimsAuthority: true,
+      claimLiveAutonomousRecovery: true,
+      claimProductionRollback: true,
+      maturity: "persistent",
+      recovery: {
+        ...validConfig().h09Projection!.recovery,
+        liveAutonomousRecovery: true,
+        productionRollbackExecuted: true
+      }
+    }
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "h09_projection_claims_authority");
+  assertFinding(report, "h09_projection_maturity_overclaim");
+  assertFinding(report, "h09_live_autonomous_recovery_overclaim");
+  assertFinding(report, "h09_production_rollback_overclaim");
+});
+
+test("fails H09 future Box, stable-agent, and independent-audit overclaims", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h09Projection: {
+      ...validConfig().h09Projection!,
+      claimH10LearningEngine: true,
+      claimH11ImpactGraph: true,
+      claimH12BoxAssurance: true,
+      claimH13SystemAssurance: true,
+      claimStableAgents: true,
+      claimIndependentAudit: true
+    }
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "h09_h10_learning_engine_overclaim");
+  assertFinding(report, "h09_h11_impact_graph_overclaim");
+  assertFinding(report, "h09_h12_box_assurance_overclaim");
+  assertFinding(report, "h09_h13_system_assurance_overclaim");
+  assertFinding(report, "h09_stable_agents_overclaim");
+  assertFinding(report, "h09_independent_audit_overclaim");
+});
+
+test("fails stale H09 recovery state and missing component evidence without classification", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h09Projection: {
+      ...validConfig().h09Projection!,
+      freshness: "stale",
+      components: [
+        {
+          ...validConfig().h09Projection!.components[0]!,
+          evidenceStatus: "missing",
+          freshness: "missing"
+        },
+        ...validConfig().h09Projection!.components.slice(1)
+      ],
+      recovery: {
+        ...validConfig().h09Projection!.recovery,
+        policyStatus: "missing",
+        freshness: "stale"
+      }
+    },
+    classifiedMismatches: [...(validConfig().classifiedMismatches ?? [])]
+  });
+
+  assert.equal(report.status, "failed");
+  assert.equal(findings(report, "unclassified_state_mismatch"), 5);
+});
+
+test("fails H09 exhausted budget conflict and missing precise cannot_claim entries", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h09Projection: {
+      ...validConfig().h09Projection!,
+      selfHealBudget: {
+        ...validConfig().h09Projection!.selfHealBudget,
+        exhausted: true,
+        exhaustionClassification: "not_exhausted"
+      }
+    },
+    cannotClaim: ["live_github_adapter_implemented", "HMC_authoritative_state"]
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "h09_exhausted_budget_classification_conflict");
+  assertFinding(report, "missing_h09_projection_cannot_claim");
+  assertFinding(report, "h09_blocked_claim_missing_cannot_claim");
+});
+
 test("fails private paths in state config", () => {
   const report = deriveHmcStateConfig({
     ...validConfig(),
@@ -657,6 +757,13 @@ function validConfig(): HmcStateConfig {
         status: "product_pipeline_active",
         maturity: "fixture_backed",
         debt: ["box_assurance_pending", "full_conductor_gate_pending"]
+      },
+      {
+        id: "H09",
+        name: "Self-Audit, Self-Heal, and Recovery",
+        status: "product_pipeline_active",
+        maturity: "fixture_backed",
+        debt: ["box_assurance_pending", "live_autonomous_recovery_not_implemented"]
       }
     ],
     ffets: [
@@ -897,6 +1004,42 @@ function validConfig(): HmcStateConfig {
       {
         id: "H08-F06",
         title: "HMC Git/CI/PR conductor projection",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H09-F00",
+        title: "H09 plan and FFET graph",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H09-F01",
+        title: "Recovery policy and budget model",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H09-F02",
+        title: "Self-heal planner",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H09-F03",
+        title: "Recovery execution records",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H09-F04",
+        title: "Anti-theatre checks",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H09-F05",
+        title: "HMC recovery projection",
         status: "active",
         maturity: "fixture_backed"
       }
@@ -958,6 +1101,21 @@ function validConfig(): HmcStateConfig {
           "persistent_state_store_implemented",
           "H13_system_assurance_engine_implemented"
         ]
+      },
+      {
+        id: "h09_hmc_recovery_projection",
+        status: "passed",
+        maturity: "fixture_backed",
+        cannotClaim: [
+          "HMC_authoritative_state",
+          "H09_recovery_engine_implemented",
+          "live_autonomous_recovery_execution",
+          "production_rollback_executed",
+          "H10_learning_engine_implemented",
+          "H11_impact_graph_implemented",
+          "H12_box_assurance_engine_implemented",
+          "H13_system_assurance_engine_implemented"
+        ]
       }
     ],
     evidence: [
@@ -987,6 +1145,12 @@ function validConfig(): HmcStateConfig {
       },
       {
         id: "H08-F05",
+        status: "verified",
+        maturity: "fixture_backed",
+        required: true
+      },
+      {
+        id: "H09-F04",
         status: "verified",
         maturity: "fixture_backed",
         required: true
@@ -1284,6 +1448,90 @@ function validConfig(): HmcStateConfig {
         h08Prerequisite("H08-F05")
       ]
     },
+    h09Projection: {
+      id: "H09",
+      status: "product_pipeline_active",
+      maturity: "fixture_backed",
+      authority: "derived_view_only",
+      freshness: "fresh",
+      box: {
+        id: "H09",
+        status: "product_pipeline_active",
+        maturity: "fixture_backed",
+        assuranceStatus: "pending"
+      },
+      components: [
+        h09Component("recovery_policy", "Recovery policy", "verified"),
+        h09Component("self_heal_budget", "Self-heal budget", "verified"),
+        h09Component("hard_stop_detector", "Hard-stop detector", "verified"),
+        h09Component("self_heal_planner", "Self-heal planner", "verified"),
+        h09Component("recovery_execution", "Recovery execution records", "verified"),
+        h09Component("quarantine", "Quarantine routing", "verified"),
+        h09Component("rollback", "Rollback routing", "verified"),
+        h09Component("anti_theatre", "Anti-theatre checks", "verified")
+      ],
+      selfHealBudget: {
+        maxSelfHealsPerFfet: 3,
+        maxSelfHealsPerBox: 10,
+        maxSelfHealsForFullRun: 30,
+        usedForFfet: 0,
+        usedForBox: 4,
+        usedForFullRun: 4,
+        exhausted: false,
+        exhaustionClassification: "not_exhausted",
+        freshness: "fresh"
+      },
+      recovery: {
+        policyStatus: "verified",
+        hardStopStatus: "verified",
+        plannerStatus: "verified",
+        executionStatus: "verified",
+        quarantineStatus: "verified",
+        rollbackStatus: "verified",
+        antiTheatreStatus: "verified",
+        liveAutonomousRecovery: false,
+        productionRollbackExecuted: false,
+        freshness: "fresh"
+      },
+      blockedClaims: [
+        {
+          claimId: "H09_recovery_engine_implemented",
+          reason: "H09-F05 projects fixture-backed recovery state before H09 Box assurance and closeout.",
+          cannotClaim: "H09_recovery_engine_implemented"
+        },
+        {
+          claimId: "live_autonomous_recovery_execution",
+          reason: "H09-F05 displays recovery state only and does not execute live autonomous recovery.",
+          cannotClaim: "live_autonomous_recovery_execution"
+        },
+        {
+          claimId: "production_rollback_executed",
+          reason: "H09 rollback routing is fixture-backed and never production rollback.",
+          cannotClaim: "production_rollback_executed"
+        },
+        {
+          claimId: "H10_learning_engine_implemented",
+          reason: "H10 has not started.",
+          cannotClaim: "H10_learning_engine_implemented"
+        },
+        {
+          claimId: "H11_impact_graph_implemented",
+          reason: "H11 has not started.",
+          cannotClaim: "H11_impact_graph_implemented"
+        },
+        {
+          claimId: "H12_box_assurance_engine_implemented",
+          reason: "H12 has not started.",
+          cannotClaim: "H12_box_assurance_engine_implemented"
+        },
+        {
+          claimId: "H13_system_assurance_engine_implemented",
+          reason: "H13 is not authorized.",
+          cannotClaim: "H13_system_assurance_engine_implemented"
+        }
+      ],
+      prerequisiteCloseouts: [h09Prerequisite("H09-F01"), h09Prerequisite("H09-F02"), h09Prerequisite("H09-F03"), h09Prerequisite("H09-F04")]
+    },
     git: {
       expectedMainSha: sha(),
       actualMainSha: sha(),
@@ -1329,9 +1577,14 @@ function validConfig(): HmcStateConfig {
     "live_lifecycle_runner_execution",
     "H08_git_ci_pr_merge_conductor_implemented",
     "github_settings_mutation_authorized",
-    "branch_protection_mutation_authorized",
-    "H13_system_assurance_engine_implemented",
-    "production_resource_orchestration",
+      "branch_protection_mutation_authorized",
+      "H13_system_assurance_engine_implemented",
+      "H09_recovery_engine_implemented",
+      "live_autonomous_recovery_execution",
+      "production_rollback_executed",
+      "H10_learning_engine_implemented",
+      "H11_impact_graph_implemented",
+      "production_resource_orchestration",
       "h06_box_assurance_complete",
       "H07_proof_engine_implemented",
       "release_candidate",
@@ -1342,7 +1595,7 @@ function validConfig(): HmcStateConfig {
       "mechanically_independent_audit",
       "H12_box_assurance_engine_implemented"
     ],
-    finalPostureRecommendation: "H08_GIT_CI_PR_CONDUCTOR_PROJECTION_ACTIVE_FIXTURE_BACKED"
+    finalPostureRecommendation: "H09_RECOVERY_PROJECTION_ACTIVE_FIXTURE_BACKED"
   };
 }
 
@@ -1454,6 +1707,33 @@ function h08Component(
 }
 
 function h08Prerequisite(id: string): NonNullable<HmcStateConfig["h08Projection"]>["prerequisiteCloseouts"][number] {
+  return {
+    id,
+    status: "closeout_complete",
+    closeoutStatus: "closeout_complete",
+    evidenceStatus: "verified",
+    terminalLearningStatus: "complete"
+  };
+}
+
+function h09Component(
+  id: NonNullable<HmcStateConfig["h09Projection"]>["components"][number]["id"],
+  title: string,
+  status: string
+): NonNullable<HmcStateConfig["h09Projection"]>["components"][number] {
+  return {
+    id,
+    title,
+    status,
+    maturity: "fixture_backed",
+    evidenceStatus: "verified",
+    truthSource: "fixture",
+    freshness: "fresh",
+    required: true
+  };
+}
+
+function h09Prerequisite(id: string): NonNullable<HmcStateConfig["h09Projection"]>["prerequisiteCloseouts"][number] {
   return {
     id,
     status: "closeout_complete",
