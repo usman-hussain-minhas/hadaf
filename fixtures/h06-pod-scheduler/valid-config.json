@@ -1,0 +1,125 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h06-pod-scheduler"
+  },
+  "schemas": {
+    "common": {
+      "ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json",
+      "sha256": "54109366cf7536cb98394e817418f7f12c2c8fd19fab85718b99f42cf1a2eacf"
+    },
+    "pod": {
+      "ref": "fixture://schemas/pod_scheduler_record.schema.json",
+      "sha256": "8fa47765e18ad56de3146041428f1fca5002bc65f0503e4c56c99a2beb922e2a"
+    }
+  },
+  "expectedBoxId": "H06",
+  "blockedFfetRefs": [
+    "fixture://ffets/H06-F04.json"
+  ],
+  "requiredCannotClaim": [
+    "production_resource_orchestration",
+    "live_parallel_pod_execution",
+    "mechanically_independent_agents",
+    "stable_agents",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ],
+  "pods": [
+    {
+      "recordId": "pod-H06-F03-admitted",
+      "ref": "fixture://pods/admitted-pod.json",
+      "sha256": "96c64272388034ac52829cd041b2ca490d8e9ec8ee3b5bfad235e50a7ad799c4",
+      "collisionRole": "holder",
+      "expectedStatus": "passed"
+    },
+    {
+      "recordId": "pod-H06-F03-serial-fallback",
+      "ref": "fixture://pods/serial-fallback-pod.json",
+      "sha256": "730b1351d229e492f011777b9a72debe9adefd064154713c3ed90b64a806c53c",
+      "expectedStatus": "passed"
+    },
+    {
+      "recordId": "pod-H06-F03-collision-blocked",
+      "ref": "fixture://pods/collision-blocked-pod.json",
+      "sha256": "ab8c8bf66eb3de47bd118f89eb80f485126d41577c17dc0b4267c1ef01f56931",
+      "expectedStatus": "passed"
+    },
+    {
+      "recordId": "pod-H06-F03-collision-without-fallback",
+      "ref": "fixture://pods/collision-without-fallback.json",
+      "sha256": "51aa1fbd37065f5f29bf254beb7ef51c9e347cd6118923dc62f64f17018032ed",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "collision_detected_without_block_or_serial_fallback"
+      ]
+    },
+    {
+      "recordId": "pod-H06-F03-write-set-overlap",
+      "ref": "fixture://pods/write-set-overlap-admitted.json",
+      "sha256": "d36fa9ae4e444f0ef0d74a9b7ed5378f8bf8747dce16ff0af1c4dfa2fe203d59",
+      "collisionRole": "contender",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "write_set_overlap_without_collision"
+      ]
+    },
+    {
+      "recordId": "pod-H06-F03-unclosed-dependency",
+      "ref": "fixture://pods/unclosed-dependency-admitted.json",
+      "sha256": "e9f84b2186644f16a929ca02342b88c1e58380eee38d97374df0fa76fe532f30",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "pod_admitted_with_blocked_dependency"
+      ]
+    },
+    {
+      "recordId": "pod-H06-F03-missing-cannot-claim",
+      "ref": "fixture://pods/missing-cannot-claim.json",
+      "sha256": "525b02079937507c2ae8e5a3cc457b1016efbf967cb2fc13b0e688ba9160ec88",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "required_cannot_claim_missing"
+      ]
+    },
+    {
+      "recordId": "pod-H06-F03-runtime-ref-placeholder",
+      "ref": "fixture://pods/runtime-ref-placeholder.json",
+      "sha256": "22f50bcd79a4c22e5045a5cfd4ce6d582c4ccde0c011fa740b4c8dcacf66fbdb",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "schema_validation_failed",
+        "runtime_ref_hash_invalid_placeholder"
+      ]
+    },
+    {
+      "recordId": "pod-H06-F03-h08-overclaim",
+      "ref": "fixture://pods/h08-overclaim-pod.json",
+      "sha256": "ebc217dca03bc938370256d5b52104984952fb7260f01b0452da44aca561cf99",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "future_box_capability_overclaim"
+      ]
+    },
+    {
+      "recordId": "pod-H06-F03-mechanical-independence-overclaim",
+      "ref": "fixture://pods/mechanical-independence-overclaim-pod.json",
+      "sha256": "f4bb6f028ee273693c74f10a3b1af73dad40b29e93c1c5553c45d80c21ed259a",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "agent_independence_or_stability_overclaim"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "production_resource_orchestration",
+    "live_autonomous_worktree_orchestration",
+    "live_parallel_pod_execution",
+    "mechanically_independent_agents",
+    "stable_agents",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "H07_proof_engine_implemented",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ],
+  "finalPostureRecommendation": "H06_F03_POD_SCHEDULER_SERIAL_FALLBACK_FIXTURE_VERIFIED"
+}

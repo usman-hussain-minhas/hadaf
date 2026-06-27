@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "pod_id": "pod-H06-F03-admitted",
+  "box_id": "H06",
+  "role_refs": [
+    "fixture://roles/codex.bootstrap"
+  ],
+  "ffet_refs": [
+    "fixture://ffets/H06-F03.json"
+  ],
+  "write_set": [
+    "product://packages/kernel/src/h06/pod-scheduler.ts"
+  ],
+  "shared_resources": [
+    "fixture://runtime/scheduler/read-only-state"
+  ],
+  "admission_result": "admitted",
+  "collision_result": "none",
+  "serial_fallback": false,
+  "runtime_refs": [
+    {
+      "ref": "fixture://closeouts/H06-F02.json",
+      "sha256": "436646d37694ae11b1c0c6d32ab89fea6e4fe9553cb3c7503eaeb0e8a13af011"
+    }
+  ],
+  "cannot_claim": [
+    "production_resource_orchestration",
+    "live_parallel_pod_execution",
+    "mechanically_independent_agents",
+    "stable_agents",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ]
+}
