@@ -1,0 +1,36 @@
+{
+  "schema_version": "hadaf_h10_anti_repeat_v1",
+  "anti_repeat_id": "H10-ANTI-REPEAT-STALE-001",
+  "pattern_id": "PATTERN-H10-STALE-EVIDENCE",
+  "source_mistake": {
+    "ref": "learning://H10-F02-learning",
+    "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "repeated_pattern": true,
+  "guard": {
+    "guard_type": "stop_condition",
+    "ref": "artifact://stale-evidence-stop.json",
+    "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+  },
+  "regression_drill": {
+    "status": "passed",
+    "command_ref": "command://verify-h10-anti-repeat",
+    "output_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "product_sha": "43eac1c164c4ee4191d3fc28ca93c3c2ef4111ce"
+  },
+  "non_degradation": {
+    "ref": "artifact://quality-report.json",
+    "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "status": "passed"
+  },
+  "claims": {
+    "all_future_mistakes_prevented": false,
+    "anti_repeat_prevents_all_regressions": false,
+    "stable_agents": false
+  },
+  "cannot_claim": [
+    "all_future_mistakes_prevented",
+    "anti_repeat_prevents_all_regressions",
+    "stable_agents"
+  ]
+}

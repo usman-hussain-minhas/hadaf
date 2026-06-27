@@ -1,0 +1,31 @@
+{
+  "schema_version": "hadaf_h10_anti_repeat_v1",
+  "anti_repeat_id": "H10-ANTI-REPEAT-NO-NON-DEGRADATION-001",
+  "pattern_id": "PATTERN-H10-QUALITY",
+  "source_mistake": {
+    "ref": "learning://H10-F03-learning",
+    "sha256": "8888888888888888888888888888888888888888888888888888888888888888"
+  },
+  "repeated_pattern": true,
+  "guard": {
+    "guard_type": "fixture",
+    "ref": "fixture://non-degradation-omitted.json",
+    "sha256": "9999999999999999999999999999999999999999999999999999999999999999"
+  },
+  "regression_drill": {
+    "status": "passed",
+    "command_ref": "command://verify-h10-anti-repeat",
+    "output_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "product_sha": "55e5b1e84a055cca912854356fc3e4712674c756"
+  },
+  "claims": {
+    "all_future_mistakes_prevented": false,
+    "anti_repeat_prevents_all_regressions": false,
+    "stable_agents": false
+  },
+  "cannot_claim": [
+    "all_future_mistakes_prevented",
+    "anti_repeat_prevents_all_regressions",
+    "stable_agents"
+  ]
+}

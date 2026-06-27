@@ -198,6 +198,21 @@ export {
   type H10VerifiedUpskillProposalRef
 } from "./h10/upskill-proposals.js";
 export {
+  verifyH10AntiRepeatConfig,
+  type H10AntiRepeatConfig,
+  type H10AntiRepeatFinding,
+  type H10AntiRepeatGuardType,
+  type H10AntiRepeatReport,
+  type H10AntiRepeatScenarioExpectation,
+  type H10AntiRepeatScenarioResult,
+  type H10AntiRepeatStatus,
+  type H10AntiRepeatSummary,
+  type H10ExpectedAntiRepeatRecord,
+  type H10ExpectedAntiRepeatStatus,
+  type H10RegressionDrillStatus,
+  type H10VerifiedAntiRepeatRef
+} from "./h10/anti-repeat.js";
+export {
   verifyProductPreviewConfig,
   type ProductPreviewConfig,
   type ProductPreviewFinding,

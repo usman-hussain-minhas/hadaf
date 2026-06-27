@@ -1,0 +1,42 @@
+{
+  "schema_version": "hadaf_h10_anti_repeat_v1",
+  "anti_repeat_id": "H10-ANTI-REPEAT-VALID-001",
+  "pattern_id": "PATTERN-H10-FFET-FRESHNESS",
+  "source_mistake": {
+    "ref": "learning://H10-F02-learning",
+    "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+  },
+  "repeated_pattern": true,
+  "guard": {
+    "guard_type": "verifier_rule",
+    "ref": "artifact://fresh-jit-rule.json",
+    "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+  },
+  "regression_drill": {
+    "status": "passed",
+    "command_ref": "command://verify-h10-anti-repeat",
+    "output_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+    "product_sha": "55e5b1e84a055cca912854356fc3e4712674c756"
+  },
+  "non_degradation": {
+    "ref": "artifact://quality-report.json",
+    "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+    "status": "passed"
+  },
+  "waiver": {
+    "applied": false
+  },
+  "bypass": {
+    "attempted": false
+  },
+  "claims": {
+    "all_future_mistakes_prevented": false,
+    "anti_repeat_prevents_all_regressions": false,
+    "stable_agents": false
+  },
+  "cannot_claim": [
+    "all_future_mistakes_prevented",
+    "anti_repeat_prevents_all_regressions",
+    "stable_agents"
+  ]
+}

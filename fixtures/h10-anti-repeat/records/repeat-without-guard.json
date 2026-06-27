@@ -1,0 +1,31 @@
+{
+  "schema_version": "hadaf_h10_anti_repeat_v1",
+  "anti_repeat_id": "H10-ANTI-REPEAT-NO-GUARD-001",
+  "pattern_id": "PATTERN-H10-FFET-FRESHNESS",
+  "source_mistake": {
+    "ref": "learning://H10-F02-learning",
+    "sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+  },
+  "repeated_pattern": true,
+  "regression_drill": {
+    "status": "passed",
+    "command_ref": "command://verify-h10-anti-repeat",
+    "output_sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+    "product_sha": "55e5b1e84a055cca912854356fc3e4712674c756"
+  },
+  "non_degradation": {
+    "ref": "artifact://quality-report.json",
+    "sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+    "status": "passed"
+  },
+  "claims": {
+    "all_future_mistakes_prevented": false,
+    "anti_repeat_prevents_all_regressions": false,
+    "stable_agents": false
+  },
+  "cannot_claim": [
+    "all_future_mistakes_prevented",
+    "anti_repeat_prevents_all_regressions",
+    "stable_agents"
+  ]
+}

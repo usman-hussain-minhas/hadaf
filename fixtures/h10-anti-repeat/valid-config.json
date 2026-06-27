@@ -1,0 +1,77 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h10-anti-repeat/records"
+  },
+  "currentProductSha": "55e5b1e84a055cca912854356fc3e4712674c756",
+  "scenarios": [
+    {
+      "scenarioId": "valid-regression-drill",
+      "recordRef": "fixture://valid-regression-drill.json",
+      "recordSha256": "9a896a528dd9925c33aea32d76cf29f734a7f77ac575b0f40fe90beca13d81ee",
+      "expectedStatus": "passed",
+      "expected": {
+        "guardType": "verifier_rule",
+        "regressionDrillStatus": "passed",
+        "repeatedPattern": true
+      }
+    },
+    {
+      "scenarioId": "repeat-without-guard",
+      "recordRef": "fixture://repeat-without-guard.json",
+      "recordSha256": "39d2d8e9addc1b861dc826d6e3209e10ca2bbed037def64781b97823de62ff76",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "guard_missing",
+        "guard_type_missing"
+      ]
+    },
+    {
+      "scenarioId": "non-degradation-omitted",
+      "recordRef": "fixture://non-degradation-omitted.json",
+      "recordSha256": "b1eebb01ac64036a81f76789d1c74b5c7b8bd0f2d471fae394e23631f6cdc2b9",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "non_degradation_missing",
+        "non_degradation_not_passed"
+      ]
+    },
+    {
+      "scenarioId": "stale-evidence",
+      "recordRef": "fixture://stale-evidence.json",
+      "recordSha256": "44c413141a8006dccda2427c62e73e5c2ad0d474741d588d0e057a9be1cc220f",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "regression_drill_product_sha_stale"
+      ]
+    },
+    {
+      "scenarioId": "waiver-without-authority",
+      "recordRef": "fixture://waiver-without-authority.json",
+      "recordSha256": "2eaed890debae39286518ddd470d3ee69437e8f4bc93767d9fc024c995f4ccff",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "waiver_authority_missing",
+        "waiver_authority_hash_invalid"
+      ]
+    },
+    {
+      "scenarioId": "anti-repeat-bypass",
+      "recordRef": "fixture://anti-repeat-bypass.json",
+      "recordSha256": "c36b886373a32c358a5a1eec531d45e6a8e3a8cf56dd06bd98ab25ced8a85926",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "anti_repeat_bypass_attempted",
+        "all_future_mistakes_prevented_overclaim",
+        "anti_repeat_prevents_all_regressions_overclaim",
+        "required_cannot_claim_missing"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "all_future_mistakes_prevented",
+    "anti_repeat_prevents_all_regressions",
+    "stable_agents",
+    "H11_impact_graph_implemented"
+  ],
+  "finalPostureRecommendation": "H10_ANTI_REPEAT_FIXTURE_BACKED"
+}
