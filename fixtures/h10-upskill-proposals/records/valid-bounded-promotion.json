@@ -1,0 +1,49 @@
+{
+  "schema_version": "hadaf_h10_upskill_proposal_v1",
+  "proposal_id": "H10-UPSKILL-VALID-BOUNDED-PROMOTION-001",
+  "agent_id": "quality.compiler",
+  "agent_version": "0.1",
+  "upskill_type": "evidence",
+  "trigger": {
+    "ref": "ffet://H10-F02",
+    "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+    "product_sha": "43eac1c164c4ee4191d3fc28ca93c3c2ef4111ce"
+  },
+  "old_behavior": "Did not require terminal learning records to name durable effects.",
+  "proposed_behavior": "Require durable effect and non-degradation for terminal learning ingestion.",
+  "durable_effect": {
+    "effect_type": "verifier_rule",
+    "ref": "artifact://h10-upskill-rule.json",
+    "sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+  },
+  "non_degradation": {
+    "ref": "artifact://test-report.json",
+    "sha256": "6666666666666666666666666666666666666666666666666666666666666666"
+  },
+  "authority_change": {
+    "changes_governing_authority": false
+  },
+  "promotion_gate": {
+    "requested_status": "qualified_for_bounded_use",
+    "status_reason": "Bounded only to H10 fixture-backed verification.",
+    "authority_ref": "artifact://h10-f03-jit.json",
+    "authority_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+    "cannot_claim_until_met": [
+      "stable_agents",
+      "independent_quality_auditor_qualified"
+    ]
+  },
+  "claims": {
+    "stable_agents": false,
+    "globally_qualified_agents": false,
+    "independently_qualified_agents": false,
+    "independent_quality_auditor_qualified": false,
+    "model_weights_updated": false,
+    "all_future_mistakes_prevented": false
+  },
+  "cannot_claim": [
+    "stable_agents",
+    "model_weights_updated",
+    "independent_quality_auditor_qualified"
+  ]
+}

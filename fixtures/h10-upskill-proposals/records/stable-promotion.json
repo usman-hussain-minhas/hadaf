@@ -1,0 +1,41 @@
+{
+  "schema_version": "hadaf_h10_upskill_proposal_v1",
+  "proposal_id": "H10-UPSKILL-STABLE-PROMOTION-001",
+  "agent_id": "codex.bootstrap",
+  "agent_version": "h10-bounded",
+  "upskill_type": "coding",
+  "trigger": {
+    "ref": "ffet://H10-F02",
+    "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "product_sha": "43eac1c164c4ee4191d3fc28ca93c3c2ef4111ce"
+  },
+  "old_behavior": "Fixture-tested behavior.",
+  "proposed_behavior": "Promote to stable.",
+  "durable_effect": {
+    "effect_type": "fixture",
+    "ref": "fixture://stable-promotion.json",
+    "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  },
+  "non_degradation": {
+    "ref": "artifact://quality-report.json",
+    "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+  },
+  "authority_change": {
+    "changes_governing_authority": false
+  },
+  "promotion_gate": {
+    "requested_status": "stable",
+    "status_reason": "Negative fixture.",
+    "cannot_claim_until_met": [
+      "stable_agents"
+    ]
+  },
+  "claims": {
+    "stable_agents": true,
+    "model_weights_updated": false
+  },
+  "cannot_claim": [
+    "model_weights_updated",
+    "independent_quality_auditor_qualified"
+  ]
+}

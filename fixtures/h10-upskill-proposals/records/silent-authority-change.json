@@ -1,0 +1,42 @@
+{
+  "schema_version": "hadaf_h10_upskill_proposal_v1",
+  "proposal_id": "H10-UPSKILL-SILENT-AUTHORITY-001",
+  "agent_id": "codex.bootstrap",
+  "agent_version": "h10-bounded",
+  "upskill_type": "doctrine",
+  "trigger": {
+    "ref": "ffet://H10-F02",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "product_sha": "43eac1c164c4ee4191d3fc28ca93c3c2ef4111ce"
+  },
+  "old_behavior": "Existing authority was unchanged.",
+  "proposed_behavior": "Silently change governing authority.",
+  "durable_effect": {
+    "effect_type": "checklist_item",
+    "ref": "artifact://authority-checklist.json",
+    "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "non_degradation": {
+    "ref": "artifact://quality-report.json",
+    "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+  },
+  "authority_change": {
+    "changes_governing_authority": true
+  },
+  "promotion_gate": {
+    "requested_status": "advisory_only",
+    "status_reason": "Negative fixture.",
+    "cannot_claim_until_met": [
+      "stable_agents"
+    ]
+  },
+  "claims": {
+    "stable_agents": false,
+    "model_weights_updated": false
+  },
+  "cannot_claim": [
+    "stable_agents",
+    "model_weights_updated",
+    "independent_quality_auditor_qualified"
+  ]
+}
