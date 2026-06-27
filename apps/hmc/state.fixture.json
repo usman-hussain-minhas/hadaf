@@ -2,9 +2,9 @@
   "adapterStatus": "passed",
   "adapterMaturity": "fixture_backed",
   "projectName": "HADAF v1",
-  "projectPosture": "H06_RUNTIME_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED",
-  "activeBox": "H06 Worktree, Lock, Checkpoint, and Pod Scheduler",
-  "activeFfet": "H06-F05 HMC runtime projection",
+  "projectPosture": "H07_PROOF_FOUNDATION_ACTIVE_FIXTURE_BACKED",
+  "activeBox": "H07 Proof and Evidence Engine",
+  "activeFfet": "H07-F04 HMC proof projection",
   "h03AssuranceStatus": "H03 Box assurance pending",
   "classifiedMismatch": "generated_state_not_fresh",
   "h03Projection": {
@@ -83,7 +83,7 @@
     "cleanupStatus": "verified",
     "liveProviderStatus": "not_claimed",
     "productionActivationStatus": "not_claimed",
-    "activeFfet": "H06-F05",
+    "activeFfet": "H06-F05 closeout_complete",
     "assuranceStatus": "pending",
     "maturity": "fixture_backed",
     "runtimeRefs": [
@@ -107,6 +107,65 @@
         "title": "Pod scheduler",
         "status": "verified"
       }
+    ]
+  },
+  "h07Projection": {
+    "status": "product_pipeline_complete_pending_box_assurance",
+    "authority": "derived_view_only",
+    "boxStatus": "product_pipeline_complete_pending_box_assurance",
+    "assuranceStatus": "pending",
+    "activeFfet": "H07-F04",
+    "maturity": "fixture_backed",
+    "verifiedProofCount": 5,
+    "blockedProofCount": 1,
+    "nonOperationalProofCount": 2,
+    "blockedClaimCount": 3,
+    "proofLevels": [
+      {
+        "level": "P0",
+        "title": "Authority proof",
+        "status": "verified"
+      },
+      {
+        "level": "P1",
+        "title": "Static/source-target proof",
+        "status": "verified"
+      },
+      {
+        "level": "P2",
+        "title": "Domain/schema proof",
+        "status": "verified"
+      },
+      {
+        "level": "P3",
+        "title": "HMC projection proof",
+        "status": "verified"
+      },
+      {
+        "level": "P4",
+        "title": "Agent execution evidence requirement",
+        "status": "blocked"
+      },
+      {
+        "level": "P5",
+        "title": "Proof engine claim verification",
+        "status": "verified"
+      },
+      {
+        "level": "P8",
+        "title": "Release proof",
+        "status": "non_operational"
+      },
+      {
+        "level": "P9",
+        "title": "Production proof",
+        "status": "non_operational"
+      }
+    ],
+    "blockedClaims": [
+      "release_candidate",
+      "production_ready",
+      "mechanically_independent_audit"
     ]
   },
   "cannotClaim": [
@@ -133,6 +192,12 @@
     "live_parallel_pod_execution",
     "live_lifecycle_runner_execution",
     "H08_git_ci_pr_merge_conductor_implemented",
+    "H07_proof_engine_implemented",
+    "release_candidate",
+    "release_proof_complete",
+    "production_proof_complete",
+    "mechanically_independent_audit",
+    "H12_box_assurance_engine_implemented",
     "production_resource_orchestration",
     "h06_box_assurance_complete",
     "self_hosting_ready",

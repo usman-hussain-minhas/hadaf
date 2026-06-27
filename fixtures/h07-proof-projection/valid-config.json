@@ -1,0 +1,157 @@
+{
+  "projectionId": "H07",
+  "boxId": "H07",
+  "productSha": "861eb22d173929275391a78181c15925c47b2014",
+  "treeHash": "99e793bef61de1ff28e075806f6dee5ce51110bb",
+  "authority": "derived_view_only",
+  "maturity": "fixture_backed",
+  "freshness": "fresh",
+  "box": {
+    "id": "H07",
+    "status": "product_pipeline_complete_pending_box_assurance",
+    "maturity": "fixture_backed",
+    "assuranceStatus": "pending"
+  },
+  "proofLevels": [
+    {
+      "level": "P0",
+      "title": "Authority proof",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "evidenceStatus": "verified",
+      "negativeProofStatus": "verified",
+      "freshness": "fresh",
+      "required": true
+    },
+    {
+      "level": "P1",
+      "title": "Static/source-target proof",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "evidenceStatus": "verified",
+      "negativeProofStatus": "verified",
+      "freshness": "fresh",
+      "required": true
+    },
+    {
+      "level": "P2",
+      "title": "Domain/schema proof",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "evidenceStatus": "verified",
+      "negativeProofStatus": "verified",
+      "freshness": "fresh",
+      "required": true
+    },
+    {
+      "level": "P3",
+      "title": "HMC projection proof",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "evidenceStatus": "verified",
+      "negativeProofStatus": "verified",
+      "freshness": "fresh",
+      "required": true
+    },
+    {
+      "level": "P4",
+      "title": "Agent execution evidence requirement",
+      "status": "blocked",
+      "maturity": "fixture_backed",
+      "evidenceStatus": "not_applicable",
+      "negativeProofStatus": "verified",
+      "freshness": "fresh"
+    },
+    {
+      "level": "P5",
+      "title": "Proof engine claim verification",
+      "status": "verified",
+      "maturity": "fixture_backed",
+      "evidenceStatus": "verified",
+      "negativeProofStatus": "verified",
+      "freshness": "fresh",
+      "required": true
+    },
+    {
+      "level": "P8",
+      "title": "Release proof",
+      "status": "non_operational",
+      "maturity": "fixture_backed",
+      "evidenceStatus": "not_applicable",
+      "negativeProofStatus": "verified",
+      "freshness": "fresh"
+    },
+    {
+      "level": "P9",
+      "title": "Production proof",
+      "status": "non_operational",
+      "maturity": "fixture_backed",
+      "evidenceStatus": "not_applicable",
+      "negativeProofStatus": "verified",
+      "freshness": "fresh"
+    }
+  ],
+  "blockedClaims": [
+    {
+      "claimId": "release_candidate",
+      "reason": "P8 release proof is non-operational in H07-H12.",
+      "cannotClaim": "release_candidate"
+    },
+    {
+      "claimId": "production_ready",
+      "reason": "P9 production proof is non-operational in H07-H12.",
+      "cannotClaim": "production_ready"
+    },
+    {
+      "claimId": "mechanically_independent_audit",
+      "reason": "H07 projection is self/advisory only.",
+      "cannotClaim": "mechanically_independent_audit"
+    }
+  ],
+  "prerequisiteCloseouts": [
+    {
+      "id": "H07-F00",
+      "status": "closeout_complete",
+      "closeoutStatus": "closeout_complete",
+      "evidenceStatus": "verified",
+      "terminalLearningStatus": "complete"
+    },
+    {
+      "id": "H07-F01",
+      "status": "closeout_complete",
+      "closeoutStatus": "closeout_complete",
+      "evidenceStatus": "verified",
+      "terminalLearningStatus": "complete"
+    },
+    {
+      "id": "H07-F02",
+      "status": "closeout_complete",
+      "closeoutStatus": "closeout_complete",
+      "evidenceStatus": "verified",
+      "terminalLearningStatus": "complete"
+    },
+    {
+      "id": "H07-F03",
+      "status": "closeout_complete",
+      "closeoutStatus": "closeout_complete",
+      "evidenceStatus": "verified",
+      "terminalLearningStatus": "complete"
+    }
+  ],
+  "requiredCannotClaim": [
+    "release_candidate",
+    "production_ready",
+    "self_hosting_ready",
+    "mechanically_independent_audit",
+    "H12_box_assurance_engine_implemented",
+    "HMC_authoritative_state"
+  ],
+  "cannotClaim": [
+    "release_candidate",
+    "production_ready",
+    "self_hosting_ready",
+    "mechanically_independent_audit",
+    "H12_box_assurance_engine_implemented",
+    "HMC_authoritative_state"
+  ]
+}

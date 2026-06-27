@@ -482,3 +482,16 @@ export {
   type H07ProofVerifierSummary,
   type H07ProofVerifierVerifiedRef
 } from "./h07/proof-verifier.js";
+export {
+  deriveH07HmcProofProjection,
+  type H07HmcBlockedClaimInput,
+  type H07HmcDerivedProofProjection,
+  type H07HmcProofBoxInput,
+  type H07HmcProofLevelInput,
+  type H07HmcProofPrerequisiteInput,
+  type H07HmcProofProjectionConfig,
+  type H07HmcProofProjectionFinding,
+  type H07HmcProofProjectionMaturity,
+  type H07HmcProofProjectionReport,
+  type H07HmcProofProjectionStatus
+} from "./h07/hmc-proof-projection.js";

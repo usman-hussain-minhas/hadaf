@@ -43,6 +43,10 @@
             <span aria-hidden="true">R</span>
             <span>Runtime</span>
           </button>
+          <button class="nav-item" type="button" data-view="proof" aria-pressed="false">
+            <span aria-hidden="true">P5</span>
+            <span>Proof</span>
+          </button>
           <button class="nav-item" type="button" data-view="ffets" aria-pressed="false">
             <span aria-hidden="true">F</span>
             <span>FFETs</span>
@@ -85,8 +89,8 @@
               <div class="status-strip" role="list" aria-label="Box status">
                 <span role="listitem" class="status-pill">H04 closeout complete</span>
                 <span role="listitem" class="status-pill">H05 closeout complete</span>
-                <span role="listitem" class="status-pill status-pill--active">H06 runtime state visible</span>
-                <span role="listitem" class="status-pill status-pill--warn" data-state-field="h06-active-ffet">H06-F05</span>
+                <span role="listitem" class="status-pill status-pill--active">H07 proof state visible</span>
+                <span role="listitem" class="status-pill status-pill--warn" data-state-field="h07-active-ffet">H07-F04</span>
                 <span role="listitem" class="status-pill status-pill--warn">Box assurance pending</span>
               </div>
               <p class="summary" data-state-field="project-posture">H06_RUNTIME_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED</p>
@@ -195,6 +199,30 @@
                   <span class="state-label">Authority</span>
                   <strong data-state-field="h06-projection-authority">derived_view_only</strong>
                   <p>Runtime, Control, and Evidence remain authoritative.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="panel panel--wide" aria-labelledby="h07-title">
+              <div class="panel-heading">
+                <p class="label">H07 Projection</p>
+                <h2 id="h07-title" data-state-field="h07-status">product_pipeline_complete_pending_box_assurance</h2>
+              </div>
+              <div class="projection-grid" aria-label="H07 proof projection">
+                <article>
+                  <span class="state-label">Verified Proofs</span>
+                  <strong data-state-field="h07-verified-proof-count">5</strong>
+                  <p>P0-P3 and P5 are fixture-backed.</p>
+                </article>
+                <article>
+                  <span class="state-label">Future Proofs</span>
+                  <strong data-state-field="h07-non-operational-proof-count">2</strong>
+                  <p>P8/P9 remain non-operational and blocked.</p>
+                </article>
+                <article>
+                  <span class="state-label">Authority</span>
+                  <strong data-state-field="h07-projection-authority">derived_view_only</strong>
+                  <p>HMC displays proof state without becoming proof authority.</p>
                 </article>
               </div>
             </section>
@@ -337,6 +365,73 @@
           </div>
         </section>
 
+        <section class="view" id="view-proof" data-view-panel="proof" aria-labelledby="proof-title" hidden>
+          <div class="view-heading">
+            <div>
+              <p class="label">Proof</p>
+              <h1 id="proof-title">Evidence Projection</h1>
+            </div>
+            <span class="maturity maturity--fixture">fixture_backed</span>
+          </div>
+          <div class="dashboard-grid">
+            <section class="panel panel--wide" aria-labelledby="proof-state-title">
+              <div class="panel-heading">
+                <p class="label">Derived State</p>
+                <h2 id="proof-state-title" data-state-field="h07-status">product_pipeline_complete_pending_box_assurance</h2>
+              </div>
+              <div class="projection-grid" aria-label="Proof projection summary">
+                <article>
+                  <span class="state-label">Verified</span>
+                  <strong data-state-field="h07-verified-proof-count">5</strong>
+                  <p>P0-P3 and P5 have fixture-backed proof.</p>
+                </article>
+                <article>
+                  <span class="state-label">Blocked</span>
+                  <strong data-state-field="h07-blocked-proof-count">1</strong>
+                  <p>P4 remains a requirement boundary.</p>
+                </article>
+                <article>
+                  <span class="state-label">Non-operational</span>
+                  <strong data-state-field="h07-non-operational-proof-count">2</strong>
+                  <p>P8/P9 are visible but not claimable.</p>
+                </article>
+                <article>
+                  <span class="state-label">Authority</span>
+                  <strong data-state-field="h07-projection-authority">derived_view_only</strong>
+                  <p>Control and Evidence remain the proof authority.</p>
+                </article>
+              </div>
+            </section>
+            <section class="panel" aria-labelledby="proof-levels-title">
+              <div class="panel-heading">
+                <p class="label">Levels</p>
+                <h2 id="proof-levels-title">P0-P9</h2>
+              </div>
+              <ul class="agent-list" data-state-field="h07-proof-list" aria-label="Fixture-backed proof levels">
+                <li><strong>P0 Authority proof</strong><span>verified</span></li>
+                <li><strong>P1 Static/source-target proof</strong><span>verified</span></li>
+                <li><strong>P2 Domain/schema proof</strong><span>verified</span></li>
+                <li><strong>P3 HMC projection proof</strong><span>verified</span></li>
+                <li><strong>P4 Agent execution evidence requirement</strong><span>blocked</span></li>
+                <li><strong>P5 Proof engine claim verification</strong><span>verified</span></li>
+                <li><strong>P8 Release proof</strong><span>non_operational</span></li>
+                <li><strong>P9 Production proof</strong><span>non_operational</span></li>
+              </ul>
+            </section>
+            <section class="panel" aria-labelledby="proof-boundaries-title">
+              <div class="panel-heading">
+                <p class="label">Cannot Claim</p>
+                <h2 id="proof-boundaries-title">Blocked</h2>
+              </div>
+              <ul class="tag-list" data-state-field="h07-blocked-claims" aria-label="Proof cannot claim entries">
+                <li>release_candidate</li>
+                <li>production_ready</li>
+                <li>mechanically_independent_audit</li>
+              </ul>
+            </section>
+          </div>
+        </section>
+
         <section class="view" id="view-boxes" data-view-panel="boxes" aria-labelledby="boxes-title" hidden>
           <div class="view-heading">
             <div>
@@ -390,9 +485,15 @@
             </div>
             <div class="table-row" role="row">
               <span role="cell">H06 Worktree, Lock, Checkpoint, and Pod Scheduler</span>
-              <span role="cell"><strong>active</strong></span>
+              <span role="cell"><strong>complete pending assurance</strong></span>
               <span role="cell">fixture-backed runtime projection</span>
               <span role="cell">live orchestration not claimed</span>
+            </div>
+            <div class="table-row" role="row">
+              <span role="cell">H07 Proof and Evidence Engine</span>
+              <span role="cell"><strong>active</strong></span>
+              <span role="cell">fixture-backed proof projection</span>
+              <span role="cell">P8/P9 non-operational</span>
             </div>
           </div>
         </section>
@@ -551,9 +652,34 @@
               <strong>Local lifecycle runner</strong>
               <span>closeout complete</span>
             </article>
-            <article class="queue-item is-active">
+            <article class="queue-item is-done">
               <span class="queue-code">H06-F05</span>
               <strong data-state-field="active-ffet">HMC runtime projection</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H07-F00</span>
+              <strong>H07 plan and FFET graph</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H07-F01</span>
+              <strong>Evidence eligibility verifier</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H07-F02</span>
+              <strong>Proof package verifier</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H07-F03</span>
+              <strong>Proof verifier aggregation</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-active">
+              <span class="queue-code">H07-F04</span>
+              <strong data-state-field="h07-active-ffet">HMC proof projection</strong>
               <span>active</span>
             </article>
           </div>
@@ -582,6 +708,7 @@
                 <li><span class="status-dot status-dot--ok"></span> H04 projection guard</li>
                 <li><span class="status-dot status-dot--ok"></span> H05 projection guard</li>
                 <li><span class="status-dot status-dot--ok"></span> H06 runtime projection guard</li>
+                <li><span class="status-dot status-dot--ok"></span> H07 proof projection guard</li>
               </ul>
             </section>
             <section class="panel" aria-labelledby="debt-title">
@@ -596,6 +723,9 @@
                 <li>live_h03_control_adapter_implemented</li>
                 <li>h04_fully_implemented</li>
                 <li>live_lifecycle_runner_execution</li>
+                <li>release_proof_complete</li>
+                <li>production_proof_complete</li>
+                <li>H12_box_assurance_engine_implemented</li>
                 <li>production_resource_orchestration</li>
                 <li>h06_box_assurance_complete</li>
               </ul>
@@ -628,6 +758,11 @@
               <p>Runtime is <span data-state-field="h06-runtime">fixture_projected</span>; runner is <span data-state-field="h06-runner">verified</span>.</p>
             </article>
             <article class="state-card">
+              <span class="state-label">H07</span>
+              <strong data-state-field="h07-status">product_pipeline_complete_pending_box_assurance</strong>
+              <p><span data-state-field="h07-verified-proof-count">5</span> proof levels are verified; P8/P9 remain non-operational.</p>
+            </article>
+            <article class="state-card">
               <span class="state-label">constitution</span>
               <strong data-state-field="constitution-status">boundary_verified</strong>
               <p>Approval remains <span data-state-field="approval-status">for_human_review</span>; execution is <span data-state-field="execution-status">execution_not_authorized</span>.</p>
@@ -649,6 +784,11 @@
               <span class="maturity maturity--fixture">fixture_backed</span>
           </div>
           <div class="panel panel--wide">
+            <div class="decision-row">
+              <span class="status-pill status-pill--warn">H07 assurance pending</span>
+              <strong>Proof projection is visible, fixture-backed, and non-authoritative.</strong>
+              <span data-state-field="h07-projection-authority">derived_view_only</span>
+            </div>
             <div class="decision-row">
               <span class="status-pill status-pill--warn">H06 assurance pending</span>
               <strong>H06 runtime projection is visible, fixture-backed, and non-authoritative.</strong>
