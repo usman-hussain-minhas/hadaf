@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "tree-hash-mismatch",
+  "product_sha": "e9ed156fc05b6e342b51662bd9847571082eb560",
+  "tree_hash": "1111111111111111111111111111111111111111",
+  "proof_level": "P5",
+  "exact_product_binding_required": true,
+  "stale_invalidation": {
+    "invalidate_on_product_sha_change": true,
+    "invalidate_on_tree_hash_change": true,
+    "invalidate_on_evidence_hash_change": true
+  },
+  "claims": [],
+  "evidence": [],
+  "redaction": {
+    "public_safe": true,
+    "redacted_refs": []
+  },
+  "cannot_claim": [
+    "release_candidate",
+    "production_ready",
+    "self_hosting_ready",
+    "mechanically_independent_audit"
+  ]
+}

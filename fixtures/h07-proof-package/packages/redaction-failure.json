@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "redaction-failure",
+  "product_sha": "e9ed156fc05b6e342b51662bd9847571082eb560",
+  "tree_hash": "2e58a8416b406d02c35b72fd2392aeef18e721e0",
+  "proof_level": "P5",
+  "exact_product_binding_required": true,
+  "stale_invalidation": {
+    "invalidate_on_product_sha_change": true,
+    "invalidate_on_tree_hash_change": true,
+    "invalidate_on_evidence_hash_change": true
+  },
+  "claims": [],
+  "evidence": [
+    {
+      "ref": "fixture://proof-artifacts/authority.json",
+      "sha256": "b4c5e7d18c197786e7bce3ecec551ed44dc639e3836ed893b40747baeccb6b9b",
+      "evidence_class": "authority",
+      "public_safe": false,
+      "redaction_status": "private"
+    }
+  ],
+  "redaction": {
+    "public_safe": false,
+    "redacted_refs": []
+  },
+  "cannot_claim": [
+    "release_candidate",
+    "production_ready",
+    "self_hosting_ready",
+    "mechanically_independent_audit"
+  ]
+}

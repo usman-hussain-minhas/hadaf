@@ -459,3 +459,14 @@ export {
   type H07ExpectedEligibilityStatus,
   type H07VerifiedEligibilityRef
 } from "./h07/evidence-eligibility.js";
+export {
+  verifyH07ProofPackageConfig,
+  type H07ExpectedProofPackageStatus,
+  type H07ProofPackageConfig,
+  type H07ProofPackageExpectation,
+  type H07ProofPackageFinding,
+  type H07ProofPackageReport,
+  type H07ProofPackageResult,
+  type H07ProofPackageStatus,
+  type H07VerifiedProofRef
+} from "./h07/proof-package.js";
