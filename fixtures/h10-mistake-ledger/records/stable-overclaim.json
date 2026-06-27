@@ -1,0 +1,52 @@
+{
+  "schema_version": "hadaf_h10_mistake_ledger_v1",
+  "mistake_id": "H10-MISTAKE-STABLE-OVERCLAIM-001",
+  "ledger_entry_id": "H10-LEDGER-STABLE-OVERCLAIM-001",
+  "source_event": {
+    "event_type": "control_transaction",
+    "ref": "transaction://H09-BOX-CLOSEOUT",
+    "sha256": "b00e33fa07eb860986a68eba6277706b62b809fd299a31ad2e7e60bba9eb40c8",
+    "product_sha": "b722001a0301ac62c3a9c68a54410216104d0b0f",
+    "terminal_outcome": "complete"
+  },
+  "classification": {
+    "mistake_type": "doctrine",
+    "severity": "critical",
+    "repeated": false,
+    "systemic": false,
+    "pattern_id": "PATTERN-H10-STABLE-OVERCLAIM"
+  },
+  "evidence": {
+    "refs": [
+      {
+        "ref": "artifact://assurance.json",
+        "sha256": "3b83fecd7ef17849831640d5afaa6dc6bbb34d09fa0668c518c3cca7f593a48e",
+        "purpose": "assurance"
+      }
+    ]
+  },
+  "impact": {
+    "affected_box": "H10",
+    "affected_ffet": "H10-F01"
+  },
+  "correction": {
+    "corrected_rule": "H10 cannot promote stable, global, or independently qualified agents.",
+    "regression_guard": {
+      "guard_type": "fixture",
+      "ref": "fixture://stable-overclaim.json",
+      "sha256": "843955e1e68268ca273b91cf5d1d433ec5e14865dc2860e8b4cc4d4026689848"
+    },
+    "non_degradation_ref": "artifact://quality-report.json",
+    "non_degradation_sha256": "2cce96805693cef049f92ec2e68616e36fe6c95a59fa9f1c75ded4b8d2e7c56f",
+    "future_stop_condition": "Stop if a learning record claims stable agents."
+  },
+  "claims": {
+    "stable_agents": true,
+    "globally_qualified_agents": true,
+    "independently_qualified_agents": true,
+    "model_weights_updated": true
+  },
+  "cannot_claim": [
+    "model_weights_updated"
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": "hadaf_h10_mistake_ledger_v1",
+  "mistake_id": "H10-MISTAKE-VALID-DECISION-001",
+  "ledger_entry_id": "H10-LEDGER-VALID-DECISION-001",
+  "source_event": {
+    "event_type": "product_pr",
+    "ref": "pr://79",
+    "sha256": "99dfae3904188b2b74fcf1233b27a3e67d2c3ee145bfd03e6e9f8ca71708719b",
+    "product_sha": "b722001a0301ac62c3a9c68a54410216104d0b0f",
+    "terminal_outcome": "merged"
+  },
+  "classification": {
+    "mistake_type": "decision",
+    "severity": "medium",
+    "repeated": false,
+    "systemic": false,
+    "pattern_id": "PATTERN-H10-DECISION-CALIBRATION"
+  },
+  "evidence": {
+    "refs": [
+      {
+        "ref": "artifact://quality-report.json",
+        "sha256": "2cce96805693cef049f92ec2e68616e36fe6c95a59fa9f1c75ded4b8d2e7c56f",
+        "purpose": "non_degradation"
+      },
+      {
+        "ref": "artifact://regression-fixture.json",
+        "sha256": "732db87702a3d79e2b3b5afd986ceb3bf1d8f7ae0bc5488d5b2408499b39ceeb",
+        "purpose": "regression_guard"
+      }
+    ]
+  },
+  "impact": {
+    "affected_box": "H09",
+    "affected_ffet": "H09-F05",
+    "affected_files": [
+      "packages/kernel/src/h09/hmc-recovery-projection.ts"
+    ]
+  },
+  "correction": {
+    "corrected_rule": "Run public-safety scans after staging new verifier fixtures.",
+    "regression_guard": {
+      "guard_type": "fixture",
+      "ref": "fixture://private-path-residue.json",
+      "sha256": "843955e1e68268ca273b91cf5d1d433ec5e14865dc2860e8b4cc4d4026689848"
+    },
+    "non_degradation_ref": "artifact://quality-report.json",
+    "non_degradation_sha256": "2cce96805693cef049f92ec2e68616e36fe6c95a59fa9f1c75ded4b8d2e7c56f",
+    "future_stop_condition": "Stop if staged verifier fixtures are not included in public-safety and Target Guard checks."
+  },
+  "decision_upskill": {
+    "decision_context": "A new verifier introduced negative fixtures after initial scanner validation.",
+    "rejected_alternatives": [
+      "Trust earlier public-safety output",
+      "Skip scanner rerun because fixtures are test-only"
+    ],
+    "decision_failure": "Scanner evidence can be stale when untracked files are added after the check.",
+    "corrected_rule": "Stage the exact candidate file set before final public-safety and Target Guard validation.",
+    "future_stop_or_ask_condition": "Stop if candidate files are not all included in the final scan scope.",
+    "regression_checklist": [
+      "stage candidate files",
+      "rerun public safety",
+      "rerun target guard"
+    ],
+    "cannot_claim": [
+      "public_safety_current_without_staged_file_scan"
+    ]
+  },
+  "claims": {
+    "stable_agents": false,
+    "globally_qualified_agents": false,
+    "independently_qualified_agents": false,
+    "model_weights_updated": false,
+    "generated_status_as_authority": false,
+    "all_future_mistakes_prevented": false
+  },
+  "cannot_claim": [
+    "stable_agents",
+    "model_weights_updated",
+    "independent_quality_auditor_qualified"
+  ]
+}

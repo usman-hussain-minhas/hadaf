@@ -1,0 +1,54 @@
+{
+  "schema_version": "hadaf_h10_mistake_ledger_v1",
+  "mistake_id": "H10-MISTAKE-PRIVATE-PATH-001",
+  "ledger_entry_id": "H10-LEDGER-PRIVATE-PATH-001",
+  "source_event": {
+    "event_type": "product_pr",
+    "ref": "pr://79",
+    "sha256": "99dfae3904188b2b74fcf1233b27a3e67d2c3ee145bfd03e6e9f8ca71708719b",
+    "product_sha": "b722001a0301ac62c3a9c68a54410216104d0b0f",
+    "terminal_outcome": "merged"
+  },
+  "classification": {
+    "mistake_type": "security",
+    "severity": "high",
+    "repeated": false,
+    "systemic": false,
+    "pattern_id": "PATTERN-H10-PRIVATE-PATH"
+  },
+  "evidence": {
+    "refs": [
+      {
+        "ref": "artifact://public-safety.json",
+        "sha256": "843955e1e68268ca273b91cf5d1d433ec5e14865dc2860e8b4cc4d4026689848",
+        "purpose": "public_safety"
+      }
+    ]
+  },
+  "impact": {
+    "affected_box": "H10",
+    "affected_ffet": "H10-F01",
+    "affected_files": [
+      "PRIVATE_PATH_SENTINEL/example-private-control.json"
+    ]
+  },
+  "correction": {
+    "corrected_rule": "Private local paths are forbidden in Product-facing mistake records.",
+    "regression_guard": {
+      "guard_type": "fixture",
+      "ref": "fixture://private-path-residue.json",
+      "sha256": "843955e1e68268ca273b91cf5d1d433ec5e14865dc2860e8b4cc4d4026689848"
+    },
+    "non_degradation_ref": "artifact://quality-report.json",
+    "non_degradation_sha256": "2cce96805693cef049f92ec2e68616e36fe6c95a59fa9f1c75ded4b8d2e7c56f",
+    "future_stop_condition": "Stop if Product-facing records include private local paths."
+  },
+  "claims": {
+    "stable_agents": false
+  },
+  "cannot_claim": [
+    "stable_agents",
+    "model_weights_updated",
+    "independent_quality_auditor_qualified"
+  ]
+}

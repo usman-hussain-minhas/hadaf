@@ -1,0 +1,50 @@
+{
+  "schema_version": "hadaf_h10_mistake_ledger_v1",
+  "mistake_id": "H10-MISTAKE-REPEATED-001",
+  "ledger_entry_id": "H10-LEDGER-REPEATED-001",
+  "source_event": {
+    "event_type": "ffet",
+    "ref": "ffet://H09-F05",
+    "sha256": "87c8cf0407a605d47143bcbd4c58fcb5e19180eb2f39fbd96f10ee600533b5d2",
+    "product_sha": "b722001a0301ac62c3a9c68a54410216104d0b0f",
+    "terminal_outcome": "complete"
+  },
+  "classification": {
+    "mistake_type": "planning",
+    "severity": "high",
+    "repeated": true,
+    "systemic": false
+  },
+  "evidence": {
+    "refs": [
+      {
+        "ref": "artifact://learning.json",
+        "sha256": "b309792691f4391b75d5f13e4b52e8071e92ba9e8c6182c5892dac29cac9fbae",
+        "purpose": "terminal_learning"
+      }
+    ]
+  },
+  "impact": {
+    "affected_box": "H09",
+    "affected_ffet": "H09-F05"
+  },
+  "correction": {
+    "corrected_rule": "Repeated mistake classes must be marked systemic with a pattern ID.",
+    "regression_guard": {
+      "guard_type": "verifier_rule",
+      "ref": "rule://repeated-systemic-required",
+      "sha256": "843955e1e68268ca273b91cf5d1d433ec5e14865dc2860e8b4cc4d4026689848"
+    },
+    "non_degradation_ref": "artifact://quality-report.json",
+    "non_degradation_sha256": "2cce96805693cef049f92ec2e68616e36fe6c95a59fa9f1c75ded4b8d2e7c56f",
+    "future_stop_condition": "Stop if repeated mistakes are not systemic blockers."
+  },
+  "claims": {
+    "stable_agents": false
+  },
+  "cannot_claim": [
+    "stable_agents",
+    "model_weights_updated",
+    "independent_quality_auditor_qualified"
+  ]
+}

@@ -71,6 +71,7 @@
     "verify:h09-recovery-execution": "node scripts/verify-h09-recovery-execution.mjs",
     "verify:h09-self-heal-planner": "node scripts/verify-h09-self-heal-planner.mjs",
     "verify:h09-recovery-projection": "node scripts/verify-h09-recovery-projection.mjs",
+    "verify:h10-mistake-ledger": "node scripts/verify-h10-mistake-ledger.mjs",
     "supply-chain": "node scripts/generate-supply-chain-artifacts.mjs"
   },
   "devDependencies": {
