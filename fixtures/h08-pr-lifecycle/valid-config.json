@@ -1,0 +1,122 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h08-pr-lifecycle"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "valid-pr-lifecycle",
+      "recordRef": "fixture://records/valid-pr-lifecycle.json",
+      "recordSha256": "c751ee9fcf1da32d4dd576b7b65a7e0fb0bb070b5dc20fbe76dcb424518e86e9",
+      "expectedStatus": "passed",
+      "expected": {
+        "prNumber": 68,
+        "terminalState": "merged",
+        "headSha": "cec0ec00d6ac9b8160baf5ec88df417783b5a9d7",
+        "mergeSha": "6cdde438f60a642ad7a9439f9324fa73abb2e4d5",
+        "role": "product_mutation",
+        "terminalLearningRequired": true
+      }
+    },
+    {
+      "scenarioId": "role-mixed-pr",
+      "recordRef": "fixture://records/role-mixed-pr.json",
+      "recordSha256": "c06558fb052c830221a350f596add4a8343745418c1be1bb90f490cac02d9072",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "multiple_roles_declared",
+        "changed_file_outside_role",
+        "product_pr_private_plane_file"
+      ],
+      "expected": {
+        "prNumber": 69,
+        "terminalState": "merged",
+        "role": "product_mutation",
+        "terminalLearningRequired": true
+      }
+    },
+    {
+      "scenarioId": "unsafe-pr-metadata",
+      "recordRef": "fixture://records/unsafe-pr-metadata.json",
+      "recordSha256": "562f850426887df669f6663ec64b65aa3b4b161c4f2ed5749eb562c9a3c38f9f",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "private_metadata_detected",
+        "unsafe_pr_metadata"
+      ],
+      "expected": {
+        "prNumber": 70,
+        "terminalState": "merged",
+        "role": "product_mutation",
+        "terminalLearningRequired": true
+      }
+    },
+    {
+      "scenarioId": "head-sha-drift",
+      "recordRef": "fixture://records/head-sha-drift.json",
+      "recordSha256": "1295f8f370cb16252669e6d7faa36ebd39bf40799f1c1f098146d0ffdcf84e4e",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "head_sha_mismatch",
+        "attested_head_sha_mismatch"
+      ],
+      "expected": {
+        "prNumber": 71,
+        "terminalState": "merged",
+        "headSha": "cec0ec00d6ac9b8160baf5ec88df417783b5a9d7",
+        "role": "product_mutation",
+        "terminalLearningRequired": true
+      }
+    },
+    {
+      "scenarioId": "merge-sha-missing",
+      "recordRef": "fixture://records/merge-sha-missing.json",
+      "recordSha256": "289d46ed8c658ed1ade57db6e73e2415dd4157d9c59aaf89e8488882a2e8323b",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "merge_sha_missing_or_invalid",
+        "merge_sha_mismatch",
+        "attested_merge_sha_mismatch"
+      ],
+      "expected": {
+        "prNumber": 72,
+        "terminalState": "merged",
+        "mergeSha": "6cdde438f60a642ad7a9439f9324fa73abb2e4d5",
+        "role": "product_mutation",
+        "terminalLearningRequired": true
+      }
+    },
+    {
+      "scenarioId": "terminal-learning-missing",
+      "recordRef": "fixture://records/terminal-learning-missing.json",
+      "recordSha256": "a1e11129f2032bb99203f6fdf6f7de8f831f81555819a565b782f404f2be16df",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "terminal_learning_missing",
+        "terminal_learning_ref_missing",
+        "terminal_learning_hash_missing_or_invalid"
+      ],
+      "expected": {
+        "prNumber": 73,
+        "terminalState": "merged",
+        "role": "product_mutation",
+        "terminalLearningRequired": true
+      }
+    }
+  ],
+  "cannotClaim": [
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized",
+    "H08_git_ci_pr_merge_conductor_implemented",
+    "H09_recovery_engine_implemented",
+    "H10_learning_engine_implemented",
+    "H11_impact_graph_implemented",
+    "H12_box_assurance_engine_implemented",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ],
+  "finalPostureRecommendation": "H08_F02_PR_LIFECYCLE_STATE_MODEL_VERIFIED"
+}

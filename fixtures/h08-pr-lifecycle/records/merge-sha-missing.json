@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "lifecycle_id": "merge-sha-missing",
+  "captured_at": "2026-06-27T06:20:00Z",
+  "pr": {
+    "number": 72,
+    "title": "merge missing fixture",
+    "body": "This fixture should fail merged PR merge SHA requirements.",
+    "state": "merged",
+    "is_draft": false,
+    "base_sha": "57231b1a3b7f70cd19929d1d82237afb6ef359cd",
+    "head_sha": "abababababababababababababababababababab",
+    "merge_sha": null,
+    "changed_files": [
+      "packages/kernel/src/h08/pr-lifecycle.ts"
+    ]
+  },
+  "work_unit": {
+    "ffet_id": "H08-F02",
+    "role": "product_mutation",
+    "declared_roles": [
+      "product_mutation"
+    ]
+  },
+  "metadata_safety": {
+    "title_scanned": true,
+    "body_scanned": true,
+    "findings": [],
+    "private_metadata_detected": false
+  },
+  "closeout": {
+    "required": true,
+    "ref": "fixture://closeouts/merge-missing.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "status": "closeout_complete"
+  },
+  "terminal_learning": {
+    "required": true,
+    "ref": "fixture://learning/merge-missing.json",
+    "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "status": "complete"
+  },
+  "public_attestation": {
+    "pr_body_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "exact_head_sha": "abababababababababababababababababababab",
+    "merge_sha": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd"
+  },
+  "cannot_claim": [
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ]
+}

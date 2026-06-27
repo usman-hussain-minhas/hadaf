@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "lifecycle_id": "head-sha-drift",
+  "captured_at": "2026-06-27T06:20:00Z",
+  "pr": {
+    "number": 71,
+    "title": "head drift fixture",
+    "body": "This fixture should fail exact-head reconciliation.",
+    "state": "merged",
+    "is_draft": false,
+    "base_sha": "57231b1a3b7f70cd19929d1d82237afb6ef359cd",
+    "head_sha": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "merge_sha": "ffffffffffffffffffffffffffffffffffffffff",
+    "changed_files": [
+      "packages/kernel/src/h08/pr-lifecycle.ts"
+    ]
+  },
+  "work_unit": {
+    "ffet_id": "H08-F02",
+    "role": "product_mutation",
+    "declared_roles": [
+      "product_mutation"
+    ]
+  },
+  "metadata_safety": {
+    "title_scanned": true,
+    "body_scanned": true,
+    "findings": [],
+    "private_metadata_detected": false
+  },
+  "closeout": {
+    "required": true,
+    "ref": "fixture://closeouts/head-drift.json",
+    "sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+    "status": "closeout_complete"
+  },
+  "terminal_learning": {
+    "required": true,
+    "ref": "fixture://learning/head-drift.json",
+    "sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+    "status": "complete"
+  },
+  "public_attestation": {
+    "pr_body_sha256": "9999999999999999999999999999999999999999999999999999999999999999",
+    "exact_head_sha": "0000000000000000000000000000000000000000",
+    "merge_sha": "ffffffffffffffffffffffffffffffffffffffff"
+  },
+  "cannot_claim": [
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ]
+}
