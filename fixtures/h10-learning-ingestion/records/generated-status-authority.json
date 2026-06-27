@@ -1,0 +1,50 @@
+{
+  "schema_version": "hadaf_h10_terminal_learning_v1",
+  "learning_id": "H10-LEARNING-GENERATED-STATUS-AUTHORITY-001",
+  "source_event": {
+    "event_type": "product_pr",
+    "ref": "pr://80",
+    "sha256": "3030303030303030303030303030303030303030303030303030303030303030",
+    "product_sha": "30cda26b3623ca61ec2951aab2a90a25f23b5999",
+    "terminal_outcome": "merged"
+  },
+  "closeout": {
+    "ref": "artifact://closeout.json",
+    "sha256": "3131313131313131313131313131313131313131313131313131313131313131",
+    "status": "closeout_complete"
+  },
+  "evidence": {
+    "refs": [
+      {
+        "ref": "artifact://validation.json",
+        "sha256": "3232323232323232323232323232323232323232323232323232323232323232",
+        "purpose": "validation"
+      }
+    ]
+  },
+  "lesson": {
+    "summary": "This record intentionally treats generated status as authority.",
+    "durable_effect": {
+      "effect_type": "stop_condition",
+      "ref": "artifact://generated-status-stop-condition.json",
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+    }
+  },
+  "non_degradation": {
+    "ref": "artifact://quality-report.json",
+    "sha256": "3434343434343434343434343434343434343434343434343434343434343434"
+  },
+  "authority": {
+    "generated_status_used_as_authority": true
+  },
+  "claims": {
+    "all_future_mistakes_prevented": false,
+    "stable_agents": false,
+    "model_weights_updated": false
+  },
+  "cannot_claim": [
+    "stable_agents",
+    "model_weights_updated",
+    "automated_model_updating"
+  ]
+}

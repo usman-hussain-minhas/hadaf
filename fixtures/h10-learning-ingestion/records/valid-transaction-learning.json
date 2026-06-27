@@ -1,0 +1,50 @@
+{
+  "schema_version": "hadaf_h10_terminal_learning_v1",
+  "learning_id": "H10-LEARNING-VALID-TRANSACTION-001",
+  "source_event": {
+    "event_type": "control_transaction",
+    "ref": "transaction://H10-F01-closeout",
+    "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "product_sha": "30cda26b3623ca61ec2951aab2a90a25f23b5999",
+    "terminal_outcome": "complete"
+  },
+  "closeout": {
+    "ref": "artifact://h10-f01-control-closeout.json",
+    "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "status": "closeout_complete"
+  },
+  "evidence": {
+    "refs": [
+      {
+        "ref": "artifact://h10-f01-terminal-learning.json",
+        "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "purpose": "terminal_learning"
+      }
+    ]
+  },
+  "lesson": {
+    "summary": "Terminal Control/Evidence/Runtime learning must remain durable and non-authoritative unless separately ratified.",
+    "durable_effect": {
+      "effect_type": "verifier_rule",
+      "ref": "artifact://h10-learning-verifier-rule.json",
+      "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    }
+  },
+  "non_degradation": {
+    "ref": "artifact://target-guard-report.json",
+    "sha256": "1212121212121212121212121212121212121212121212121212121212121212"
+  },
+  "authority": {
+    "generated_status_used_as_authority": false
+  },
+  "claims": {
+    "all_future_mistakes_prevented": false,
+    "stable_agents": false,
+    "model_weights_updated": false
+  },
+  "cannot_claim": [
+    "stable_agents",
+    "model_weights_updated",
+    "automated_model_updating"
+  ]
+}

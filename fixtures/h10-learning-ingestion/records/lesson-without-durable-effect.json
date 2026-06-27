@@ -1,0 +1,45 @@
+{
+  "schema_version": "hadaf_h10_terminal_learning_v1",
+  "learning_id": "H10-LEARNING-NO-DURABLE-EFFECT-001",
+  "source_event": {
+    "event_type": "product_pr",
+    "ref": "pr://80",
+    "sha256": "2626262626262626262626262626262626262626262626262626262626262626",
+    "product_sha": "30cda26b3623ca61ec2951aab2a90a25f23b5999",
+    "terminal_outcome": "merged"
+  },
+  "closeout": {
+    "ref": "artifact://closeout.json",
+    "sha256": "2727272727272727272727272727272727272727272727272727272727272727",
+    "status": "closeout_complete"
+  },
+  "evidence": {
+    "refs": [
+      {
+        "ref": "artifact://validation.json",
+        "sha256": "2828282828282828282828282828282828282828282828282828282828282828",
+        "purpose": "validation"
+      }
+    ]
+  },
+  "lesson": {
+    "summary": "This lesson intentionally lacks a durable effect."
+  },
+  "non_degradation": {
+    "ref": "artifact://quality-report.json",
+    "sha256": "2929292929292929292929292929292929292929292929292929292929292929"
+  },
+  "authority": {
+    "generated_status_used_as_authority": false
+  },
+  "claims": {
+    "all_future_mistakes_prevented": false,
+    "stable_agents": false,
+    "model_weights_updated": false
+  },
+  "cannot_claim": [
+    "stable_agents",
+    "model_weights_updated",
+    "automated_model_updating"
+  ]
+}
