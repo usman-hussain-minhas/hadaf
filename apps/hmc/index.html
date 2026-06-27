@@ -51,6 +51,10 @@
             <span aria-hidden="true">G</span>
             <span>Git</span>
           </button>
+          <button class="nav-item" type="button" data-view="recovery" aria-pressed="false">
+            <span aria-hidden="true">R9</span>
+            <span>Recovery</span>
+          </button>
           <button class="nav-item" type="button" data-view="ffets" aria-pressed="false">
             <span aria-hidden="true">F</span>
             <span>FFETs</span>
@@ -88,17 +92,18 @@
             <section class="panel panel--wide" aria-labelledby="active-box-title">
               <div class="panel-heading">
                 <p class="label">Current Truth</p>
-                <h2 id="active-box-title" data-state-field="active-box">H08 Git, CI, PR, and Merge Conductor</h2>
+                <h2 id="active-box-title" data-state-field="active-box">H09 Self-Audit, Self-Heal, and Recovery</h2>
               </div>
               <div class="status-strip" role="list" aria-label="Box status">
                 <span role="listitem" class="status-pill">H04 closeout complete</span>
                 <span role="listitem" class="status-pill">H05 closeout complete</span>
                 <span role="listitem" class="status-pill status-pill--active">H07 proof state visible</span>
                 <span role="listitem" class="status-pill status-pill--active">H08 conductor state visible</span>
-                <span role="listitem" class="status-pill status-pill--warn" data-state-field="h08-active-ffet">H08-F06</span>
+                <span role="listitem" class="status-pill status-pill--active">H09 recovery state visible</span>
+                <span role="listitem" class="status-pill status-pill--warn" data-state-field="h09-active-ffet">H09-F05</span>
                 <span role="listitem" class="status-pill status-pill--warn">Box assurance pending</span>
               </div>
-              <p class="summary" data-state-field="project-posture">H08_GIT_CI_PR_CONDUCTOR_PROJECTION_ACTIVE_FIXTURE_BACKED</p>
+              <p class="summary" data-state-field="project-posture">H09_RECOVERY_PROJECTION_ACTIVE_FIXTURE_BACKED</p>
             </section>
 
             <section class="panel" aria-labelledby="truth-title">
@@ -132,6 +137,11 @@
                 <li>H08_git_ci_pr_merge_conductor_implemented</li>
                 <li>github_settings_mutation_authorized</li>
                 <li>branch_protection_mutation_authorized</li>
+                <li>H09_recovery_engine_implemented</li>
+                <li>live_autonomous_recovery_execution</li>
+                <li>production_rollback_executed</li>
+                <li>H10_learning_engine_implemented</li>
+                <li>H11_impact_graph_implemented</li>
                 <li>HMC_authoritative_state</li>
                 <li>execution_authorization_granted</li>
                 <li>h06_box_assurance_complete</li>
@@ -254,6 +264,30 @@
                   <span class="state-label">Authority</span>
                   <strong data-state-field="h08-projection-authority">derived_view_only</strong>
                   <p>HMC displays H08 state without becoming Git authority.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="panel panel--wide" aria-labelledby="h09-title">
+              <div class="panel-heading">
+                <p class="label">H09 Projection</p>
+                <h2 id="h09-title" data-state-field="h09-status">product_pipeline_active</h2>
+              </div>
+              <div class="projection-grid" aria-label="H09 recovery projection">
+                <article>
+                  <span class="state-label">Self-Heal Budget</span>
+                  <strong data-state-field="h09-budget">0/3 FFET</strong>
+                  <p>Budget use is projected, not open-ended repair authority.</p>
+                </article>
+                <article>
+                  <span class="state-label">Recovery</span>
+                  <strong data-state-field="h09-recovery-execution">verified</strong>
+                  <p>Fixture-backed recovery execution records are displayed only.</p>
+                </article>
+                <article>
+                  <span class="state-label">Authority</span>
+                  <strong data-state-field="h09-projection-authority">derived_view_only</strong>
+                  <p>HMC displays H09 state without becoming recovery authority.</p>
                 </article>
               </div>
             </section>
@@ -541,6 +575,93 @@
           </div>
         </section>
 
+        <section class="view" id="view-recovery" data-view-panel="recovery" aria-labelledby="recovery-title" hidden>
+          <div class="view-heading">
+            <div>
+              <p class="label">Recovery</p>
+              <h1 id="recovery-title">Self-Heal Projection</h1>
+            </div>
+            <span class="maturity maturity--fixture">fixture_backed</span>
+          </div>
+          <div class="dashboard-grid">
+            <section class="panel panel--wide" aria-labelledby="recovery-state-title">
+              <div class="panel-heading">
+                <p class="label">Derived State</p>
+                <h2 id="recovery-state-title" data-state-field="h09-status">product_pipeline_active</h2>
+              </div>
+              <div class="projection-grid" aria-label="H09 recovery controls">
+                <article>
+                  <span class="state-label">Policy</span>
+                  <strong data-state-field="h09-recovery-policy">verified</strong>
+                  <p>Recovery policy is fixture-backed and bounded.</p>
+                </article>
+                <article>
+                  <span class="state-label">Planner</span>
+                  <strong data-state-field="h09-self-heal-planner">verified</strong>
+                  <p>Self-heal plans must remain deterministic and scoped.</p>
+                </article>
+                <article>
+                  <span class="state-label">Execution Records</span>
+                  <strong data-state-field="h09-recovery-execution">verified</strong>
+                  <p>Records are projected without live autonomous recovery.</p>
+                </article>
+                <article>
+                  <span class="state-label">Quarantine</span>
+                  <strong data-state-field="h09-quarantine">verified</strong>
+                  <p>Unsafe states require durable quarantine evidence.</p>
+                </article>
+                <article>
+                  <span class="state-label">Rollback</span>
+                  <strong data-state-field="h09-rollback">verified</strong>
+                  <p>Rollback routing is not production rollback execution.</p>
+                </article>
+                <article>
+                  <span class="state-label">Anti-Theatre</span>
+                  <strong data-state-field="h09-anti-theatre">verified</strong>
+                  <p>No self-heal credit without changed evidence and validation.</p>
+                </article>
+              </div>
+            </section>
+            <section class="panel" aria-labelledby="recovery-budget-title">
+              <div class="panel-heading">
+                <p class="label">Budget</p>
+                <h2 id="recovery-budget-title">Bounded</h2>
+              </div>
+              <ul class="agent-list" aria-label="Self-heal budget">
+                <li><strong>FFET</strong><span data-state-field="h09-budget">0/3 FFET</span></li>
+                <li><strong>Box</strong><span data-state-field="h09-box-budget">4/10 Box</span></li>
+                <li><strong>Run</strong><span data-state-field="h09-run-budget">4/30 Run</span></li>
+                <li><strong>Exhaustion</strong><span data-state-field="h09-budget-exhausted">not_exhausted</span></li>
+              </ul>
+            </section>
+            <section class="panel" aria-labelledby="recovery-boundaries-title">
+              <div class="panel-heading">
+                <p class="label">Cannot Claim</p>
+                <h2 id="recovery-boundaries-title">Blocked</h2>
+              </div>
+              <ul class="tag-list" data-state-field="h09-blocked-claims" aria-label="H09 cannot claim entries">
+                <li>H09_recovery_engine_implemented</li>
+                <li>live_autonomous_recovery_execution</li>
+                <li>production_rollback_executed</li>
+                <li>H10_learning_engine_implemented</li>
+                <li>H11_impact_graph_implemented</li>
+                <li>H12_box_assurance_engine_implemented</li>
+                <li>H13_system_assurance_engine_implemented</li>
+              </ul>
+            </section>
+            <section class="panel" aria-labelledby="recovery-authority-title">
+              <div class="panel-heading">
+                <p class="label">Authority</p>
+                <h2 id="recovery-authority-title">Derived</h2>
+              </div>
+              <strong data-state-field="h09-projection-authority">derived_view_only</strong>
+              <p>HMC does not become recovery, rollback, learning, impact, or assurance authority.</p>
+              <p>Live recovery: <span data-state-field="h09-live-recovery">not_claimed</span>.</p>
+              <p>Production rollback: <span data-state-field="h09-production-rollback">not_claimed</span>.</p>
+            </section>
+          </div>
+        </section>
+
         <section class="view" id="view-boxes" data-view-panel="boxes" aria-labelledby="boxes-title" hidden>
           <div class="view-heading">
             <div>
@@ -609,6 +730,12 @@
               <span role="cell"><strong>active</strong></span>
               <span role="cell">fixture-backed conductor projection</span>
               <span role="cell">settings mutation not authorized</span>
+            </div>
+            <div class="table-row" role="row">
+              <span role="cell">H09 Self-Audit, Self-Heal, and Recovery</span>
+              <span role="cell"><strong>active</strong></span>
+              <span role="cell">fixture-backed recovery projection</span>
+              <span role="cell">live recovery not claimed</span>
             </div>
           </div>
         </section>
@@ -827,9 +954,39 @@
               <strong>Bounded dogfood conductor envelope</strong>
               <span>closeout complete</span>
             </article>
-            <article class="queue-item is-active">
+            <article class="queue-item is-done">
               <span class="queue-code">H08-F06</span>
               <strong data-state-field="h08-active-ffet">HMC Git/CI/PR conductor projection</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H09-F00</span>
+              <strong>H09 plan and FFET graph</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H09-F01</span>
+              <strong>Recovery policy and budget model</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H09-F02</span>
+              <strong>Self-heal planner</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H09-F03</span>
+              <strong>Recovery execution records</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-done">
+              <span class="queue-code">H09-F04</span>
+              <strong>Anti-theatre checks</strong>
+              <span>closeout complete</span>
+            </article>
+            <article class="queue-item is-active">
+              <span class="queue-code">H09-F05</span>
+              <strong data-state-field="h09-active-ffet">HMC recovery projection</strong>
               <span>active</span>
             </article>
           </div>

@@ -1,0 +1,50 @@
+{
+  "schema_version": "h09_hmc_recovery_projection_v1",
+  "projection_id": "h09-hmc-recovery-projection-live-overclaim",
+  "status": "product_pipeline_active",
+  "maturity": "fixture_backed",
+  "authority": "derived_view_only",
+  "freshness": "fresh",
+  "active_ffet": "H09-F05",
+  "components": [],
+  "self_heal_budget": {
+    "max_self_heals_per_ffet": 3,
+    "max_self_heals_per_box": 10,
+    "max_self_heals_for_full_run": 30,
+    "used_for_ffet": 0,
+    "used_for_box": 0,
+    "used_for_full_run": 0,
+    "exhausted": false,
+    "exhaustion_classification": "not_exhausted",
+    "freshness": "fresh"
+  },
+  "recovery": {
+    "policy_status": "verified",
+    "hard_stop_status": "verified",
+    "planner_status": "verified",
+    "execution_status": "verified",
+    "quarantine_status": "verified",
+    "rollback_status": "verified",
+    "anti_theatre_status": "verified",
+    "live_autonomous_recovery": true,
+    "production_rollback_executed": true,
+    "freshness": "fresh"
+  },
+  "claims": {
+    "live_autonomous_recovery": true,
+    "production_rollback": true
+  },
+  "cannot_claim": [
+    "HMC_authoritative_state",
+    "H09_recovery_engine_implemented",
+    "live_autonomous_recovery_execution",
+    "production_rollback_executed",
+    "H10_learning_engine_implemented",
+    "H11_impact_graph_implemented",
+    "H12_box_assurance_engine_implemented",
+    "H13_system_assurance_engine_implemented",
+    "stable_agents",
+    "self_hosting_ready",
+    "production_ready"
+  ]
+}

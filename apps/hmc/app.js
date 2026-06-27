@@ -297,6 +297,76 @@ async function loadFixtureState() {
       })
     );
   }
+  const h09Status = document.querySelector("[data-state-field='h09-status']");
+  if (h09Status) {
+    h09Status.textContent = state.h09Projection.status;
+  }
+  const h09ActiveFfet = document.querySelector("[data-state-field='h09-active-ffet']");
+  if (h09ActiveFfet) {
+    h09ActiveFfet.textContent = state.h09Projection.activeFfet;
+  }
+  const h09ProjectionAuthority = document.querySelector("[data-state-field='h09-projection-authority']");
+  if (h09ProjectionAuthority) {
+    h09ProjectionAuthority.textContent = state.h09Projection.authority;
+  }
+  const h09RecoveryPolicy = document.querySelector("[data-state-field='h09-recovery-policy']");
+  if (h09RecoveryPolicy) {
+    h09RecoveryPolicy.textContent = state.h09Projection.recoveryPolicyStatus;
+  }
+  const h09SelfHealPlanner = document.querySelector("[data-state-field='h09-self-heal-planner']");
+  if (h09SelfHealPlanner) {
+    h09SelfHealPlanner.textContent = state.h09Projection.selfHealPlannerStatus;
+  }
+  const h09RecoveryExecution = document.querySelector("[data-state-field='h09-recovery-execution']");
+  if (h09RecoveryExecution) {
+    h09RecoveryExecution.textContent = state.h09Projection.recoveryExecutionStatus;
+  }
+  const h09Quarantine = document.querySelector("[data-state-field='h09-quarantine']");
+  if (h09Quarantine) {
+    h09Quarantine.textContent = state.h09Projection.quarantineStatus;
+  }
+  const h09Rollback = document.querySelector("[data-state-field='h09-rollback']");
+  if (h09Rollback) {
+    h09Rollback.textContent = state.h09Projection.rollbackStatus;
+  }
+  const h09AntiTheatre = document.querySelector("[data-state-field='h09-anti-theatre']");
+  if (h09AntiTheatre) {
+    h09AntiTheatre.textContent = state.h09Projection.antiTheatreStatus;
+  }
+  const h09Budget = document.querySelector("[data-state-field='h09-budget']");
+  if (h09Budget) {
+    h09Budget.textContent = `${state.h09Projection.usedForFfet}/${state.h09Projection.maxSelfHealsPerFfet} FFET`;
+  }
+  const h09BoxBudget = document.querySelector("[data-state-field='h09-box-budget']");
+  if (h09BoxBudget) {
+    h09BoxBudget.textContent = `${state.h09Projection.usedForBox}/${state.h09Projection.maxSelfHealsPerBox} Box`;
+  }
+  const h09RunBudget = document.querySelector("[data-state-field='h09-run-budget']");
+  if (h09RunBudget) {
+    h09RunBudget.textContent = `${state.h09Projection.usedForFullRun}/${state.h09Projection.maxSelfHealsForFullRun} Run`;
+  }
+  const h09BudgetExhausted = document.querySelector("[data-state-field='h09-budget-exhausted']");
+  if (h09BudgetExhausted) {
+    h09BudgetExhausted.textContent = state.h09Projection.budgetExhausted ? "exhausted" : state.h09Projection.exhaustionClassification;
+  }
+  const h09LiveRecovery = document.querySelector("[data-state-field='h09-live-recovery']");
+  if (h09LiveRecovery) {
+    h09LiveRecovery.textContent = state.h09Projection.liveAutonomousRecovery ? "claimed" : "not_claimed";
+  }
+  const h09ProductionRollback = document.querySelector("[data-state-field='h09-production-rollback']");
+  if (h09ProductionRollback) {
+    h09ProductionRollback.textContent = state.h09Projection.productionRollbackExecuted ? "claimed" : "not_claimed";
+  }
+  const h09BlockedClaims = document.querySelector("[data-state-field='h09-blocked-claims']");
+  if (h09BlockedClaims) {
+    h09BlockedClaims.replaceChildren(
+      ...state.h09Projection.blockedClaims.map((claim) => {
+        const item = document.createElement("li");
+        item.textContent = claim;
+        return item;
+      })
+    );
+  }
   const mismatch = document.querySelector("[data-state-field='classified-mismatch']");
   if (mismatch) {
     mismatch.textContent = state.classifiedMismatch;
