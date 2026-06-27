@@ -1,0 +1,117 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h08-git-truth"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "valid-current-truth",
+      "snapshotRef": "fixture://snapshots/valid-current-truth.json",
+      "snapshotSha256": "e6be77403d717dd8ba29e8d8f0898964d48bd0b844c64aeb99c93b51b1b4849d",
+      "expectedStatus": "passed",
+      "expected": {
+        "repository": "usman-hussain-minhas/hadaf",
+        "branch": "main",
+        "headSha": "57231b1a3b7f70cd19929d1d82237afb6ef359cd",
+        "originMainSha": "57231b1a3b7f70cd19929d1d82237afb6ef359cd",
+        "treeHash": "8b6360ee32c041cd5d015c9777ede10d601021ef",
+        "worktreeClean": true,
+        "localMainEqualsOriginMain": true,
+        "githubAvailability": "available",
+        "openPullRequestCount": 0,
+        "openPullRequestNumbers": []
+      }
+    },
+    {
+      "scenarioId": "head-origin-mismatch",
+      "snapshotRef": "fixture://snapshots/head-origin-mismatch.json",
+      "snapshotSha256": "19fee96c61f73f22d4601a5cfb9b35e5db12ca359f589d4869e58491bd0b9f09",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "head_origin_mismatch"
+      ],
+      "expected": {
+        "repository": "usman-hussain-minhas/hadaf",
+        "localMainEqualsOriginMain": true,
+        "openPullRequestCount": 0
+      }
+    },
+    {
+      "scenarioId": "open-pr-mismatch",
+      "snapshotRef": "fixture://snapshots/open-pr-mismatch.json",
+      "snapshotSha256": "11fcad1e21c6c5245b73bb50fe79ffd625dcf1377da8448eb8cc3aab88ea002b",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "open_pr_count_mismatch",
+        "open_pr_numbers_mismatch"
+      ],
+      "expected": {
+        "repository": "usman-hussain-minhas/hadaf",
+        "localMainEqualsOriginMain": true,
+        "openPullRequestCount": 0,
+        "openPullRequestNumbers": []
+      }
+    },
+    {
+      "scenarioId": "github-unavailable",
+      "snapshotRef": "fixture://snapshots/github-unavailable.json",
+      "snapshotSha256": "b75315c545c0c50da39a4c854eeb27c408f280c0d9d176228566bc66a12c2ceb",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "github_truth_unavailable"
+      ],
+      "expected": {
+        "repository": "usman-hussain-minhas/hadaf",
+        "githubAvailability": "available",
+        "openPullRequestCount": 0
+      }
+    },
+    {
+      "scenarioId": "settings-mutation-claim",
+      "snapshotRef": "fixture://snapshots/settings-mutation-claim.json",
+      "snapshotSha256": "354ca1645a3b1d3d2cf4e847e49c987f61c38e52a3949376d3c7e392fbbe91b7",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "github_settings_mutation_claimed",
+        "branch_protection_mutation_claimed",
+        "mutating_command_detected",
+        "mutation_commands_declared"
+      ],
+      "expected": {
+        "repository": "usman-hussain-minhas/hadaf",
+        "localMainEqualsOriginMain": true,
+        "openPullRequestCount": 0
+      }
+    },
+    {
+      "scenarioId": "private-metadata",
+      "snapshotRef": "fixture://snapshots/private-metadata.json",
+      "snapshotSha256": "148bf5d7ceda3ca6c72ba725a069fc1343282fe5df7df72fa1934f32f4c4bd1d",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "private_metadata_detected",
+        "private_metadata_declared"
+      ],
+      "expected": {
+        "repository": "usman-hussain-minhas/hadaf",
+        "localMainEqualsOriginMain": true,
+        "openPullRequestCount": 0
+      }
+    }
+  ],
+  "cannotClaim": [
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized",
+    "H08_git_ci_pr_merge_conductor_implemented",
+    "H09_recovery_engine_implemented",
+    "H10_learning_engine_implemented",
+    "H11_impact_graph_implemented",
+    "H12_box_assurance_engine_implemented",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ],
+  "finalPostureRecommendation": "H08_F01_READ_ONLY_GIT_GITHUB_TRUTH_ADAPTER_VERIFIED"
+}
