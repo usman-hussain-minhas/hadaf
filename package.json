@@ -56,6 +56,7 @@
     "verify:h06-locks-checkpoints-quarantine": "node scripts/verify-h06-locks-checkpoints-quarantine.mjs",
     "verify:h06-pod-scheduler": "node scripts/verify-h06-pod-scheduler.mjs",
     "verify:h06-local-lifecycle-runner": "node scripts/verify-h06-local-lifecycle-runner.mjs",
+    "verify:h07-evidence-eligibility": "node scripts/verify-h07-evidence-eligibility.mjs",
     "supply-chain": "node scripts/generate-supply-chain-artifacts.mjs"
   },
   "devDependencies": {

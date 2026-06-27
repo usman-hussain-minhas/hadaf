@@ -448,3 +448,14 @@ export {
   type H06LocalLifecycleRunnerValidationResult,
   type H06VerifiedLocalLifecycleRunnerRef
 } from "./h06/local-lifecycle-runner.js";
+export {
+  verifyH07EvidenceEligibilityConfig,
+  type H07EligibilityFinding,
+  type H07EligibilityPolicyExpectation,
+  type H07EligibilityPolicyResult,
+  type H07EligibilityStatus,
+  type H07EvidenceEligibilityConfig,
+  type H07EvidenceEligibilityReport,
+  type H07ExpectedEligibilityStatus,
+  type H07VerifiedEligibilityRef
+} from "./h07/evidence-eligibility.js";

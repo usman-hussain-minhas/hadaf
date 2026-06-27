@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "policy_id": "unknown-evidence-class",
+  "claim_classes": [
+    "P5_proof_engine"
+  ],
+  "evidence_classes": [
+    "product_sha"
+  ],
+  "eligibility_rules": [
+    {
+      "claim_class": "P5_proof_engine",
+      "minimum_evidence_classes": [
+        "unregistered_evidence"
+      ],
+      "exact_sha_required": true,
+      "negative_fixture_required": true,
+      "allowed_status": "supported"
+    }
+  ],
+  "freshness_policy": {
+    "product_sha_required": true,
+    "tree_hash_required": true,
+    "evidence_manifest_hash_required": true
+  },
+  "cannot_claim": [
+    "release_candidate",
+    "production_ready",
+    "mechanically_independent_audit"
+  ]
+}
