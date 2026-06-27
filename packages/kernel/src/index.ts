@@ -560,3 +560,18 @@ export {
   withOptionalField,
   type H08StrictOptionalAntiPattern
 } from "./h08/optional-fields.js";
+export {
+  verifyH08ConductorConfig,
+  type H08ConductorActionType,
+  type H08ConductorConfig,
+  type H08ConductorDecision,
+  type H08ConductorExpectedRecord,
+  type H08ConductorFinding,
+  type H08ConductorReport,
+  type H08ConductorScenarioExpectation,
+  type H08ConductorScenarioResult,
+  type H08ConductorStatus,
+  type H08ConductorSummary,
+  type H08ExpectedConductorStatus,
+  type H08VerifiedConductorRef
+} from "./h08/conductor.js";
