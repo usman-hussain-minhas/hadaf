@@ -1,0 +1,27 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h07-evidence-eligibility"
+  },
+  "policies": [
+    {
+      "policyId": "valid-h07-policy",
+      "ref": "fixture://policies/valid-policy.json",
+      "sha256": "ccb199022f619fd7fd8c0e9de0f06dbfd0c941e998c943a66f50badd9a171e53",
+      "expectedStatus": "passed",
+      "expectedFindingKinds": [
+        "future_operational_claim_supported"
+      ]
+    }
+  ],
+  "requiredCannotClaim": [
+    "release_candidate",
+    "production_ready",
+    "self_hosting_ready"
+  ],
+  "cannotClaim": [
+    "release_candidate",
+    "production_ready",
+    "self_hosting_ready"
+  ],
+  "finalPostureRecommendation": "H07_F03_ELIGIBILITY_FAIL_CALIBRATION"
+}

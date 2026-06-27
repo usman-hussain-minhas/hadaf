@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "aggregate_id": "eligibility-pass-proof-fail",
+  "eligibility_config": {
+    "ref": "h07elig://valid-config.json",
+    "sha256": "772b94e4d01a19fbc8b7dd37e9c42ab70d78e5685d12f15a04599e5e2b137bda"
+  },
+  "proof_package_config": {
+    "ref": "fixture://subconfigs/proof-fail-config.json",
+    "sha256": "b3adbe270662da40ed9e28cd1deb34f17396532a3d41a85e1bdd4a7262171338"
+  },
+  "required_proof_levels": [
+    "P5"
+  ],
+  "required_negative_proof_kinds": [
+    "future_operational_claim_supported"
+  ],
+  "operational_claims": [],
+  "cannot_claim": [
+    "release_candidate",
+    "production_ready",
+    "self_hosting_ready",
+    "mechanically_independent_audit",
+    "H12_box_assurance_engine_implemented"
+  ]
+}

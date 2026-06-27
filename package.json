@@ -58,6 +58,7 @@
     "verify:h06-local-lifecycle-runner": "node scripts/verify-h06-local-lifecycle-runner.mjs",
     "verify:h07-evidence-eligibility": "node scripts/verify-h07-evidence-eligibility.mjs",
     "verify:h07-proof-package": "node scripts/verify-h07-proof-package.mjs",
+    "verify:h07-proof-verifier": "node scripts/verify-h07-proof-verifier.mjs",
     "supply-chain": "node scripts/generate-supply-chain-artifacts.mjs"
   },
   "devDependencies": {
