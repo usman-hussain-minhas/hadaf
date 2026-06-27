@@ -1,0 +1,35 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h07-proof-package"
+  },
+  "expectedProductSha": "e9ed156fc05b6e342b51662bd9847571082eb560",
+  "expectedTreeHash": "0000000000000000000000000000000000000000",
+  "unsupportedClaimClasses": [
+    "P8_release",
+    "P9_production",
+    "release_candidate",
+    "production_ready",
+    "self_hosting_ready"
+  ],
+  "requiredCannotClaim": [
+    "release_candidate",
+    "production_ready",
+    "self_hosting_ready",
+    "mechanically_independent_audit"
+  ],
+  "packages": [
+    {
+      "packageId": "valid-proof-package",
+      "ref": "fixture://packages/valid-proof-package.json",
+      "sha256": "e35799f1a979bfc1b8a3db2a3814357629c1eb1c1f114b4463191404dd793bfb",
+      "expectedStatus": "passed"
+    }
+  ],
+  "cannotClaim": [
+    "release_candidate",
+    "production_ready",
+    "self_hosting_ready",
+    "mechanically_independent_audit"
+  ],
+  "finalPostureRecommendation": "H07_F03_PROOF_FAIL_CALIBRATION"
+}

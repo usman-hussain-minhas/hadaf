@@ -470,3 +470,15 @@ export {
   type H07ProofPackageStatus,
   type H07VerifiedProofRef
 } from "./h07/proof-package.js";
+export {
+  verifyH07ProofVerifierConfig,
+  type H07ExpectedProofVerifierStatus,
+  type H07ProofVerifierFinding,
+  type H07ProofVerifierReport,
+  type H07ProofVerifierScenarioExpectation,
+  type H07ProofVerifierScenarioResult,
+  type H07ProofVerifierStatus,
+  type H07ProofVerifierSuiteConfig,
+  type H07ProofVerifierSummary,
+  type H07ProofVerifierVerifiedRef
+} from "./h07/proof-verifier.js";

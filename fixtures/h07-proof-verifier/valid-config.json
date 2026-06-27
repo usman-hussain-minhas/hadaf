@@ -1,0 +1,60 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h07-proof-verifier",
+    "h07elig": "fixtures/h07-evidence-eligibility",
+    "h07proof": "fixtures/h07-proof-package"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "valid-proof-verifier",
+      "ref": "fixture://configs/valid-proof-verifier.json",
+      "sha256": "05d5f4faad039bb122ed62462c0022d691aaebc23a09125008a6ff225e8ccff1",
+      "expectedStatus": "passed"
+    },
+    {
+      "scenarioId": "eligibility-pass-proof-fail",
+      "ref": "fixture://configs/eligibility-pass-proof-fail.json",
+      "sha256": "77e455f9e4bdb428a48c15ddffad6d33bf6c2bc1f52bcca94804daeb07994039",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "proof_package_verifier_failed"
+      ]
+    },
+    {
+      "scenarioId": "proof-pass-eligibility-fail",
+      "ref": "fixture://configs/proof-pass-eligibility-fail.json",
+      "sha256": "302857afed410bd6d1c456740e2af7d7c1b0c2ea3067088a26417c184252c2f4",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "eligibility_verifier_failed"
+      ]
+    },
+    {
+      "scenarioId": "missing-required-proof-level",
+      "ref": "fixture://configs/missing-required-proof-level.json",
+      "sha256": "91181d9896c2bc32085870f9b3f9d9a89607ec0350a3a0bae2c363d03392e136",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "required_proof_level_missing",
+        "negative_proof_absent"
+      ]
+    },
+    {
+      "scenarioId": "operational-claim-requested",
+      "ref": "fixture://configs/operational-claim-requested.json",
+      "sha256": "e00f82e3750d5ceb47e832158f180b2098ed8f235540968f7c4ceb3c6450ed64",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "operational_claim_requested"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "release_candidate",
+    "production_ready",
+    "self_hosting_ready",
+    "mechanically_independent_audit",
+    "H12_box_assurance_engine_implemented"
+  ],
+  "finalPostureRecommendation": "H07_F03_PROOF_VERIFIER_BOUNDARY_VERIFIED"
+}

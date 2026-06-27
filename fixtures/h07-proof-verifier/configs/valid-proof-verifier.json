@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "aggregate_id": "valid-proof-verifier",
+  "eligibility_config": {
+    "ref": "h07elig://valid-config.json",
+    "sha256": "772b94e4d01a19fbc8b7dd37e9c42ab70d78e5685d12f15a04599e5e2b137bda"
+  },
+  "proof_package_config": {
+    "ref": "h07proof://valid-config.json",
+    "sha256": "9a5176f7126bd9c55497bc2ba6337b0816c14b53d8f67d61fc368cad00d16477"
+  },
+  "required_proof_levels": [
+    "P5"
+  ],
+  "required_negative_proof_kinds": [
+    "future_operational_claim_supported",
+    "unsupported_claim_supported"
+  ],
+  "operational_claims": [],
+  "cannot_claim": [
+    "release_candidate",
+    "production_ready",
+    "self_hosting_ready",
+    "mechanically_independent_audit",
+    "H12_box_assurance_engine_implemented"
+  ]
+}
