@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "pod_id": "pod-H06-F03-h08-overclaim",
+  "box_id": "H06",
+  "role_refs": [
+    "fixture://roles/git.conductor"
+  ],
+  "ffet_refs": [
+    "fixture://ffets/H06-F03.json"
+  ],
+  "write_set": [
+    "product://fixtures/h06-pod-scheduler/pods/h08-overclaim-pod.json"
+  ],
+  "shared_resources": [
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ],
+  "admission_result": "admitted",
+  "collision_result": "none",
+  "serial_fallback": false,
+  "runtime_refs": [],
+  "cannot_claim": [
+    "production_resource_orchestration",
+    "live_parallel_pod_execution",
+    "mechanically_independent_agents",
+    "stable_agents",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ]
+}

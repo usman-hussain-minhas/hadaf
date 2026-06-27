@@ -421,3 +421,16 @@ export {
   type H06RuntimeValidationResult,
   type H06VerifiedRuntimeRef
 } from "./h06/locks-checkpoints-quarantine.js";
+export {
+  verifyH06PodSchedulerConfig,
+  type H06ExpectedPodSchedulerStatus,
+  type H06PodSchedulerConfig,
+  type H06PodSchedulerExpectation,
+  type H06PodSchedulerFinding,
+  type H06PodSchedulerReport,
+  type H06PodSchedulerSchemaDescriptor,
+  type H06PodSchedulerSchemaSet,
+  type H06PodSchedulerStatus,
+  type H06PodSchedulerValidationResult,
+  type H06VerifiedPodSchedulerRef
+} from "./h06/pod-scheduler.js";

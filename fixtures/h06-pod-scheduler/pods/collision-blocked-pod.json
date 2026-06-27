@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "pod_id": "pod-H06-F03-collision-blocked",
+  "box_id": "H06",
+  "role_refs": [
+    "fixture://roles/git.conductor"
+  ],
+  "ffet_refs": [
+    "fixture://ffets/H06-F03.json"
+  ],
+  "write_set": [
+    "product://package.json"
+  ],
+  "shared_resources": [],
+  "admission_result": "blocked",
+  "collision_result": "detected",
+  "serial_fallback": false,
+  "runtime_refs": [
+    {
+      "ref": "fixture://closeouts/H06-F00.json",
+      "sha256": "e5679bade07bd7c47d8489f6eaa99c4aabb67361d4344e9e6fc18857bcbba947"
+    }
+  ],
+  "cannot_claim": [
+    "production_resource_orchestration",
+    "live_parallel_pod_execution",
+    "mechanically_independent_agents",
+    "stable_agents",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ]
+}

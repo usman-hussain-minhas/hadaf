@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0.0",
+  "pod_id": "pod-H06-F03-serial-fallback",
+  "box_id": "H06",
+  "role_refs": [
+    "fixture://roles/security.residue",
+    "fixture://roles/supply_chain.auditor"
+  ],
+  "ffet_refs": [
+    "fixture://ffets/H06-F03.json"
+  ],
+  "write_set": [
+    "product://scripts/run-quality-gates.mjs"
+  ],
+  "shared_resources": [
+    "fixture://runtime/locks/shared-quality-state"
+  ],
+  "admission_result": "serial_fallback",
+  "collision_result": "detected",
+  "serial_fallback": true,
+  "runtime_refs": [
+    {
+      "ref": "fixture://closeouts/H06-F01.json",
+      "sha256": "c3028cb6ffa907ec662b8e769eab6863cdffb594e2db352663f332fa9fa5d09b"
+    }
+  ],
+  "cannot_claim": [
+    "production_resource_orchestration",
+    "live_parallel_pod_execution",
+    "mechanically_independent_agents",
+    "stable_agents",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ]
+}

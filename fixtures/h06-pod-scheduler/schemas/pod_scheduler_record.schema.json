@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://schemas/pod_scheduler_record.schema.json",
+  "title": "HADAF Pod Scheduler Record Fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "pod_id",
+    "box_id",
+    "role_refs",
+    "ffet_refs",
+    "write_set",
+    "shared_resources",
+    "admission_result",
+    "collision_result",
+    "serial_fallback",
+    "runtime_refs",
+    "cannot_claim"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "pod_id": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/id"
+    },
+    "box_id": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/id"
+    },
+    "role_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/ref"
+      },
+      "default": []
+    },
+    "ffet_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/ref"
+      },
+      "default": []
+    },
+    "write_set": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "shared_resources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "admission_result": {
+      "enum": [
+        "admitted",
+        "blocked",
+        "queued",
+        "serial_fallback"
+      ]
+    },
+    "collision_result": {
+      "enum": [
+        "none",
+        "detected",
+        "unable_to_verify"
+      ]
+    },
+    "serial_fallback": {
+      "type": "boolean"
+    },
+    "runtime_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/refHash"
+      },
+      "default": []
+    },
+    "cannot_claim": {
+      "$ref": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json#/$defs/cannotClaim"
+    }
+  }
+}

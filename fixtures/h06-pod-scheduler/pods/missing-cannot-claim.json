@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0.0",
+  "pod_id": "pod-H06-F03-missing-cannot-claim",
+  "box_id": "H06",
+  "role_refs": [
+    "fixture://roles/codex.bootstrap"
+  ],
+  "ffet_refs": [
+    "fixture://ffets/H06-F03.json"
+  ],
+  "write_set": [
+    "product://fixtures/h06-pod-scheduler/valid-config.json"
+  ],
+  "shared_resources": [],
+  "admission_result": "queued",
+  "collision_result": "none",
+  "serial_fallback": false,
+  "runtime_refs": [],
+  "cannot_claim": [
+    "production_resource_orchestration",
+    "live_parallel_pod_execution",
+    "mechanically_independent_agents",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ]
+}

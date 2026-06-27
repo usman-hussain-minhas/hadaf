@@ -54,6 +54,7 @@
     "verify:h06-resource-quotas": "node scripts/verify-h06-resource-quotas.mjs",
     "verify:h06-worktree-lifecycle": "node scripts/verify-h06-worktree-lifecycle.mjs",
     "verify:h06-locks-checkpoints-quarantine": "node scripts/verify-h06-locks-checkpoints-quarantine.mjs",
+    "verify:h06-pod-scheduler": "node scripts/verify-h06-pod-scheduler.mjs",
     "supply-chain": "node scripts/generate-supply-chain-artifacts.mjs"
   },
   "devDependencies": {
