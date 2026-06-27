@@ -1,0 +1,128 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h08-conductor"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "dry-run-ready",
+      "envelopeRef": "fixture://records/dry-run-ready.json",
+      "envelopeSha256": "1949f8a17bf9f74357cab7169f2435bec7eb602a3363f43b00b9f5ff8221023b",
+      "expectedStatus": "passed",
+      "expectedDecision": "dry_run_allowed",
+      "expected": {
+        "repository": "usman-hussain-minhas/hadaf",
+        "prNumber": 72,
+        "headSha": "cccccccccccccccccccccccccccccccccccccccc",
+        "actionType": "dry_run_merge"
+      }
+    },
+    {
+      "scenarioId": "missing-h08-gate",
+      "envelopeRef": "fixture://records/missing-h08-gate.json",
+      "envelopeSha256": "ced7af0d27a3c39268690c263cdc7de1c9e08ac96ccbcda659924298700ceb12",
+      "expectedStatus": "failed",
+      "expectedDecision": "blocked",
+      "expectedFindingKinds": [
+        "h08_gate_not_satisfied"
+      ],
+      "expected": {
+        "repository": "usman-hussain-minhas/hadaf",
+        "prNumber": 72,
+        "headSha": "cccccccccccccccccccccccccccccccccccccccc",
+        "actionType": "dry_run_merge"
+      }
+    },
+    {
+      "scenarioId": "settings-mutation",
+      "envelopeRef": "fixture://records/settings-mutation.json",
+      "envelopeSha256": "6609626b5b4129a2992560e59570a73ddb0ca23c8f30eb5cef95781bc068b014",
+      "expectedStatus": "failed",
+      "expectedDecision": "blocked",
+      "expectedFindingKinds": [
+        "settings_mutation_blocked"
+      ],
+      "expected": {
+        "repository": "usman-hussain-minhas/hadaf",
+        "prNumber": 72,
+        "headSha": "cccccccccccccccccccccccccccccccccccccccc",
+        "actionType": "settings_mutation"
+      }
+    },
+    {
+      "scenarioId": "force-push",
+      "envelopeRef": "fixture://records/force-push.json",
+      "envelopeSha256": "570c79235384d11996ee4950981cebd9a214c021c6b286101a2a488a37f12cc8",
+      "expectedStatus": "failed",
+      "expectedDecision": "blocked",
+      "expectedFindingKinds": [
+        "force_push_blocked"
+      ],
+      "expected": {
+        "repository": "usman-hussain-minhas/hadaf",
+        "prNumber": 72,
+        "headSha": "cccccccccccccccccccccccccccccccccccccccc",
+        "actionType": "force_push"
+      }
+    },
+    {
+      "scenarioId": "wrong-repository",
+      "envelopeRef": "fixture://records/wrong-repository.json",
+      "envelopeSha256": "95bdefba5b3a2b21af122a05f6d6e58dd42ebcc783370903746fa5e88ca668d0",
+      "expectedStatus": "failed",
+      "expectedDecision": "blocked",
+      "expectedFindingKinds": [
+        "wrong_repository"
+      ],
+      "expected": {
+        "repository": "usman-hussain-minhas/hadaf",
+        "prNumber": 72,
+        "headSha": "cccccccccccccccccccccccccccccccccccccccc",
+        "actionType": "dry_run_merge"
+      }
+    },
+    {
+      "scenarioId": "remote-cleanup-without-closeout",
+      "envelopeRef": "fixture://records/remote-cleanup-without-closeout.json",
+      "envelopeSha256": "541d923cd4b0a97551106beb648ba5cb4390758f035e1220cdcadc9aefdbb89d",
+      "expectedStatus": "failed",
+      "expectedDecision": "blocked",
+      "expectedFindingKinds": [
+        "remote_branch_cleanup_not_allowed"
+      ],
+      "expected": {
+        "repository": "usman-hussain-minhas/hadaf",
+        "prNumber": 72,
+        "headSha": "cccccccccccccccccccccccccccccccccccccccc",
+        "actionType": "remote_branch_cleanup"
+      }
+    },
+    {
+      "scenarioId": "human-branch-protection",
+      "envelopeRef": "fixture://records/human-branch-protection.json",
+      "envelopeSha256": "526f27d96640dd75aade79a5454748e04511b6758e606175c11ccac6869b8d94",
+      "expectedStatus": "failed",
+      "expectedDecision": "human_action_required",
+      "expectedFindingKinds": [
+        "human_branch_protection_blocker"
+      ],
+      "expected": {
+        "repository": "usman-hussain-minhas/hadaf",
+        "prNumber": 72,
+        "headSha": "cccccccccccccccccccccccccccccccccccccccc",
+        "actionType": "merge_current_pr"
+      }
+    }
+  ],
+  "cannotClaim": [
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized",
+    "H08_git_ci_pr_merge_conductor_implemented",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ],
+  "finalPostureRecommendation": "H08_F05_BOUNDED_DOGFOOD_CONDUCTOR_ENVELOPE_FIXTURE_TESTED"
+}

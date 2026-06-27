@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "envelope_id": "remote-cleanup-without-closeout",
+  "captured_at": "2026-06-27T07:05:00Z",
+  "mode": "dry_run",
+  "repository": {
+    "owner": "usman-hussain-minhas",
+    "name": "hadaf"
+  },
+  "h08_gate": {
+    "status": "satisfied",
+    "ref": "artifact://gates/H08-F04-ready.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "merge_readiness": {
+    "decision": "approved_for_merge",
+    "ref": "artifact://readiness/H08-F04-merge-ready.json",
+    "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "pr_number": 72,
+    "expected_head_sha": "cccccccccccccccccccccccccccccccccccccccc",
+    "actual_head_sha": "cccccccccccccccccccccccccccccccccccccccc",
+    "exact_head_verified": true,
+    "required_checks_green": true,
+    "public_metadata_safe": true,
+    "evidence_fresh": true,
+    "closeout_plan_present": true,
+    "terminal_learning_plan_present": true
+  },
+  "requested_action": {
+    "action_type": "remote_branch_cleanup",
+    "dry_run": false,
+    "current_run_branch": true,
+    "closeout_complete": false,
+    "rollback_needed": false,
+    "branch_name": "hadaf/h08-f05-bounded-dogfood-conductor-envelope"
+  },
+  "branch_protection": {
+    "human_action_required": false
+  },
+  "safety_policy": {
+    "current_repo_only": true,
+    "no_settings_mutation": true,
+    "no_branch_protection_mutation": true,
+    "no_force_push": true,
+    "no_history_rewrite": true,
+    "no_unscoped_cleanup": true,
+    "exact_head_required": true,
+    "dry_run_default": true
+  },
+  "conductor": {
+    "decision": "blocked",
+    "mutation_commands_used": [],
+    "allowed_mutations": []
+  },
+  "cannot_claim": [
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ]
+}
