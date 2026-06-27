@@ -1,0 +1,137 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h08-merge-readiness"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "merge-ready",
+      "readinessRef": "fixture://records/merge-ready.json",
+      "readinessSha256": "1323af2bf5da58b809c6cbf309e8631d165c0698bba78ad7b0bcf98c5b5f85b7",
+      "expectedStatus": "passed",
+      "expectedDecision": "approved_for_merge",
+      "expected": {
+        "prNumber": 71,
+        "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "mergeStateStatus": "CLEAN",
+        "requiredCheckNames": [
+          "Seed quality checks",
+          "CodeQL analysis",
+          "Dependency review"
+        ]
+      }
+    },
+    {
+      "scenarioId": "exact-head-drift",
+      "readinessRef": "fixture://records/exact-head-drift.json",
+      "readinessSha256": "19a9545a987c22c9e609bdebc8e04dbd0995d5d332974710e888d5feea56c3df",
+      "expectedStatus": "failed",
+      "expectedDecision": "blocked",
+      "expectedFindingKinds": [
+        "exact_head_drift"
+      ],
+      "expected": {
+        "prNumber": 71,
+        "requiredCheckNames": [
+          "Seed quality checks"
+        ]
+      }
+    },
+    {
+      "scenarioId": "failed-required-check",
+      "readinessRef": "fixture://records/failed-required-check.json",
+      "readinessSha256": "ca7c83a4c725ff6b8e58137835a2df173363eab1b5bb9976c9080b3020d5ef08",
+      "expectedStatus": "failed",
+      "expectedDecision": "blocked",
+      "expectedFindingKinds": [
+        "required_check_failed"
+      ],
+      "expected": {
+        "prNumber": 71,
+        "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "requiredCheckNames": [
+          "Seed quality checks"
+        ]
+      }
+    },
+    {
+      "scenarioId": "unsafe-metadata",
+      "readinessRef": "fixture://records/unsafe-metadata.json",
+      "readinessSha256": "5235b4323cc3c43dccfa5cecfd049ebc216fc8cbc971060251727886d09b49af",
+      "expectedStatus": "failed",
+      "expectedDecision": "blocked",
+      "expectedFindingKinds": [
+        "unsafe_pr_metadata"
+      ],
+      "expected": {
+        "prNumber": 71,
+        "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "requiredCheckNames": [
+          "Seed quality checks"
+        ]
+      }
+    },
+    {
+      "scenarioId": "missing-evidence-manifest",
+      "readinessRef": "fixture://records/missing-artifact-manifest.json",
+      "readinessSha256": "8e15870d32895c3e64df8d77440151163224213b20d079f1ce5270f5ebb6115f",
+      "expectedStatus": "failed",
+      "expectedDecision": "blocked",
+      "expectedFindingKinds": [
+        "evidence_manifest_not_fresh"
+      ],
+      "expected": {
+        "prNumber": 71,
+        "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "requiredCheckNames": [
+          "Seed quality checks"
+        ]
+      }
+    },
+    {
+      "scenarioId": "missing-closeout-plan",
+      "readinessRef": "fixture://records/missing-closeout-plan.json",
+      "readinessSha256": "c7d5f5a52c0c21695a89a003163bb4d74eab5ee8235c187d3b9c7f00869b79c4",
+      "expectedStatus": "failed",
+      "expectedDecision": "blocked",
+      "expectedFindingKinds": [
+        "closeout_plan_missing"
+      ],
+      "expected": {
+        "prNumber": 71,
+        "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "requiredCheckNames": [
+          "Seed quality checks"
+        ]
+      }
+    },
+    {
+      "scenarioId": "human-branch-protection-blocker",
+      "readinessRef": "fixture://records/human-branch-protection-blocker.json",
+      "readinessSha256": "66096e0842313e33dbf314ea414f0ffb08c314719e73a547fe50e2eb130fce7b",
+      "expectedStatus": "failed",
+      "expectedDecision": "human_action_required",
+      "expectedFindingKinds": [
+        "human_branch_protection_blocker"
+      ],
+      "expected": {
+        "prNumber": 71,
+        "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "requiredCheckNames": [
+          "Seed quality checks"
+        ]
+      }
+    }
+  ],
+  "cannotClaim": [
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized",
+    "H08_git_ci_pr_merge_conductor_implemented",
+    "self_hosting_ready",
+    "release_candidate",
+    "production_ready",
+    "stable_agents",
+    "mechanically_independent_agents",
+    "independent_quality_auditor_qualified"
+  ],
+  "finalPostureRecommendation": "H08_F04_MERGE_READINESS_DRY_RUN_FIXTURE_TESTED"
+}

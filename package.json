@@ -63,6 +63,7 @@
     "verify:h08-git-truth": "node scripts/verify-h08-git-truth.mjs",
     "verify:h08-pr-lifecycle": "node scripts/verify-h08-pr-lifecycle.mjs",
     "verify:h08-ci-watcher": "node scripts/verify-h08-ci-watcher.mjs",
+    "verify:h08-merge-readiness": "node scripts/verify-h08-merge-readiness.mjs",
     "supply-chain": "node scripts/generate-supply-chain-artifacts.mjs"
   },
   "devDependencies": {
