@@ -1,0 +1,40 @@
+{
+  "schema_version": "hadaf_h10_anti_repeat_v1",
+  "anti_repeat_id": "H10-ANTI-REPEAT-WAIVER-NO-AUTHORITY-001",
+  "pattern_id": "PATTERN-H10-WAIVER",
+  "source_mistake": {
+    "ref": "learning://H10-F03-learning",
+    "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+  },
+  "repeated_pattern": true,
+  "guard": {
+    "guard_type": "human_gate",
+    "ref": "artifact://waiver-guard.json",
+    "sha256": "1212121212121212121212121212121212121212121212121212121212121212"
+  },
+  "regression_drill": {
+    "status": "passed",
+    "command_ref": "command://verify-h10-anti-repeat",
+    "output_sha256": "1313131313131313131313131313131313131313131313131313131313131313",
+    "product_sha": "55e5b1e84a055cca912854356fc3e4712674c756"
+  },
+  "non_degradation": {
+    "ref": "artifact://quality-report.json",
+    "sha256": "1414141414141414141414141414141414141414141414141414141414141414",
+    "status": "passed"
+  },
+  "waiver": {
+    "applied": true,
+    "reason": "Negative fixture omits authority."
+  },
+  "claims": {
+    "all_future_mistakes_prevented": false,
+    "anti_repeat_prevents_all_regressions": false,
+    "stable_agents": false
+  },
+  "cannot_claim": [
+    "all_future_mistakes_prevented",
+    "anti_repeat_prevents_all_regressions",
+    "stable_agents"
+  ]
+}

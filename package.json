@@ -74,6 +74,7 @@
     "verify:h10-mistake-ledger": "node scripts/verify-h10-mistake-ledger.mjs",
     "verify:h10-learning-ingestion": "node scripts/verify-h10-learning-ingestion.mjs",
     "verify:h10-upskill-proposals": "node scripts/verify-h10-upskill-proposals.mjs",
+    "verify:h10-anti-repeat": "node scripts/verify-h10-anti-repeat.mjs",
     "supply-chain": "node scripts/generate-supply-chain-artifacts.mjs"
   },
   "devDependencies": {

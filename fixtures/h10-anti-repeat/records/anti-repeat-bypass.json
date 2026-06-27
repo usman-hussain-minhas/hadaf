@@ -1,0 +1,38 @@
+{
+  "schema_version": "hadaf_h10_anti_repeat_v1",
+  "anti_repeat_id": "H10-ANTI-REPEAT-BYPASS-001",
+  "pattern_id": "PATTERN-H10-BYPASS",
+  "source_mistake": {
+    "ref": "learning://H10-F03-learning",
+    "sha256": "1515151515151515151515151515151515151515151515151515151515151515"
+  },
+  "repeated_pattern": true,
+  "guard": {
+    "guard_type": "verifier_rule",
+    "ref": "artifact://bypass-guard.json",
+    "sha256": "1616161616161616161616161616161616161616161616161616161616161616"
+  },
+  "regression_drill": {
+    "status": "passed",
+    "command_ref": "command://verify-h10-anti-repeat",
+    "output_sha256": "1717171717171717171717171717171717171717171717171717171717171717",
+    "product_sha": "55e5b1e84a055cca912854356fc3e4712674c756"
+  },
+  "non_degradation": {
+    "ref": "artifact://quality-report.json",
+    "sha256": "1818181818181818181818181818181818181818181818181818181818181818",
+    "status": "passed"
+  },
+  "bypass": {
+    "attempted": true,
+    "reason": "Negative fixture attempts to bypass anti-repeat."
+  },
+  "claims": {
+    "all_future_mistakes_prevented": true,
+    "anti_repeat_prevents_all_regressions": true,
+    "stable_agents": false
+  },
+  "cannot_claim": [
+    "stable_agents"
+  ]
+}
