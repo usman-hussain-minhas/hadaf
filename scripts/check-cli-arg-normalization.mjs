@@ -50,6 +50,8 @@ const cases = [
   pnpmCase("h06-resource-quotas-separator", ["verify:h06-resource-quotas", "--", "fixtures/h06-resource-quotas/valid-config.json"]),
   pnpmCase("h06-worktree-lifecycle-direct", ["verify:h06-worktree-lifecycle", "fixtures/h06-worktree-lifecycle/valid-config.json"]),
   pnpmCase("h06-worktree-lifecycle-separator", ["verify:h06-worktree-lifecycle", "--", "fixtures/h06-worktree-lifecycle/valid-config.json"]),
+  pnpmCase("h06-locks-checkpoints-quarantine-direct", ["verify:h06-locks-checkpoints-quarantine", "fixtures/h06-locks-checkpoints-quarantine/valid-config.json"]),
+  pnpmCase("h06-locks-checkpoints-quarantine-separator", ["verify:h06-locks-checkpoints-quarantine", "--", "fixtures/h06-locks-checkpoints-quarantine/valid-config.json"]),
   pnpmCase("target-guard-direct", ["check:target-guard", "fixtures/target-guard/valid-config.json"]),
   pnpmCase("target-guard-separator", ["check:target-guard", "--", "fixtures/target-guard/valid-config.json"]),
   nodeCase("pr-metadata-direct", ["scripts/check-pr-metadata-public-safety.mjs", fixturePaths.prBody]),

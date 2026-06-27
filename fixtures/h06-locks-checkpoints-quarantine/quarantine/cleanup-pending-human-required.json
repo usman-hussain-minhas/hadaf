@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "quarantine_id": "quarantine-H06-F02-human-required",
+  "incident_type": "product_contamination",
+  "affected_paths_or_resources": [
+    "product/hadaf/runtime/worktrees/h06-f02-hadaf"
+  ],
+  "source_worktree_ref": "fixture://runtime/worktrees/h06-f02-hadaf",
+  "detected_at": "2026-06-26T23:49:42Z",
+  "evidence_ref": {
+    "ref": "fixture://evidence/H06/product-contamination.json",
+    "sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+  },
+  "disposition": "cleanup_pending",
+  "cleanup_allowed": false,
+  "human_decision_required": true,
+  "cannot_claim": [
+    "production_resource_orchestration",
+    "live_autonomous_worktree_orchestration",
+    "mechanically_independent_agents",
+    "stable_agents"
+  ]
+}

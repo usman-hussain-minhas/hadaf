@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fixture://schemas/h04_h06_lifecycle_common.definitions.schema.json",
+  "title": "HADAF H04-H06 Lifecycle Common Definitions Fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "definitions_version": {
+      "const": "1.0.0"
+    }
+  },
+  "required": [
+    "schema_version",
+    "definitions_version"
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "ref": {
+      "type": "string",
+      "pattern": "^(control|evidence|runtime|product|input|release|fixture)://[^\\s]+$|^[A-Za-z0-9_./:-]+$",
+      "not": {
+        "pattern": "^/"
+      }
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^(?!.*(?:pending|placeholder|todo|TBD|FIXME))[a-f0-9]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cannotClaim": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "freshnessStatus": {
+      "enum": [
+        "fresh",
+        "stale",
+        "superseded",
+        "unknown",
+        "not_applicable_with_reason"
+      ]
+    },
+    "refHash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "sha256"
+      ],
+      "properties": {
+        "ref": {
+          "type": "string",
+          "pattern": "^(control|evidence|runtime|product|input|release|fixture)://[^\\s]+$|^[A-Za-z0-9_./:-]+$",
+          "not": {
+            "pattern": "^/"
+          }
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^(?!.*(?:pending|placeholder|todo|TBD|FIXME))[a-f0-9]{64}$"
+        }
+      }
+    },
+    "gitObjectHash": {
+      "type": "string",
+      "pattern": "^(?!.*(?:pending|placeholder|todo|TBD|FIXME))[a-f0-9]{40}$"
+    }
+  }
+}
