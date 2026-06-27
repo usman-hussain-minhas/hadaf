@@ -434,3 +434,17 @@ export {
   type H06PodSchedulerValidationResult,
   type H06VerifiedPodSchedulerRef
 } from "./h06/pod-scheduler.js";
+export {
+  verifyH06LocalLifecycleRunnerConfig,
+  type H06ExpectedLocalLifecycleRunnerStatus,
+  type H06LocalLifecycleRunnerConfig,
+  type H06LocalLifecycleRunnerExpectation,
+  type H06LocalLifecycleRunnerFinding,
+  type H06LocalLifecycleRunnerRecordKind,
+  type H06LocalLifecycleRunnerReport,
+  type H06LocalLifecycleRunnerSchemaDescriptor,
+  type H06LocalLifecycleRunnerSchemaSet,
+  type H06LocalLifecycleRunnerStatus,
+  type H06LocalLifecycleRunnerValidationResult,
+  type H06VerifiedLocalLifecycleRunnerRef
+} from "./h06/local-lifecycle-runner.js";
