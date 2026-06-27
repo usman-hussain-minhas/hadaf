@@ -1,0 +1,46 @@
+{
+  "schema_version": "hadaf_h10_mistake_ledger_v1",
+  "mistake_id": "H10-MISTAKE-MISSING-GUARD-001",
+  "ledger_entry_id": "H10-LEDGER-MISSING-GUARD-001",
+  "source_event": {
+    "event_type": "ffet",
+    "ref": "ffet://H09-F05",
+    "sha256": "87c8cf0407a605d47143bcbd4c58fcb5e19180eb2f39fbd96f10ee600533b5d2",
+    "product_sha": "b722001a0301ac62c3a9c68a54410216104d0b0f",
+    "terminal_outcome": "complete"
+  },
+  "classification": {
+    "mistake_type": "coding",
+    "severity": "medium",
+    "repeated": false,
+    "systemic": false,
+    "pattern_id": "PATTERN-H10-MISSING-GUARD"
+  },
+  "evidence": {
+    "refs": [
+      {
+        "ref": "artifact://build.log",
+        "sha256": "2469880dc9eaab3c37d1fac5aec5dab50c0d0fceaebe30fcfa816a727dc3961f",
+        "purpose": "validation"
+      }
+    ]
+  },
+  "impact": {
+    "affected_box": "H10",
+    "affected_ffet": "H10-F01"
+  },
+  "correction": {
+    "corrected_rule": "Regression guards are required for lessons to count.",
+    "non_degradation_ref": "artifact://quality-report.json",
+    "non_degradation_sha256": "2cce96805693cef049f92ec2e68616e36fe6c95a59fa9f1c75ded4b8d2e7c56f",
+    "future_stop_condition": "Stop if a mistake record lacks a regression guard."
+  },
+  "claims": {
+    "stable_agents": false
+  },
+  "cannot_claim": [
+    "stable_agents",
+    "model_weights_updated",
+    "independent_quality_auditor_qualified"
+  ]
+}

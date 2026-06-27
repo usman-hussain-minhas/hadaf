@@ -1,0 +1,79 @@
+{
+  "logicalRoots": {
+    "fixture": "fixtures/h10-mistake-ledger/records"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "valid-decision-mistake",
+      "recordRef": "fixture://valid-decision-mistake.json",
+      "recordSha256": "5978a9ff12f69699f6587fd0b46ca97b26585218656acbfd952d175292536465",
+      "expectedStatus": "passed",
+      "expected": {
+        "mistakeType": "decision",
+        "severity": "medium",
+        "evidenceRefCount": 2,
+        "regressionGuardType": "fixture"
+      }
+    },
+    {
+      "scenarioId": "missing-source-event",
+      "recordRef": "fixture://missing-source-event.json",
+      "recordSha256": "53ba1123365cbcc806db115f5514466f0d337546b3dfe985f6212a7136daa340",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "source_event_missing"
+      ]
+    },
+    {
+      "scenarioId": "missing-regression-guard",
+      "recordRef": "fixture://missing-regression-guard.json",
+      "recordSha256": "c79c839a60300114abf3845a912ab0c9d77a5a86d29ed7c554acf85ee291f6e7",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "regression_guard_type_missing",
+        "regression_guard_ref_missing",
+        "regression_guard_hash_invalid"
+      ]
+    },
+    {
+      "scenarioId": "stable-overclaim",
+      "recordRef": "fixture://stable-overclaim.json",
+      "recordSha256": "0672591e204810dfc280119bdedb072d99ee1e22654d7a2ae188e20f3cba51cc",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "stable_agents_overclaim",
+        "globally_qualified_agents_overclaim",
+        "independently_qualified_agents_overclaim",
+        "model_weight_update_overclaim",
+        "required_cannot_claim_missing"
+      ]
+    },
+    {
+      "scenarioId": "repeated-unclassified",
+      "recordRef": "fixture://repeated-unclassified.json",
+      "recordSha256": "fec5b727f92623566e38312898518119972ff3324a9ca9a4e2a47f78e5c15d6f",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "repeated_mistake_unclassified",
+        "repeated_pattern_id_missing"
+      ]
+    },
+    {
+      "scenarioId": "private-path-residue",
+      "recordRef": "fixture://private-path-residue.json",
+      "recordSha256": "aa2fe90c65d6e6738acabbbe7677034b7a1584c66a49b97bd8abc47eff0adc7f",
+      "expectedStatus": "failed",
+      "expectedFindingKinds": [
+        "private_metadata_detected"
+      ]
+    }
+  ],
+  "cannotClaim": [
+    "H10_learning_engine_implemented",
+    "stable_agents",
+    "globally_qualified_agents",
+    "independently_qualified_agents",
+    "model_weights_updated"
+  ],
+  "finalPostureRecommendation": "H10_MISTAKE_LEDGER_FIXTURE_BACKED"
+}

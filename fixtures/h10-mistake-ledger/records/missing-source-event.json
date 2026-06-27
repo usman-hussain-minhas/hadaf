@@ -1,0 +1,44 @@
+{
+  "schema_version": "hadaf_h10_mistake_ledger_v1",
+  "mistake_id": "H10-MISTAKE-MISSING-SOURCE-001",
+  "ledger_entry_id": "H10-LEDGER-MISSING-SOURCE-001",
+  "classification": {
+    "mistake_type": "evidence",
+    "severity": "high",
+    "repeated": false,
+    "systemic": false,
+    "pattern_id": "PATTERN-H10-MISSING-SOURCE"
+  },
+  "evidence": {
+    "refs": [
+      {
+        "ref": "artifact://quality-report.json",
+        "sha256": "2cce96805693cef049f92ec2e68616e36fe6c95a59fa9f1c75ded4b8d2e7c56f",
+        "purpose": "validation"
+      }
+    ]
+  },
+  "impact": {
+    "affected_box": "H10",
+    "affected_ffet": "H10-F01"
+  },
+  "correction": {
+    "corrected_rule": "Every mistake record must bind to a terminal lifecycle event.",
+    "regression_guard": {
+      "guard_type": "verifier_rule",
+      "ref": "rule://source-event-required",
+      "sha256": "843955e1e68268ca273b91cf5d1d433ec5e14865dc2860e8b4cc4d4026689848"
+    },
+    "non_degradation_ref": "artifact://quality-report.json",
+    "non_degradation_sha256": "2cce96805693cef049f92ec2e68616e36fe6c95a59fa9f1c75ded4b8d2e7c56f",
+    "future_stop_condition": "Stop if a mistake ledger entry lacks a source event."
+  },
+  "claims": {
+    "stable_agents": false
+  },
+  "cannot_claim": [
+    "stable_agents",
+    "model_weights_updated",
+    "independent_quality_auditor_qualified"
+  ]
+}

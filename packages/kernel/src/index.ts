@@ -151,6 +151,21 @@ export {
   type H09VerifiedHmcRecoveryProjectionRef
 } from "./h09/hmc-recovery-projection.js";
 export {
+  verifyH10MistakeLedgerConfig,
+  type H10ExpectedMistakeLedgerRecord,
+  type H10ExpectedMistakeLedgerStatus,
+  type H10MistakeLedgerConfig,
+  type H10MistakeLedgerFinding,
+  type H10MistakeLedgerReport,
+  type H10MistakeLedgerScenarioExpectation,
+  type H10MistakeLedgerScenarioResult,
+  type H10MistakeLedgerStatus,
+  type H10MistakeLedgerSummary,
+  type H10MistakeSeverity,
+  type H10MistakeType,
+  type H10VerifiedMistakeLedgerRef
+} from "./h10/mistake-ledger.js";
+export {
   verifyProductPreviewConfig,
   type ProductPreviewConfig,
   type ProductPreviewFinding,
