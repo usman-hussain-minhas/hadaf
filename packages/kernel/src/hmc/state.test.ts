@@ -11,7 +11,7 @@ test("derives a valid HMC fixture state with classified stale generated state", 
   assert.equal(report.classified_mismatches.length, 1);
   assert.equal(report.view.project.name, "HADAF v1");
   assert.equal(report.view.maturitySummary.fixture_backed > 0, true);
-  assert.equal(report.final_posture_recommendation, "H06_RUNTIME_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED");
+  assert.equal(report.final_posture_recommendation, "H07_PROOF_FOUNDATION_ACTIVE_FIXTURE_BACKED");
   assert.equal(report.view.h03Projection?.authority, "derived_view_only");
   assert.equal(report.view.h03Projection?.deliveryConstitution.approvalStatus, "for_human_review");
   assert.equal(report.view.h03Projection?.deliveryConstitution.executionAuthorized, false);
@@ -22,6 +22,9 @@ test("derives a valid HMC fixture state with classified stale generated state", 
   assert.equal(report.view.h06Projection?.authority, "derived_view_only");
   assert.equal(report.view.h06Projection?.runtime.layoutStatus, "verified");
   assert.equal(report.view.h06Projection?.runner.liveProviderStatus, "not_claimed");
+  assert.equal(report.view.h07Projection?.authority, "derived_view_only");
+  assert.equal(report.view.h07Projection?.proofLevels.some((proof) => proof.level === "P5" && proof.status === "verified"), true);
+  assert.equal(report.view.h07Projection?.proofLevels.some((proof) => proof.level === "P9" && proof.status === "non_operational"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h03_stage:H03-F05" && ref.status === "closeout_complete"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h03_stage:H03-F06" && ref.status === "closeout_complete"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h04_ffet:H04-F05" && ref.status === "closeout_complete"), true);
@@ -29,6 +32,8 @@ test("derives a valid HMC fixture state with classified stale generated state", 
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h05_agent:codex.bootstrap" && ref.status === "fixture_projected"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h06_runtime:worktree-registry" && ref.status === "verified"), true);
   assert.equal(report.verified_refs.some((ref) => ref.ref === "h06_runtime:pod-scheduler" && ref.status === "verified"), true);
+  assert.equal(report.verified_refs.some((ref) => ref.ref === "h07_proof:P5" && ref.status === "verified"), true);
+  assert.equal(report.verified_refs.some((ref) => ref.ref === "h07_prerequisite:H07-F03" && ref.status === "closeout_complete"), true);
   assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04" && ffet.status === "active"), false);
   assert.equal(report.view.ffets.some((ffet) => ffet.id === "H02-F04-R1" && ffet.status === "verified"), true);
 });
@@ -417,6 +422,72 @@ test("fails H06 projection when precise cannot_claim entries are missing", () =>
   assertFinding(report, "missing_h06_projection_cannot_claim");
 });
 
+test("fails H07 projection authority, maturity, future proof, and claim overclaims", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    h07Projection: {
+      ...validConfig().h07Projection!,
+      claimsAuthority: true,
+      claimP8Operational: true,
+      claimP9Operational: true,
+      claimReleaseReady: true,
+      claimProductionReady: true,
+      claimMechanicalIndependence: true,
+      claimH12Assurance: true,
+      maturity: "persistent",
+      proofLevels: validConfig().h07Projection!.proofLevels.map((proof) =>
+        proof.level === "P8" || proof.level === "P9" ? { ...proof, status: "operational" } : proof
+      )
+    }
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "h07_projection_claims_authority");
+  assertFinding(report, "h07_projection_maturity_overclaim");
+  assertFinding(report, "h07_future_proof_level_operational_overclaim");
+  assertFinding(report, "h07_p8_operational_overclaim");
+  assertFinding(report, "h07_p9_operational_overclaim");
+  assertFinding(report, "h07_release_ready_overclaim");
+  assertFinding(report, "h07_production_ready_overclaim");
+  assertFinding(report, "h07_mechanical_independence_overclaim");
+  assertFinding(report, "h07_h12_assurance_overclaim");
+});
+
+test("fails stale H07 proof state without visible classification", () => {
+  const config = validConfig();
+  const report = deriveHmcStateConfig({
+    ...config,
+    h07Projection: {
+      ...config.h07Projection!,
+      freshness: "stale",
+      proofLevels: [
+        {
+          ...config.h07Projection!.proofLevels[0]!,
+          evidenceStatus: "missing",
+          negativeProofStatus: "missing",
+          freshness: "stale"
+        },
+        ...config.h07Projection!.proofLevels.slice(1)
+      ]
+    },
+    classifiedMismatches: [...(config.classifiedMismatches ?? [])]
+  });
+
+  assert.equal(report.status, "failed");
+  assert.equal(findings(report, "unclassified_state_mismatch"), 4);
+});
+
+test("fails H07 projection when precise cannot_claim entries are missing", () => {
+  const report = deriveHmcStateConfig({
+    ...validConfig(),
+    cannotClaim: ["live_github_adapter_implemented", "HMC_authoritative_state"]
+  });
+
+  assert.equal(report.status, "failed");
+  assertFinding(report, "missing_h07_projection_cannot_claim");
+  assertFinding(report, "h07_blocked_claim_missing_cannot_claim");
+});
+
 test("fails private paths in state config", () => {
   const report = deriveHmcStateConfig({
     ...validConfig(),
@@ -487,6 +558,13 @@ function validConfig(): HmcStateConfig {
         status: "product_pipeline_active",
         maturity: "fixture_backed",
         debt: ["box_assurance_pending", "live_runtime_execution_not_implemented"]
+      },
+      {
+        id: "H07",
+        name: "Proof and Evidence Engine",
+        status: "product_pipeline_complete_pending_box_assurance",
+        maturity: "fixture_backed",
+        debt: ["box_assurance_pending", "P8_P9_non_operational"]
       }
     ],
     ffets: [
@@ -655,6 +733,36 @@ function validConfig(): HmcStateConfig {
       {
         id: "H06-F05",
         title: "HMC runtime projection",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H07-F00",
+        title: "H07 plan and FFET graph",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H07-F01",
+        title: "Evidence eligibility verifier",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H07-F02",
+        title: "Proof package verifier",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H07-F03",
+        title: "Proof verifier aggregation",
+        status: "closeout_complete",
+        maturity: "fixture_backed"
+      },
+      {
+        id: "H07-F04",
+        title: "HMC proof projection",
         status: "active",
         maturity: "fixture_backed"
       }
@@ -689,6 +797,19 @@ function validConfig(): HmcStateConfig {
           "live_lifecycle_runner_execution",
           "persistent_state_store_implemented"
         ]
+      },
+      {
+        id: "h07_hmc_proof_projection",
+        status: "passed",
+        maturity: "fixture_backed",
+        cannotClaim: [
+          "HMC_authoritative_state",
+          "release_candidate",
+          "production_ready",
+          "release_proof_complete",
+          "production_proof_complete",
+          "H12_box_assurance_engine_implemented"
+        ]
       }
     ],
     evidence: [
@@ -706,6 +827,12 @@ function validConfig(): HmcStateConfig {
       },
       {
         id: "H06-F04",
+        status: "verified",
+        maturity: "fixture_backed",
+        required: true
+      },
+      {
+        id: "H07-F03",
         status: "verified",
         maturity: "fixture_backed",
         required: true
@@ -890,6 +1017,52 @@ function validConfig(): HmcStateConfig {
         h06Prerequisite("H06-F04")
       ]
     },
+    h07Projection: {
+      id: "H07",
+      status: "product_pipeline_complete_pending_box_assurance",
+      maturity: "fixture_backed",
+      authority: "derived_view_only",
+      freshness: "fresh",
+      box: {
+        id: "H07",
+        status: "product_pipeline_complete_pending_box_assurance",
+        maturity: "fixture_backed",
+        assuranceStatus: "pending"
+      },
+      proofLevels: [
+        h07Proof("P0", "Authority proof", "verified", true),
+        h07Proof("P1", "Static/source-target proof", "verified", true),
+        h07Proof("P2", "Domain/schema proof", "verified", true),
+        h07Proof("P3", "HMC projection proof", "verified", true),
+        h07Proof("P4", "Agent execution evidence requirement", "blocked", false),
+        h07Proof("P5", "Proof engine claim verification", "verified", true),
+        h07Proof("P8", "Release proof", "non_operational", false),
+        h07Proof("P9", "Production proof", "non_operational", false)
+      ],
+      blockedClaims: [
+        {
+          claimId: "release_candidate",
+          reason: "P8 release proof is non-operational in H07-H12.",
+          cannotClaim: "release_candidate"
+        },
+        {
+          claimId: "production_ready",
+          reason: "P9 production proof is non-operational in H07-H12.",
+          cannotClaim: "production_ready"
+        },
+        {
+          claimId: "mechanically_independent_audit",
+          reason: "H07 projection is self/advisory only.",
+          cannotClaim: "mechanically_independent_audit"
+        }
+      ],
+      prerequisiteCloseouts: [
+        h07Prerequisite("H07-F00"),
+        h07Prerequisite("H07-F01"),
+        h07Prerequisite("H07-F02"),
+        h07Prerequisite("H07-F03")
+      ]
+    },
     git: {
       expectedMainSha: sha(),
       actualMainSha: sha(),
@@ -935,9 +1108,17 @@ function validConfig(): HmcStateConfig {
       "live_lifecycle_runner_execution",
       "H08_git_ci_pr_merge_conductor_implemented",
       "production_resource_orchestration",
-      "h06_box_assurance_complete"
+      "h06_box_assurance_complete",
+      "H07_proof_engine_implemented",
+      "release_candidate",
+      "production_ready",
+      "self_hosting_ready",
+      "release_proof_complete",
+      "production_proof_complete",
+      "mechanically_independent_audit",
+      "H12_box_assurance_engine_implemented"
     ],
-    finalPostureRecommendation: "H06_RUNTIME_LIFECYCLE_FOUNDATION_ACTIVE_FIXTURE_BACKED"
+    finalPostureRecommendation: "H07_PROOF_FOUNDATION_ACTIVE_FIXTURE_BACKED"
   };
 }
 
@@ -994,6 +1175,34 @@ function h06RuntimeRef(id: string, title: string): NonNullable<HmcStateConfig["h
 }
 
 function h06Prerequisite(id: string): NonNullable<HmcStateConfig["h06Projection"]>["prerequisiteCloseouts"][number] {
+  return {
+    id,
+    status: "closeout_complete",
+    closeoutStatus: "closeout_complete",
+    evidenceStatus: "verified",
+    terminalLearningStatus: "complete"
+  };
+}
+
+function h07Proof(
+  level: NonNullable<HmcStateConfig["h07Projection"]>["proofLevels"][number]["level"],
+  title: string,
+  status: NonNullable<HmcStateConfig["h07Projection"]>["proofLevels"][number]["status"],
+  required: boolean
+): NonNullable<HmcStateConfig["h07Projection"]>["proofLevels"][number] {
+  return {
+    level,
+    title,
+    status,
+    maturity: "fixture_backed",
+    evidenceStatus: required ? "verified" : "not_applicable",
+    negativeProofStatus: "verified",
+    freshness: "fresh",
+    required
+  };
+}
+
+function h07Prerequisite(id: string): NonNullable<HmcStateConfig["h07Projection"]>["prerequisiteCloseouts"][number] {
   return {
     id,
     status: "closeout_complete",

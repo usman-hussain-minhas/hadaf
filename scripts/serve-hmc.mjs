@@ -111,7 +111,7 @@ async function runSmoke() {
       ...requireIncludes(stateJson, [
         "adapterMaturity",
         "fixture_backed",
-        "H06-F05 HMC runtime projection",
+        "H07-F04 HMC proof projection",
         "product_pipeline_active",
         "codex.bootstrap",
         "circuitBreakerStatus",

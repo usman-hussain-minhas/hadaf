@@ -201,6 +201,52 @@ async function loadFixtureState() {
       })
     );
   }
+  const h07Status = document.querySelector("[data-state-field='h07-status']");
+  if (h07Status) {
+    h07Status.textContent = state.h07Projection.status;
+  }
+  const h07ActiveFfet = document.querySelector("[data-state-field='h07-active-ffet']");
+  if (h07ActiveFfet) {
+    h07ActiveFfet.textContent = state.h07Projection.activeFfet;
+  }
+  const h07ProjectionAuthority = document.querySelector("[data-state-field='h07-projection-authority']");
+  if (h07ProjectionAuthority) {
+    h07ProjectionAuthority.textContent = state.h07Projection.authority;
+  }
+  const h07VerifiedProofCount = document.querySelector("[data-state-field='h07-verified-proof-count']");
+  if (h07VerifiedProofCount) {
+    h07VerifiedProofCount.textContent = String(state.h07Projection.verifiedProofCount);
+  }
+  const h07BlockedProofCount = document.querySelector("[data-state-field='h07-blocked-proof-count']");
+  if (h07BlockedProofCount) {
+    h07BlockedProofCount.textContent = String(state.h07Projection.blockedProofCount);
+  }
+  const h07NonOperationalProofCount = document.querySelector("[data-state-field='h07-non-operational-proof-count']");
+  if (h07NonOperationalProofCount) {
+    h07NonOperationalProofCount.textContent = String(state.h07Projection.nonOperationalProofCount);
+  }
+  const h07ProofList = document.querySelector("[data-state-field='h07-proof-list']");
+  if (h07ProofList) {
+    h07ProofList.replaceChildren(
+      ...state.h07Projection.proofLevels.map((proof) => {
+        const item = document.createElement("li");
+        item.innerHTML = `<strong></strong><span></span>`;
+        item.querySelector("strong").textContent = `${proof.level} ${proof.title}`;
+        item.querySelector("span").textContent = proof.status;
+        return item;
+      })
+    );
+  }
+  const h07BlockedClaims = document.querySelector("[data-state-field='h07-blocked-claims']");
+  if (h07BlockedClaims) {
+    h07BlockedClaims.replaceChildren(
+      ...state.h07Projection.blockedClaims.map((claim) => {
+        const item = document.createElement("li");
+        item.textContent = claim;
+        return item;
+      })
+    );
+  }
   const mismatch = document.querySelector("[data-state-field='classified-mismatch']");
   if (mismatch) {
     mismatch.textContent = state.classifiedMismatch;
