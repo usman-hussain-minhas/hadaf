@@ -539,3 +539,17 @@ export {
   type H08ExpectedCiWatcherStatus,
   type H08VerifiedCiWatcherRef
 } from "./h08/ci-watcher.js";
+export {
+  verifyH08MergeReadinessConfig,
+  type H08ExpectedMergeReadinessStatus,
+  type H08MergeReadinessConfig,
+  type H08MergeReadinessDecision,
+  type H08MergeReadinessExpectedRecord,
+  type H08MergeReadinessFinding,
+  type H08MergeReadinessReport,
+  type H08MergeReadinessScenarioExpectation,
+  type H08MergeReadinessScenarioResult,
+  type H08MergeReadinessStatus,
+  type H08MergeReadinessSummary,
+  type H08VerifiedMergeReadinessRef
+} from "./h08/merge-readiness.js";

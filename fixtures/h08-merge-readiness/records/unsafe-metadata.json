@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0.0",
+  "readiness_id": "unsafe-metadata",
+  "captured_at": "2026-06-27T06:55:00Z",
+  "capture_mode": "fixture",
+  "repository": {
+    "owner": "usman-hussain-minhas",
+    "name": "hadaf"
+  },
+  "pr": {
+    "number": 71,
+    "state": "open",
+    "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "expected_head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "mergeable": true,
+    "merge_state_status": "CLEAN",
+    "public_metadata_safe": false,
+    "pr_body_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "ci": {
+    "required_checks": [
+      {
+        "name": "Seed quality checks",
+        "required": true,
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ]
+  },
+  "evidence": {
+    "manifest_ref": "artifact://manifests/H08-F04-evidence-manifest.json",
+    "manifest_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "status": "fresh"
+  },
+  "closeout_plan": {
+    "present": true,
+    "ref": "artifact://plans/H08-F04-closeout-plan.json",
+    "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+  },
+  "terminal_learning_plan": {
+    "present": true,
+    "ref": "artifact://plans/H08-F04-learning-plan.json",
+    "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  },
+  "branch_protection": {
+    "human_action_required": false
+  },
+  "conductor": {
+    "dry_run": true,
+    "mutation_commands_used": [],
+    "decision": "blocked"
+  },
+  "cannot_claim": [
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized"
+  ]
+}
