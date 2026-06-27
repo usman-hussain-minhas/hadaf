@@ -1,0 +1,52 @@
+{
+  "schema_version": "hadaf_h09_self_heal_plan_request_v1",
+  "request_id": "h09-scope-expansion",
+  "mode": "planner_input",
+  "failure": {
+    "class_id": "scope_expansion",
+    "severity": "high",
+    "description": "A proposed repair would exceed the active FFET ownership."
+  },
+  "attempt_state": {
+    "self_heals_used_for_ffet": 1,
+    "self_heals_used_for_box": 3,
+    "self_heals_used_for_run": 6
+  },
+  "observed_failures": [
+    {
+      "ffet_id": "H09-F02",
+      "class_id": "scope_expansion",
+      "count": 1
+    }
+  ],
+  "proposed_actions": [
+    {
+      "action_id": "correction_pr",
+      "deterministic": true,
+      "scoped": true,
+      "evidence_preserving": true,
+      "requires_human_decision": false,
+      "expands_scope": true,
+      "rollback_defined": true
+    }
+  ],
+  "guards": {
+    "exact_sha_required": true,
+    "validation_required": true,
+    "evidence_manifest_required": true,
+    "terminal_learning_required": true,
+    "public_safety_required": true,
+    "no_private_data": true,
+    "no_product_plane_contamination": true
+  },
+  "claims": {
+    "scope_expansion_without_human_decision": true
+  },
+  "cannot_claim": [
+    "free_autonomous_fixing",
+    "authority_repair_without_human_decision",
+    "security_repair_without_hard_stop",
+    "stable_agents",
+    "mechanically_independent_agents"
+  ]
+}
