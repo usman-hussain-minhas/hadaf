@@ -60,6 +60,7 @@
     "verify:h07-proof-package": "node scripts/verify-h07-proof-package.mjs",
     "verify:h07-proof-verifier": "node scripts/verify-h07-proof-verifier.mjs",
     "verify:h07-proof-projection": "node scripts/verify-h07-proof-projection.mjs",
+    "verify:h08-git-truth": "node scripts/verify-h08-git-truth.mjs",
     "supply-chain": "node scripts/generate-supply-chain-artifacts.mjs"
   },
   "devDependencies": {

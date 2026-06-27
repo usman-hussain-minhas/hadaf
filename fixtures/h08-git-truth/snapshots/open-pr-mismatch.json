@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "snapshot_id": "open-pr-mismatch",
+  "captured_at": "2026-06-27T06:10:00Z",
+  "capture_mode": "fixture",
+  "repository": {
+    "owner": "usman-hussain-minhas",
+    "name": "hadaf",
+    "default_branch": "main",
+    "remote_url": "https://github.com/usman-hussain-minhas/hadaf"
+  },
+  "git": {
+    "branch": "main",
+    "head_sha": "57231b1a3b7f70cd19929d1d82237afb6ef359cd",
+    "origin_main_sha": "57231b1a3b7f70cd19929d1d82237afb6ef359cd",
+    "head_tree": "8b6360ee32c041cd5d015c9777ede10d601021ef",
+    "worktree_clean": true,
+    "status_short": [],
+    "local_main_equals_origin_main": true
+  },
+  "github": {
+    "availability": "available",
+    "open_pull_requests": [
+      {
+        "number": 99,
+        "title": "fixture open PR",
+        "state": "open",
+        "head_sha": "2222222222222222222222222222222222222222",
+        "is_draft": false
+      }
+    ],
+    "checks": []
+  },
+  "read_only": {
+    "git_commands": [
+      "git status --short --branch"
+    ],
+    "github_commands": [
+      "gh pr list --state open --json number,state,headRefOid"
+    ],
+    "mutation_commands_used": [],
+    "settings_mutation_authorized": false,
+    "branch_protection_mutation_authorized": false
+  },
+  "public_safety": {
+    "private_metadata_detected": false,
+    "scanned_fields": [
+      "github.open_pull_requests"
+    ],
+    "findings": []
+  },
+  "cannot_claim": [
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ]
+}

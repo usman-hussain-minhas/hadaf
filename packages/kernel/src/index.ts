@@ -495,3 +495,16 @@ export {
   type H07HmcProofProjectionReport,
   type H07HmcProofProjectionStatus
 } from "./h07/hmc-proof-projection.js";
+export {
+  verifyH08GitTruthConfig,
+  type H08ExpectedGitTruthStatus,
+  type H08GitTruthConfig,
+  type H08GitTruthExpectedSnapshot,
+  type H08GitTruthFinding,
+  type H08GitTruthReport,
+  type H08GitTruthScenarioExpectation,
+  type H08GitTruthScenarioResult,
+  type H08GitTruthStatus,
+  type H08GitTruthSummary,
+  type H08VerifiedGitTruthRef
+} from "./h08/git-truth.js";

@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "snapshot_id": "valid-current-truth",
+  "captured_at": "2026-06-27T06:10:00Z",
+  "capture_mode": "fixture",
+  "repository": {
+    "owner": "usman-hussain-minhas",
+    "name": "hadaf",
+    "default_branch": "main",
+    "remote_url": "https://github.com/usman-hussain-minhas/hadaf"
+  },
+  "git": {
+    "branch": "main",
+    "head_sha": "57231b1a3b7f70cd19929d1d82237afb6ef359cd",
+    "origin_main_sha": "57231b1a3b7f70cd19929d1d82237afb6ef359cd",
+    "head_tree": "8b6360ee32c041cd5d015c9777ede10d601021ef",
+    "worktree_clean": true,
+    "status_short": [],
+    "local_main_equals_origin_main": true
+  },
+  "github": {
+    "availability": "available",
+    "open_pull_requests": [],
+    "checks": [
+      {
+        "name": "Seed quality checks",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "57231b1a3b7f70cd19929d1d82237afb6ef359cd"
+      }
+    ],
+    "settings": {
+      "branch_protection_read": true,
+      "actions_policy_read": true,
+      "settings_mutation_authorized": false,
+      "branch_protection_mutation_authorized": false
+    }
+  },
+  "read_only": {
+    "git_commands": [
+      "git status --short --branch",
+      "git rev-parse HEAD",
+      "git rev-parse origin/main"
+    ],
+    "github_commands": [
+      "gh pr list --state open --json number,title,headRefOid"
+    ],
+    "mutation_commands_used": [],
+    "settings_mutation_authorized": false,
+    "branch_protection_mutation_authorized": false
+  },
+  "public_safety": {
+    "private_metadata_detected": false,
+    "scanned_fields": [
+      "repository",
+      "git",
+      "github",
+      "read_only"
+    ],
+    "findings": []
+  },
+  "cannot_claim": [
+    "github_settings_mutation_authorized",
+    "branch_protection_mutation_authorized",
+    "H08_git_ci_pr_merge_conductor_implemented"
+  ]
+}
