@@ -67,6 +67,7 @@
     "verify:h08-conductor": "node scripts/verify-h08-conductor.mjs",
     "verify:h08-git-projection": "node scripts/verify-h08-git-projection.mjs",
     "verify:h09-recovery-policy": "node scripts/verify-h09-recovery-policy.mjs",
+    "verify:h09-recovery-execution": "node scripts/verify-h09-recovery-execution.mjs",
     "verify:h09-self-heal-planner": "node scripts/verify-h09-self-heal-planner.mjs",
     "supply-chain": "node scripts/generate-supply-chain-artifacts.mjs"
   },

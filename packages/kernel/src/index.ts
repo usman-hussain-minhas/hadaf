@@ -615,6 +615,19 @@ export {
   type H09VerifiedRecoveryPolicyRef
 } from "./h09/recovery-policy.js";
 export {
+  verifyH09RecoveryExecutionConfig,
+  type H09ExpectedRecoveryExecutionStatus,
+  type H09RecoveryExecutionConfig,
+  type H09RecoveryExecutionDecision,
+  type H09RecoveryExecutionFinding,
+  type H09RecoveryExecutionReport,
+  type H09RecoveryExecutionScenarioExpectation,
+  type H09RecoveryExecutionScenarioResult,
+  type H09RecoveryExecutionStatus,
+  type H09RecoveryExecutionSummary,
+  type H09VerifiedRecoveryExecutionRef
+} from "./h09/recovery-execution.js";
+export {
   verifyH09SelfHealPlannerConfig,
   type H09ExpectedSelfHealPlannerStatus,
   type H09SelfHealBudgetLimits,

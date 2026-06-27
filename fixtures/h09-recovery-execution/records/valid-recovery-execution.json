@@ -1,0 +1,57 @@
+{
+  "schema_version": "hadaf_h09_recovery_execution_v1",
+  "execution_id": "h09-valid-recovery-execution",
+  "mode": "execution_record",
+  "planner_decision": "plan_ready",
+  "recovery_action": "quarantine",
+  "failure_class": "deterministic_fixture_correction",
+  "unsafe_state": true,
+  "evidence": {
+    "durable_output_ref": "artifact://h09/recovery/valid-output.json",
+    "durable_output_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "evidence_manifest_ref": "artifact://h09/recovery/valid-manifest.json",
+    "evidence_manifest_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "transient_only": false
+  },
+  "quarantine": {
+    "required": true,
+    "performed": true,
+    "quarantine_ref": "artifact://h09/recovery/quarantine.json",
+    "quarantine_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "reason": "Unsafe generated record isolated before recovery routing."
+  },
+  "rollback": {
+    "required": true,
+    "route": "forward_fix",
+    "exact_target_sha": "27b17da88119826f549d99ce246c324c11afed48",
+    "evidence_preserving": true,
+    "production_rollback": false
+  },
+  "cleanup": {
+    "broad_cleanup": false,
+    "local_branch_delete": true,
+    "remote_branch_delete": true,
+    "closeout_complete": true,
+    "worktree_cleanup": true,
+    "exact_scope": [
+      "current-run branch",
+      "current-run worktree"
+    ]
+  },
+  "claims": {
+    "production_rollback_executed": false,
+    "unscoped_cleanup_authorized": false,
+    "remote_branch_cleanup_without_closeout": false,
+    "transient_evidence_supports_terminal_claim": false,
+    "hard_stop_executed_without_human_decision": false,
+    "stable_agents": false,
+    "independent_audit": false
+  },
+  "cannot_claim": [
+    "production_rollback_executed",
+    "unscoped_cleanup_authorized",
+    "remote_branch_cleanup_without_closeout",
+    "stable_agents",
+    "mechanically_independent_agents"
+  ]
+}
